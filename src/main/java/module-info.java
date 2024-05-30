@@ -9,7 +9,9 @@ module org.example.citywars {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires com.fasterxml.jackson.databind;
     requires com.almasb.fxgl.all;
+    requires com.fasterxml.jackson.core;
 
     opens org.example.citywars to javafx.fxml;
     exports org.example.citywars;
