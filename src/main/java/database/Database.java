@@ -10,13 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Database<T> {
     private String tableName;
-    private Class<T> type;
+    // private Class<T> type;
     private ObjectMapper mapper;
     private List<T> data;
 
-    public Database(String tableName, Class<T> type) {
+    public Database(String tableName
+    // , Class<T> typ
+    ) {
         this.tableName = tableName;
-        this.type = type;
+        // this.type = type;
         this.mapper = new ObjectMapper();
 
         try {
