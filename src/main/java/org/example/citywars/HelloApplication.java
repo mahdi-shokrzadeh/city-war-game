@@ -4,14 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import models.M_SignUpMenu;
-import models.Menu;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class HelloApplication extends Application {
-    Menu menu;
+    public static Menu menu;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,7 +23,7 @@ public class HelloApplication extends Application {
 //        while (!isEnd) {
 //            input = sc.nextLine();
 //            if (input.matches("^ *show +current +menu *$")) {
-//                menu.myNameIs();
+//                System.out.println(menu.getName());//for console version
 //            } else {
 //                menu = menu.myMethods(input);
 //                if (menu == null) {
@@ -34,9 +32,9 @@ public class HelloApplication extends Application {
 //            }
 //        }
 
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(menu.background.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName()+".fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle(menu.getName());
         stage.setScene(scene);
         stage.show();
     }
