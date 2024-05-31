@@ -16,22 +16,6 @@ public class HelloApplication extends Application {
 
         menu = new M_SignUpMenu();
 
-        Scanner sc = new Scanner(System.in);//for console version
-        String input;//for console version
-
-//        boolean isEnd = false;
-//        while (!isEnd) {
-//            input = sc.nextLine();
-//            if (input.matches("^ *show +current +menu *$")) {
-//                System.out.println(menu.getName());//for console version
-//            } else {
-//                menu = menu.myMethods(input);
-//                if (menu == null) {
-//                    isEnd = true;
-//                }
-//            }
-//        }
-
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName()+".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(menu.getName());
@@ -40,6 +24,24 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        //launch();
+
+        menu = new M_SignUpMenu();
+
+        Scanner sc = new Scanner(System.in);//for console version
+        String input;//for console version
+
+        boolean isEnd = false;
+        while (!isEnd) {
+            input = sc.nextLine();
+            if (input.matches("^ *show +current +menu *$")) {
+                System.out.println(menu.getName().substring(1));//for console version
+            } else {
+                menu = menu.myMethods(input);
+                if (menu == null) {
+                    isEnd = true;
+                }
+            }
+        }
     }
 }

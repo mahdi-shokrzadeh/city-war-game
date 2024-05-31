@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import models.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public abstract class Menu {
     private String name;
     ArrayList<Pattern> patterns;
     Matcher matcher;
-    static User loggedInUser = null;
+    //static User loggedInUser = null;
 
     public abstract Menu myMethods(String input);
     public Menu(){};
