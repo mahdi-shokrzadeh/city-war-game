@@ -37,4 +37,20 @@ public abstract class Menu {
         stage.setScene(scene);
         stage.show();
     }
+    String passwordProblem(String s){
+        if (s.isBlank())
+            return "Blank Field!";
+        else if(!s.matches(".*[a-z]+.*") || !s.matches(".*[A-Z]+.*"))
+            return "Password must have at least an upper case and a lower case letter!";
+        else if(!s.matches(".+[0-9]+.*"))
+            return "Password must have at least a number!";
+        else if(!s.matches(".*[!@#$%^&*]+.*"))
+            return "Password must have at least a non-alphanumeric character!";
+        else if(s.contains(" "))
+            return "Password mustn't have any space!";
+        else if (s.length() >= 8 && s.length() <= 24)
+            return "Password must have between 8 and 24 characters!";
+
+        return null;
+    }
 }
