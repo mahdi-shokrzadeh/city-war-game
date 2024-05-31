@@ -6,11 +6,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class M_SignUpMenu extends Menu {
+    Label error;
+    TextField usernameField;
+    PasswordField passwordField;
+    Label password;
+    PasswordField passwordConfirmationField;
+    ChoiceBox<String> questionChoice;
+    TextField questionAnswerField;
+    TextField captchaField;
+    TextField emailField;
+    TextField nicknameField;
+
     public M_SignUpMenu(){
         super("M_SignUpMenu");
     }
