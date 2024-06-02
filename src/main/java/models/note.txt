@@ -1,1 +1,17 @@
-models here
+Response status codes guide:
+
+Negative values mean an error has occured.
+Positive values mean no error has occured.
+
+-status code 200: Operation finished successfully
+-status code 201: Created data successfully
+
+-status code -400: Bad operation (an error has occured which the USER is responsibale for)
+-status code -401: Unauthorized user (user is not known)
+-status code -403: Forbidden (user does not have the permission to this operation)
+-status code -422: Unprocessable content (invalid input)
+-status code -404: Not found (for search and get operations)
+-status code -409: Conflict between data that is sent to the server and that already exist on the server
+-status code -500: Bad operation (an error has occured which the SERVER is responsibale for)
+
+
