@@ -3,8 +3,10 @@ package database;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.dlsc.formsfx.model.structure.StringField;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -90,4 +92,57 @@ public class Database<T> {
             e.printStackTrace();
         }
     }
+
+    public List<T> whereEquals(String property, String value) {
+        List<T> result = data.stream().filter(x -> {
+            try {
+                return x.getClass().getField(property).toString().equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }).collect(Collectors.toList());
+
+        return result;
+    }
+
+    public T firstWhereEquals(String property, String value) {
+        T result = data.stream().filter(x -> {
+            try {
+                return x.getClass().getField(property).toString().equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }).collect(Collectors.toList()).getFirst();
+
+        return result;
+    }
+
+    public List<T> whereNotEquals(String property, String value) {
+        List<T> result = data.stream().filter(x -> {
+            try {
+                return !x.getClass().getField(property).toString().equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }).collect(Collectors.toList());
+
+        return result;
+    }
+
+    public T firstWhereNotEquals(String property, String value) {
+        T result = data.stream().filter(x -> {
+            try {
+                return x.getClass().getField(property).toString().equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }).collect(Collectors.toList()).getFirst();
+
+        return result;
+    }
+
 }
