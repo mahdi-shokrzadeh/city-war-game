@@ -2,25 +2,32 @@ package models.card;
 
 public abstract class CardStruct {
 
+    private int id;
     private String name;
     private int price;
     private int duration;
     private CardType cardType;
-    private String description;
+    private int upgradeLevel;
+    private int upgradeCost;
+    private String desc;
 
-    public CardStruct(String _name, int _price, int _duration, String _type, String _desc) {
+
+
+    public CardStruct(String _name, int _price, int _duration, String _type, int _upgradeLevel, int _upgradeCost, String _desc) {
         name = _name;
         price = _price;
         duration = _duration;
         cardType = CardType.valueOf(_type);
-        description = _desc;
+        upgradeLevel = _upgradeLevel;
+        upgradeCost = _upgradeCost;
+        desc = _desc;
     }
 
     public String getName() {
         return name;
     }
 
-    public int pirce() {
+    public int getPrice() {
         return price;
     }
 
@@ -28,11 +35,18 @@ public abstract class CardStruct {
         return cardType;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public int getUpgradeLevel(){ return upgradeLevel;}
+
+    public int getUpgradeCost(){ return upgradeCost;}
 
     public int getDuration() {
         return duration;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDesc(){return desc;}
+
 }

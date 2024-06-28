@@ -10,5 +10,17 @@ public enum SpellType {
     Steal,
     Attenuate,
     Copy,
-    Hide,
+    Hide;
+
+    public static boolean includes(String type) {
+        boolean result = false;
+        for (CardType _type : CardType.values()) {
+            if (_type.name().equals(type)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
 }

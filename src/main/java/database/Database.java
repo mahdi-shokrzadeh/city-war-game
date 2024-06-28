@@ -3,10 +3,9 @@ package database;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import models.Response;
 
-import com.dlsc.formsfx.model.structure.StringField;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -59,6 +58,18 @@ public class Database<T> {
         save();
     }
 
+    public void deletByName(String name){
+        data.removeIf(object -> {
+            try{
+                return object.getClass().getField("name").toString().equals(name);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return false;
+        });
+        save();
+    }
+
     public void create(T object) {
         try {
             int id = data.get(data.size() - 1).getClass().getField("id").getInt(data.get(data.size() - 1)) + 1;
@@ -84,6 +95,7 @@ public class Database<T> {
         save();
     }
 
+
     private void save() {
         try {
             File file = new File("./json/" + tableName + ".json");
@@ -94,7 +106,7 @@ public class Database<T> {
     }
 
     public List<T> whereEquals(String property, String value) {
-        List<T> result = data.stream().filter(x -> {
+        return data.stream().filter(x -> {
             try {
                 return x.getClass().getField(property).toString().equals(value);
             } catch (Exception e) {
@@ -102,25 +114,22 @@ public class Database<T> {
             }
             return false;
         }).collect(Collectors.toList());
-
-        return result;
     }
 
     public T firstWhereEquals(String property, String value) {
-        T result = data.stream().filter(x -> {
+        return data.stream().filter(x -> {
             try {
                 return x.getClass().getField(property).toString().equals(value);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return false;
-        }).collect(Collectors.toList()).getFirst();
-
-        return result;
+        }).toList().getFirst();
     }
 
     public List<T> whereNotEquals(String property, String value) {
-        List<T> result = data.stream().filter(x -> {
+
+        return data.stream().filter(x -> {
             try {
                 return !x.getClass().getField(property).toString().equals(value);
             } catch (Exception e) {
@@ -128,21 +137,18 @@ public class Database<T> {
             }
             return false;
         }).collect(Collectors.toList());
-
-        return result;
     }
 
     public T firstWhereNotEquals(String property, String value) {
-        T result = data.stream().filter(x -> {
+
+        return data.stream().filter(x -> {
             try {
                 return x.getClass().getField(property).toString().equals(value);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return false;
-        }).collect(Collectors.toList()).getFirst();
-
-        return result;
+        }).toList().getFirst();
     }
 
 }
