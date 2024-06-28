@@ -11,6 +11,7 @@ module org.example.citywars {
     requires eu.hansolo.tilesfx;
     requires com.fasterxml.jackson.databind;
     requires com.almasb.fxgl.all;
+    requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
 
     opens org.example.citywars to javafx.fxml;
