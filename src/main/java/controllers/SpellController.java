@@ -7,7 +7,7 @@ import database.Database;
 
 public class SpellController {
 
-    public static Response createSpell(User user, String name, int price, int duration, String type, SpellType spellType, int upgradeLevel, int upgradeCost, String desc) {
+    public static Response createSpell(User user, String name, int price, int duration, String type, String spellType, int upgradeLevel, int upgradeCost, String desc) {
 
         Response res;
 
@@ -129,12 +129,17 @@ public class SpellController {
             return res;
         }
 
-        //Spell spell = new Spell(name, price, duration, type, spellType, upgradeLevel, upgradeCost, desc);
-        //Database<Spell> spellDB = new Database<Spell>("spells");
-        //spellDB.create(spell);
+        Response existingSpell = getSpellByName(name);
+        if (!existingSpell.ok) {
+            res = new Response("spell with this does not exists", -409);
+            return res;
+        }
 
-        //res = new Response("Spell created successfully", 201, spell);
-        return new Response("",0);
+        Spell spell = new Spell(name, price, duration, ((Spell) existingSpell.body.get("spell")).getCardType().toString(), spellType, upgradeLevel, upgradeCost, desc);
+        Database<Spell> spellDB = new Database<Spell>("spells");
+        spellDB.create(spell);
+
+        return new Response("Spell edited successfully", 200);
     }
 
 }

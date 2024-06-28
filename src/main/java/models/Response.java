@@ -1,11 +1,15 @@
 package models;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import java.util.HashMap;
+
 public class Response {
 
     public String message;
     public int status;
     public boolean ok;
-    public Object body;
+    public HashMap<String, Object> body;
 
     public Response(String _message, int _status) {
         status = _status;
@@ -20,7 +24,8 @@ public class Response {
     public Response(String _message, int _status, Object _body) {
         status = _status;
         message = _message;
-        body = _body;
+        body = new HashMap<>();
+        body.put(_body.toString(), _body);
         if (_status < 0) {
             ok = false;
         } else {
