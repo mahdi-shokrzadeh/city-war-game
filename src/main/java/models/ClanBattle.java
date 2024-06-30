@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClanBattle {
-    private int id;
     private final int attackerID;
     private final int defenderID;
     private boolean hasEnded;
@@ -21,7 +20,6 @@ public class ClanBattle {
         playedDefendersIDs = new ArrayList<>();
         gameIDS = new ArrayList<>();
     }
-    public int getID(){ return id; }
     public int getAttackerId(){ return attackerID; }
     public int getDefenderId(){ return defenderID; }
     public boolean getStatus(){ return hasEnded; }
