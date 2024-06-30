@@ -11,8 +11,6 @@ public class UserCard{
         cardID = _cardID;
     }
     public int getID(){ return id;}
-    public void setID(int _id){ id = _id;}
-
     public int getUserID(){ return  userID; }
     public int getCardID(){ return cardID; }
     public void upgrade(){}
