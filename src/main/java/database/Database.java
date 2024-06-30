@@ -1,5 +1,7 @@
 package database;
 
+import java.util.Map;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -70,15 +72,21 @@ public class Database<T> {
         save();
     }
 
-    public void create(T object) {
+    public int create(T object) {
+        int id = -1;
         try {
-            int id = data.get(data.size() - 1).getClass().getField("id").getInt(data.get(data.size() - 1)) + 1;
+            if(data.isEmpty()){
+                id = 0;
+            }else {
+                id = getClass().getField("id").getInt(data.getLast()) + 1;
+            }
             object.getClass().getField("id").setInt(object, id);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
         data.add(object);
         save();
+        return id;
     }
 
     public void update(T object, int id) {
@@ -124,6 +132,39 @@ public class Database<T> {
                 e.printStackTrace();
             }
             return false;
+        }).toList().getFirst();
+    }
+
+    public T firstWhereEquals(Map<String, String> conditions){
+        return data.stream().filter(x ->{
+            try{
+                boolean result = true;
+                for(Map.Entry<String, String> entry: conditions.entrySet()){
+                    if(!getClass().getField(entry.getKey()).toString().equals(entry.getValue())){
+                        return  false;
+                    }
+                }
+                return  result;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return false;
+        }).toList().getFirst();
+    }
+
+    public T firstWhereEqualsOr(Map<String, String> conditions){
+        return data.stream().filter(x -> {
+            try{
+                for(Map.Entry<String, String> entry: conditions.entrySet()){
+                    if(getClass().getField(entry.getKey()).toString().equals(entry.getValue())){
+                        return true;
+                    }
+                }
+                return false;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return  false;
         }).toList().getFirst();
     }
 

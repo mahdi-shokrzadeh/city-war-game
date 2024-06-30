@@ -13,7 +13,7 @@ import models.card.CardType;
 public class UserCardsController {
 
     public static Response buyCard(int userID, Card card){
-        Database<User> userDB = new Database<User>("users");
+        Database<User> userDB = new Database<>("users");
         User user;
 
         try {
@@ -25,14 +25,11 @@ public class UserCardsController {
         if( user == null ){
             return new Response("could not find any user with this id",-400);
         }
-        if(!CardType.includes(card.getCardType().toString()) ){
-            return  new Response("the provided card does not have a valid type",-400);
-        }
 
         Database<UserCard> userCardsDB = new Database<>("userCards");
-        UserCard userCard = new UserCard(userID, card);
+        UserCard userCard = new UserCard(userID, card.getId());
         userCardsDB.create(userCard);
-
+        // SAVE THE CARDID IN THE USER AS WELL
         return new Response("card purchased successfully",200);
     }
 
@@ -88,9 +85,8 @@ public class UserCardsController {
             return new Response("an exception happend while deleting user card",-500);
         }
 
+        // SAVE THE CHANGES IN THE USER AS WELL
         return new Response("user card successfully deleted",200);
-
-
     }
 
     public static Response upgradeCard(int userID, Card card){

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import models.card.*;
 import models.User;
 import models.Response;
@@ -149,6 +151,20 @@ public class CardController {
 
         res = new Response("card updated successfully", 200);
         return res;
+
+    }
+
+    public static Response getAllCards(){
+        Database<Card> cardDB = new Database<>("cards");
+        List<Card> allCards;
+        try{
+            allCards = cardDB.getAll();
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response("an exception occurred while fetching all cards",-500);
+        }
+
+        return  new Response("fetched all cards successfully",200,allCards);
 
     }
 
