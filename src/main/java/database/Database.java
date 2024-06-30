@@ -192,4 +192,31 @@ public class Database<T> {
         }).toList().getFirst();
     }
 
+    public void firstDeleteWhereEquals(String property, String value){
+        data.removeIf(x -> {
+            try {
+                return x.getClass().getField(property).toString().equals(value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
+    public void firstDeleteWhereEquals(Map<String, String> conditions){
+        data.removeIf(x -> {
+            try{
+                for(Map.Entry<String, String> entry: conditions.entrySet()){
+                    if( !getClass().getField(entry.getKey()).toString().equals(entry.getValue()) ){
+                        return false;
+                    }
+                }
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return  false;
+        });
+    }
+
 }
