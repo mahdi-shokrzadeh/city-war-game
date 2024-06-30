@@ -1,8 +1,8 @@
 package models;
 
-public class Character {
+public class GameCharacter {
     private final String name;
-    public Character(String _name){
+    public GameCharacter(String _name){
         name = _name;
     }
     public String getName(){ return name;}
