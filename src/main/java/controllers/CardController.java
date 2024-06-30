@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import models.GameCharacter;
 import models.card.*;
 import models.User;
 import models.Response;
@@ -9,8 +10,8 @@ import database.Database;
 
 public class CardController {
 
-    public static Response createRegularCard(User user, String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String desc) {
-
+    public static Response createRegularCard(User user, String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName) {
+        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
         if (!user.getRole().equals("admin")) {
@@ -59,8 +60,22 @@ public class CardController {
             res = new Response("card with this name already exists", -409);
             return res;
         }
+        if( characterName.isBlank() ){
+            return new Response("character name can not be blank",-422);
+        }
 
-        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, desc);
+        GameCharacter gameCharacter = null;
+        try{
+            gameCharacter = gameCDB.firstWhereEquals("name",characterName);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response("a deep exception happened while fetching the character",-500);
+        }
+        if( gameCharacter == null ){
+            return  new Response("no character was found with this name",-400);
+        }
+
+        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
         Database<Card> cardDB = new Database<Card>("cards");
         cardDB.create(card);
 
@@ -99,7 +114,8 @@ public class CardController {
 
     }
 
-    public static Response editCard(User user, String name, int price, int duration,int power,int damage, int upgradeLevel, int upgradeCost, String desc){
+    public static Response editCard(User user, String name, int price, int duration,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName){
+        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
         if (!user.getRole().equals("admin")) {
@@ -139,13 +155,24 @@ public class CardController {
             return res;
         }
 
+        GameCharacter gameCharacter = null;
+        try{
+            gameCharacter = gameCDB.firstWhereEquals("name",characterName);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response("a deep exception happened while fetching the character",-500);
+        }
+        if( gameCharacter == null ){
+            return  new Response("no character was found with this name",-400);
+        }
+
         Response existingCard = getCardByName(name);
         if (!existingCard.ok) {
             res = new Response("card with this does not exist exists", -409);
             return res;
         }
 
-        Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc);
+        Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
         Database<Card> cardDB = new Database<Card>("cards");
         cardDB.update(card, card.getId());
 
