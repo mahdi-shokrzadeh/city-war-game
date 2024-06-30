@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="city-wars">
+    <output-path>$PROJECT_DIR$/out/artifacts/city_wars</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="org.example.citywars.HelloApplication" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="city_wars.jar">
+        <element id="module-output" name="city-wars" />
+      </element>
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10" />
+    </root>
+  </artifact>
+</component>
