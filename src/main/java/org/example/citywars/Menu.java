@@ -11,6 +11,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import models.P_PlayMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,8 @@ public abstract class Menu implements Initializable {
     ArrayList<Pattern> patterns;
     Matcher matcher;
     //static User loggedInUser = null;
+    static boolean secondPersonNeeded;
+    P_PlayMode playMode;
 
     public abstract Menu myMethods(String input);
     public Menu(){};
