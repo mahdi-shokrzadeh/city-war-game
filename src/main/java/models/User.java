@@ -21,6 +21,7 @@ public class User implements Comparable<User> {
     private Integer clanID;
     private boolean firstLogin;
     private List<Integer> userCardIDS;
+    private GameCharacter character;
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
         this.username = username;
@@ -90,6 +91,8 @@ public class User implements Comparable<User> {
 
     public List<Integer> getUserCardIDS(){ return userCardIDS; }
 
+    public GameCharacter getGameCharacter(){ return character; }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -140,11 +143,15 @@ public class User implements Comparable<User> {
 
     public void addUserCardID(int id){ userCardIDS.add(id); }
 
+    public void removeCardID(int id){ userCardIDS.remove(id); }
+
     @Override
     public int compareTo(User u) {
         if( username.equals(u.getUsername()) && email.equals(u.getEmail()) && nickname.equals(u.getNickname()) && role.equals(u.getRole())){
             return 0;
         }else{ return -1; }
     }
+
+    public void setGameCharacter(GameCharacter c){ character = c; }
 
 }
