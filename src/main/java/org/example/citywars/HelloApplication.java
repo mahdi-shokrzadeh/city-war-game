@@ -40,6 +40,7 @@ public class HelloApplication extends Application {
             } else {
                 menu = menu.myMethods(input);
                 if (menu == null) {
+                    System.out.println("the End!");
                     isEnd = true;
                 }
             }

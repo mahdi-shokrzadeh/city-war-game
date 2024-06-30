@@ -65,7 +65,7 @@ public abstract class Menu implements Initializable {
             return "Password must have at least a non-alphanumeric character!";
         else if(s.contains(" "))
             return "Password mustn't have any space!";
-        else if (s.length() >= 8 && s.length() <= 24)
+        else if (s.length() < 8 || s.length() > 24)
             return "Password must have between 8 and 24 characters!";
 
         return null;
