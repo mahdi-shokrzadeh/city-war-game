@@ -1,23 +1,17 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 import database.Database;
+import models.GameCharacter;
 import models.Response;
 import models.User;
 import models.UserCard;
 import models.card.Card;
 
-public class UserController extends User {
-
-    public UserController(String username, String password, String nickname, String email, String role,
-            String recovery_pass_question, String recovery_pass_answer) {
-        super(username, password, nickname, email, role, recovery_pass_question, recovery_pass_answer);
-    }
-
+public class UserController {
 
     public static Response sudoGetAllUsers(){
 
@@ -62,7 +56,7 @@ public class UserController extends User {
             return new Response("no user was found",-400);
         }
 
-        return new Response("all userse fetched successfully",200,allUsers);
+        return new Response("all users fetched successfully",200,allUsers);
 
     }
 
@@ -72,7 +66,7 @@ public class UserController extends User {
             return new Response("username can not be blank",-422);
         }
         if( Pattern.compile("^+([a-zA-Z0-9]|_)$").matcher(username).find() ){
-            return new Response("username should only contain lower case letters, upper case letters, numbers and unde score",-422);
+            return new Response("username should only contain lower case letters, upper case letters, numbers and under score",-422);
         }
         Response res = sudoGetAllUsers();
         List<User> allUsers = null;
