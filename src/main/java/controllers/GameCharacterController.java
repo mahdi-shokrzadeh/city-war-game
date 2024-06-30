@@ -1,17 +1,17 @@
 package controllers;
 
 import database.Database;
-import models.Character;
 import models.Response;
+import models.GameCharacter;
 
-public class CharacterController {
+public class GameCharacterController {
 
-    public static Response createCharacter(String name){
+    public static Response createGameCharacter(String name){
 
-        Database<Character> characterDB = new Database<>("characters");
+        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         try{
-            Character c = new Character(name);
-            characterDB.create(c);
+            GameCharacter c = new GameCharacter(name);
+            gameCDB.create(c);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while creating character",-500);
@@ -20,11 +20,11 @@ public class CharacterController {
         return new Response("character created successfully",200);
     }
 
-    public static Response getCharacter(String name){
-        Database<Character> characterDB = new Database<>("characters");
-        Character character = null;
+    public static Response getGameCharacter(String name){
+        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
+        GameCharacter character = null;
         try{
-            character = characterDB.firstWhereEquals("name",name);
+            character = gameCDB.firstWhereEquals("name",name);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exceptio occurred while getting character",-500);
