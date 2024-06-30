@@ -17,7 +17,6 @@ public class Clan {
         leaderID = id;
     }
     public int getId(){ return id; }
-    public void setID(int _id){ id = _id;}
     public String getName(){return name;}
     public String getJoiningKey(){ return joiningKey;}
     public String getBattleKey(){ return  battleKey;}
