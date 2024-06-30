@@ -15,7 +15,6 @@ public class ClanGame {
         hasEnded = false;
     }
     public int getId(){ return id; }
-    public void setID(int _id){ id = _id;}
     public User getAttacker(){ return attacker; }
     public User getDefender(){ return defender; }
     public User getWinner(){ return winner; }
