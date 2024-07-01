@@ -7,7 +7,7 @@ import org.example.citywars.Menu;
 import models.User;
 
 public class Game extends Menu {
-
+    private int id;
     private int player_one_id;
     private int player_two_id;
     private String mode;
@@ -61,6 +61,8 @@ public class Game extends Menu {
 
     // getter and setter methods
 
+    public int getID(){ return id; }
+    public void setID(int _id){ id = _id;}
     public int getPlayer_one_id() {
         return player_one_id;
     }
