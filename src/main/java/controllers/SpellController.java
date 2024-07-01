@@ -81,7 +81,7 @@ public class SpellController {
 
         try {
             Database<Spell> spellDB = new Database<>("spells");
-            spellDB.delete(spell.getId());
+            spellDB.delete(spell.getID());
             res = new Response("spell deleted successfully", 200);
         } catch (Exception e) {
             e.printStackTrace();

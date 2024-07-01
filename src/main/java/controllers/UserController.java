@@ -74,10 +74,12 @@ public class UserController {
             allUsers = (List<User>) res.body.get("allUsers");
         }
         boolean duplicateUserName = false;
-        for(User u: allUsers){
-            if (u.getUsername().equals(username)) {
-                duplicateUserName = true;
-                break;
+        if( allUsers != null ) {
+            for (User u : allUsers) {
+                if (u.getUsername().equals(username)) {
+                    duplicateUserName = true;
+                    break;
+                }
             }
         }
         if( duplicateUserName ){
@@ -99,7 +101,7 @@ public class UserController {
         if( !Pattern.compile("[0-9]+").matcher(password).find() ){
             return new Response("password must have at least one digit",-422);
         }
-        if( !Pattern.compile("(!%@#\\$\\^\\*&-\\+=_/;''\\.,~)+").matcher(password).find() ){
+        if( !Pattern.compile("[!%@#$^*&\\-+=_/;'.,~]+").matcher(password).find() ){
             return new Response("password must contain at least one special character",-422);
         }
 
@@ -199,7 +201,7 @@ public class UserController {
             Random random = new Random();
             for(int i=0;i<20;i++){
                 Card card = allCards.get(random.nextInt(allCards.size()));
-                UserCard userCard = new UserCard(user.getId(), card.getId());
+                UserCard userCard = new UserCard(user.getID(), card.getID());
                 int id;
                 try {
                     id = userCardDB.create(userCard);
@@ -212,7 +214,7 @@ public class UserController {
 
             Database<User> userDB = new Database<>("users");
             try{
-                userDB.update(user, user.getId());
+                userDB.update(user, user.getID());
             }catch (Exception e){
                 e.printStackTrace();
                 return new Response("an exception happened while saving user",-500);

@@ -82,7 +82,7 @@ public class UserSpellsController {
         }
 
         try{
-            userSpellsDB.delete(spell.getId());
+            userSpellsDB.delete(spell.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while deleting user spell",-500);
