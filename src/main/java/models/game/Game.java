@@ -39,7 +39,7 @@ public class Game extends Menu {
         this.mode = mode;
         this.created_at = new java.util.Date().toString();
 
-        rounds.add(new Round(player_one, player_two));
+        rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
         this.current_round = rounds.get(0);
 
         ConsoleGame.printGreetings();
@@ -134,7 +134,8 @@ public class Game extends Menu {
                     break;
 
                 case "new_round":
-                    this.rounds.add(new Round(this.player_one, this.player_two));
+                    this.rounds.add(new Round(this.player_one, this.player_two,
+                            this.player_one_cards, this.player_two_cards));
                     this.current_round = this.rounds.get(this.rounds.size() - 1);
                     break;
                 default:
