@@ -13,6 +13,8 @@ public class Round {
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
     private User current_player;
+    private int player_one_damage = 0;
+    private int player_two_damage = 0;
 
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
@@ -39,7 +41,8 @@ public class Round {
 
         boolean con = true;
         while (con) {
-            String result = current_turn.processTurn(current_player, board, player_one_cards, player_two_cards);
+            String result = current_turn.processTurn(current_player, board, player_one_cards, player_two_cards,
+                    this);
             if (result.equals("turn_is_finished")) {
                 if (this.turns.size() < 4) {
                     if (current_player == player_one) {
@@ -113,5 +116,21 @@ public class Round {
 
     public void setBoard(Block[][] board) {
         this.board = board;
+    }
+
+    public int getPlayerOneDamage() {
+        return player_one_damage;
+    }
+
+    public void setPlayerOneDamage(int player_one_damage) {
+        this.player_one_damage = player_one_damage;
+    }
+
+    public int getPlayerTwoDamage() {
+        return player_two_damage;
+    }
+
+    public void setPlayerTwoDamage(int player_two_damage) {
+        this.player_two_damage = player_two_damage;
     }
 }
