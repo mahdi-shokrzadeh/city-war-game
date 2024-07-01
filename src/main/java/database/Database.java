@@ -222,6 +222,7 @@ public class Database<T> {
             }
             return false;
         });
+        save();
     }
 
     public void firstDeleteWhereEquals(Map<String, String> conditions){
@@ -238,6 +239,7 @@ public class Database<T> {
             }
             return  false;
         });
+        save();
     }
 
 }
