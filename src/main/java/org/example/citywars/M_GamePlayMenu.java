@@ -20,16 +20,16 @@ public class M_GamePlayMenu extends Menu {
         // public User(String username, String password, String nickname, String email,
         // String role,
         // String recovery_pass_question, String recovery_pass_answer) {
-        User player_one = new User("username", "password", "nickname", "email", "role", "recovery_pass_question",
+        User player_one = new User("username1", "password", "nickname1", "email", "role", "recovery_pass_question",
                 "recovery_pass_answer");
 
         User player_two = new User("player_two", "password",
-                "nickname", "email", "role", "recovery_pass_question", "recovery_pass_answer");
+                "nickname2", "email", "role", "recovery_pass_question", "recovery_pass_answer");
 
         switch (input) {
             case "2":
-                // Menu temp_men = new Game(player_one, player_two, "duel");
-                return new M_GameOverMenu();
+                Menu temp_men = new Game(player_one, player_two, "duel");
+                return temp_men;
 
             default:
 
