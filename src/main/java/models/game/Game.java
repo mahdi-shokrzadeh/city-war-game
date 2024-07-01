@@ -49,10 +49,10 @@ public class Game extends Menu {
 
     }
 
-    public Menu myMethods(String input) {
+    // public Menu myMethods(String input) {
         
-        return this;
-    }
+    //     return this;
+    // }
 
     // handlers
     public void startGame() {
