@@ -1,5 +1,9 @@
 package database;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import java.io.File;
@@ -10,12 +14,14 @@ import models.Response;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.User;
 
 public class Database<T> {
     private String tableName;
     // private Class<T> type;
     private ObjectMapper mapper;
     private List<T> data;
+    public T temp;
 
     public Database(String tableName
     // , Class<T> typ
@@ -25,9 +31,13 @@ public class Database<T> {
         this.mapper = new ObjectMapper();
 
         try {
-            File file = new File("./json/" + tableName + ".json");
-            this.data = mapper.readValue(file, new TypeReference<List<T>>() {
-            });
+            File file = new File("./src/main/java/database/json/" + tableName + ".json");
+            if(file.length() == 0){
+                this.data = new ArrayList<>();
+            }else{
+                System.out.println();
+                this.data = mapper.readValue(file, new TypeReference<List<T>>(){});;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,14 +85,24 @@ public class Database<T> {
     public int create(T object) {
         int id = -1;
         try {
-            if(data.isEmpty()){
+            if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = getClass().getField("id").getInt(data.getLast()) + 1;
+                Class[] params = new Class[1];
+                params[0] = Object.class;
+                id = (int) data.getLast().getClass().getMethod("get",params).invoke(data.getLast(), "id") + 1;
             }
-            object.getClass().getField("id").setInt(object, id);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Class[] params = new Class[1];
+            params[0] = int.class;
+            object.getClass().getMethod("setID", params).invoke(object, id);
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            //throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            //throw new RuntimeException(e);
         }
         data.add(object);
         save();
@@ -106,8 +126,8 @@ public class Database<T> {
 
     private void save() {
         try {
-            File file = new File("./json/" + tableName + ".json");
-            mapper.writeValue(file, data);
+            File file = new File("./src/main/java/database/json/" + tableName + ".json");
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,14 +145,15 @@ public class Database<T> {
     }
 
     public T firstWhereEquals(String property, String value) {
-        return data.stream().filter(x -> {
+        List<T> result = data.stream().filter(x -> {
             try {
                 return x.getClass().getField(property).toString().equals(value);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return false;
-        }).toList().getFirst();
+        }).toList();
+        return result.isEmpty() ? null : result.getFirst();
     }
 
     public T firstWhereEquals(Map<String, String> conditions){
@@ -201,6 +222,7 @@ public class Database<T> {
             }
             return false;
         });
+        save();
     }
 
     public void firstDeleteWhereEquals(Map<String, String> conditions){
@@ -217,6 +239,7 @@ public class Database<T> {
             }
             return  false;
         });
+        save();
     }
 
 }
