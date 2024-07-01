@@ -10,7 +10,7 @@ import database.Database;
 
 public class CardController {
 
-    public static Response createRegularCard(User user, String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName) {
+    public static Response createRegularCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
         Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
@@ -64,7 +64,7 @@ public class CardController {
             return new Response("character name can not be blank",-422);
         }
 
-        GameCharacter gameCharacter = null;
+        GameCharacter gameCharacter = new GameCharacter(characterName);
         try{
             gameCharacter = gameCDB.firstWhereEquals("name",characterName);
         }catch (Exception e){
@@ -75,7 +75,7 @@ public class CardController {
             return  new Response("no character was found with this name",-400);
         }
 
-        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
+        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, "desc", gameCharacter);
         Database<Card> cardDB = new Database<Card>("cards");
         cardDB.create(card);
 
