@@ -60,7 +60,7 @@ public class ClanController {
             return  new Response("a clan with this name already exists",-400);
         }
 
-        Clan clan = new Clan(user.getId(), name);
+        Clan clan = new Clan(user.getID(), name);
         int id = clansDB.create(clan);
         clan.setJoiningKey(name+"/"+ id);
         clan.setBattleKey(name);
@@ -69,7 +69,7 @@ public class ClanController {
         Database<User> userDB = new Database<>("users");
         try{
             user.setClanID(id);
-            userDB.update(user, user.getId());
+            userDB.update(user, user.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while saving user's clan id",-500);
@@ -100,7 +100,7 @@ public class ClanController {
         Database<User> userDB = new Database<>("users");
         try{
             user.setClanID(clan.getId());
-            userDB.update(user, user.getId());
+            userDB.update(user, user.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while saving user's clan id",-500);
@@ -132,7 +132,7 @@ public class ClanController {
             return new Response("the defender clan was not found",-400);
         }
 
-        if( attackerClan.getLeaderID() != leader.getId()){
+        if( attackerClan.getLeaderID() != leader.getID()){
             return new Response("only the leader can start the battle",-401);
         }
 
@@ -164,7 +164,7 @@ public class ClanController {
         List<Integer> playedUserIDS = Stream.concat(battle.getPlayedAttackersIDS().stream(), battle.getPlayedDefendersIDs().stream()).toList();
         boolean userHasPlayed = false;
         for(int id: playedUserIDS) {
-            if( user.getId() == id ){
+            if( user.getID() == id ){
                 userHasPlayed = true;
                 break;
             }

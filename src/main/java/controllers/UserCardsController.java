@@ -31,10 +31,10 @@ public class UserCardsController {
         }
 
         Database<UserCard> userCardsDB = new Database<>("userCards");
-        UserCard userCard = new UserCard(userID, card.getId());
+        UserCard userCard = new UserCard(userID, card.getID());
         int id = userCardsDB.create(userCard);
         user.addUserCardID(id);
-        userDB.update(user, user.getId());
+        userDB.update(user, user.getID());
 
         return new Response("card purchased successfully",200);
     }
@@ -105,8 +105,8 @@ public class UserCardsController {
 
         try{
             Map<String, String> conditions = new HashMap<>();
-            conditions.put("userID",String.valueOf(user.getId()));
-            conditions.put("cardID",String.valueOf(card.getId()));
+            conditions.put("userID",String.valueOf(user.getID()));
+            conditions.put("cardID",String.valueOf(card.getID()));
             userCard = userCardDatabase.firstWhereEquals(conditions);
             userCardDatabase.firstDeleteWhereEquals(conditions);
         }catch (Exception e){
