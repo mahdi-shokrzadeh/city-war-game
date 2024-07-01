@@ -2,7 +2,8 @@ package controllers;
 
 import java.util.List;
 
-import database.Database;
+import database.DBs.UserSpellDB;
+import database.DBs.UserDB;
 import models.card.Spell;
 import models.UserSpell;
 import models.User;
@@ -11,9 +12,9 @@ import models.Response;
 import models.card.SpellType;
 
 public class UserSpellsController {
-
+    private static final UserSpellDB usDB =new UserSpellDB();
+    private static final UserDB userDB = new UserDB();
     public static Response buySpell(int userID, Spell spell){
-        Database<User> userDB = new Database<>("users");
         User user;
 
         try {
@@ -29,22 +30,19 @@ public class UserSpellsController {
             return  new Response("the provided spell does not have a valid type",-400);
         }
 
-        Database<UserSpell> userSpellDB = new Database<>("userSpells");
         UserSpell userSpell = new UserSpell(userID, spell);
-        userSpellDB.create(userSpell);
+        usDB.create(userSpell);
 
         return new Response("spell purchased successfully",200);
     }
 
     public static Response getUsersSpells(int userID){
-        Database<UserSpell> userSpellsDB = new Database<>("userSpells");
-        Database<User> usersDB = new Database<>("users");
         User user;
         List<UserSpell> allUsersSpells;
 
 
         try{
-            user = usersDB.getOne(userID);
+            user = userDB.getOne(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user",-500);
@@ -54,7 +52,7 @@ public class UserSpellsController {
         }
 
         try {
-            allUsersSpells = userSpellsDB.whereEquals("userID", String.valueOf(userID));
+            allUsersSpells = usDB.whereEquals(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user spells",-500);
@@ -67,12 +65,10 @@ public class UserSpellsController {
     }
 
     public static Response removeUserSpell(int userID, Spell spell){
-        Database<UserSpell> userSpellsDB = new Database<>("userSpells");
-        Database<User> usersDB = new Database<>("users");
         User user;
 
         try{
-            user = usersDB.getOne(userID);
+            user = userDB.getOne(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user",-500);
@@ -82,7 +78,7 @@ public class UserSpellsController {
         }
 
         try{
-            userSpellsDB.delete(spell.getID());
+            usDB.delete(spell.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while deleting user spell",-500);

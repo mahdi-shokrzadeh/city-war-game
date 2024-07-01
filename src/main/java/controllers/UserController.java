@@ -4,18 +4,20 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import database.Database;
-import models.GameCharacter;
 import models.Response;
 import models.User;
 import models.UserCard;
 import models.card.Card;
+import database.DBs.CardDB;
+import database.DBs.UserDB;
+import database.DBs.UserCardDB;
 
 public class UserController {
-
+    private static final UserDB userDB = new UserDB();
+    private static final  CardDB cardDB = new CardDB();
+    private static final UserCardDB ucDB = new UserCardDB();
     public static Response sudoGetAllUsers(){
 
-        Database<User> userDB = new Database<>("users");
         List<User> allUsers;
         try{
             allUsers = userDB.getAll();
@@ -29,11 +31,9 @@ public class UserController {
     }
 
     public static Response getAllUsers(int userId){
-        Database<User> usersDB = new Database<>("users");
-
         User admin;
         try {
-            admin = usersDB.getOne(userId);
+            admin = userDB.getOne(userId);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while fetching the user",-500);
@@ -47,7 +47,7 @@ public class UserController {
 
         List<User> allUsers;
         try{
-            allUsers = usersDB.getAll();
+            allUsers = userDB.getAll();
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while fetching all users",-500);
@@ -124,7 +124,6 @@ public class UserController {
             return new Response("password recovery answer can not be blank",-422);
         }
 
-        Database<User> userDB = new Database<>("users");
         try{
             User user = new User(username, password, nickname, email, role, passRecoveryQuestion, passRecoveryAnswer);
             userDB.create(user);
@@ -140,7 +139,6 @@ public class UserController {
     public static Response testCreateUser(String username, String password, String nickname, String email, String role, String passRecoveryQuestion, String passRecoveryAnswer){
 
 
-        Database<User> userDB = new Database<>("users");
         User user;
         try{
             user = new User(username, password, nickname, email, role, passRecoveryQuestion, passRecoveryAnswer);
@@ -197,14 +195,13 @@ public class UserController {
             if( allCards == null ){
                 return new Response("a deep error occurred while fetching all cards",-500);
             }
-            Database<UserCard> userCardDB = new Database<>("userCards");
             Random random = new Random();
             for(int i=0;i<20;i++){
                 Card card = allCards.get(random.nextInt(allCards.size()));
                 UserCard userCard = new UserCard(user.getID(), card.getID());
                 int id;
                 try {
-                    id = userCardDB.create(userCard);
+                    id = ucDB.create(userCard);
                 }catch (Exception e){
                     e.printStackTrace();
                     return new Response("a deep error occurred while craeting user card",-500);
@@ -212,7 +209,6 @@ public class UserController {
                 user.addUserCardID(id);
             }
 
-            Database<User> userDB = new Database<>("users");
             try{
                 userDB.update(user, user.getID());
             }catch (Exception e){

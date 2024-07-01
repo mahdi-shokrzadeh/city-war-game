@@ -3,10 +3,9 @@ package controllers;
 import models.card.*;
 import models.User;
 import models.Response;
-import database.Database;
-
+import database.DBs.SpellDB;
 public class SpellController {
-
+    private static  final SpellDB spellDB = new SpellDB();
     public static Response createSpell(User user, String name, int price, int duration, String type, String spellType, int upgradeLevel, int upgradeCost, String desc) {
 
         Response res;
@@ -54,7 +53,6 @@ public class SpellController {
         }
 
         Spell spell = new Spell(name, price, duration, type, spellType, upgradeLevel, upgradeCost, desc);
-        Database<Spell> spellDB = new Database<Spell>("spells");
         spellDB.create(spell);
 
         res = new Response("Spell created successfully", 201, spell);
@@ -65,8 +63,7 @@ public class SpellController {
         Spell spell = null;
         Response res;
         try {
-            Database<Spell> spellDB = new Database<Spell>("spells");
-            spell = spellDB.firstWhereEquals("name", name);
+            spell = spellDB.getByName(name);
             res = new Response("Spell found", 200, spell);
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +77,6 @@ public class SpellController {
         Response res;
 
         try {
-            Database<Spell> spellDB = new Database<>("spells");
             spellDB.delete(spell.getID());
             res = new Response("spell deleted successfully", 200);
         } catch (Exception e) {
@@ -136,7 +132,6 @@ public class SpellController {
         }
 
         Spell spell = new Spell(name, price, duration, ((Spell) existingSpell.body.get("spell")).getCardType().toString(), spellType, upgradeLevel, upgradeCost, desc);
-        Database<Spell> spellDB = new Database<Spell>("spells");
         spellDB.create(spell);
 
         return new Response("Spell edited successfully", 200);

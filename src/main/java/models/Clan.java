@@ -16,7 +16,7 @@ public class Clan {
         battle = null;
         leaderID = id;
     }
-    public int getId(){ return id; }
+    public int getID(){ return id; }
     public void setID(int _id){ id = _id;}
     public String getName(){return name;}
     public String getJoiningKey(){ return joiningKey;}
@@ -34,7 +34,7 @@ public class Clan {
         members.remove(user);
     }
     public void startBattle(Clan clan){
-        battle = new ClanBattle(this.getId(), clan.getId(), Math.min(this.getMembers().size(),clan.getMembers().size()));
+        battle = new ClanBattle(this.getID(), clan.getID(), Math.min(this.getMembers().size(),clan.getMembers().size()));
     }
     public void endBattle(){ battle.endBattle(); battle = null; }
 

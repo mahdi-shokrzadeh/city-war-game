@@ -4,18 +4,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import database.Database;
 import models.User;
 import models.card.Card;
 import models.Response;
 import models.UserCard;
-
-import models.card.CardType;
+import database.DBs.UserDB;
+import database.DBs.UserCardDB;
+import database.DBs.CardDB;
 
 public class UserCardsController {
-
+    private static final UserDB userDB = new UserDB();
+    private static final UserCardDB ucDB = new UserCardDB();
+    private static final CardDB cardDB = new CardDB();
     public static Response buyCard(int userID, Card card){
-        Database<User> userDB = new Database<>("users");
         User user;
         try {
             user = userDB.getOne(userID);
@@ -30,9 +31,8 @@ public class UserCardsController {
             return new Response("user does not have enough coins to buy this card",-400);
         }
 
-        Database<UserCard> userCardsDB = new Database<>("userCards");
         UserCard userCard = new UserCard(userID, card.getID());
-        int id = userCardsDB.create(userCard);
+        int id = ucDB.create(userCard);
         user.addUserCardID(id);
         userDB.update(user, user.getID());
 
@@ -40,14 +40,11 @@ public class UserCardsController {
     }
 
     public static Response getUsersCards(int userID){
-        Database<UserCard> userCardDatabase = new Database<>("userCards");
-        Database<User> usersDB = new Database<>("users");
-        Database<Card> cardDB = new Database<>("cards");
         User user;
         List<UserCard> allUsersCards;
 
         try{
-            user = usersDB.getOne(userID);
+            user = userDB.getOne(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user",-500);
@@ -57,7 +54,7 @@ public class UserCardsController {
         }
 
         try {
-            allUsersCards = userCardDatabase.whereEquals("userID", String.valueOf(userID));
+            allUsersCards = ucDB.whereEquals(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user cards",-500);
@@ -87,12 +84,9 @@ public class UserCardsController {
     }
 
     public static Response removeUserCard(int userID, Card card){
-        Database<UserCard> userCardDatabase = new Database<>("userCards");
-        Database<User> usersDB = new Database<>("users");
         User user;
-
         try{
-            user = usersDB.getOne(userID);
+            user = userDB.getOne(userID);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching user",-500);
@@ -104,11 +98,7 @@ public class UserCardsController {
         UserCard userCard = null;
 
         try{
-            Map<String, String> conditions = new HashMap<>();
-            conditions.put("userID",String.valueOf(user.getID()));
-            conditions.put("cardID",String.valueOf(card.getID()));
-            userCard = userCardDatabase.firstWhereEquals(conditions);
-            userCardDatabase.firstDeleteWhereEquals(conditions);
+            userCard = ucDB.firstWhereEquals(user.getID(), card.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happend while deleting user card",-500);
