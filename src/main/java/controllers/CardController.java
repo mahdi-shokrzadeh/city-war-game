@@ -2,16 +2,19 @@ package controllers;
 
 import java.util.List;
 
+import database.DBs.CardDB;
+import database.DBs.GameCharacterDB;
 import models.GameCharacter;
 import models.card.*;
 import models.User;
 import models.Response;
-import database.Database;
+import database.DBs.UserDB;
 
 public class CardController {
-
+    private static final UserDB userDB = new UserDB();
+    private static final GameCharacterDB gcDB = new GameCharacterDB();
+    private static final CardDB cardDB = new CardDB();
     public static Response createRegularCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
-        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
 //        if (!user.getRole().equals("admin")) {
@@ -66,7 +69,7 @@ public class CardController {
 
         GameCharacter gameCharacter = new GameCharacter(characterName);
         try{
-            gameCharacter = gameCDB.firstWhereEquals("name",characterName);
+            gameCharacter = gcDB.getByName(characterName);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("a deep exception happened while fetching the character",-500);
@@ -76,7 +79,6 @@ public class CardController {
         }
 
         Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, "desc", gameCharacter);
-        Database<Card> cardDB = new Database<Card>("cards");
         cardDB.create(card);
 
         res = new Response("Card created successfully", 201, card);
@@ -87,8 +89,7 @@ public class CardController {
         Card card = null;
         Response res;
         try {
-            Database<Card> cardDB = new Database<Card>("cards");
-            card = cardDB.firstWhereEquals("name", name);
+            card = cardDB.getByName(name);
             res = new Response("Card found", 200, card);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +103,6 @@ public class CardController {
         Response res;
 
         try {
-            Database<Card> cardDB = new Database<>("cards");
             cardDB.delete(card.getID());
             res = new Response("card deleted successfully", 200);
         } catch (Exception e) {
@@ -115,7 +115,6 @@ public class CardController {
     }
 
     public static Response editCard(User user, String name, int price, int duration,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName){
-        Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
         if (!user.getRole().equals("admin")) {
@@ -157,7 +156,7 @@ public class CardController {
 
         GameCharacter gameCharacter = null;
         try{
-            gameCharacter = gameCDB.firstWhereEquals("name",characterName);
+            gameCharacter = gcDB.getByName(characterName);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("a deep exception happened while fetching the character",-500);
@@ -173,7 +172,6 @@ public class CardController {
         }
 
         Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
-        Database<Card> cardDB = new Database<Card>("cards");
         cardDB.update(card, card.getID());
 
         res = new Response("card updated successfully", 200);
@@ -182,7 +180,6 @@ public class CardController {
     }
 
     public static Response getAllCards(){
-        Database<Card> cardDB = new Database<>("cards");
         List<Card> allCards;
         try{
             allCards = cardDB.getAll();

@@ -22,14 +22,15 @@ public class ClanBattle {
         gameIDS = new ArrayList<>();
     }
     public int getID(){ return id; }
-    public int getAttackerId(){ return attackerID; }
-    public int getDefenderId(){ return defenderID; }
+    public int getAttackerID(){ return attackerID; }
+    public int getDefenderID(){ return defenderID; }
     public boolean getStatus(){ return hasEnded; }
     public int getNumberOfRemainingGames(){ return  numberOfRemainingGames;}
     public void endBattle(){ hasEnded = true; }
     public List<Integer> getPlayedAttackersIDS(){ return playedAttackersIDs; }
     public List<Integer> getPlayedDefendersIDs(){ return playedDefendersIDs; }
     public List<Integer> getGameIDS(){ return gameIDS; }
+    public void setID(int _id){ id = _id;}
     public void playAGame(int attackerID, int defenderID,int gameID){
         playedAttackersIDs.add(attackerID);
         playedDefendersIDs.add(defenderID);
