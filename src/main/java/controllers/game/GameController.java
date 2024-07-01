@@ -1,16 +1,14 @@
 package controllers.game;
 
+import models.User;
 import database.Database;
 import models.game.Game;
 import models.Response;
 
 import java.util.ResourceBundle;
 
-public class GameController  {
+public class GameController {
 
-    public GameController() {
-        // super();
-    }
 
     public static Response createGame(int p1ID, int p2ID, String mode, String createdAt, int numberOfRounds){
         Database<Game> gameDB = new Database<>("games");

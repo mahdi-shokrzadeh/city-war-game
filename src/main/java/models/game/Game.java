@@ -1,8 +1,12 @@
 package models.game;
 
+import java.util.ArrayList;
+
+import org.example.citywars.Menu;
+
 import models.User;
 
-public class Game {
+public class Game extends Menu {
     private int id;
     private int player_one_id;
     private int player_two_id;
@@ -13,13 +17,21 @@ public class Game {
     private String reward;
     private int number_of_rounds;
     private int bet_amount;
+    private ArrayList<Round> rounds = new ArrayList<Round>();
 
     public Game(User player_one, User player_two, String mode) {
+        super("GameProcess");
+        // this.player_one_id = player_one.getId();
+        // this.player_two_id = player_two.getId();
+        this.mode = mode;
+        this.created_at = new java.util.Date().toString();
+
+        rounds.add(new Round(player_one, player_two));
 
         switch (mode) {
 
-            case "bet":
-
+            case "dule":
+                this.startGame();
                 break;
 
             case "normal":
@@ -33,7 +45,20 @@ public class Game {
 
     }
 
-    Game(User player_one, User player_two, String mode, String clan) {
+    public Game(User player_one, User player_two, String mode, String clan) {
+
+    }
+
+
+
+
+    public Menu myMethods(String input) {
+        Menu temp_menu = this;
+        return temp_menu;
+    }
+
+    // handlers
+    public void startGame() {
 
     }
 
@@ -111,6 +136,14 @@ public class Game {
 
     public void setBet_amount(int bet_amount) {
         this.bet_amount = bet_amount;
+    }
+
+    public ArrayList<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(ArrayList<Round> rounds) {
+        this.rounds = rounds;
     }
 
 }
