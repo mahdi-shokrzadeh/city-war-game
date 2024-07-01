@@ -41,7 +41,11 @@ public class User implements Comparable<User> {
     }
 
     // getter and setters
-    public int getId(){ return id;}
+    public User(){}
+
+    public int getID(){ return id; }
+
+    public void setID(int _id){ id = _id;}
 
     public String getUsername() {
         return username;

@@ -43,9 +43,10 @@ public abstract class CardStruct {
         return duration;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
+    public void setID(int _id){ id = _id;}
 
     public String getDesc(){return desc;}
 

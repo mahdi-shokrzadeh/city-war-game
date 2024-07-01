@@ -3,7 +3,7 @@ package models.game;
 import models.User;
 
 public class Game {
-
+    private int id;
     private int player_one_id;
     private int player_two_id;
     private String mode;
@@ -14,7 +14,7 @@ public class Game {
     private int number_of_rounds;
     private int bet_amount;
 
-    Game(User player_one, User player_two, String mode) {
+    public Game(User player_one, User player_two, String mode) {
 
         switch (mode) {
 
@@ -39,6 +39,8 @@ public class Game {
 
     // getter and setter methods
 
+    public int getID(){ return id; }
+    public void setID(int _id){ id = _id;}
     public int getPlayer_one_id() {
         return player_one_id;
     }
