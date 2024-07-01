@@ -16,5 +16,7 @@ module org.example.citywars {
     requires com.fasterxml.jackson.core;
 
     opens org.example.citywars to javafx.fxml;
+    opens models to com.fasterxml.jackson.databind;
     exports org.example.citywars;
+    exports models;
 }
