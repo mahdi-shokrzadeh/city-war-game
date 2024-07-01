@@ -21,8 +21,8 @@ public class Game extends Menu {
 
     public Game(User player_one, User player_two, String mode) {
         super("GameProcess");
-        this.player_one_id = player_one.getId();
-        this.player_two_id = player_two.getId();
+        // this.player_one_id = player_one.getId();
+        // this.player_two_id = player_two.getId();
         this.mode = mode;
         this.created_at = new java.util.Date().toString();
 
@@ -49,10 +49,13 @@ public class Game extends Menu {
 
     }
 
-    // public Menu myMethods(String input) {
-        
-    //     return this;
-    // }
+
+
+
+    public Menu myMethods(String input) {
+        Menu temp_menu = this;
+        return temp_menu;
+    }
 
     // handlers
     public void startGame() {
