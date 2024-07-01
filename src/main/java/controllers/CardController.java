@@ -10,14 +10,14 @@ import database.Database;
 
 public class CardController {
 
-    public static Response createRegularCard(User user, String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName) {
+    public static Response createRegularCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
         Database<GameCharacter> gameCDB = new Database<>("gameCharacters");
         Response res;
 
-        if (!user.getRole().equals("admin")) {
-            res = new Response("only admins can add cards", -401);
-            return res;
-        }
+//        if (!user.getRole().equals("admin")) {
+//            res = new Response("only admins can add cards", -401);
+//            return res;
+//        }
 
         if (!CardType.includes(type)) {
             res = new Response("invalid card type", -422);
@@ -35,10 +35,10 @@ public class CardController {
             res = new Response("card duration cannot be negative", -422);
             return res;
         }
-        if (desc.isEmpty()) {
-            res = new Response("invalid card description", -422);
-            return res;
-        }
+//        if (desc.isEmpty()) {
+//            res = new Response("invalid card description", -422);
+//            return res;
+//        }
         if(damage < 10 || damage > 50){
             res = new Response("invalid card power", -422);
             return res;
@@ -64,7 +64,7 @@ public class CardController {
             return new Response("character name can not be blank",-422);
         }
 
-        GameCharacter gameCharacter = null;
+        GameCharacter gameCharacter = new GameCharacter(characterName);
         try{
             gameCharacter = gameCDB.firstWhereEquals("name",characterName);
         }catch (Exception e){
@@ -75,7 +75,7 @@ public class CardController {
             return  new Response("no character was found with this name",-400);
         }
 
-        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
+        Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, "desc", gameCharacter);
         Database<Card> cardDB = new Database<Card>("cards");
         cardDB.create(card);
 
@@ -103,7 +103,7 @@ public class CardController {
 
         try {
             Database<Card> cardDB = new Database<>("cards");
-            cardDB.delete(card.getId());
+            cardDB.delete(card.getID());
             res = new Response("card deleted successfully", 200);
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +174,7 @@ public class CardController {
 
         Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
         Database<Card> cardDB = new Database<Card>("cards");
-        cardDB.update(card, card.getId());
+        cardDB.update(card, card.getID());
 
         res = new Response("card updated successfully", 200);
         return res;
