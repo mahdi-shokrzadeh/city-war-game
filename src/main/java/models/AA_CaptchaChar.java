@@ -16,11 +16,11 @@ public class AA_CaptchaChar {
         }
     }
     AA_CaptchaChar(String fileName){
-        File file = new File(fileName);
+        File parentDir = new File("./src/main/java/models/asciiArt");
+        File file = new File(parentDir, fileName);
         lines=new ArrayList<>();
         try {
             Scanner sc = new Scanner(file);
-
             while (sc.hasNext()){
                 lines.add(sc.nextLine());
             }
