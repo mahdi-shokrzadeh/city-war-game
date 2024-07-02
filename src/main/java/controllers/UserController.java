@@ -150,6 +150,103 @@ public class UserController {
 
     }
 
+    public static Response getByID(int id){
+        User user = null;
+        try{
+            user = userDB.getOne(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new Response("an exception happened while fetching the user",-500);
+        }
+        if( user == null ){
+            return new Response("no user was found with this id",-400);
+        }
+        return new Response("user fetched successfully",200,"user",user);
+    }
+
+    public static Response getByUserName(String username){
+        User user = null;
+        try{
+            user = userDB.getByUserName(username);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new Response("an exception happened while fetching the user",-500);
+        }
+        if( user == null ){
+            return new Response("no user was found with this id",-400);
+        }
+        return new Response("user fetched successfully",200,"user",user);
+    }
+
+    public static Response editProfile(String username, String newUserName, String newNickName, String newPassword ){
+        User user = null;
+
+        try{
+            user = userDB.getByUserName(username);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new Response("an exception happened while fetching user",-500);
+        }
+        if( user == null ){
+            return new Response("no user was found with this username",-400);
+        }
+
+        if( newUserName.isBlank() ){
+            return new Response("username can not be blank",-422);
+        }
+
+        if( !Pattern.compile("^[a-zA-Z0-9_]+$").matcher(newUserName).find() ){
+            return new Response("username should only contain lower case letters, upper case letters, numbers and under score",-422);
+        }
+        Response res = sudoGetAllUsers();
+        List<User> allUsers = null;
+        if(res.ok) {
+            allUsers = (List<User>) res.body.get("allUsers");
+        }
+        boolean duplicateUserName = false;
+        if( allUsers != null ) {
+            for (User u : allUsers) {
+                if (u.getUsername().equals(newUserName)) {
+                    duplicateUserName = true;
+                    break;
+                }
+            }
+        }
+        if( duplicateUserName ){
+            return new Response("this username has already been taken",-422);
+        }
+
+        if( newPassword.isBlank() ){
+            return new Response("password can not be blank",-422);
+        }
+        if( newPassword.length() < 8 ){
+            return new Response("password must be at least 8 characters long",-422);
+        }
+        if( !Pattern.compile("[a-z]+").matcher(newPassword).find() ){
+            return new Response("password must have at least one lower case letter",-422);
+        }
+        if( !Pattern.compile("[A-Z]+").matcher(newPassword).find() ){
+            return new Response("password must have at least one upper case letter",-422);
+        }
+        if( !Pattern.compile("[0-9]+").matcher(newPassword).find() ){
+            return new Response("password must have at least one digit",-422);
+        }
+        if( !Pattern.compile("[!%@#$^*&\\-+=_/;'.,~]+").matcher(newPassword).find() ){
+            return new Response("password must contain at least one special character",-422);
+        }
+
+        if( newNickName.isBlank() ){
+            return new Response("nickname can not be blank",-422);
+        }
+
+        user.setUsername( newUserName );
+        user.setPassword( newPassword );
+        user.setNickname( newPassword );
+        userDB.update(user, user.getID());
+
+        return new Response("profile edited successfully",200);
+    }
+
     public static Response login(String username, String password){
 
         if (M_LoginMenu.timerIsOn){
@@ -194,14 +291,14 @@ public class UserController {
             return new Response("Password and Username don’t match!",-401);
         }
 
-        if( !user.getFirstLogin()){
+        if( !user.getFirstLogin() ){
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
+            if( allCards == null ) {
+                return new Response("a deep error occurred while fetching all cards", -500);
+            }
             if( res.ok ){
                 allCards = (List<Card>) res.body.get("allCards");
-            }
-            if( allCards == null ){
-                return new Response("a deep error occurred while fetching all cards",-500);
             }
             Random random = new Random();
             for(int i=0;i<20;i++){
