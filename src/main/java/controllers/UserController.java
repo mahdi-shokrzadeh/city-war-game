@@ -282,14 +282,16 @@ public class UserController {
         }
 
         if( !user.getFirstLogin() ){
+
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
-            if( allCards == null ) {
-                return new Response("a deep error occurred while fetching all cards", -500);
-            }
             if( res.ok ){
                 allCards = (List<Card>) res.body.get("allCards");
             }
+            if( allCards == null ) {
+                return new Response("no cards were found while creating starter pack", -500);
+            }
+
             Random random = new Random();
             for(int i=0;i<20;i++){
                 Card card = allCards.get(random.nextInt(allCards.size()));
@@ -299,10 +301,12 @@ public class UserController {
                     id = ucDB.create(userCard);
                 }catch (Exception e){
                     e.printStackTrace();
-                    return new Response("a deep error occurred while craeting user card",-500);
+                    return new Response("a deep error occurred while creating user card",-500);
                 }
                 user.addUserCardID(id);
             }
+
+            user.setCoins(250);
 
             try{
                 userDB.update(user, user.getID());
