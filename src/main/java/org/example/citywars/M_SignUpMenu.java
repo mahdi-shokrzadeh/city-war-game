@@ -1,22 +1,29 @@
 package org.example.citywars;
 
+import controllers.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.AA_Captcha;
+import models.Response;
+import models.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class M_SignUpMenu extends Menu {
 
+    private static final String ADMIN_PASSWORD = "Admin@1403";
     final String securityQuestions = "Please choose a security question :\n" +
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
+    String securityQuestionNo;
+    String securityQuestionAns;
     Label error;
     TextField usernameField;
     PasswordField passwordField;
@@ -68,7 +75,7 @@ public class M_SignUpMenu extends Menu {
 
             System.out.println(s);
 
-            return securityQuestionAndCaptcha(matcher.group("username").trim(),tempSc,s);
+            return securityQuestionAndCaptcha(tempSc, matcher.group("username").trim(), randPass, matcher.group("nickname").trim(), matcher.group("email").trim(), "player");
         }
 
         matcher = patterns.get(0).matcher(input);
@@ -84,7 +91,10 @@ public class M_SignUpMenu extends Menu {
             if (!s.equals(securityQuestions)) {
                 return this;
             }
-            return securityQuestionAndCaptcha(matcher.group("username").trim(),tempSc,s);
+            String role = "player";
+            if (matcher.group("password").trim().equals(ADMIN_PASSWORD))
+                role = "admin";
+            return securityQuestionAndCaptcha(tempSc, matcher.group("username").trim(), matcher.group("password").trim(), matcher.group("nickname").trim(), matcher.group("email").trim(), role);
         }
 
 
@@ -140,9 +150,9 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        }  /*else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
-                System.out.println("Username already exists!");
-            } */ else if (passwordProblem(password.trim()) != null) {
+        } else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
+            System.out.println("Username already exists!");
+        } else if (passwordProblem(password.trim()) != null) {
             System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
@@ -159,9 +169,20 @@ public class M_SignUpMenu extends Menu {
         String sqAnswer = "";
         while (sqAnswer.isBlank()) {
             sqAnswer = tempSc.nextLine();
-            if (sqAnswer.matches(patterns.get(2).toString())) {
 
-                System.out.println("Question and your answer saved successfully!");
+            matcher = patterns.get(2).matcher(sqAnswer);
+            if (matcher.find()) {
+
+                if (matcher.group("answer").trim().equals(matcher.group("answerConf").trim())) {
+                    securityQuestionAns = matcher.group("answer").trim();
+                    securityQuestionNo = matcher.group("qNumber").trim();
+                    System.out.println("Question and your answer saved successfully!");
+                    return;
+                }
+                System.out.println("Try Again!");
+
+                setSecurityQuestion(tempSc);
+
             } else {
                 System.out.println("Invalid input! :(");
                 sqAnswer = "";
@@ -169,7 +190,7 @@ public class M_SignUpMenu extends Menu {
         }
     }
 
-    private Menu securityQuestionAndCaptcha(String username, Scanner tempSc , String s){
+    private Menu securityQuestionAndCaptcha(Scanner tempSc, String username, String password, String nickname, String email, String role) {
         setSecurityQuestion(tempSc);
 
         while (captchaCountLeft > 0) {
@@ -187,7 +208,8 @@ public class M_SignUpMenu extends Menu {
             }
 
             if (ans == captcha.getAnswer()) {
-                System.out.println("User " + username + " created successfully!");
+                System.out.println("From front: User " + username + " created successfully!");
+                System.out.println("From back: " + UserController.createUser(username, password, nickname, email, role, securityQuestionNo, securityQuestionAns).message);
                 return new M_LoginMenu();
             }
             captchaCountLeft--;
@@ -196,6 +218,29 @@ public class M_SignUpMenu extends Menu {
 
         captchaCountLeft = 3;
         return this;
+    }
+
+    int getIndexFromUsername(String username) {
+        Response res = UserController.sudoGetAllUsers();
+        List<User> allUsers = null;
+        if (res.ok) {
+            System.out.println("OKOKOKOKOKOKOKOKOK");
+
+            allUsers = (List<User>) res.body.get("allUsers");
+        }
+        if (allUsers != null) {
+
+            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGG@@@@@@@@@@@@@@@@@@@");
+
+            for (int i = 0; i < allUsers.size(); i++) {
+                if (allUsers.get(i).getUsername().equals(username)) {
+
+                    System.out.println(i);
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     //Control Methods

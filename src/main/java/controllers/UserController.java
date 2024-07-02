@@ -207,7 +207,7 @@ public class UserController {
                     id = userCardDB.create(userCard);
                 }catch (Exception e){
                     e.printStackTrace();
-                    return new Response("a deep error occurred while craeting user card",-500);
+                    return new Response("a deep error occurred while creating user card",-500);
                 }
                 user.addUserCardID(id);
             }
