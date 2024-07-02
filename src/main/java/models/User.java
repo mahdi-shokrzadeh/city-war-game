@@ -23,6 +23,7 @@ public class User implements Comparable<User> {
     private List<Integer> userCardIDS;
     private GameCharacter character;
     private int damage = 0;
+    private boolean is_bonus_active = false;
 
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
@@ -198,6 +199,14 @@ public class User implements Comparable<User> {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void setIsBonusActive(boolean is_bonus_active) {
+        this.is_bonus_active = is_bonus_active;
+    }
+
+    public boolean getIsBonusActive() {
+        return is_bonus_active;
     }
 
 }

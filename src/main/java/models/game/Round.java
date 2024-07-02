@@ -1,9 +1,13 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import com.almasb.fxgl.dev.Console;
 
 import models.User;
 import models.card.Card;
+import views.console.game.ConsoleGame;
 
 public class Round {
     private User player_one;
@@ -12,6 +16,7 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
+    
 
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
@@ -26,6 +31,9 @@ public class Round {
 
         this.player_one_cards = player_one_cards;
         this.player_two_cards = player_two_cards;
+        Collections.shuffle(player_one_cards);
+        Collections.shuffle(player_two_cards);
+
         // fill the board with block
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
@@ -127,21 +135,35 @@ public class Round {
             } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
                 this.player_one
                         .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                // reduce the damage of the player
+                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
             } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
                 this.player_two
                         .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+
+                // reduce the damage of the player
+                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
             } else {
                 if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
                     this.player_two
                             .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                    this.player_one
+                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
+
                 } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
                     this.player_one
                             .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                    this.player_two
+                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
                 } else {
                     continue;
                 }
 
             }
+
+            ConsoleGame.printBlocksStatus(player_one_block, player_two_block);
+            ConsoleGame.printDamageStatus(this.player_one, this.player_two);
+            ConsoleGame.printHPStatus(this.player_one, this.player_two);
 
             if (this.checkGameIsFinished()) {
                 return true;

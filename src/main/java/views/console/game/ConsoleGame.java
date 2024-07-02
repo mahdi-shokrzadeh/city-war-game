@@ -1,5 +1,8 @@
 package views.console.game;
 
+import models.User;
+import models.game.Block;
+
 public class ConsoleGame {
 
     public static void printGameMenu() {
@@ -61,6 +64,34 @@ public class ConsoleGame {
 
     public static void printWinner(String winner) {
         System.out.println("The winner is: " + winner);
+    }
+
+    public static void printBlocksStatus(Block player_one_block, Block player_two_block) {
+        for (int i = 2; i <= 6; i++) {
+            ConsoleBoard.printBoardElement(player_one_block, i);
+        }
+        System.out.println("--------");
+        for (int i = 2; i <= 6; i++) {
+            ConsoleBoard.printBoardElement(player_two_block, i);
+        }
+    }
+
+    public static void printDamageStatus(User player_one, User player_two) {
+        System.out.println("Player one: " + player_one.getUsername() + " Total Damage: " + player_one.getDamage());
+        System.out.println("Player two: " + player_two.getUsername() + " Total Damage: " + player_two.getDamage());
+    }
+
+    public static void printHPStatus(User player_one, User player_two) {
+        System.out.println("Player one: " + player_one.getUsername() + " Hitpoints: " + player_one.getHitPoints());
+        System.out.println("Player two: " + player_two.getUsername() + " Hitpoints: " + player_two.getHitPoints());
+    }
+
+    public static void printBonous() {
+        System.out.println("You have a bonous for completely destroying the enemy's card!");
+    }
+
+    public static void printCoinBonous() {
+        System.out.println("You have a 40 more coin now!");
     }
 
 }
