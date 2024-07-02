@@ -12,9 +12,10 @@
     </padding>
 
     <MediaView fx:id="backGround" fitHeight="1080.0" fitWidth="1920.0" />
-    <Button blendMode="SCREEN" layoutX="242.0" layoutY="733.0" onAction="#GoToLoginButton" prefHeight="149.0" prefWidth="272.0" text="Login" textFill="#fff6fb">
+    <Button layoutX="242.0" layoutY="733.0" onAction="#GoToLoginButton" prefHeight="149.0" prefWidth="272.0" styleClass="button-2" stylesheets="@CSSs/button.css" text="Login">
       <font>
          <Font name="Comic Sans MS" size="61.0" />
-      </font></Button>
+      </font>
+    </Button>
 
 </Pane>

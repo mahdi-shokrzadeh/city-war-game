@@ -1,27 +1,25 @@
 package database.DBs;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.game.Game;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import models.User;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
-public class UserDB {
+public class GameDB {
     private final ObjectMapper mapper;
-    private List<User> data;
-    public UserDB(){
+    private List<Game> data;
+    public GameDB(){
         mapper = new ObjectMapper();
         try{
-            File file = new File("./src/main/java/database/json/users.json");
+            File file = new File("./src/main/java/database/json/games.json");
             if(file.length() == 0){
                 data = new ArrayList<>();
             }else{
-                data = mapper.readValue(file, new TypeReference<List<User>>(){});
+                data = mapper.readValue(file, new TypeReference<List<Game>>(){});
             }
         }catch (Exception e){
             System.out.print(e.getMessage());
@@ -29,13 +27,13 @@ public class UserDB {
     }
     private void save(){
         try {
-            File file = new File("./src/main/java/database/json/users.json");
+            File file = new File("./src/main/java/database/json/games.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    public int create(User user){
+    public int create(Game game){
         int id = -1;
         try {
             if( data.isEmpty() ){
@@ -43,38 +41,38 @@ public class UserDB {
             }else {
                 id = data.getLast().getID();
             }
-            user.setID(id);
-            data.add(user);
+            game.setID(id);
+            data.add(game);
             save();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return id;
     }
-    public User getOne(int id){
-        User user = null;
+    public Game getOne(int id){
+        Game game = null;
         try{
-            user = data.stream().filter(o -> o.getID() == id).toList().getFirst();
+            game = data.stream().filter(o -> o.getID() == id).toList().getFirst();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return user;
+        return game;
     }
-    public User getByUserName(String name){
-        User user = null;
+    public List<Game> getByUserID(int id){
+        List<Game> games = null;
         try{
-            user = data.stream().filter(o -> o.getUsername().equals(name) ).toList().getFirst();
+            games = data.stream().filter(o -> o.getPlayer_one_id() == id || o.getPlayer_two_id() == id).toList();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return user;
+        return games;
     }
-    public List<User> getAll(){
+    public List<Game> getAll(){
         return data;
     }
-    public void update(User user, int id) {
+    public void update(Game game, int id) {
         try{
-            data.replaceAll(o -> o.getID() == id ? user: o);
+            data.replaceAll(o -> o.getID() == id ? game: o);
             save();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -82,10 +80,6 @@ public class UserDB {
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);
-        save();
-    }
-    public void deleteByUserName(String name){
-        data.removeIf(o -> o.getUsername().equals(name) );
         save();
     }
 }

@@ -82,9 +82,6 @@ public class Game extends Menu {
             return menu;
         }
 
-        Menu temp_menu = this;
-        return temp_menu;
-    }
 
     // handlers
 

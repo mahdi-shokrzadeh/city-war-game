@@ -57,7 +57,7 @@ public class M_SignUpMenu extends Menu {
         String input;
         do {
             input = consoleScanner.nextLine().trim();
-            if (input.matches("^*Back*$")){
+            if (input.toLowerCase().matches("^back$")){
                 return new M_Intro();
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
@@ -229,9 +229,9 @@ public class M_SignUpMenu extends Menu {
             }
 
             if (ans == captcha.getAnswer()) {
-                System.out.println("User " + username + " created successfully!");
                 Response res = UserController.createUser(matcher.group("username"),matcher.group("password"),matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
                 if(res.ok) {
+                    System.out.println("User " + username + " created successfully!");
                     return new M_LoginMenu();
                 }else {
                     System.out.println(res.message);
