@@ -7,6 +7,7 @@ import models.Response;
 import models.User;
 import models.UserCard;
 import models.card.Card;
+import database.Database;
 import database.DBs.CardDB;
 import database.DBs.UserDB;
 import database.DBs.UserCardDB;
