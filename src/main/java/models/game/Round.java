@@ -16,7 +16,6 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
-    
 
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
@@ -45,6 +44,7 @@ public class Round {
 
     public String processRound() {
 
+        ConsoleGame.printRoundStart();
         boolean con = true;
         while (con) {
             String result = current_turn.processTurn(board,
@@ -54,6 +54,8 @@ public class Round {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
+                    System.out.println("HERE!!");
+                    // timeLine();
                     if (this.timeLine()) {
                         return "game_is_finished";
                     } else {
@@ -124,14 +126,14 @@ public class Round {
     }
 
     public boolean timeLine() {
-
-        for (int i = 0; i < 20; i++) {
+        System.out.println("HEY here!");
+        for (int i = 0; i <= 20; i++) {
 
             Block player_one_block = this.board[0][i];
             Block player_two_block = this.board[1][i];
 
             if (player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
-                continue;
+
             } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
                 this.player_one
                         .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
@@ -155,16 +157,15 @@ public class Round {
                             .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
                     this.player_two
                             .setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
-                } else {
-                    continue;
                 }
 
             }
-
+            ConsoleGame.printBlockIndex(i + 1);
             ConsoleGame.printBlocksStatus(player_one_block, player_two_block);
             ConsoleGame.printDamageStatus(this.player_one, this.player_two);
             ConsoleGame.printHPStatus(this.player_one, this.player_two);
 
+            
             if (this.checkGameIsFinished()) {
                 return true;
             }

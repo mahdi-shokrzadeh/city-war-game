@@ -69,11 +69,14 @@ public class ConsoleGame {
     public static void printBlocksStatus(Block player_one_block, Block player_two_block) {
         for (int i = 2; i <= 6; i++) {
             ConsoleBoard.printBoardElement(player_one_block, i);
+            System.out.print("   ");
         }
-        System.out.println("--------");
+        System.out.println("\n" + "--------");
         for (int i = 2; i <= 6; i++) {
             ConsoleBoard.printBoardElement(player_two_block, i);
+            System.out.print("   ");
         }
+        System.out.println("\n");
     }
 
     public static void printDamageStatus(User player_one, User player_two) {
@@ -84,6 +87,7 @@ public class ConsoleGame {
     public static void printHPStatus(User player_one, User player_two) {
         System.out.println("Player one: " + player_one.getUsername() + " Hitpoints: " + player_one.getHitPoints());
         System.out.println("Player two: " + player_two.getUsername() + " Hitpoints: " + player_two.getHitPoints());
+        System.out.println("\n");
     }
 
     public static void printBonous() {
@@ -92,6 +96,16 @@ public class ConsoleGame {
 
     public static void printCoinBonous() {
         System.out.println("You have a 40 more coin now!");
+    }
+
+    public static void printRoundStart() {
+        System.out.println("\n" + "---------" + "\n");
+        System.out.println("New round is now started!");
+        System.out.println("\n" + "---------" + "\n");
+    }
+
+    public static void printBlockIndex(int index) {
+        System.out.println("Block number: " + index);
     }
 
 }
