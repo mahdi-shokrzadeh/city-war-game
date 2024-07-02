@@ -1,16 +1,18 @@
 package controllers;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import models.Response;
 import models.User;
 import models.UserCard;
 import models.card.Card;
+import database.Database;
 import database.DBs.CardDB;
 import database.DBs.UserDB;
 import database.DBs.UserCardDB;
+import org.example.citywars.M_LoginMenu;
+
 
 public class UserController {
     private static final UserDB userDB = new UserDB();
@@ -249,16 +251,18 @@ public class UserController {
 
     public static Response login(String username, String password){
 
+        if (M_LoginMenu.timerIsOn){
+            return new Response("Try again in "+M_LoginMenu.lockTime+" seconds",-401);
+        }
+
         User user = null;
-        boolean usernameExists = false;
         boolean passwordIsCorrect = false;
         try{
             List<User> allUsers  = (List<User>) sudoGetAllUsers().body.get("allUsers");
             for(User u: allUsers){
                 if( u.getUsername().equals(username) ){
-                    usernameExists = true;
+                    user = u;
                     if( u.getPassword().equals(password) ){
-                        user = u;
                         passwordIsCorrect = true;
                     }
                 }
@@ -269,20 +273,28 @@ public class UserController {
             return new Response("an exception happened while fetching the passwords",-500);
         }
 
-        if( !usernameExists ){
-            return new Response("no user was found with this username",-400);
+        if( user == null ){
+            return new Response("Username doesn’t exist!",-400);
         }
 
         if( !passwordIsCorrect ){
-            return new Response("the password is not correct",-401);
-        }
+            M_LoginMenu.failureCount++;
+            M_LoginMenu.lockTime = 5*M_LoginMenu.failureCount;
+            M_LoginMenu.timerIsOn = true;
+            M_LoginMenu.timer = new Timer();
+            int delay = 1000;
+            int period = 1000;
+            M_LoginMenu.timer.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    setInterval();
+                }
+            }, delay, period);
 
         if( user == null ){
             return new Response("no user was found",-400);
         }
 
-        if( !user.getFirstLogin() ){
-
+        if( !user.getFirstLogin() || ((List<Card>)CardController.getAllCards().body.get("allCards")).isEmpty()){
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
             if( res.ok ){
@@ -321,4 +333,48 @@ public class UserController {
         return new Response("user logged in successfully",200,"user",user);
     }
 
+    private static final int setInterval() {
+        if (M_LoginMenu.lockTime == 1) {
+            M_LoginMenu.timer.cancel();
+            M_LoginMenu.timerIsOn=false;
+        }
+        return --M_LoginMenu.lockTime;
+    }
+
+
+    public static Response forgotPassword(String username){
+
+        User user = null;
+        try{
+            List<User> allUsers  = (List<User>) sudoGetAllUsers().body.get("allUsers");
+            for(User u: allUsers){
+                if( u.getUsername().equals(username) ){
+                    user=u;
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Response("an exception happened while fetching the passwords",-500);
+        }
+
+        if(  user == null ){
+            return new Response("Username doesn’t exist!",-400);
+        }
+        else {
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println(user.getPassRecoveryQuestion());
+
+            String answer="";
+            while (answer.isBlank()) {
+                answer = sc.nextLine();
+                if (!answer.trim().toLowerCase().equals(user.getPassRecoveryAnswer().toLowerCase()))
+                    return new Response("Wrong answer! Try again!", -401);
+                answer = "";
+            }
+
+            return new Response("user logged in successfully!",201);
+        }
+    }
 }

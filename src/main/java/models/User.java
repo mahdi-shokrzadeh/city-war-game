@@ -23,6 +23,9 @@ public class User implements Comparable<User> {
     private List<Integer> userCardIDS;
     private GameCharacter character;
     private int progress;
+    private int damage = 0;
+    private boolean is_bonus_active = false;
+
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
         this.username = username;
@@ -43,11 +46,16 @@ public class User implements Comparable<User> {
     }
 
     // getter and setters
-    public User(){}
+    public User() {
+    }
 
-    public int getID(){ return id; }
+    public int getID() {
+        return id;
+    }
 
-    public void setID(int _id){ id = _id;}
+    public void setID(int _id) {
+        id = _id;
+    }
 
     public String getUsername() {
         return username;
@@ -89,15 +97,25 @@ public class User implements Comparable<User> {
         return hitPoints;
     }
 
-    public int getCoins(){ return  coins; }
+    public int getCoins() {
+        return coins;
+    }
 
-    public Integer getClanID(){ return clanID; }
+    public Integer getClanID() {
+        return clanID;
+    }
 
-    public boolean getFirstLogin(){ return firstLogin; }
+    public boolean getFirstLogin() {
+        return firstLogin;
+    }
 
-    public List<Integer> getUserCardIDS(){ return userCardIDS; }
+    public List<Integer> getUserCardIDS() {
+        return userCardIDS;
+    }
 
-    public GameCharacter getGameCharacter(){ return character; }
+    public GameCharacter getGameCharacter() {
+        return character;
+    }
 
     public int getProgress(){ return progress; }
 
@@ -141,27 +159,60 @@ public class User implements Comparable<User> {
         this.username = username;
     }
 
-    public void setCoins(int value){ coins = value;}
+    public void setCoins(int value) {
+        coins = value;
+    }
 
-    public void changeCoin(int value){ coins += value;}
+    public void changeCoin(int value) {
+        coins += value;
+    }
 
-    public void setClanID(int id){ clanID = id; }
+    public void setClanID(int id) {
+        clanID = id;
+    }
 
     public void makeProgress(){ progress++; }
 
-    public void firstLogin(){ firstLogin = false; }
+    public void firstLogin() {
+        firstLogin = false;
+    }
 
-    public void addUserCardID(int id){ userCardIDS.add(id); }
+    public void addUserCardID(int id) {
+        userCardIDS.add(id);
+    }
 
-    public void removeCardID(int id){ userCardIDS.remove(id); }
+    public void removeCardID(int id) {
+        userCardIDS.remove(id);
+    }
 
     @Override
     public int compareTo(User u) {
-        if( username.equals(u.getUsername()) && email.equals(u.getEmail()) && nickname.equals(u.getNickname()) && role.equals(u.getRole())){
+        if (username.equals(u.getUsername()) && email.equals(u.getEmail()) && nickname.equals(u.getNickname())
+                && role.equals(u.getRole())) {
             return 0;
-        }else{ return -1; }
+        } else {
+            return -1;
+        }
     }
 
-    public void setGameCharacter(GameCharacter c){ character = c; }
+    public void setGameCharacter(GameCharacter c) {
+        character = c;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setIsBonusActive(boolean is_bonus_active) {
+        this.is_bonus_active = is_bonus_active;
+    }
+
+    public boolean getIsBonusActive() {
+        return is_bonus_active;
+    }
 
 }
