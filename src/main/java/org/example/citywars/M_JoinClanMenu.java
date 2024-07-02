@@ -7,7 +7,8 @@ public class M_JoinClanMenu extends Menu{
         super("M_ClanMainMenu");
         patterns.add(Pattern.compile("^ *-Join +(?<clanName>[\\S ]+) *$"));
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *-all +clans *$")){
             // show clans
             return this;

@@ -15,8 +15,8 @@ public class M_GamePlayMenu extends Menu {
         ConsoleGameMenu.printGameMenu();
     }
 
-    public Menu myMethods(String input) {
-
+    public Menu myMethods() {
+        String input = consoleScanner.nextLine();
         // public User(String username, String password, String nickname, String email,
         // String role,
         // String recovery_pass_question, String recovery_pass_answer) {

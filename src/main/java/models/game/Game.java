@@ -176,13 +176,6 @@ public class Game extends Menu {
         id = _id;
     }
 
-    public int getID() {
-        return id;
-    }
-
-    public void setID(int _id) {
-        id = _id;
-    }
     public int getPlayer_one_id() {
         return player_one_id;
     }

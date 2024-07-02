@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,8 +37,9 @@ public abstract class Menu implements Initializable {
     //static User loggedInUser = null;
     static boolean secondPersonNeeded;
     P_PlayMode playMode;
+    protected final Scanner consoleScanner = new Scanner(System.in);
 
-    public abstract Menu myMethods(String input);
+    public abstract Menu myMethods();
     public Menu(){};
     public Menu(String name,String BG){
         this.name = name;

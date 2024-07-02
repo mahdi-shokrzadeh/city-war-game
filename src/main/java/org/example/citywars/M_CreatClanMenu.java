@@ -8,7 +8,8 @@ public class M_CreatClanMenu extends Menu{
         patterns.add(Pattern.compile("^ *-Create +a +clan +(?<clanName>[\\S ]+) *$"));
 
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         matcher = patterns.get(0).matcher(input);
         if (matcher.find()) {
             // join clans matcher.group("clanName")
