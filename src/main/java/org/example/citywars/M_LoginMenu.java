@@ -15,7 +15,8 @@ public class M_LoginMenu extends Menu {
         patterns.add(Pattern.compile("^ *user +login +-u(?<username>[\\S ]+)-p(?<password>[\\S ]+) *$"));
         patterns.add(Pattern.compile("^ *Forgot +my +password +-u(?<username>[\\S ]+) *$"));
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         if (input.matches("^ *Back *$")) {
             if (M_GameModeChoiseMenu.secondPersonNeeded)
                 return new M_GameModeChoiseMenu();

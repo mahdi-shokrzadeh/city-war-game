@@ -6,7 +6,8 @@ public class M_GameOverMenu extends Menu{
 
         //game over methods
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *-back +to +main +menu *$"))
             return new M_GameMainMenu();
 

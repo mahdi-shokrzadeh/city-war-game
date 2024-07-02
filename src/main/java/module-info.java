@@ -17,6 +17,10 @@ module org.example.citywars {
 
     opens org.example.citywars to javafx.fxml;
     opens models to com.fasterxml.jackson.databind;
+    opens models.card to com.fasterxml.jackson.databind;
+    opens models.game to com.fasterxml.jackson.databind;
     exports org.example.citywars;
-    exports models;
+    exports models to com.fasterxml.jackson.databind;
+    exports models.card to com.fasterxml.jackson.databind;
+    exports models.game to com.fasterxml.jackson.databind;
 }
