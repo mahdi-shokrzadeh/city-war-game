@@ -1,18 +1,33 @@
 package org.example.citywars;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import models.P_PlayMode;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Menu {
+public abstract class Menu implements Initializable {
+     File file;
+     Media media;
+     MediaPlayer mediaPlayer;
+    @FXML
+     MediaView backGround;
     Parent root;
     Stage stage;
     Scene scene;
@@ -20,9 +35,16 @@ public abstract class Menu {
     ArrayList<Pattern> patterns;
     Matcher matcher;
     //static User loggedInUser = null;
+    static boolean secondPersonNeeded;
+    P_PlayMode playMode;
+    protected final Scanner consoleScanner = new Scanner(System.in);
 
-    public abstract Menu myMethods(String input);
+    public abstract Menu myMethods();
     public Menu(){};
+    public Menu(String name,String BG){
+        this.name = name;
+        file= new File("src\\main\\resources\\BG-Videos\\"+BG);
+    }
     public Menu(String name){
         this.name = name;
     }
@@ -48,9 +70,20 @@ public abstract class Menu {
             return "Password must have at least a non-alphanumeric character!";
         else if(s.contains(" "))
             return "Password mustn't have any space!";
-        else if (s.length() >= 8 && s.length() <= 24)
+        else if (s.length() < 8 || s.length() > 24)
             return "Password must have between 8 and 24 characters!";
 
         return null;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        backGround.setMediaPlayer(mediaPlayer);
+
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setCycleCount(-1);
     }
 }
