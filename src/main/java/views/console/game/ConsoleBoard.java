@@ -16,7 +16,8 @@ public class ConsoleBoard {
                 player_one.getHitPoints() + " Total Damage: " + player_one_damage);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
-                System.out.print((j + 1) + "- ");
+                String index = (j + 1) + "-";
+                System.out.print(padString(new String(index), 3));
 
                 for (int k = 0; k <= 6; k++) {
                     if (k > 0) {
@@ -97,7 +98,5 @@ public class ConsoleBoard {
             return sb.toString();
         }
     }
-
-    
 
 }
