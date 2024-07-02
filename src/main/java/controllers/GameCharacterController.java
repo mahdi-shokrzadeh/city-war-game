@@ -27,7 +27,7 @@ public class GameCharacterController {
             e.printStackTrace();
             return new Response("an exceptio occurred while getting character",-500);
         }
-        return new Response("fetched character successfully",200,character);
+        return new Response("fetched character successfully",200,"character",character);
     }
 
 }
