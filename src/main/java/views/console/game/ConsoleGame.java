@@ -18,4 +18,18 @@ public class ConsoleGame {
     public static void printGreetings() {
         System.out.println("\n" + "Welcome to the game!" + "\n");
     }
+
+
+    public static void printInvalidCardNumber() {
+        System.out.println("Please enter a valid card number!");
+    }
+
+
+    public static void printInvalidPlayerNumber() {
+        System.out.println("Please enter a valid player number!");
+    }
+
+    public static void printInvalidBlockNumber() {
+        System.out.println("Please enter a valid block number or card number!");
+    }
 }
