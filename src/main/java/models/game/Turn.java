@@ -25,11 +25,16 @@ public class Turn {
         this.board = board;
     }
 
-    public String processTurn(User current_player, Block[][] board,
+    public String processTurn(Block[][] board,
             Round round) {
-        this.current_player = current_player;
-        int turn_index = round.getTurns().indexOf(this);
 
+        int turn_index = round.getTurns().indexOf(this);
+        if (turn_index % 2 == 0) {
+            current_player = player_one;
+        } else {
+            current_player = player_two;
+        }
+        ConsoleGame.printTurnIsStarted(turn_index + 1);
         boolean cond = false;
         Scanner sc = new Scanner(System.in);
         ConsoleBoard.printBoard(board, player_one, player_two,
@@ -99,16 +104,17 @@ public class Turn {
                     }
 
                     if (selected_card.getCardType().toString().equals("Regular")) {
-                        handlePutCardInBoard((turn_index) % 2, selected_card, block_number);
+                        if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                            // Turn is finished
+                            ConsoleGame.printTurnIsFinished(turn_index + 1);
+                            cond = true;
+                        }
                     } else {
                         // SPELL action
                     }
                     // ConsoleBoard.printBoard(board, player_one, player_two,
                     // player_one.getDamage(),
                     // player_two.getDamage());
-
-                    // Turn is finished
-                    ConsoleGame.printTurnIsFinished(turn_index + 1);
 
                 } else {
                     ConsoleGame.printInvalidBlockNumber();
@@ -130,16 +136,23 @@ public class Turn {
         }
     }
 
-    public void handlePutCardInBoard(int des_index, Card card, int starting_block_number) {
+    public boolean handlePutCardInBoard(int des_index, Card card, int starting_block_number) {
         starting_block_number--;
+        boolean cond = true;
         for (int i = 0; i < card.getDuration(); i++) {
-            if (checkBlockIsValidForCard(des_index, starting_block_number + i)) {
+            if (!checkBlockIsValidForCard(des_index, starting_block_number + i)) {
+                cond = false;
+                break;
+            }
+        }
+        if (cond) {
+            for (int i = 0; i < card.getDuration(); i++) {
                 this.board[des_index][starting_block_number + i].setBlockCard(card);
                 this.board[des_index][starting_block_number + i].setBlockEmpty(false);
                 handleAffection(des_index, starting_block_number + i);
-            } else {
-                return;
             }
+        } else {
+            return false;
         }
         ConsoleGame.printSuccessfulCardPlacement();
         if (des_index == 0) {
@@ -147,10 +160,11 @@ public class Turn {
         } else {
             player_two_cards.remove(card);
         }
+        return true;
     }
 
     public boolean checkBlockIsValidForCard(int des_index, int block_number) {
-        if (block_number < 0 || block_number > 21) {
+        if (block_number < 0 || block_number > 20) {
             ConsoleGame.printInvalidBlockNumber();
             return false;
         }
@@ -169,12 +183,16 @@ public class Turn {
     public void handleAffection(int des_index, int block_number) {
         Block bl = this.board[des_index][block_number];
         Block opponent_block = this.board[(des_index + 1) % 2][block_number];
+        if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
+            this.current_player.setDamage(this.current_player.getDamage() + bl.getBlockCard().getDamage());
+        }
         if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
             User op = getOpponent(this.current_player);
             if (bl.getBlockPower() > opponent_block.getBlockPower()) {
                 opponent_block.setBlockDestroyed(true);
                 // reduce the damage
                 op.setDamage(op.getDamage() - opponent_block.getBlockCard().getDamage());
+
             } else if (bl.getBlockPower() < opponent_block.getBlockPower()) {
                 bl.setBlockDestroyed(true);
                 // reduce the damage

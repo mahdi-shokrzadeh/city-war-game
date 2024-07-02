@@ -50,4 +50,8 @@ public class ConsoleGame {
     public static void printTurnIsFinished(int turn_index) {
         System.out.println("Turn " + turn_index + " is finished!");
     }
+
+    public static void printTurnIsStarted(int turn_index) {
+        System.out.println("Turn " + turn_index + " is started!");
+    }
 }

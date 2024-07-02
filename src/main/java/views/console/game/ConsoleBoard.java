@@ -20,7 +20,7 @@ public class ConsoleBoard {
                 String index = (j + 1) + "-";
                 System.out.print(padString(new String(index), 3));
 
-                for (int k = 0; k <= 6; k++) {
+                for (int k = 2; k <= 6; k++) {
                     if (k > 0) {
                         System.out.print("   ");
                     }
@@ -46,9 +46,11 @@ public class ConsoleBoard {
             System.out.print("|");
             if (block.isBlockUnavailable()) {
                 System.out.print(padString("UNAVAILABLE", fixedLength));
+            } else if (block.isBlockDestroyed()) {
+                System.out.print(padString("DESTROYED", fixedLength));
             } else if (block.isBlockEmpty()) {
                 System.out.print(padString("EMPTY", fixedLength));
-            } else {
+            } else if (!block.isBlockEmpty()) {
                 System.out.print(padString("OCCUPIED", fixedLength));
             }
             System.out.print("|");
@@ -60,10 +62,10 @@ public class ConsoleBoard {
                 } else {
                     Card card = block.getBlockCard();
                     String name = "name: " + card.getName();
-                    System.out.print(padString(name, fixedLength));
+                    System.out.print(padString(name, 16));
                 }
             } else {
-                System.out.print(padString("", fixedLength));
+                System.out.print(padString("", 16));
             }
             System.out.print("|");
         } else if (line == 4) {

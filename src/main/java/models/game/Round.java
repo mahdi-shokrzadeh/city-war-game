@@ -12,8 +12,6 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
-    private User current_player;
-    
 
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
@@ -25,8 +23,9 @@ public class Round {
         this.current_turn = turns.get(0);
         this.player_one = player_one;
         this.player_two = player_two;
-        this.current_player = player_one;
 
+        this.player_one_cards = player_one_cards;
+        this.player_two_cards = player_two_cards;
         // fill the board with block
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
@@ -40,15 +39,10 @@ public class Round {
 
         boolean con = true;
         while (con) {
-            String result = current_turn.processTurn(current_player, board,
+            String result = current_turn.processTurn(board,
                     this);
             if (result.equals("turn_is_finished")) {
                 if (this.turns.size() < 4) {
-                    if (current_player == player_one) {
-                        current_player = player_two;
-                    } else {
-                        current_player = player_one;
-                    }
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
@@ -116,8 +110,5 @@ public class Round {
     public void setBoard(Block[][] board) {
         this.board = board;
     }
-
-
-
 
 }
