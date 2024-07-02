@@ -55,7 +55,7 @@ public class SpellController {
         Spell spell = new Spell(name, price, duration, type, spellType, upgradeLevel, upgradeCost, desc);
         spellDB.create(spell);
 
-        res = new Response("Spell created successfully", 201, spell);
+        res = new Response("Spell created successfully", 201,"spell", spell);
         return res;
     }
 
@@ -64,7 +64,7 @@ public class SpellController {
         Response res;
         try {
             spell = spellDB.getByName(name);
-            res = new Response("Spell found", 200, spell);
+            res = new Response("Spell found", 200,"spell", spell);
         } catch (Exception e) {
             e.printStackTrace();
             spell = null;

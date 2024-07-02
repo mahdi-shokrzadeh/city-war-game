@@ -26,7 +26,7 @@ public class UserController {
             return new Response("an exception happened while fetching all users",-500);
         }
 
-        return new Response("all users fetched successfully",200,allUsers);
+        return new Response("all users fetched successfully",200,"allUsers",allUsers);
 
     }
 
@@ -56,12 +56,11 @@ public class UserController {
             return new Response("no user was found",-400);
         }
 
-        return new Response("all users fetched successfully",200,allUsers);
+        return new Response("all users fetched successfully",200,"allUsers",allUsers);
 
     }
 
     public static Response createUser(String username, String password, String nickname, String email, String role, String passRecoveryQuestion, String passRecoveryAnswer ){
-
         if( username.isBlank() ){
             return new Response("username can not be blank",-422);
         }
@@ -131,7 +130,6 @@ public class UserController {
             e.printStackTrace();
             return new Response("an exception occurred while creating user",-500);
         }
-
         return new Response("user successfully created",201);
 
     }
@@ -219,7 +217,7 @@ public class UserController {
             user.firstLogin();
         }
 
-        return new Response("user logged in successfully",200,user);
+        return new Response("user logged in successfully",200,"user",user);
     }
 
 }

@@ -61,7 +61,7 @@ public class UserSpellsController {
             return new Response("could not find users spells",-400);
         }
 
-        return new Response("all users' spells fetched successfully",200,allUsersSpells);
+        return new Response("all users' spells fetched successfully",200,"allUserSpells",allUsersSpells);
     }
 
     public static Response removeUserSpell(int userID, Spell spell){
