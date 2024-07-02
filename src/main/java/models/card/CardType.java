@@ -9,6 +9,7 @@ public enum CardType {
         for (CardType _type : CardType.values()) {
             if (_type.name().equals(type)) {
                 result = true;
+                break;
             }
         }
         return result;
