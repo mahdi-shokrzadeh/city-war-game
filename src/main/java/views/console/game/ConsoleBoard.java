@@ -72,7 +72,12 @@ public class ConsoleBoard {
             System.out.print("|");
             if (!block.isBlockEmpty()) {
                 Card card = block.getBlockCard();
-                System.out.print(padString("damage: " + card.getDamage(), fixedLength));
+                if (!block.isBlockDestroyed()) {
+
+                    System.out.print(padString("damage: " + card.getDamage(), fixedLength));
+                } else {
+                    System.out.print(padString("damage: " + 0, fixedLength));
+                }
             } else {
                 System.out.print(padString("", fixedLength));
             }
@@ -81,7 +86,7 @@ public class ConsoleBoard {
             System.out.print("|");
             if (!block.isBlockEmpty()) {
                 Card card = block.getBlockCard();
-                System.out.print(padString("power: " + card.getPower() / card.getDuration(),
+                System.out.print(padString("power: " + block.getBlockPower(),
                         fixedLength));
             } else {
                 System.out.print(padString("", fixedLength));

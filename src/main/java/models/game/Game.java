@@ -3,6 +3,7 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
 import models.GameCharacter;
@@ -76,6 +77,8 @@ public class Game extends Menu {
             this.handleChooseCharacter(this.player_two);
         } else if (input.equals("-Start game")) {
             this.startGame();
+            Menu menu = new M_Intro();
+            return menu;
         }
 
         Menu temp_menu = this;
@@ -120,21 +123,21 @@ public class Game extends Menu {
     }
 
     public void startGame() {
-        // if (this.player_one.getGameCharacter() == null || this.player_two.getGameCharacter() == null) {
-        //     System.out.println("Please select characters for both players");
-        //     return;
+        // if (this.player_one.getGameCharacter() == null ||
+        // this.player_two.getGameCharacter() == null) {
+        // System.out.println("Please select characters for both players");
+        // return;
         // }
 
         boolean con = true;
         while (con) {
             String result = this.current_round.processRound();
-
             switch (result) {
                 case "game_is_finished":
                     con = false;
                     break;
 
-                case "new_round":
+                case "need_more_rounds":
                     this.rounds.add(new Round(this.player_one, this.player_two,
                             this.player_one_cards, this.player_two_cards));
                     this.current_round = this.rounds.get(this.rounds.size() - 1);
@@ -143,62 +146,110 @@ public class Game extends Menu {
                     break;
             }
         }
+        ConsoleGame.printGameIsFinished();
+        this.findWinner();
+
     }
 
     public void handleAddCardsToPlayers() {
 
         player_one_cards.add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "desc1", new GameCharacter("c1")));
-        // add sample cards with different behaviors
-        player_one_cards.add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0, "mega knight description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0, "lava hound description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0, "baby dragon description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giant skeleton description", new GameCharacter("c1")));
-        player_one_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0, "barbarians description", new GameCharacter("c1")));
-        // add for player two
-        player_two_cards.add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0, "mega knight description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0, "lava hound description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0, "baby dragon description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giant skeleton description", new GameCharacter("c1")));
-        player_two_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0, "barbarians description", new GameCharacter("c1")));
 
-        
+        player_one_cards
+                .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
+        player_one_cards.add(
+                new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description", new GameCharacter("c1")));
+        player_one_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0, "mega knight description",
+                new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description", new GameCharacter("c1")));
+        player_one_cards.add(
+                new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description", new GameCharacter("c1")));
+        player_one_cards.add(
+                new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description", new GameCharacter("c1")));
+        player_one_cards
+                .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description", new GameCharacter("c1")));
+        player_one_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0, "lava hound description",
+                new GameCharacter("c1")));
+        player_one_cards.add(
+                new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description", new GameCharacter("c1")));
+        player_one_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0, "baby dragon description",
+                new GameCharacter("c1")));
+        player_one_cards.add(new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giant skeleton description",
+                new GameCharacter("c1")));
+        player_one_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0, "barbarians description",
+                new GameCharacter("c1")));
+
+        player_two_cards
+                .add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description", new GameCharacter("c1")));
+        player_two_cards.add(
+                new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description", new GameCharacter("c1")));
+        player_two_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0, "mega knight description",
+                new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description", new GameCharacter("c1")));
+        player_two_cards.add(
+                new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description", new GameCharacter("c1")));
+        player_two_cards.add(
+                new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description", new GameCharacter("c1")));
+        player_two_cards
+                .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description", new GameCharacter("c1")));
+        player_two_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0, "lava hound description",
+                new GameCharacter("c1")));
+        player_two_cards.add(
+                new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description", new GameCharacter("c1")));
+        player_two_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0, "baby dragon description",
+                new GameCharacter("c1")));
+        player_two_cards.add(new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giant skeleton description",
+                new GameCharacter("c1")));
+        player_two_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0, "barbarians description",
+                new GameCharacter("c1")));
 
     }
 
@@ -292,6 +343,16 @@ public class Game extends Menu {
 
     public void setRounds(ArrayList<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    public void findWinner() {
+        if (player_one.getHitPoints() > player_two.getHitPoints()) {
+            this.winner = player_one.getUsername();
+            ConsoleGame.printWinner(player_one.getUsername());
+        } else {
+            this.winner = player_two.getUsername();
+            ConsoleGame.printWinner(player_two.getUsername());
+        }
     }
 
 }

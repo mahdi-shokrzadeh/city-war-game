@@ -42,16 +42,20 @@ public class Round {
             String result = current_turn.processTurn(board,
                     this);
             if (result.equals("turn_is_finished")) {
-                if (this.turns.size() < 4) {
+                if (this.turns.size() < 2) {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
-                    // round is over!
+                    if (this.timeLine()) {
+                        return "game_is_finished";
+                    } else {
+                        con = false;
+                    }
                 }
             }
         }
 
-        return "game_is_finished";
+        return "need_more_rounds";
     }
 
     // getters and setters
@@ -109,6 +113,56 @@ public class Round {
 
     public void setBoard(Block[][] board) {
         this.board = board;
+    }
+
+    public boolean timeLine() {
+
+        for (int i = 0; i < 20; i++) {
+
+            Block player_one_block = this.board[0][i];
+            Block player_two_block = this.board[1][i];
+
+            if (player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
+                continue;
+            } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
+                this.player_one
+                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+            } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
+                this.player_two
+                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+            } else {
+                if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
+                    this.player_two
+                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
+                    this.player_one
+                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                } else {
+                    continue;
+                }
+
+            }
+
+            if (this.checkGameIsFinished()) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public boolean checkGameIsFinished() {
+        if (this.player_one.getHitPoints() <= 0) {
+            this.game_is_finished = true;
+            this.winner = this.player_two.getUsername();
+            return true;
+        } else if (this.player_two.getHitPoints() <= 0) {
+            this.game_is_finished = true;
+            this.winner = this.player_one.getUsername();
+            return true;
+        }
+        return false;
     }
 
 }

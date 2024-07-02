@@ -54,4 +54,13 @@ public class ConsoleGame {
     public static void printTurnIsStarted(int turn_index) {
         System.out.println("Turn " + turn_index + " is started!");
     }
+
+    public static void printGameIsFinished() {
+        System.out.println("Game is finished!");
+    }
+
+    public static void printWinner(String winner) {
+        System.out.println("The winner is: " + winner);
+    }
+
 }
