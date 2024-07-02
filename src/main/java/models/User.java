@@ -22,6 +22,7 @@ public class User implements Comparable<User> {
     private boolean firstLogin;
     private List<Integer> userCardIDS;
     private GameCharacter character;
+    private int progress;
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
         this.username = username;
@@ -38,6 +39,7 @@ public class User implements Comparable<User> {
         this.clanID = null;
         this.firstLogin = false;
         this.userCardIDS = new ArrayList<>();
+        progress = 1;
     }
 
     // getter and setters
@@ -97,6 +99,8 @@ public class User implements Comparable<User> {
 
     public GameCharacter getGameCharacter(){ return character; }
 
+    public int getProgress(){ return progress; }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -142,6 +146,8 @@ public class User implements Comparable<User> {
     public void changeCoin(int value){ coins += value;}
 
     public void setClanID(int id){ clanID = id; }
+
+    public void makeProgress(){ progress++; }
 
     public void firstLogin(){ firstLogin = false; }
 
