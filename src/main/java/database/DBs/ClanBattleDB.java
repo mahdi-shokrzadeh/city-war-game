@@ -63,11 +63,20 @@ public class ClanBattleDB {
     public ClanBattle firstWhereEqualsOr(int id){
         ClanBattle battle = null;
         try{
-            battle = data.stream().filter(o -> o.getAttackerID() == id || o.getDefenderID() == id).toList().getFirst();
+            battle = data.stream().filter(o -> (o.getAttackerID() == id || o.getDefenderID() == id) && !o.hasEnded()).toList().getFirst();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         return battle;
+    }
+    public List<ClanBattle> whereEqualsOr(int id){
+        List<ClanBattle> battles = null;
+        try{
+            battles = data.stream().filter(o -> o.getAttackerID() == id || o.getDefenderID() == id).toList();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return battles;
     }
     public List<ClanBattle> getAll(){
         return data;
