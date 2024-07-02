@@ -29,7 +29,7 @@ public class UserDB {
     }
     private void save(){
         try {
-            File file = new File("./src/main/java/database/json/user.json");
+            File file = new File("./src/main/java/database/json/users.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
             System.out.println(e.getMessage());

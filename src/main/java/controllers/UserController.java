@@ -64,7 +64,7 @@ public class UserController {
         if( username.isBlank() ){
             return new Response("username can not be blank",-422);
         }
-        if( Pattern.compile("^+([a-zA-Z0-9]|_)$").matcher(username).find() ){
+        if( !Pattern.compile("^[a-zA-Z0-9_]+$").matcher(username).find() ){
             return new Response("username should only contain lower case letters, upper case letters, numbers and under score",-422);
         }
         Response res = sudoGetAllUsers();
@@ -184,7 +184,7 @@ public class UserController {
             return new Response("no user was found",-400);
         }
 
-        if( !user.getFirstLogin() || ((List<Card>)CardController.getAllCards().body.get("allCards")).isEmpty()){
+        if( !user.getFirstLogin()){
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
             if( res.ok ){
