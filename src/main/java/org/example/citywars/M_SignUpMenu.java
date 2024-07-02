@@ -57,7 +57,7 @@ public class M_SignUpMenu extends Menu {
         String input;
         do {
             input = consoleScanner.nextLine().trim();
-            if (input.matches("^*Back*$")){
+            if (input.toLowerCase().matches("^back$")){
                 return new M_Intro();
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);

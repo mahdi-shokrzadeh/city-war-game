@@ -28,6 +28,8 @@ public class M_Intro extends Menu {
                 return new M_LoginMenu();
             else if (input.toLowerCase().matches("^signup$"))
                 return new M_SignUpMenu();
+            else if (input.toLowerCase().matches("^exit$"))
+                return null;
             else
                 System.out.println("invalid command!");
         } while(true);
