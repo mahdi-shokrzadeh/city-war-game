@@ -13,7 +13,8 @@ public class ConsoleBoard {
     public static void printBoard(Block[][] board, User player_one, User player_two, int player_one_damage,
             int player_two_damage) {
         System.out.println("Player one: " + player_one.getUsername() + " Hitpoints: " +
-                player_one.getHitPoints() + " Total Damage: " + player_one_damage);
+                player_one.getHitPoints() + " Total Damage: " + player_one_damage + " Game chracater: " +
+                player_one.getGameCharacter().getName());
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
                 String index = (j + 1) + "-";
@@ -28,10 +29,11 @@ public class ConsoleBoard {
                 System.out.println();
             }
             System.out.println();
-            if (i == 1)
+            if (i == 0)
                 System.out.println(
                         "Player two: " + player_two.getUsername() + " Hitpoints: " + player_two.getHitPoints() +
-                                " Total Damage: " + player_two_damage);
+                                " Total Damage: " + player_two_damage + " Game chracater: " +
+                                player_two.getGameCharacter().getName());
         }
     }
 

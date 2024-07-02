@@ -22,7 +22,7 @@ public class Round {
     private Block[][] board = new Block[2][21];
 
     public Round(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards) {
-        turns.add(new Turn(player_one, player_two));
+        turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards));
         this.current_turn = turns.get(0);
         this.player_one = player_one;
         this.player_two = player_two;
@@ -41,7 +41,7 @@ public class Round {
 
         boolean con = true;
         while (con) {
-            String result = current_turn.processTurn(current_player, board, player_one_cards, player_two_cards,
+            String result = current_turn.processTurn(current_player, board,
                     this);
             if (result.equals("turn_is_finished")) {
                 if (this.turns.size() < 4) {
@@ -50,7 +50,7 @@ public class Round {
                     } else {
                         current_player = player_one;
                     }
-                    this.turns.add(new Turn(player_one, player_two));
+                    this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
                     // round is over!

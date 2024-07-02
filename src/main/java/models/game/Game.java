@@ -68,8 +68,9 @@ public class Game extends Menu {
 
     }
 
-    public Menu myMethods(String input) {
-
+    @Override
+    public Menu myMethods() {
+        String input = consoleScanner.nextLine();
         if (input.equals("-Select character")) {
             this.handleChooseCharacter(this.player_one);
             this.handleChooseCharacter(this.player_two);
@@ -119,10 +120,10 @@ public class Game extends Menu {
     }
 
     public void startGame() {
-        if (this.player_one.getGameCharacter() == null || this.player_two.getGameCharacter() == null) {
-            System.out.println("Please select characters for both players");
-            return;
-        }
+        // if (this.player_one.getGameCharacter() == null || this.player_two.getGameCharacter() == null) {
+        //     System.out.println("Please select characters for both players");
+        //     return;
+        // }
 
         boolean con = true;
         while (con) {
