@@ -4,6 +4,8 @@ import controllers.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import models.Response;
+import models.User;
+import models.game.Game;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,10 +55,13 @@ public class M_LoginMenu extends Menu {
                 Response s=UserController.login(matcher.group("username").trim(),matcher.group("password").trim());
                 System.out.println(s.message);
                 if (s.ok){
-                    if (M_GameModeChoiseMenu.secondPersonNeeded)
+                    if (secondPersonNeeded) {
+                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
+                    }
+                    else {
+                        loggedInUser=(User)s.body.get("user");
                         return new M_GamePlayMenu();
-                    else
-                        return new M_GameMainMenu();
+                    }
                 }
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
@@ -64,10 +69,13 @@ public class M_LoginMenu extends Menu {
                 Response s=UserController.forgotPassword(matcher.group("username").trim());
                 System.out.println(s.message);
                 if (s.ok){
-                    if (M_GameModeChoiseMenu.secondPersonNeeded)
+                    if (secondPersonNeeded) {
+                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
+                    }
+                    else {
+                        loggedInUser=(User)s.body.get("user");
                         return new M_GamePlayMenu();
-                    else
-                        return new M_GameMainMenu();
+                    }
                 }
             }
             else if(Pattern.compile("^show current menu$").matcher(input).find()){
