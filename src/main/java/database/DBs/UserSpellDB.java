@@ -59,12 +59,13 @@ public class UserSpellDB {
         return userSpell;
     }
     public List<UserSpell> whereEquals(int id){
+        List<UserSpell> spells = null;
         try{
-           data.removeIf(o -> o.getUserID() != id);
+           spells = data.stream().filter(o -> o.getUserID() != id).toList();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return data;
+        return spells;
     }
     public List<UserSpell> getAll(){
         return data;

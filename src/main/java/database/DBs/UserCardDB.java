@@ -78,12 +78,13 @@ public class UserCardDB {
         return userCard;
     }
     public List<UserCard> whereEquals(int id){
+        List<UserCard> cards = null;
         try{
-            data.removeIf(o -> o.getUserID() != id);
+            cards = data.stream().filter(o -> o.getUserID() != id).toList();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return data;
+        return cards;
     }
     public List<UserCard> getAll(){
         return data;
