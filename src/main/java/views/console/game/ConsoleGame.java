@@ -19,11 +19,9 @@ public class ConsoleGame {
         System.out.println("\n" + "Welcome to the game!" + "\n");
     }
 
-
     public static void printInvalidCardNumber() {
         System.out.println("Please enter a valid card number!");
     }
-
 
     public static void printInvalidPlayerNumber() {
         System.out.println("Please enter a valid player number!");
@@ -31,5 +29,25 @@ public class ConsoleGame {
 
     public static void printInvalidBlockNumber() {
         System.out.println("Please enter a valid block number or card number!");
+    }
+
+    public static void printBlockIsUnavailable() {
+        System.out.println("This block is unavailable!");
+    }
+
+    public static void printBlockIsNotEmpty() {
+        System.out.println("This block is not empty!");
+    }
+
+    public static void printInvaidInput() {
+        System.out.println("Invalid input!");
+    }
+
+    public static void printSuccessfulCardPlacement() {
+        System.out.println("Card placed successfully!");
+    }
+
+    public static void printTurnIsFinished(int turn_index) {
+        System.out.println("Turn " + turn_index + " is finished!");
     }
 }

@@ -9,7 +9,7 @@ public class Block {
     private boolean block_is_unavailable = false; // mean unable to host card
     private boolean card_is_hidden = false;
     private boolean block_is_destroyed = false; // it was attacked!
-
+    private int bloc_power = 0;
     public Block() {
 
     }
@@ -28,6 +28,7 @@ public class Block {
 
     public void setBlockCard(Card block_card) {
         this.block_card = block_card;
+        this.bloc_power = block_card.getPower()/block_card.getDuration();
     }
 
     public boolean isBlockEmpty() {
@@ -62,7 +63,14 @@ public class Block {
         this.block_is_destroyed = block_is_destroyed;
     }
 
-    
+
+    public int getBlockPower() {
+        return bloc_power;
+    }
+
+    public void setBlockPower(int bloc_power) {
+        this.bloc_power = bloc_power;
+    }
 
 }
 

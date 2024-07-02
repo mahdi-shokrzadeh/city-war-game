@@ -13,8 +13,7 @@ public class Round {
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
     private User current_player;
-    private int player_one_damage = 0;
-    private int player_two_damage = 0;
+    
 
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
@@ -22,7 +21,7 @@ public class Round {
     private Block[][] board = new Block[2][21];
 
     public Round(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards) {
-        turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards));
+        turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
         this.current_turn = turns.get(0);
         this.player_one = player_one;
         this.player_two = player_two;
@@ -50,7 +49,7 @@ public class Round {
                     } else {
                         current_player = player_one;
                     }
-                    this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards));
+                    this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
                     // round is over!
@@ -118,19 +117,7 @@ public class Round {
         this.board = board;
     }
 
-    public int getPlayerOneDamage() {
-        return player_one_damage;
-    }
 
-    public void setPlayerOneDamage(int player_one_damage) {
-        this.player_one_damage = player_one_damage;
-    }
 
-    public int getPlayerTwoDamage() {
-        return player_two_damage;
-    }
 
-    public void setPlayerTwoDamage(int player_two_damage) {
-        this.player_two_damage = player_two_damage;
-    }
 }

@@ -38,7 +38,7 @@ public class ConsoleBoard {
     }
 
     public static void printBoardElement(Block block, int line) {
-        final int fixedLength = 8;
+        final int fixedLength = 10;
 
         if (line == 0 || line == 6) {
             // System.out.print("------------");
@@ -49,7 +49,7 @@ public class ConsoleBoard {
             } else if (block.isBlockEmpty()) {
                 System.out.print(padString("EMPTY", fixedLength));
             } else {
-                System.out.print(padString("", fixedLength));
+                System.out.print(padString("OCCUPIED", fixedLength));
             }
             System.out.print("|");
         } else if (line == 3) {
@@ -59,7 +59,8 @@ public class ConsoleBoard {
                     System.out.print(padString("HIDDEN", fixedLength));
                 } else {
                     Card card = block.getBlockCard();
-                    System.out.print(padString(card.getName(), fixedLength));
+                    String name = "name: " + card.getName();
+                    System.out.print(padString(name, fixedLength));
                 }
             } else {
                 System.out.print(padString("", fixedLength));
