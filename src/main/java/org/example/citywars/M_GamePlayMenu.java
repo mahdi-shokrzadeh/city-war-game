@@ -29,7 +29,7 @@ public class M_GamePlayMenu extends Menu {
         switch (input) {
             case "2":
                 Menu temp_men = new Game(player_one, player_two, "duel");
-                return temp_men;
+                return new M_LoginMenu();
 
             default:
 

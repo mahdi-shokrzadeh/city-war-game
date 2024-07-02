@@ -50,7 +50,7 @@ public class Round {
             String result = current_turn.processTurn(board,
                     this);
             if (result.equals("turn_is_finished")) {
-                if (this.turns.size() < 2) {
+                if (this.turns.size() < 6) {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
@@ -165,7 +165,6 @@ public class Round {
             ConsoleGame.printDamageStatus(this.player_one, this.player_two);
             ConsoleGame.printHPStatus(this.player_one, this.player_two);
 
-            
             if (this.checkGameIsFinished()) {
                 return true;
             }

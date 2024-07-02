@@ -168,7 +168,7 @@ public class Turn {
         }
         ConsoleGame.printSuccessfulCardPlacement();
         // Check for Bonous
-
+        this.checkBonous();
         if (des_index == 0) {
             player_one_cards.remove(card);
         } else {

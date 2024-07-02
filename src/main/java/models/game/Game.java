@@ -3,10 +3,11 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.example.citywars.M_GameOverMenu;
 import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
-import models.GameCharacter;
+import models.GameCharacter;    
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleGame;
@@ -77,7 +78,7 @@ public class Game extends Menu {
             this.handleChooseCharacter(this.player_two);
         } else if (input.equals("-Start game")) {
             this.startGame();
-            Menu menu = new M_Intro();
+            Menu menu = new M_GameOverMenu();
             return menu;
         }
 
