@@ -25,8 +25,8 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-//        launch();
-
+        launch();
+/*
         menu = new M_SignUpMenu();
 
         Scanner sc = new Scanner(System.in);//for console version
@@ -45,5 +45,9 @@ public class HelloApplication extends Application {
                 }
             }
         }
+
+ */
     }
+
+
 }

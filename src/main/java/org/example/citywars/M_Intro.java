@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class M_Intro extends Menu {
     public M_Intro() {
-        super("M_Intro", "BGIntro.mp4");
+        super("M_Intro", "Bgintro.m4v");
         secondPersonNeeded = false;
         playMode = null;
     }
