@@ -60,6 +60,15 @@ public class UserDB {
         }
         return user;
     }
+    public User getByUserName(String name){
+        User user = null;
+        try{
+            user = data.stream().filter(o -> o.getUsername().equals(name) ).toList().getFirst();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
     public List<User> getAll(){
         return data;
     }
