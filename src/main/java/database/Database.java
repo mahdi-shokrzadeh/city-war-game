@@ -21,8 +21,6 @@ public class Database<T> {
     // private Class<T> type;
     private ObjectMapper mapper;
     private List<T> data;
-    public T temp;
-
     public Database(String tableName
     // , Class<T> typ
     ) {
@@ -189,41 +187,6 @@ public class Database<T> {
         }).toList().getFirst();
     }
 
-    public List<T> whereNotEquals(String property, String value) {
-
-        return data.stream().filter(x -> {
-            try {
-                return !x.getClass().getField(property).toString().equals(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }).collect(Collectors.toList());
-    }
-
-    public T firstWhereNotEquals(String property, String value) {
-
-        return data.stream().filter(x -> {
-            try {
-                return x.getClass().getField(property).toString().equals(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }).toList().getFirst();
-    }
-
-    public void firstDeleteWhereEquals(String property, String value){
-        data.removeIf(x -> {
-            try {
-                return x.getClass().getField(property).toString().equals(value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        });
-        save();
-    }
 
     public void firstDeleteWhereEquals(Map<String, String> conditions){
         data.removeIf(x -> {

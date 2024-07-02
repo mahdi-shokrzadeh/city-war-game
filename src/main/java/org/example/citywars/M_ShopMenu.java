@@ -4,7 +4,8 @@ public class M_ShopMenu extends Menu{
     public M_ShopMenu(){
         super("M_ShopMenu");
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         return null;
     }
 }

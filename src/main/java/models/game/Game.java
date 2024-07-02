@@ -52,7 +52,7 @@ public class Game extends Menu {
 
 
 
-    public Menu myMethods(String input) {
+    public Menu myMethods() {
         Menu temp_menu = this;
         return temp_menu;
     }

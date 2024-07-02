@@ -5,14 +5,17 @@ import java.util.Map;
 import java.util.List;
 import java.util.stream.Stream;
 
-import database.Database;
+import database.DBs.UserDB;
+import database.DBs.ClanDB;
+import database.DBs.ClanBattleDB;
 import models.*;
 
 public class ClanController {
     private static final int clanCreationCost = 1000;
-
+    private static final UserDB userDB = new UserDB();
+    private static final ClanDB clanDB = new ClanDB();
+    private static final ClanBattleDB cbDB = new ClanBattleDB();
     public static Response getCLanById(int id){
-        Database<Clan> clanDB = new Database<>("clans");
         Clan clan;
         try {
             clan = clanDB.getOne(id);
@@ -20,7 +23,7 @@ public class ClanController {
             e.printStackTrace();
             return new Response("an exception has occurred while fetching the clan",-500);
         }
-        return new Response("clan fetched successfully",200,clan);
+        return new Response("clan fetched successfully",200,"clan",clan);
     }
     public static Response getMyClan(User user){
 
@@ -28,7 +31,6 @@ public class ClanController {
             return new Response("you are not a member of any clan",-400);
         }
 
-        Database<Clan> clanDB = new Database<>("clans");
         Clan myCLan;
         try{
             myCLan = clanDB.getOne(user.getClanID());
@@ -40,7 +42,7 @@ public class ClanController {
             return new Response("clan was not found",-400);
         }
 
-        return new Response("clan fetched successfully",200,myCLan);
+        return new Response("clan fetched successfully",200,"myClan",myCLan);
     }
     public static Response createClan(User user, String name){
 
@@ -48,10 +50,9 @@ public class ClanController {
             return  new Response("the user does not have enough coins to create a clan",-400);
         }
 
-        Database<Clan> clansDB = new Database<>("clans");
         Clan existingClan;
         try {
-            existingClan = clansDB.firstWhereEquals("name", name);
+            existingClan = clanDB.getByName(name);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while checking for double clan name",-500);
@@ -61,12 +62,12 @@ public class ClanController {
         }
 
         Clan clan = new Clan(user.getID(), name);
-        int id = clansDB.create(clan);
+        int id = clanDB.create(clan);
         clan.setJoiningKey(name+"/"+ id);
         clan.setBattleKey(name);
-        clansDB.create(clan);
+        clanDB.create(clan);
 
-        Database<User> userDB = new Database<>("users");
+        UserDB userDB = new UserDB();
         try{
             user.setClanID(id);
             userDB.update(user, user.getID());
@@ -80,10 +81,9 @@ public class ClanController {
 
     public static Response addMember(User user,String name, String key){
 
-        Database<Clan> clanDB = new Database<>("clans");
         Clan clan;
         try{
-            clan = clanDB.firstWhereEquals("name",name);
+            clan = clanDB.getByName(name);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching the clan with the given name",-500);
@@ -97,9 +97,8 @@ public class ClanController {
             return new Response("invalid joining key",-401);
         }
 
-        Database<User> userDB = new Database<>("users");
         try{
-            user.setClanID(clan.getId());
+            user.setClanID(clan.getID());
             userDB.update(user, user.getID());
         }catch (Exception e){
             e.printStackTrace();
@@ -109,7 +108,7 @@ public class ClanController {
         clan.addMember(user);
 
         try{
-            clanDB.update(clan, clan.getId());
+            clanDB.update(clan, clan.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while saving the clan",-500);
@@ -119,11 +118,9 @@ public class ClanController {
 
     public static Response startBattle(User leader,Clan attackerClan, String key){
 
-        Database<Clan> clanDB = new Database<>("clans");
-
         Clan defenderClan;
         try{
-            defenderClan = clanDB.firstWhereEquals("battleKey",key);
+            defenderClan = clanDB.getByBattleKey(key);
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception occurred while fetching the defender clan",-500);
@@ -137,22 +134,17 @@ public class ClanController {
         }
 
         // SAVE DEFENDER AND ATTACKER CLANS IN THE DATABASE
-        Database<ClanBattle> clanBattleDB = new Database<>("clanBattles");
-        ClanBattle battle = new ClanBattle(attackerClan.getId(), defenderClan.getId(), Math.min(attackerClan.getMembers().size(), defenderClan.getMembers().size()));
-        clanBattleDB.create(battle);
+        ClanBattle battle = new ClanBattle(attackerClan.getID(), defenderClan.getID(), Math.min(attackerClan.getMembers().size(), defenderClan.getMembers().size()));
+        cbDB.create(battle);
         return new Response("battle started successfully",0);
 
     }
 
     public static Response playAGame(User user,Clan userClan){
 
-        Database<ClanBattle> clanBattleDB = new Database<>("clanBattles");
         ClanBattle battle;
         try{
-            Map<String, String> conditions = new HashMap<>();
-            conditions.put("attackerID",String.valueOf(userClan.getId()));
-            conditions.put("defenderID",String.valueOf(userClan.getId()));
-            battle = clanBattleDB.firstWhereEqualsOr(conditions);
+            battle = cbDB.firstWhereEqualsOr(userClan.getID());
         }catch (Exception e){
             e.printStackTrace();
             return new Response("an exception happened while fetching battle",-500);
@@ -174,12 +166,12 @@ public class ClanController {
         }
 
         User opponent;
-        if( user.getClanID() == battle.getAttackerId() ){
-            Clan defenderClan = ((Clan)getCLanById(battle.getDefenderId()).body.get("clan"));
+        if( user.getClanID() == battle.getAttackerID() ){
+            Clan defenderClan = ((Clan)getCLanById(battle.getDefenderID()).body.get("clan"));
             //List<Integer> defenderIDS = ((Clan) getCLanById(battle.getDefenderId()).body.get("clan")).getMembers();
             // reduce....
             //defenderIDS.removeAll(battle.getPlayedDefendersIDs());
-        }else if( user.getClanID() == battle.getDefenderId()){
+        }else if( user.getClanID() == battle.getDefenderID()){
 
         }
         //ClanGame game = new ClanGame();

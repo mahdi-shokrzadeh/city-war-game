@@ -12,14 +12,25 @@ public class M_Intro extends Menu {
         playMode = null;
     }
 
-    public Menu myMethods(String input) {
-        if (input.toLowerCase().matches("^ *log +in *$"))
-            return new M_LoginMenu();
-        else if (input.toLowerCase().matches("^ *sign +up *$"))
-            return new M_SignUpMenu();
+    private void printMenu(){
+        System.out.println("Intro menu");
+        System.out.println("Options: ");
+        System.out.println("    signup");
+        System.out.println("    login");
+    }
 
-        System.out.println("invalid command!");
-        return this;
+    public Menu myMethods() {
+        printMenu();
+        String input = null;
+        do{
+            input = consoleScanner.nextLine().trim();
+            if (input.toLowerCase().matches("^login$"))
+                return new M_LoginMenu();
+            else if (input.toLowerCase().matches("^signup$"))
+                return new M_SignUpMenu();
+            else
+                System.out.println("invalid command!");
+        } while(true);
     }
 
     @FXML

@@ -7,7 +7,7 @@ public class GameCharacter {
         name = _name;
     }
     public String getName(){ return name;}
-    public int getId(){ return id; }
+    public int getID(){ return id; }
     public void setID(int _id){ id = _id;}
 
 }

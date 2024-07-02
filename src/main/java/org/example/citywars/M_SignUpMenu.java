@@ -6,24 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.AA_Captcha;
 import models.Response;
-import models.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class M_SignUpMenu extends Menu {
 
-    private static final String ADMIN_PASSWORD = "Admin@1403";
     final String securityQuestions = "Please choose a security question :\n" +
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
-    String securityQuestionNo;
-    String securityQuestionAns;
     Label error;
     TextField usernameField;
     PasswordField passwordField;
@@ -35,87 +30,111 @@ public class M_SignUpMenu extends Menu {
     TextField emailField;
     TextField nicknameField;
     int captchaCountLeft;
+    private String securityQuestion;
+    private String securityQuestionAnswer;
 
     public M_SignUpMenu() {
         super("M_SignUpMenu", "BG1.mp4");
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
-        patterns.add(Pattern.compile("^ *user +create +-u(?<username>[\\S ]+)-p(?<password>[\\S ]+) +(?<passwordConf>[\\S ]+)-email(?<email>[\\S ]+)-n(?<nickname>[\\S ]+) *$"));
-        patterns.add(Pattern.compile("^ *user +create +-u(?<username>[\\S ]+)-p +random *-email(?<email>[\\S ]+)-n(?<nickname>[\\S ]+) *$"));
-        patterns.add(Pattern.compile("^ *question +pick +-q *(?<qNumber>[1-3]) *-a(?<answer>[\\S ]+)-c(?<answerConf>[\\S ]+) *$"));
+        patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
+        patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p +random *-email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
+        patterns.add(Pattern.compile("^*question +pick +-q *(?<qNumber>[1-3]) *-a (?<answer>[\\S ]+) -c (?<answerConf>[\\S ]+) *$"));
     }
 
-    public Menu myMethods(String input) {
-        Scanner tempSc = new Scanner(System.in);
+    private void printMenu(){
+        System.out.println("Signup menu");
+        System.out.println("Options: ");
+        System.out.println("    Back");
+        System.out.println("Information: ");
+        System.out.println("    You can signup in this menu using the one of the two following formats: ");
+        System.out.println("        user create -u username -p password password_confirmation -email email -n nickname");
+        System.out.println("        user create -u username -p random -email email -n nickname");
+    }
 
-        if (input.matches("^ *Back *$"))
-            return new M_Intro();
+    public Menu myMethods() {
+        printMenu();
+        String input;
+        do {
+            input = consoleScanner.nextLine().trim();
+            if (input.matches("^*Back*$")){
+                return new M_Intro();
+            }else if (patterns.get(1).matcher(input).find()) {
+                matcher = patterns.get(1).matcher(input);
+                matcher.find();
+                String randPass = randomPassword();
+                String s = checkAll(matcher.group("username"),
+                        randPass,
+                        randPass,
+                        matcher.group("email"),
+                        matcher.group("nickname"));
 
-        matcher = patterns.get(1).matcher(input);
-        if (matcher.find()) {
-            String randPass = randomPassword();
+                if (!s.equals(securityQuestions)) {
+                    System.out.println(s);
+                    continue;
+                }
 
-            String s = checkAll(matcher.group("username"),
-                    randPass,
-                    randPass,
-                    matcher.group("email"),
-                    matcher.group("nickname"));
+                System.out.println("Your random password: " + randPass + "\nPlease enter your password : ");
+                String passConf = consoleScanner.nextLine().trim();
+                if (!passConf.equals(randPass)) {
+                    System.out.println("Wrong Answer; Sign Up again from beginning :( ");
+                    continue;
+                }
 
-            if (!s.equals(securityQuestions)) {
                 System.out.println(s);
-                return this;
+
+                Menu menu = securityQuestionAndCaptcha(matcher.group("username").trim());
+                if( menu == null ){
+                    printMenu();
+                    continue;
+                }else{
+                    return menu;
+                }
+            }else if (patterns.get(0).matcher(input).find()) {
+                matcher = patterns.get(0).matcher(input);
+                matcher.find();
+                String s = checkAll(matcher.group("username"),
+                        matcher.group("password"),
+                        matcher.group("passwordConf"),
+                        matcher.group("email"),
+                        matcher.group("nickname"));
+
+                System.out.println(s);
+                if (!s.equals(securityQuestions)) {
+                    printMenu();
+                    continue;
+                }
+                Menu menu =  securityQuestionAndCaptcha(matcher.group("username").trim());
+                if( menu == null ){
+                    printMenu();
+                    continue;
+                }else{
+                    return menu;
+                }
+            }else if(Pattern.compile("^show current menu$").matcher(input).find()){
+                System.out.println("you are currently in " + getName());
+            }else {
+                System.out.println("Invalid command!");
             }
 
-            System.out.println("Your random password: " + randPass + "\nPlease enter your password : ");
-            String passConf = tempSc.nextLine();
-            if (!passConf.equals(randPass)) {
-                System.out.println("Wrong Answer; Sign Up again from beginning :( ");
-                return this;
-            }
 
-            System.out.println(s);
-
-            return securityQuestionAndCaptcha(tempSc, matcher.group("username").trim(), randPass, matcher.group("nickname").trim(), matcher.group("email").trim(), "player");
-        }
-
-        matcher = patterns.get(0).matcher(input);
-        if (matcher.find()) {
-
-            String s = checkAll(matcher.group("username"),
-                    matcher.group("password"),
-                    matcher.group("passwordConf"),
-                    matcher.group("email"),
-                    matcher.group("nickname"));
-
-            System.out.println(s);
-            if (!s.equals(securityQuestions)) {
-                return this;
-            }
-            String role = "player";
-            if (matcher.group("password").trim().equals(ADMIN_PASSWORD))
-                role = "admin";
-            return securityQuestionAndCaptcha(tempSc, matcher.group("username").trim(), matcher.group("password").trim(), matcher.group("nickname").trim(), matcher.group("email").trim(), role);
-        }
-
-
-        System.out.println(randomPassword());
-        System.out.println(randomPassword());
-        System.out.println(randomPassword());
-
-        AA_Captcha a = new AA_Captcha();
-        AA_Captcha b = new AA_Captcha();
-        AA_Captcha c = new AA_Captcha();
-
-        System.out.println(a.showEquation());
-        System.out.println(a.getAnswer());
-
-        System.out.println(b.showEquation());
-        System.out.println(b.getAnswer());
-
-        System.out.println(c.showEquation());
-        System.out.println(c.getAnswer());
-
-        return null;
+//            System.out.println(randomPassword());
+//            System.out.println(randomPassword());
+//            System.out.println(randomPassword());
+//
+//            AA_Captcha a = new AA_Captcha();
+//            AA_Captcha b = new AA_Captcha();
+//            AA_Captcha c = new AA_Captcha();
+//
+//            System.out.println(a.showEquation());
+//            System.out.println(a.getAnswer());
+//
+//            System.out.println(b.showEquation());
+//            System.out.println(b.getAnswer());
+//
+//            System.out.println(c.showEquation());
+//            System.out.println(c.getAnswer());
+        }while (true);
     }
 
     private String randomPassword() {
@@ -150,9 +169,9 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        } else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
-            System.out.println("Username already exists!");
-        } else if (passwordProblem(password.trim()) != null) {
+        }  /*else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
+                System.out.println("Username already exists!");
+            } */ else if (passwordProblem(password.trim()) != null) {
             System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
@@ -165,24 +184,26 @@ public class M_SignUpMenu extends Menu {
         return out;
     }
 
-    private void setSecurityQuestion(Scanner tempSc) {
+    private void setSecurityQuestion() {
         String sqAnswer = "";
         while (sqAnswer.isBlank()) {
-            sqAnswer = tempSc.nextLine();
-
-            matcher = patterns.get(2).matcher(sqAnswer);
-            if (matcher.find()) {
-
-                if (matcher.group("answer").trim().equals(matcher.group("answerConf").trim())) {
-                    securityQuestionAns = matcher.group("answer").trim();
-                    securityQuestionNo = matcher.group("qNumber").trim();
-                    System.out.println("Question and your answer saved successfully!");
-                    return;
+            sqAnswer = consoleScanner.nextLine().trim();
+            Matcher _matcher = patterns.get(2).matcher(sqAnswer);
+            if (_matcher.find()) {
+               switch (_matcher.group("qNumber")){
+                    case "1":{
+                        securityQuestion = "What is your father’s name ?";
+                        break;
+                    } case "2":{
+                        securityQuestion = "What is your favourite color ?";
+                        break;
+                    } case "3":{
+                        securityQuestion = "What was the name of your first pet?";
+                        break;
+                    }
                 }
-                System.out.println("Try Again!");
-
-                setSecurityQuestion(tempSc);
-
+                securityQuestionAnswer = _matcher.group("answer");
+                System.out.println("Question and your answer saved successfully!");
             } else {
                 System.out.println("Invalid input! :(");
                 sqAnswer = "";
@@ -190,8 +211,8 @@ public class M_SignUpMenu extends Menu {
         }
     }
 
-    private Menu securityQuestionAndCaptcha(Scanner tempSc, String username, String password, String nickname, String email, String role) {
-        setSecurityQuestion(tempSc);
+    private Menu securityQuestionAndCaptcha(String username){
+        setSecurityQuestion();
 
         while (captchaCountLeft > 0) {
 
@@ -202,45 +223,27 @@ public class M_SignUpMenu extends Menu {
             System.out.print("Answer = ");
 
             try {
-                ans = tempSc.nextInt();
+                ans = consoleScanner.nextInt();
             } catch (Exception e) {
                 System.out.println("Type Number!");
             }
 
             if (ans == captcha.getAnswer()) {
-                System.out.println("From front: User " + username + " created successfully!");
-                System.out.println("From back: " + UserController.createUser(username, password, nickname, email, role, securityQuestionNo, securityQuestionAns).message);
-                return new M_LoginMenu();
+                System.out.println("User " + username + " created successfully!");
+                Response res = UserController.createUser(matcher.group("username"),matcher.group("password"),matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
+                if(res.ok) {
+                    return new M_LoginMenu();
+                }else {
+                    System.out.println(res.message);
+                    return null;
+                }
             }
             captchaCountLeft--;
         }
         System.out.println("You Are Robot!!!");
 
         captchaCountLeft = 3;
-        return this;
-    }
-
-    int getIndexFromUsername(String username) {
-        Response res = UserController.sudoGetAllUsers();
-        List<User> allUsers = null;
-        if (res.ok) {
-            System.out.println("OKOKOKOKOKOKOKOKOK");
-
-            allUsers = (List<User>) res.body.get("allUsers");
-        }
-        if (allUsers != null) {
-
-            System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGG@@@@@@@@@@@@@@@@@@@");
-
-            for (int i = 0; i < allUsers.size(); i++) {
-                if (allUsers.get(i).getUsername().equals(username)) {
-
-                    System.out.println(i);
-                    return i;
-                }
-            }
-        }
-        return -1;
+        return null;
     }
 
     //Control Methods

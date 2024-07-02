@@ -26,24 +26,13 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
 //        launch();
-
-         menu = new M_SignUpMenu();
-//        menu = new M_GamePlayMenu();
-
-        Scanner sc = new Scanner(System.in);//for console version
-        String input;//for console version
-
+        menu = new M_Intro();
         boolean isEnd = false;
         while (!isEnd) {
-            input = sc.nextLine();
-            if (input.matches("^ *show +current +menu *$")) {
-                System.out.println(menu.getName().substring(1));//for console version
-            } else {
-                menu = menu.myMethods(input);
-                if (menu == null) {
-                    System.out.println("the End!");
-                    isEnd = true;
-                }
+            menu = menu.myMethods();
+            if (menu == null) {
+                System.out.println("the End!");
+                isEnd = true;
             }
         }
     }

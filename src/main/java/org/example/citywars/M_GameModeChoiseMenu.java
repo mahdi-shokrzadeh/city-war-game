@@ -7,7 +7,8 @@ public class M_GameModeChoiseMenu extends Menu{
         super("M_GameModeChoiseMenu");
         secondPersonNeeded =true;
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *-clan *$")){
             playMode = P_PlayMode.clan;
             return new M_ClanMainMenu();

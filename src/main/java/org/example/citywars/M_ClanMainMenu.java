@@ -4,7 +4,8 @@ public class M_ClanMainMenu extends Menu{
     public M_ClanMainMenu(){
         super("M_ClanMainMenu");
     }
-    public Menu myMethods(String input){
+    public Menu myMethods(){
+        String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *-my +clan *$"))
             return new M_MyClanMenu();
         else if (input.toLowerCase().matches("^ *-join +clan *$"))

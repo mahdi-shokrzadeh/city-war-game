@@ -5,7 +5,8 @@ public class M_GameMainMenu extends Menu {
         super("M_GameMainMenu");
     }
 
-    public Menu myMethods(String input) {
+    public Menu myMethods() {
+        String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *start +game *$"))
             return new M_GameModeChoiseMenu();
         else if (input.toLowerCase().matches("^ *show +cards *$"))
