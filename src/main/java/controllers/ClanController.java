@@ -23,7 +23,7 @@ public class ClanController {
             e.printStackTrace();
             return new Response("an exception has occurred while fetching the clan",-500);
         }
-        return new Response("clan fetched successfully",200,clan);
+        return new Response("clan fetched successfully",200,"clan",clan);
     }
     public static Response getMyClan(User user){
 
@@ -42,7 +42,7 @@ public class ClanController {
             return new Response("clan was not found",-400);
         }
 
-        return new Response("clan fetched successfully",200,myCLan);
+        return new Response("clan fetched successfully",200,"myClan",myCLan);
     }
     public static Response createClan(User user, String name){
 

@@ -81,7 +81,7 @@ public class CardController {
         Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, "desc", gameCharacter);
         cardDB.create(card);
 
-        res = new Response("Card created successfully", 201, card);
+        res = new Response("Card created successfully", 201,"card", card);
         return res;
     }
 
@@ -90,7 +90,7 @@ public class CardController {
         Response res;
         try {
             card = cardDB.getByName(name);
-            res = new Response("Card found", 200, card);
+            res = new Response("Card found", 200,"card", card);
         } catch (Exception e) {
             e.printStackTrace();
             card = null;
@@ -188,7 +188,7 @@ public class CardController {
             return new Response("an exception occurred while fetching all cards",-500);
         }
 
-        return  new Response("fetched all cards successfully",200,allCards);
+        return  new Response("fetched all cards successfully",200,"allCards",allCards);
 
     }
 

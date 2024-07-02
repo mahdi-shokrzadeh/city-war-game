@@ -21,11 +21,11 @@ public class Response {
         }
     }
 
-    public Response(String _message, int _status, Object _body) {
+    public Response(String _message, int _status,String key, Object _body) {
         status = _status;
         message = _message;
         body = new HashMap<>();
-        body.put(_body.toString(), _body);
+        body.put(key, _body);
         if (_status < 0) {
             ok = false;
         } else {
