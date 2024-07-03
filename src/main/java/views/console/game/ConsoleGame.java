@@ -122,4 +122,8 @@ public class ConsoleGame {
         System.out.println("\nBoss bot increased the power of the card number " + index + " by " + power + "!!\n");
     }
 
+    public static void printBuffCard(int index, int power) {
+        System.out.println("\nBuff card increased the power of the card number " + index + " by " + power + "!!\n");
+    }
+
 }
