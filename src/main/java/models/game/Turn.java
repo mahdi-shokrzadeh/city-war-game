@@ -197,7 +197,7 @@ public class Turn {
         // Check for Bonous
         this.checkBonous();
 
-        // handle Buff, now only for Regular
+        // handle Buff, now only for Regular , now p = 1
         if (des_index == 0) {
             if (Math.random() < 1 && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {

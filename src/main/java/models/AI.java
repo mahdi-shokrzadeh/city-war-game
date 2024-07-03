@@ -41,7 +41,7 @@ public class AI extends User {
             int cardIndex = random.nextInt(this.getIsBonusActive() ? 6 : 5);
             Card card = AICards.get(cardIndex);
             int startBlock = random.nextInt(board[0].length - card.getDuration() + 1);
-            if (isPlaceValid(board, card, startBlock)) {
+            if (isPlaceValid(board, card, startBlock) && card.getCardType().toString().equals("Regular")) {
                 return String.format("Placing card number %d in block %d", cardIndex + 1, startBlock + 1);
             }
         }
@@ -53,7 +53,7 @@ public class AI extends User {
             int cardIndex = random.nextInt(this.getIsBonusActive() ? 6 : 5);
             Card card = AICards.get(cardIndex);
             for (int i = 0; i <= board[0].length - card.getDuration(); i++) {
-                if (isPlaceValid(board, card, i)) {
+                if (isPlaceValid(board, card, i) && card.getCardType().toString().equals("Regular")) {
                     return String.format("Placing card number %d in block %d", cardIndex + 1, i + 1);
                 }
             }
@@ -77,7 +77,7 @@ public class AI extends User {
         }
 
         for (int i = 0; i <= board[0].length - bestCard.getDuration(); i++) {
-            if (isPlaceValid(board, bestCard, i)) {
+            if (isPlaceValid(board, bestCard, i) && bestCard.getCardType().toString().equals("Regular")) {
                 return String.format("Placing card number %d in block %d", AICards.indexOf(bestCard) + 1, i + 1);
             }
         }
@@ -115,7 +115,8 @@ public class AI extends User {
             chosenCard = bestCard;
 
             for (int i = 0; i <= board[0].length - bestCard.getDuration(); i++) {
-                if (isPlaceValid(board, bestCard, i) && isPowerValid(board, bestCard, i)) {
+                if (isPlaceValid(board, bestCard, i) && isPowerValid(board, bestCard, i)
+                        && bestCard.getCardType().toString().equals("Regular")) {
                     return String.format("Placing card number %d in block %d", AICards.indexOf(bestCard) + 1, i + 1);
                 }
             }
@@ -149,7 +150,7 @@ public class AI extends User {
             chosenCard = bestCard;
 
             for (int i = 0; i <= board[0].length - bestCard.getDuration(); i++) {
-                if (isPlaceValid(board, bestCard, i)) {
+                if (isPlaceValid(board, bestCard, i) && bestCard.getCardType().toString().equals("Regular")) {
                     return String.format("Placing card number %d in block %d", AICards.indexOf(bestCard) + 1, i + 1);
                 }
             }
