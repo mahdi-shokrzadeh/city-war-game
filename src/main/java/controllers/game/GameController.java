@@ -46,8 +46,7 @@ public class GameController {
         try{
             games = gameDB.getByUserID(id);
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return new Response("an exception happened while fetching users' games",-500);
+            return new Response("an exception happened while fetching users' games",-500,e);
         }
         if( games == null ){
             return new Response("no games were found for this user",-400);
