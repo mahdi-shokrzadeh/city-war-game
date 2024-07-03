@@ -2,8 +2,12 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.almasb.fxgl.dev.Console;
+
 import models.card.Card;
 import models.game.Block;
+import views.console.game.ConsoleGame;
 
 public class AI extends User {
 
@@ -176,6 +180,21 @@ public class AI extends User {
         return true;
     }
 
+    public void handleBoss(Block[][] board) {
+        int i = 0;
+        while (i <= 2) {
+            Random random = new Random();
+            int random1 = random.nextInt(21);
+            if (!board[0][random1].isBlockDestroyed()) {
+                int random_power = random.nextInt(7);
+                board[0][random1].setBlockPower(board[0][random1].getBlockPower() + random_power);
+                i++;
+                ConsoleGame.printBossDecision(random1 + 1, random_power);
+            }
+        }
+
+    }
+
     // getter setter
     public boolean isAI() {
         return this.is_AI;
@@ -183,5 +202,13 @@ public class AI extends User {
 
     public void setIsAI(boolean is_AI) {
         this.is_AI = is_AI;
+    }
+
+    public int getAiLevel() {
+        return this.ai_level;
+    }
+
+    public void setAiLevel(int ai_level) {
+        this.ai_level = ai_level;
     }
 }

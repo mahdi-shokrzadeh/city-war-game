@@ -61,21 +61,24 @@ public class Turn {
 
         // AI or no?
         if (this.current_player instanceof AI) {
-            
-            String input = ((AI) current_player).chooseTheMove(board, player_one_cards);
-            if (input.equals("No valid card to place")) {
-                ConsoleGame.printNoValidCardToPlace();
+            if (((AI) current_player).getAiLevel() == 5) {
+                ((AI) current_player).handleBoss(board);
             } else {
-                ConsoleGame.printAIChoice(input);
-                String[] parts = input.split(" ");
-                int card_number = Integer.parseInt(parts[3]);
-                int block_number = Integer.parseInt(parts[6]);
-                Card selected_card = player_one_cards.get(card_number - 1);
-                ConsoleCard.printCard(card_number, selected_card);
-                if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
-                    // Turn is finished
-                    ConsoleGame.printTurnIsFinished(turn_index + 1);
-                    cond = true;
+                String input = ((AI) current_player).chooseTheMove(board, player_one_cards);
+                if (input.equals("No valid card to place")) {
+                    ConsoleGame.printNoValidCardToPlace();
+                } else {
+                    ConsoleGame.printAIChoice(input);
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int block_number = Integer.parseInt(parts[6]);
+                    Card selected_card = player_one_cards.get(card_number - 1);
+                    ConsoleCard.printCard(card_number, selected_card);
+                    if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                        // Turn is finished
+                        ConsoleGame.printTurnIsFinished(turn_index + 1);
+                        cond = true;
+                    }
                 }
             }
         } else {
@@ -283,9 +286,9 @@ public class Turn {
                     this.current_player.setCoins(this.current_player.getCoins() + 40);
                     ConsoleGame.printCoinBonous();
                 }
-                // for 0.6 possibility add 50 Xp to user
+
                 if (Math.random() < 0.6) {
-                    // this.current_player.set
+
                 }
                 current_player.setIsBonusActive(true);
             }

@@ -63,7 +63,9 @@ public class ConsoleGame {
     }
 
     public static void printWinner(String winner) {
-        System.out.println("The winner is: " + winner);
+        System.out.println("\n-------------");
+        System.out.println("The game is finished and the winner is: " + winner);
+        System.out.println("-------------\n");
     }
 
     public static void printBlocksStatus(Block player_one_block, Block player_two_block) {
@@ -115,4 +117,9 @@ public class ConsoleGame {
     public static void printAIChoice(String in) {
         System.out.println("\nAI says: " + in + "\n");
     }
+
+    public static void printBossDecision(int index, int power) {
+        System.out.println("\nBoss bot increased the power of the card number " + index + " by " + power + "!!\n");
+    }
+
 }

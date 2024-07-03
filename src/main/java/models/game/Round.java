@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.almasb.fxgl.dev.Console;
 
+import models.AI;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleGame;
@@ -38,6 +39,12 @@ public class Round {
             for (int j = 0; j < 21; j++) {
                 board[i][j] = new Block();
             }
+        }
+
+        // Boss
+        if ((this.player_one instanceof AI) && ((AI) this.player_one).getAiLevel() == 5) {
+            this.changeBlocksForBoss();
+            this.handleBotInitiation();
         }
 
     }
@@ -187,4 +194,34 @@ public class Round {
         return false;
     }
 
+    public void changeBlocksForBoss() {
+        // Only Boss!
+        this.board[1][0].setBlockUnavailable(true);
+        this.board[1][1].setBlockUnavailable(true);
+        // this.board[1][2].setBlockUnavailable(true);
+        // this.board[1][18].setBlockUnavailable(true);
+        this.board[1][19].setBlockUnavailable(true);
+        this.board[1][20].setBlockUnavailable(true);
+    }
+
+    public void handleBotInitiation() {
+        // Boss cards
+        Card card_one = new Card("boss_one", 0, 21, "Regular", 20, 30, 0, 0, winner, null);
+        // Card card_two = new Card("two", 0, 10, "Regular", 20, 30, 0, 0, winner,
+        // null);
+        // Card card_three = new Card("three", 0, 7, "Regular", 20, 30, 0, 0, winner,
+        // null);
+
+        int total_damage = 0;
+        for (int i = 0; i <= 20; i++) {
+            int random = (int) (Math.random() * 10) + 20;
+            this.board[0][i].setBlockCard(card_one);
+            this.board[0][i].setCardHidden(true);
+            this.board[0][i].setBlockPower(random);
+            this.board[0][i].setBlockDamage(random);
+            total_damage += random;
+        }
+
+        this.player_one.setDamage(total_damage);
+    }
 }
