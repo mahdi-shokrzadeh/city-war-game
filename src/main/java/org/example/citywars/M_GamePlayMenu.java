@@ -27,7 +27,7 @@ public class M_GamePlayMenu extends Menu {
         User player_two = new User("player_two", "password",
                 "nickname2", "email", "role", "recovery_pass_question", "recovery_pass_answer");
 
-        AI AI = new AI();
+        AI AI = new AI(1);
 
         switch (input) {
             case "2":
