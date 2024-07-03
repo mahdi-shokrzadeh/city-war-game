@@ -198,7 +198,7 @@ public class Turn {
         Block bl = this.board[des_index][block_number];
         Block opponent_block = this.board[(des_index + 1) % 2][block_number];
         if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
-            this.current_player.setDamage(this.current_player.getDamage() + bl.getBlockCard().getDamage());
+            this.current_player.setDamage(this.current_player.getDamage() + bl.getBlockDamage());
         }
         if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
             User op = getOpponent(this.current_player);
@@ -206,22 +206,22 @@ public class Turn {
                 opponent_block.setBlockDestroyed(true);
                 opponent_destroyed_blocks.add(opponent_block);
                 // reduce the damage
-                op.setDamage(op.getDamage() - opponent_block.getBlockCard().getDamage());
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
 
             } else if (bl.getBlockPower() < opponent_block.getBlockPower()) {
                 bl.setBlockDestroyed(true);
                 // reduce the damage
                 this.current_player.setDamage(this.current_player.getDamage()
-                        - bl.getBlockCard().getDamage());
+                        - bl.getBlockDamage());
             } else {
                 // powers are equal
                 bl.setBlockDestroyed(true);
                 opponent_block.setBlockDestroyed(true);
                 // reduce the damage
                 this.current_player.setDamage(this.current_player.getDamage()
-                        - bl.getBlockCard().getDamage());
+                        - bl.getBlockDamage());
 
-                op.setDamage(op.getDamage() - opponent_block.getBlockCard().getDamage());
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
 
             }
         }

@@ -74,7 +74,7 @@ public class ConsoleBoard {
                 Card card = block.getBlockCard();
                 if (!block.isBlockDestroyed()) {
 
-                    System.out.print(padString("damage: " + card.getDamage(), fixedLength));
+                    System.out.print(padString("damage: " + block.getBlockDamage(), fixedLength));
                 } else {
                     System.out.print(padString("damage: " + 0, fixedLength));
                 }

@@ -136,27 +136,27 @@ public class Round {
 
             } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
                 this.player_one
-                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
                 // reduce the damage of the player
-                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
+                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
             } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
                 this.player_two
-                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
 
                 // reduce the damage of the player
-                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
+                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
             } else {
                 if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
                     this.player_two
-                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
                     this.player_one
-                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
+                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
 
                 } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
                     this.player_one
-                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
                     this.player_two
-                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
+                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
                 }
 
             }

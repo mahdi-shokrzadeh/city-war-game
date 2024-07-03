@@ -31,6 +31,11 @@ public class M_GamePlayMenu extends Menu {
                 Menu temp_men = new Game(player_one, player_two, "duel");
                 return temp_men;
 
+
+            case "3":
+                Menu temp_men2 = new Game(player_one, player_two, "AI");
+                return temp_men2;
+
             default:
 
                 break;
