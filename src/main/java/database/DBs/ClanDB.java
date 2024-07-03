@@ -22,7 +22,7 @@ public class ClanDB {
                 data = mapper.readValue(file, new TypeReference<List<Clan>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.print("Exception in ClanDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -30,12 +30,11 @@ public class ClanDB {
             File file = new File("./src/main/java/database/json/clans.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in ClanDB: " +e.getMessage());
         }
     }
     public int create(Clan clan){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
@@ -44,48 +43,29 @@ public class ClanDB {
             clan.setID(id);
             data.add(clan);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public Clan getOne(int id){
         Clan clan = null;
-        try{
-            clan = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        clan = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return clan;
     }
     public Clan getByName(String  name){
         Clan clan = null;
-        try{
-            clan = data.stream().filter(o -> o.getName().equals(name)).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        clan = data.stream().filter(o -> o.getName().equals(name)).findFirst().orElse(null);
         return clan;
     }
     public Clan getByBattleKey(String key){
         Clan clan = null;
-        try{
-            clan = data.stream().filter(o -> o.getBattleKey().equals(key) ).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        clan = data.stream().filter(o -> o.getBattleKey().equals(key) ).findFirst().orElse(null);
         return clan;
     }
     public List<Clan> getAll(){
         return data;
     }
     public void update(Clan clan, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? clan: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? clan: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);

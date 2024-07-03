@@ -24,7 +24,7 @@ public class UserDB {
                 data = mapper.readValue(file, new TypeReference<List<User>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.print("Exception in UserDB: " + e.getMessage());
         }
     }
     private void save(){
@@ -32,12 +32,11 @@ public class UserDB {
             File file = new File("./src/main/java/database/json/users.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in UserDB: " + e.getMessage());
         }
     }
     public int create(User user){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
@@ -46,39 +45,24 @@ public class UserDB {
             user.setID(id);
             data.add(user);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public User getOne(int id){
         User user = null;
-        try{
-            user = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        user = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return user;
     }
     public User getByUserName(String name){
         User user = null;
-        try{
-            user = data.stream().filter(o -> o.getUsername().equals(name) ).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        user = data.stream().filter(o -> o.getUsername().equals(name) ).findFirst().orElse(null);
         return user;
     }
     public List<User> getAll(){
         return data;
     }
     public void update(User user, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? user: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? user: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);

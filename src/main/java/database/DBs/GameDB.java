@@ -22,7 +22,7 @@ public class GameDB {
                 data = mapper.readValue(file, new TypeReference<List<Game>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.print("Exception in GameDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -30,12 +30,11 @@ public class GameDB {
             File file = new File("./src/main/java/database/json/games.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in GameDB: " +e.getMessage());
         }
     }
     public int create(Game game){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
@@ -44,39 +43,24 @@ public class GameDB {
             game.setID(id);
             data.add(game);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public Game getOne(int id){
         Game game = null;
-        try{
-            game = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        game = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return game;
     }
     public List<Game> getByUserID(int id){
         List<Game> games = null;
-        try{
-            games = data.stream().filter(o -> o.getPlayer_one_id() == id || o.getPlayer_two_id() == id).toList();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        games = data.stream().filter(o -> o.getPlayer_one_id() == id || o.getPlayer_two_id() == id).toList();
         return games;
     }
     public List<Game> getAll(){
         return data;
     }
     public void update(Game game, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? game: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? game: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);
