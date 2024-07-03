@@ -24,6 +24,7 @@ public class User implements Comparable<User> {
     private GameCharacter character;
     private int damage = 0;
     private boolean is_bonus_active = false;
+    private int bot_level;
 
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
@@ -209,4 +210,12 @@ public class User implements Comparable<User> {
         return is_bonus_active;
     }
 
+
+    public void setBotLevel(int bot_level) {
+        this.bot_level = bot_level;
+    }
+
+    public int getBotLevel() {
+        return bot_level;
+    }
 }
