@@ -55,8 +55,10 @@ public class Game extends Menu {
                                 this.handleAddCardsToPlayers();
                                 break;
 
-                        case "normal":
-
+                        case "AI":
+                                // this.handleChooseCharacter
+                                // this.startGame();
+                                this.handleAddCardsToPlayers();
                                 break;
 
                         default:
@@ -65,6 +67,7 @@ public class Game extends Menu {
                 }
 
         }
+
 
         public Game(User player_one, User player_two, String mode, String clan) {
 

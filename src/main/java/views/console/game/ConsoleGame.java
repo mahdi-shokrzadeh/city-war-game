@@ -108,4 +108,11 @@ public class ConsoleGame {
         System.out.println("Block number: " + index);
     }
 
+    public static void printNoValidCardToPlace() {
+        System.out.println("AI: No valid card to place");
+    }
+
+    public static void printAIChoice(String in) {
+        System.out.println("\nAI says: " + in + "\n");
+    }
 }

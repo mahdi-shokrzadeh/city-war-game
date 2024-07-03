@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import java.util.Map;
+
+import models.AI;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleBoard;
@@ -57,80 +59,102 @@ public class Turn {
             System.out.println(player_two.getUsername() + "'s turn, choose a card!");
         }
 
-        while (!cond) {
-            String input = sc.nextLine();
-            if (input.equals("Print board")) {
-                ConsoleBoard.printBoard(board, player_one, player_two,
-                        player_one.getDamage(),
-                        player_two.getDamage());
-            } else if (input.equals("Print my cards")) {
-                this.printCurrentUserHand(current_player);
-            } else if (input.equals("Print opponent cards")) {
-                if (current_player == player_one) {
-                    ConsoleCard.printUserCards(new ArrayList<Card>(player_two_cards.subList(0,
-                            this.player_two.getIsBonusActive() ? 6 : 5)), player_two);
-                } else {
-                    ConsoleCard.printUserCards(new ArrayList<Card>(player_one_cards.subList(0,
-                            this.player_one.getIsBonusActive() ? 6 : 5)), player_one);
-                }
-            }
-
-            else if (input.matches("^Select card number ([1-6]) player ([1-2])$")) {
-                String[] parts = input.split(" ");
-                int card_number = Integer.parseInt(parts[3]);
-                int player_number = Integer.parseInt(parts[5]);
-                if (player_number == 1) {
-                    if (card_number > 0 && card_number <= 6) {
-                        Card selected_card = player_one_cards.get(card_number - 1);
-                        ConsoleCard.printCard(card_number, selected_card);
-                    } else {
-                        ConsoleGame.printInvalidCardNumber();
-                    }
-                } else if (player_number == 2) {
-                    if (card_number > 0 && card_number <= 6) {
-                        Card selected_card = player_two_cards.get(card_number - 1);
-                        ConsoleCard.printCard(card_number, selected_card);
-                    } else {
-                        ConsoleGame.printInvalidCardNumber();
-                    }
-                } else {
-                    ConsoleGame.printInvalidPlayerNumber();
-                }
-            }
-            // regex for -Placing card number n in block i
-            else if (input.matches("^Placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+        // AI or no?
+        if (this.current_player instanceof AI) {
+            
+            String input = ((AI) current_player).chooseTheMove(board, player_one_cards);
+            if (input.equals("No valid card to place")) {
+                ConsoleGame.printNoValidCardToPlace();
+            } else {
+                ConsoleGame.printAIChoice(input);
                 String[] parts = input.split(" ");
                 int card_number = Integer.parseInt(parts[3]);
                 int block_number = Integer.parseInt(parts[6]);
-                if (card_number > 0 && card_number <= (current_player.getIsBonusActive() ? 6 : 5) && block_number >= 0
-                        && block_number <= 21) {
-                    Card selected_card;
+                Card selected_card = player_one_cards.get(card_number - 1);
+                ConsoleCard.printCard(card_number, selected_card);
+                if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                    // Turn is finished
+                    ConsoleGame.printTurnIsFinished(turn_index + 1);
+                    cond = true;
+                }
+            }
+        } else {
+            while (!cond) {
+                String input = sc.nextLine();
+                if (input.equals("Print board")) {
+                    ConsoleBoard.printBoard(board, player_one, player_two,
+                            player_one.getDamage(),
+                            player_two.getDamage());
+                } else if (input.equals("Print my cards")) {
+                    this.printCurrentUserHand(current_player);
+                } else if (input.equals("Print opponent cards")) {
                     if (current_player == player_one) {
-                        selected_card = player_one_cards.get(card_number - 1);
+                        ConsoleCard.printUserCards(new ArrayList<Card>(player_two_cards.subList(0,
+                                this.player_two.getIsBonusActive() ? 6 : 5)), player_two);
                     } else {
-                        selected_card = player_two_cards.get(card_number - 1);
+                        ConsoleCard.printUserCards(new ArrayList<Card>(player_one_cards.subList(0,
+                                this.player_one.getIsBonusActive() ? 6 : 5)), player_one);
                     }
+                }
 
-                    if (selected_card.getCardType().toString().equals("Regular")) {
-                        if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
-                            // Turn is finished
-                            ConsoleGame.printTurnIsFinished(turn_index + 1);
-                            cond = true;
+                else if (input.matches("^Select card number ([1-6]) player ([1-2])$")) {
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int player_number = Integer.parseInt(parts[5]);
+                    if (player_number == 1) {
+                        if (card_number > 0 && card_number <= 6) {
+                            Card selected_card = player_one_cards.get(card_number - 1);
+                            ConsoleCard.printCard(card_number, selected_card);
+                        } else {
+                            ConsoleGame.printInvalidCardNumber();
+                        }
+                    } else if (player_number == 2) {
+                        if (card_number > 0 && card_number <= 6) {
+                            Card selected_card = player_two_cards.get(card_number - 1);
+                            ConsoleCard.printCard(card_number, selected_card);
+                        } else {
+                            ConsoleGame.printInvalidCardNumber();
                         }
                     } else {
-                        // SPELL action
+                        ConsoleGame.printInvalidPlayerNumber();
                     }
-                    // ConsoleBoard.printBoard(board, player_one, player_two,
-                    // player_one.getDamage(),
-                    // player_two.getDamage());
-
-                } else {
-                    ConsoleGame.printInvalidBlockNumber();
                 }
-            } else {
-                ConsoleGame.printInvaidInput();
-            }
+                // regex for -Placing card number n in block i
+                else if (input.matches("^Placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int block_number = Integer.parseInt(parts[6]);
+                    if (card_number > 0 && card_number <= (current_player.getIsBonusActive() ? 6 : 5)
+                            && block_number >= 0
+                            && block_number <= 21) {
+                        Card selected_card;
+                        if (current_player == player_one) {
+                            selected_card = player_one_cards.get(card_number - 1);
+                        } else {
+                            selected_card = player_two_cards.get(card_number - 1);
+                        }
 
+                        if (selected_card.getCardType().toString().equals("Regular")) {
+                            if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                                // Turn is finished
+                                ConsoleGame.printTurnIsFinished(turn_index + 1);
+                                cond = true;
+                            }
+                        } else {
+                            // SPELL action
+                        }
+                        // ConsoleBoard.printBoard(board, player_one, player_two,
+                        // player_one.getDamage(),
+                        // player_two.getDamage());
+
+                    } else {
+                        ConsoleGame.printInvalidBlockNumber();
+                    }
+                } else {
+                    ConsoleGame.printInvaidInput();
+                }
+
+            }
         }
 
         return "turn_is_finished";
