@@ -29,18 +29,18 @@ public class M_GamePlayMenu extends Menu {
 
         int ai_level = 1;
         switch (player_one.getBotLevel()) {
-            case 1:
-                ai_level = 1;
-                break;
-            case 2:
-                ai_level = 2;
-                break;
-            case 3:
-                ai_level = 3;
-                break;
-            case 4:
-                ai_level = 4;
-                break;
+            // case 1:
+            //     ai_level = 1;
+            //     break;
+            // case 2:
+            //     ai_level = 2;
+            //     break;
+            // case 3:
+            //     ai_level = 3;
+            //     break;
+            // case 4:
+            //     ai_level = 4;
+            //     break;
 
             default:
                 // Boss!

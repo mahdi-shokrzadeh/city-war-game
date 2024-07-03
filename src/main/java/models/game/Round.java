@@ -17,7 +17,7 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
-
+    private int number_of_round_turns = 4;
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
@@ -57,7 +57,7 @@ public class Round {
             String result = current_turn.processTurn(board,
                     this);
             if (result.equals("turn_is_finished")) {
-                if (this.turns.size() < 6) {
+                if (this.turns.size() < this.number_of_round_turns) {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
@@ -216,6 +216,7 @@ public class Round {
         for (int i = 0; i <= 20; i++) {
             int random = (int) (Math.random() * 10) + 20;
             this.board[0][i].setBlockCard(card_one);
+            this.board[0][i].setBlockEmpty(false);
             this.board[0][i].setCardHidden(true);
             this.board[0][i].setBlockPower(random);
             this.board[0][i].setBlockDamage(random);
