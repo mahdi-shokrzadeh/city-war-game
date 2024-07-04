@@ -196,7 +196,7 @@ public class UserController {
         }
 
         if (user == null) {
-            return new Response("Username doesn’t exist!", -400);
+            return new Response("Username doesn't exist!", -400);
         }
 
         if (!passwordIsCorrect) {
@@ -276,7 +276,7 @@ public class UserController {
         }
 
         if (user == null) {
-            return new Response("Username doesn’t exist!", -400);
+            return new Response("Username doesn't exist!", -400);
         } else {
             Scanner sc = new Scanner(System.in);
 
