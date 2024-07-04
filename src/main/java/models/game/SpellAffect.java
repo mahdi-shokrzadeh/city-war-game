@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.ArrayList;
+
 import models.User;
 import models.card.Card;
 import models.card.Spell;
@@ -12,13 +14,18 @@ public class SpellAffect {
     private Spell spell_card;
     private int turn_index;
     private User current_player;
+    private Round round;
+    private ArrayList<Card> hand_cards;
 
-    public SpellAffect(Card spell_card, int turn_index, int des_index, Block[][] board, User current_player) {
+    public SpellAffect(Card spell_card, int turn_index, int des_index,
+            Block[][] board, User current_player, Round round, ArrayList<Card> hand_cards) {
         this.des_index = des_index;
         this.board = board;
         this.spell_card = (Spell) spell_card;
         this.turn_index = turn_index;
         this.current_player = current_player;
+        this.round = round;
+        this.hand_cards = hand_cards;
     }
 
     public boolean spellHandler() {
@@ -50,6 +57,22 @@ public class SpellAffect {
                 handleSpaceShift();
                 // returns fasle means no need to handleEffect
                 return false;
+
+            case "Repair":
+                handleRepair();
+                return false;
+
+            case "RoundReduce":
+                handleRoundReduce();
+                return false;
+
+            case "Attenuate":
+                handleAttenuate();
+                break;
+
+            case "Copy":
+                // handleCopy();
+                break;
 
             default:
 
@@ -182,5 +205,75 @@ public class SpellAffect {
         }
 
         return -1;
+    }
+
+    public void handleRepair() {
+        // find the unavailable block
+        int unavailable_block_index = findUnavailableBlock(this.turn_index);
+        if (unavailable_block_index == -1) {
+            ConsoleGame.printNoUnavailableBlock();
+            return;
+        }
+
+        this.board[this.turn_index][unavailable_block_index].setBlockUnavailable(false);
+        ConsoleGame.printSuccessRepair();
+    }
+
+    public void handleRoundReduce() {
+        this.round.setNumberOfRoundTurns(this.round.getNumberOfRoundTurns() - 1);
+        ConsoleGame.printSuccessfulTurnReduce();
+    }
+
+    public void handleAttenuate() {
+        // randomly choose two reqular cards from opponent
+        Card found_card_one = null;
+        Card found_card_two = null;
+
+        boolean found = false;
+        for (int i = 0; i <= 20; i++) {
+            if (!this.board[(this.turn_index + 1) % 2][i].isBlockEmpty()) {
+                if (this.board[(this.turn_index + 1) % 2][i].getBlockCard().getCardType().toString()
+                        .equals("Regular")) {
+                    if (!found) {
+                        found_card_one = this.board[(this.turn_index + 1)][i].getBlockCard();
+                        found = true;
+                    } else {
+                        found_card_two = this.board[(this.turn_index + 1)][i].getBlockCard();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (found_card_one == null || found_card_two == null) {
+            ConsoleGame.printNoRegularCardForAttenuate();
+            return;
+        }
+
+        for (int i = 0; i <= 20; i++) {
+            Block op_block = this.board[(this.turn_index + 1) % 2][i];
+            if (op_block.getBlockCard().equals(found_card_one)) {
+                op_block.setBlockPower(op_block.getBlockPower() - 1);
+            } else if (op_block.getBlockCard().equals(found_card_two)) {
+                op_block.setBlockDamage(op_block.getBlockDamage() - 10);
+            }
+            if (this.turn_index == 0) {
+                round.getPlayer_two().setDamage(round.getPlayer_two().getDamage() - 10 * found_card_two.getDuration());
+            } else {
+                round.getPlayer_one().setDamage(round.getPlayer_one().getDamage() - 10 * found_card_two.getDuration());
+            }
+        }
+        ConsoleGame.printAttenuateSuccess(found_card_one, found_card_two);
+    }
+
+    public void handleCopy() {
+        try {
+            Card copy_card = this.hand_cards.get(des_index);
+            this.hand_cards.add(0, copy_card);
+            this.current_player.setIsBonusActive(true);
+            ConsoleGame.printCopySuccess(copy_card);
+        } catch (Exception e) {
+            ConsoleGame.printNoValidCardToCopy();
+        }
     }
 }
