@@ -3,6 +3,8 @@ package org.example.citywars;
 import controllers.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.util.Duration;
 import models.Response;
 import models.User;
 import models.game.Game;
@@ -11,15 +13,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.regex.Pattern;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 public class M_LoginMenu extends Menu {
     public static Timer timer;
     public static boolean timerIsOn;
     public static int lockTime;
     public static int failureCount;
 
+    @FXML
+    Label error;
+    @FXML
+    TextField usernameField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    Button back;
+    @FXML
+    Button forgotPass;
+    @FXML
+    Button ok;
+    @FXML
+    CheckBox isAdmin;
+    @FXML
+    ProgressBar ErrorTimer;
+
     public M_LoginMenu(){
-        super("M_LoginMenu","BG1.mp4");
+        super("M_LoginMenu", true, "BG-Videos\\BG-login.png");
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn=false;
@@ -70,7 +91,6 @@ public class M_LoginMenu extends Menu {
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {
-                        //here!!!
                         return new Game(loggedInUser,(User)s.body.get("user"),"duel");
                     }
                     else {
@@ -89,8 +109,37 @@ public class M_LoginMenu extends Menu {
 
     //Control Methods
     @FXML
-    protected void GoToSignUpButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_SignUpMenu();
-        switchMenus(event);
+    protected void loginButton(ActionEvent event) throws IOException {
+
+        if (usernameField.getText().isBlank()) {
+            error.setText("Username Field is blank!");
+            return;
+        }
+        if (passwordField.getText().isBlank()) {
+            error.setText("Password Field is blank!");
+            return;
+        }
+        Response s = UserController.login(usernameField.getText(), passwordField.getText());
+        error.setText(s.message);
+
+        if (timerIsOn && s.message.contains("Wrong Password")) {
+            ErrorTimer.progressProperty().setValue(1);
+
+            Timeline timeline = new Timeline();
+            KeyValue key = new KeyValue(ErrorTimer.progressProperty(), 0);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(5 * failureCount), key);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.play();
+
+        }
+        if (s.ok) {
+            if (M_GameModeChoiseMenu.secondPersonNeeded) {
+                HelloApplication.menu = new Game(loggedInUser,(User)s.body.get("user"),"duel");
+                switchMenus(event);
+            } else {
+                HelloApplication.menu = new M_GameMainMenu();
+                switchMenus(event);
+            }
+        }
     }
 }
