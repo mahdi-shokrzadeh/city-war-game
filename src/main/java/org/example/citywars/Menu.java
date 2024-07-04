@@ -12,6 +12,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.P_PlayMode;
+import models.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public abstract class Menu implements Initializable {
     private String name;
     ArrayList<Pattern> patterns;
     Matcher matcher;
-    //static User loggedInUser = null;
+    static User loggedInUser ;
     static boolean secondPersonNeeded;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
