@@ -135,4 +135,12 @@ public class ConsoleGame {
         System.out.println("Power boost is successful (+10) for the card: " + card.getName());
     }
 
+    public static void printNoEmptyBlock() {
+        System.out.println("No empty block found for space shift!");
+    }
+
+    public static void printSuccessSpaceShift() {
+        System.out.println("Space shift was successful!");
+    }
+
 }

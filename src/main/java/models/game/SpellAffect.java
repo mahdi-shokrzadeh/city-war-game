@@ -46,6 +46,11 @@ public class SpellAffect {
                 }
                 break;
 
+            case "SpaceShift":
+                handleSpaceShift();
+                // returns fasle means no need to handleEffect
+                return false;
+
             default:
 
                 break;
@@ -130,5 +135,52 @@ public class SpellAffect {
         }
 
         return true;
+    }
+
+    public void handleSpaceShift() {
+
+        int block_number_player_one = findEmptyBlock(0);
+        int block_number_player_two = findEmptyBlock(1);
+        if (block_number_player_one == -1 || block_number_player_two == -1) {
+            ConsoleGame.printNoEmptyBlock();
+            return;
+        }
+
+        int unavailable_block_player_one = findUnavailableBlock(0);
+        int unavailable_block_player_two = findUnavailableBlock(1);
+
+        // swap the blocks
+        this.board[0][block_number_player_one].setBlockUnavailable(true);
+        this.board[0][unavailable_block_player_one].setBlockUnavailable(false);
+        this.board[0][unavailable_block_player_one].setBlockEmpty(true);
+
+        this.board[1][block_number_player_two].setBlockUnavailable(true);
+        this.board[1][unavailable_block_player_two].setBlockUnavailable(false);
+        this.board[1][unavailable_block_player_two].setBlockEmpty(true);
+
+        ConsoleGame.printSuccessSpaceShift();
+
+    }
+
+    public int findEmptyBlock(int turn_index) {
+
+        for (int i = 0; i <= 20; i++) {
+            if (this.board[turn_index][i].isBlockEmpty() && !this.board[turn_index][i].isBlockUnavailable()) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public int findUnavailableBlock(int turn_index) {
+
+        for (int i = 0; i <= 20; i++) {
+            if (!this.board[turn_index][i].isBlockEmpty() && this.board[turn_index][i].isBlockUnavailable()) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
