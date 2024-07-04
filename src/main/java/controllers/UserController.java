@@ -11,6 +11,7 @@ import database.DBs.CardDB;
 import database.DBs.UserDB;
 import database.DBs.UserCardDB;
 import org.example.citywars.M_LoginMenu;
+import org.example.citywars.Menu;
 
 
 public class UserController {
@@ -282,35 +283,23 @@ public class UserController {
 
             System.out.println(user.getPassRecoveryQuestion());
 
-            String answer = "";
-            while (answer.isBlank()) {
+            String answer;
+            while (true) {
                 answer = sc.nextLine();
                 if (!answer.trim().toLowerCase().equals(user.getPassRecoveryAnswer().toLowerCase()))
-                    return new Response("Wrong answer! Try again!", -401);
-                //answer = "";
+                    System.out.println("Wrong answer! Try again!");
+                else
+                    break;
             }
 
             System.out.println("Enter you new password: ");
-            String password = sc.nextLine().trim();
+            String password ;
+            do {
+                password= sc.nextLine().trim();
+                if (Menu.passwordProblem(password)!=null)
+                    System.out.println(Menu.passwordProblem(password));
 
-            if (password.isBlank()) {
-                return new Response("password can not be blank", -422);
-            }
-            if (password.length() < 8) {
-                return new Response("password must be at least 8 characters long", -422);
-            }
-            if (!Pattern.compile("[a-z]+").matcher(password).find()) {
-                return new Response("password must have at least one lower case letter", -422);
-            }
-            if (!Pattern.compile("[A-Z]+").matcher(password).find()) {
-                return new Response("password must have at least one upper case letter", -422);
-            }
-            if (!Pattern.compile("[0-9]+").matcher(password).find()) {
-                return new Response("password must have at least one digit", -422);
-            }
-            if (!Pattern.compile("[!%@#$^*&\\-+=_/;'.,~]+").matcher(password).find()) {
-                return new Response("password must contain at least one special character", -422);
-            }
+            }while (Menu.passwordProblem(password) != null);
 
             try {
                 user.setPassword(password);

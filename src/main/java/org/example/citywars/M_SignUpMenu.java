@@ -160,7 +160,7 @@ public class M_SignUpMenu extends Menu {
         }  else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
                 System.out.println("Username already exists!");
             } else if (passwordProblem(password.trim()) != null) {
-            System.out.println("|" + password.trim() + "|");
+//            System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
             out = "Password confirmation doesn't match!";
