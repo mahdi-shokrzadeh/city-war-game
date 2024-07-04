@@ -319,7 +319,7 @@ public class UserController {
                 return new Response("an exception happened while saving new password", -500);
             }
 
-            return new Response("password changed successfully!", 201);
+            return new Response("password changed successfully!", 201,"user", user);
         }
     }
 
