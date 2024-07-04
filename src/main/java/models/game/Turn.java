@@ -178,9 +178,10 @@ public class Turn {
 
     public void printCurrentUserHand(User player) {
         if (player == player_one) {
-            ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
-                    this.player_one.getIsBonusActive() ? 6 : 5)),
-                    player);
+            if (!(player_one instanceof AI) || ((AI) player_one).getAiLevel() != 5)
+                ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
+                        this.player_one.getIsBonusActive() ? 6 : 5)),
+                        player);
         } else {
             ConsoleCard.printUserCards(new ArrayList<>(player_two_cards.subList(0,
                     this.player_two.getIsBonusActive() ? 6 : 5)),
