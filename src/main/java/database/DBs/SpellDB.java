@@ -22,61 +22,46 @@ public class SpellDB {
                 data = mapper.readValue(file, new TypeReference<List<Spell>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.println("Exception in SpellDB: " +e.getMessage());
         }
     }
     private void save(){
+        File file = new File("./src/main/java/database/json/spells.json");
         try {
-            File file = new File("./src/main/java/database/json/spells.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
+
     }
     public int create(Spell spell){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             spell.setID(id);
             data.add(spell);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public Spell getOne(int id){
         Spell spell = null;
-        try{
-            spell = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        spell = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return spell;
     }
     public Spell getByName(String name){
         Spell spell = null;
-        try{
-            spell = data.stream().filter(o -> o.getName().equals(name) ).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        spell = data.stream().filter(o -> o.getName().equals(name) ).findFirst().orElse(null);
         return spell;
     }
     public List<Spell> getAll(){
         return data;
     }
     public void update(Spell spell, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? spell: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? spell: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);

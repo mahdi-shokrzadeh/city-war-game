@@ -53,7 +53,11 @@ public class SpellController {
         }
 
         Spell spell = new Spell(name, price, duration, type, spellType, upgradeLevel, upgradeCost, desc);
-        spellDB.create(spell);
+        try {
+            spellDB.create(spell);
+        }catch (Exception e){
+            return new Response("an exception happened while creating spell",-500,e);
+        }
 
         res = new Response("Spell created successfully", 201,"spell", spell);
         return res;
@@ -61,16 +65,15 @@ public class SpellController {
 
     public static Response getSpellByName(String name) {
         Spell spell = null;
-        Response res;
         try {
             spell = spellDB.getByName(name);
-            res = new Response("Spell found", 200,"spell", spell);
         } catch (Exception e) {
-            e.printStackTrace();
-            spell = null;
-            res = new Response("Spell not found", -404);
+            return new Response("an exception happened while fetching spell",-500,e);
         }
-        return res;
+        if( spell == null ){
+            return new Response("no spell was found with this name",-400);
+        }
+        return new Response("spell fetched successfully",200,"spell",spell);
     }
 
     public static Response removeSpell(Spell spell) {
@@ -80,8 +83,7 @@ public class SpellController {
             spellDB.delete(spell.getID());
             res = new Response("spell deleted successfully", 200);
         } catch (Exception e) {
-            e.printStackTrace();
-            res = new Response("an error has occurred while deleting spell", -500);
+            res = new Response("an error has occurred while deleting spell", -500,e);
         }
 
         return res;
@@ -132,7 +134,11 @@ public class SpellController {
         }
 
         Spell spell = new Spell(name, price, duration, ((Spell) existingSpell.body.get("spell")).getCardType().toString(), spellType, upgradeLevel, upgradeCost, desc);
-        spellDB.create(spell);
+        try {
+            spellDB.create(spell);
+        }catch (Exception e){
+            return new Response("an exception happened while editing spell",-500,e);
+        }
 
         return new Response("Spell edited successfully", 200);
     }

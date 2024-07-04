@@ -19,7 +19,8 @@ import static controllers.UserController.sudoGetAllUsers;
 
 public class M_SignUpMenu extends Menu {
 
-    final String securityQuestions = "Please choose a security question :\n" +
+    final String securityQuestions = "Please choose a security question using the following format :\n" +
+            "question pick -q question_number -a answer -c answer_confirmation\n"+
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
@@ -36,6 +37,7 @@ public class M_SignUpMenu extends Menu {
     int captchaCountLeft;
     private String securityQuestion;
     private String securityQuestionAnswer;
+    private String pass; // for command line
 
     public M_SignUpMenu() {
         super("M_SignUpMenu", "BG1.mp4");
@@ -47,13 +49,13 @@ public class M_SignUpMenu extends Menu {
     }
 
     private void printMenu(){
-        System.out.println("Signup menu");
+        System.out.println("SIGN UP MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
         System.out.println("Information: ");
         System.out.println("    You can signup in this menu using the one of the two following formats: ");
-        System.out.println("        user create -u username -p password password_confirmation -email email -n nickname");
-        System.out.println("        user create -u username -p random -email email -n nickname");
+        System.out.println("        user create -u <username> -p <password> <password_confirmation> -email <email> -n <nickname>");
+        System.out.println("        user create -u <username> -p random -email <email> -n <nickname>");
     }
 
     public Menu myMethods() {
@@ -84,13 +86,13 @@ public class M_SignUpMenu extends Menu {
                     System.out.println("Wrong Answer; Sign Up again from beginning :( ");
                     continue;
                 }
+                pass =  passConf;
 
                 System.out.println(s);
 
                 Menu menu = securityQuestionAndCaptcha(matcher.group("username").trim());
                 if( menu == null ){
                     printMenu();
-                    continue;
                 }else{
                     return menu;
                 }
@@ -108,11 +110,11 @@ public class M_SignUpMenu extends Menu {
                     printMenu();
                     continue;
                 }
+
+                pass = matcher.group("password");
+
                 Menu menu =  securityQuestionAndCaptcha(matcher.group("username").trim());
-                if( menu == null ){
-                    printMenu();
-                    continue;
-                }else{
+                if( menu != null ){
                     return menu;
                 }
             }else if(Pattern.compile("^show current menu$").matcher(input).find()){
@@ -209,13 +211,13 @@ public class M_SignUpMenu extends Menu {
             System.out.print("Answer = ");
 
             try {
-                ans = consoleScanner.nextInt();
+                ans = Integer.parseInt(consoleScanner.nextLine().trim());
             } catch (Exception e) {
                 System.out.println("Type Number!");
             }
 
             if (ans == captcha.getAnswer()) {
-                Response res = UserController.createUser(matcher.group("username"),matcher.group("password"),matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
+                Response res = UserController.createUser(matcher.group("username"),pass,matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
                 if(res.ok) {
                     System.out.println("User " + username + " created successfully!");
                     return new M_LoginMenu();

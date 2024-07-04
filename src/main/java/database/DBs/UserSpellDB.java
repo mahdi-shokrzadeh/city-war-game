@@ -22,7 +22,7 @@ public class UserSpellDB {
                 data = mapper.readValue(file, new TypeReference<List<UserSpell>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.println("Exception in UserSpellDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -30,52 +30,37 @@ public class UserSpellDB {
             File file = new File("./src/main/java/database/json/userSpells.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in UserSpellDB: " +e.getMessage());
         }
     }
     public int create(UserSpell userSpell){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             userSpell.setID(id);
             data.add(userSpell);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public UserSpell getOne(int id){
         UserSpell userSpell = null;
-        try{
-            userSpell = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        userSpell = data.stream().filter(o -> o.getID() == id).toList().getFirst();
         return userSpell;
     }
     public List<UserSpell> whereEquals(int id){
-        try{
-           data.removeIf(o -> o.getUserID() != id);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return data;
+        List<UserSpell> spells = null;
+        spells = data.stream().filter(o -> o.getUserID() != id).toList();
+        return spells;
     }
     public List<UserSpell> getAll(){
         return data;
     }
     public void update(UserSpell userSpell, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? userSpell: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? userSpell: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);
