@@ -66,7 +66,7 @@ public class M_LoginMenu extends Menu {
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
                 matcher.find();
-                Response s=UserController.forgotPassword(matcher.group("username").trim());
+                Response s = UserController.forgotPassword(matcher.group("username").trim());
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {

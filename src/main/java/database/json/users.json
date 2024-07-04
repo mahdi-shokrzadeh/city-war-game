@@ -1,7 +1,7 @@
 [ {
   "id" : 1,
   "username" : "Drew",
-  "password" : "UserUser3#",
+  "password" : "UserUser2@",
   "nickname" : "MC",
   "email" : "email.user@gmail.com",
   "role" : "admin",
@@ -16,9 +16,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 2,
   "username" : "Phil",
@@ -37,9 +37,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 3,
   "username" : "Drew1",
@@ -58,9 +58,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 4,
   "username" : "Drew2",
@@ -79,9 +79,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 5,
   "username" : "George1",
@@ -100,9 +100,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 6,
   "username" : "George",
@@ -121,9 +121,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 7,
   "username" : "John",
@@ -142,9 +142,9 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 }, {
   "id" : 8,
   "username" : "Barack",
@@ -163,7 +163,7 @@
   "userCardIDS" : [ ],
   "progress" : 1,
   "damage" : 0,
-  "botLevel" : 0,
+  "gameCharacter" : null,
   "isBonusActive" : false,
-  "gameCharacter" : null
+  "botLevel" : 0
 } ]

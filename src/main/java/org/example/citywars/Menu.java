@@ -60,7 +60,7 @@ public abstract class Menu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    String passwordProblem(String s){
+    public static String passwordProblem(String s){
         if (s.isBlank())
             return "Blank Field!";
         else if(!s.matches(".*[a-z]+.*") || !s.matches(".*[A-Z]+.*"))
