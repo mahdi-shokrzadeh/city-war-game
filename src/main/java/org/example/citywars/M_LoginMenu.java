@@ -70,6 +70,7 @@ public class M_LoginMenu extends Menu {
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {
+                        //here!!!
                         return new Game(loggedInUser,(User)s.body.get("user"),"duel");
                     }
                     else {
