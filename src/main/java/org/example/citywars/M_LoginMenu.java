@@ -70,9 +70,14 @@ public class M_LoginMenu extends Menu {
                 Response s = null;
                 s = UserController.forgotPassword(matcher.group("username").trim());
                 System.out.println(s.message);
-                if (!s.ok){
-                    if(s.exception != null){
-                        System.out.println(s.exception.getMessage());
+                if (s.ok){
+                    if (secondPersonNeeded) {
+                        //here!!!
+                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
+                    }
+                    else {
+                        loggedInUser=(User)s.body.get("user");
+                        return new M_GamePlayMenu();
                     }
                 }
                 printMenu();
