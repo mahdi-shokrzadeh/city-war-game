@@ -28,7 +28,7 @@ public class M_LoginMenu extends Menu {
         patterns.add(Pattern.compile("^ *Forgot +my +password +-u(?<username>[\\S ]+) *$"));
     }
     private void printMenu(){
-        System.out.println("Login menu");
+        System.out.println("LOG IN MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
         System.out.println("Information: ");
@@ -42,8 +42,7 @@ public class M_LoginMenu extends Menu {
         String input;
 
         do {
-            input = consoleScanner.nextLine();
-
+            input = consoleScanner.nextLine().trim();
             if (input.toLowerCase().matches("^ *back *$")) {
                 if (M_GameModeChoiseMenu.secondPersonNeeded)
                     return new M_GameModeChoiseMenu();
@@ -55,30 +54,29 @@ public class M_LoginMenu extends Menu {
                 Response s=UserController.login(matcher.group("username").trim(),matcher.group("password").trim());
                 System.out.println(s.message);
                 if (s.ok){
-                    if (secondPersonNeeded) {
-                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
-                    }
-                    else {
-                        loggedInUser=(User)s.body.get("user");
+                    loggedInUser = (User) s.body.get("user");
+                    if (M_GameModeChoiseMenu.secondPersonNeeded)
                         return new M_GamePlayMenu();
+                    else
+                        return new M_GameMainMenu();
+                }else{
+                    if( s.exception != null ) {
+                        System.out.println(s.exception.getMessage());
                     }
                 }
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
                 matcher.find();
-                Response s=UserController.forgotPassword(matcher.group("username").trim());
+                Response s = null;
+                s = UserController.forgotPassword(matcher.group("username").trim());
                 System.out.println(s.message);
-                if (s.ok){
-                    if (secondPersonNeeded) {
-                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
-                    }
-                    else {
-                        loggedInUser=(User)s.body.get("user");
-                        return new M_GamePlayMenu();
+                if (!s.ok){
+                    if(s.exception != null){
+                        System.out.println(s.exception.getMessage());
                     }
                 }
-            }
-            else if(Pattern.compile("^show current menu$").matcher(input).find()){
+                printMenu();
+            }else if(Pattern.compile("^show current menu$").matcher(input).find()){
                 System.out.println("you are currently in " + getName());
             }else {
                 System.out.println("Invalid command!");

@@ -15,7 +15,7 @@ module org.example.citywars {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
 
-    opens org.example.citywars to javafx.fxml;
+    opens org.example.citywars;
     opens models to com.fasterxml.jackson.databind;
     opens models.card to com.fasterxml.jackson.databind;
     opens models.game to com.fasterxml.jackson.databind;

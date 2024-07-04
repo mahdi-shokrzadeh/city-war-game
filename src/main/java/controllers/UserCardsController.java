@@ -21,8 +21,7 @@ public class UserCardsController {
         try {
             user = userDB.getOne(userID);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception occurred while fetching user",-500);
+            return new Response("an exception occurred while fetching user",-500,e);
         }
         if( user == null ){
             return new Response("could not find any user with this id",-400);
@@ -32,9 +31,18 @@ public class UserCardsController {
         }
 
         UserCard userCard = new UserCard(userID, card.getID());
-        int id = ucDB.create(userCard);
+        int id;
+        try {
+            id = ucDB.create(userCard);
+        }catch (Exception e){
+            return new Response("an exception happened while creating user card",-500,e);
+        }
         user.addUserCardID(id);
-        userDB.update(user, user.getID());
+        try {
+            userDB.update(user, user.getID());
+        }catch (Exception e){
+            return new Response("ane xception happened while updating user",-500,e);
+        }
 
         return new Response("card purchased successfully",200);
     }
@@ -46,8 +54,7 @@ public class UserCardsController {
         try{
             user = userDB.getOne(userID);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception occurred while fetching user",-500);
+            return new Response("an exception occurred while fetching user",-500,e);
         }
         if( user == null ){
             return new Response("no user found with this id",-400);
@@ -56,8 +63,7 @@ public class UserCardsController {
         try {
             allUsersCards = ucDB.whereEquals(userID);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception occurred while fetching user cards",-500);
+            return new Response("an exception occurred while fetching user cards",-500,e);
         }
         if( allUsersCards == null ){
             return new Response("could not find users cards",-400);
@@ -88,8 +94,7 @@ public class UserCardsController {
         try{
             user = userDB.getOne(userID);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception occurred while fetching user",-500);
+            return new Response("an exception occurred while fetching user",-500,e);
         }
         if( user == null ){
             return new Response("no user found with this id",-400);
@@ -100,8 +105,7 @@ public class UserCardsController {
         try{
             userCard = ucDB.firstWhereEquals(user.getID(), card.getID());
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception happend while deleting user card",-500);
+            return new Response("an exception happend while deleting user card",-500,e);
         }
         if( userCard == null ){
             return new Response("no user card was found",-400);

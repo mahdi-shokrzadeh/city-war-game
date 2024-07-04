@@ -12,8 +12,7 @@ public class GameCharacterController {
             GameCharacter c = new GameCharacter(name);
             gcDB.create(c);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exception happened while creating character",-500);
+            return new Response("an exception happened while creating character",-500,e);
         }
 
         return new Response("character created successfully",200);
@@ -24,8 +23,7 @@ public class GameCharacterController {
         try{
             character = gcDB.getByName(name);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("an exceptio occurred while getting character",-500);
+            return new Response("an exceptio occurred while getting character",-500,e);
         }
         return new Response("fetched character successfully",200,"character",character);
     }
