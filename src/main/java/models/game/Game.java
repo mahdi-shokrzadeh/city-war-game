@@ -34,6 +34,8 @@ public class Game extends Menu {
 
         private Round current_round;
 
+        public Game(){}
+
         public Game(User player_one, User player_two, String mode) {
                 super("GameProcess");
                 this.player_one = player_one;

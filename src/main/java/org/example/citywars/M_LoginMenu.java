@@ -45,7 +45,7 @@ public class M_LoginMenu extends Menu {
             input = consoleScanner.nextLine();
 
             if (input.toLowerCase().matches("^ *back *$")) {
-                if (M_GameModeChoiseMenu.secondPersonNeeded)
+                if (secondPersonNeeded)
                     return new M_GameModeChoiseMenu();
                 else
                     return new M_Intro();
@@ -70,7 +70,6 @@ public class M_LoginMenu extends Menu {
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {
-                        //here!!!
                         return new Game(loggedInUser,(User)s.body.get("user"),"duel");
                     }
                     else {
