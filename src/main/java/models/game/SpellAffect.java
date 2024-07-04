@@ -109,7 +109,7 @@ public class SpellAffect {
 
     public boolean handlePowerBoost() {
         // randomly choose a card from user board
-        Card found_card;
+        Card found_card = null;
         boolean found = false;
         for (int i = 0; i <= 20; i++) {
             if (!this.board[this.turn_index][i].isBlockEmpty()) {
@@ -124,6 +124,9 @@ public class SpellAffect {
         if (!found) {
             ConsoleGame.printNoRegularCard();
             return false;
+        } else {
+            found_card.setPower(found_card.getPower() + 10);
+            ConsoleGame.printPowerBoostSuccess(found_card);
         }
 
         return true;
