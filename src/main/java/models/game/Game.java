@@ -55,8 +55,14 @@ public class Game extends Menu {
                                 this.handleAddCardsToPlayers();
                                 break;
 
-                        case "normal":
+                        case "AI":
+                                // this.handleChooseCharacter
+                                // this.startGame();
+                                this.handleAddCardsToPlayers();
+                                break;
 
+                        case "bet":
+                                this.handleAddCardsToPlayers();
                                 break;
 
                         default:
@@ -76,7 +82,15 @@ public class Game extends Menu {
                 if (input.equals("-Select character")) {
                         this.handleChooseCharacter(this.player_one);
                         this.handleChooseCharacter(this.player_two);
-                } else if (input.equals("-Start game")) {
+                } else if (input.equals("-Bet amount")) {
+                        if (this.mode.equals("bet")) {
+                                this.handleGetBetAmount();
+                        } else {
+                                System.out.println("This mode does not require a bet amount");
+                        }
+                }
+
+                else if (input.equals("-Start game")) {
                         this.startGame();
                         Menu menu = new M_GameOverMenu();
                         return menu;
@@ -121,11 +135,14 @@ public class Game extends Menu {
         }
 
         public void startGame() {
-                // if (this.player_one.getGameCharacter() == null ||
-                // this.player_two.getGameCharacter() == null) {
-                // System.out.println("Please select characters for both players");
-                // return;
-                // }
+                if (this.player_one.getGameCharacter() == null ||
+                                this.player_two.getGameCharacter() == null) {
+                        System.out.println("Please select characters for both players");
+                        return;
+                } else if (this.mode.equals("bet") && this.bet_amount == 0) {
+                        System.out.println("Please enter a bet amount");
+                        return;
+                }
 
                 boolean con = true;
                 while (con) {
@@ -389,6 +406,32 @@ public class Game extends Menu {
                 } else {
                         this.winner = player_two.getUsername();
                         ConsoleGame.printWinner(player_two.getUsername());
+                }
+        }
+
+        public void handleGetBetAmount() {
+                Scanner sc = new Scanner(System.in);
+                boolean cond = false;
+                System.out.println("Please enter the bet amount:");
+                while (!cond) {
+                        String input = sc.nextLine();
+                        if (input.matches("[0-9]+")) {
+
+                                if (this.player_one.getCoins() < this.bet_amount
+                                                || this.player_two.getCoins() < this.bet_amount) {
+                                        System.out.println(
+                                                        "One of the players does not have enough coins to bet this amount"
+                                                                        + "\n" +
+                                                                        "Please enter a valid amount");
+
+                                } else {
+                                        cond = true;
+                                        this.bet_amount = Integer.parseInt(input);
+
+                                }
+                        } else {
+                                System.out.println("Please enter a valid number");
+                        }
                 }
         }
 

@@ -5,7 +5,6 @@ import models.P_PlayMode;
 public class M_GameModeChoiseMenu extends Menu{
     public M_GameModeChoiseMenu(){
         super("M_GameModeChoiseMenu");
-        secondPersonNeeded =true;
     }
     public Menu myMethods(){
         String input = consoleScanner.nextLine();

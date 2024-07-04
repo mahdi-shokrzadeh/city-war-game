@@ -2,6 +2,7 @@ package org.example.citywars;
 
 import controllers.UserController;
 import controllers.game.GameController;
+import models.AI;
 import models.User;
 import models.game.Game;
 import views.console.menu.ConsoleGameMenu;
@@ -22,14 +23,42 @@ public class M_GamePlayMenu extends Menu {
         // String recovery_pass_question, String recovery_pass_answer) {
         User player_one = new User("username1", "password", "nickname1", "email", "role", "recovery_pass_question",
                 "recovery_pass_answer");
+        loggedInUser = player_one;//temporary
 
         User player_two = new User("player_two", "password",
                 "nickname2", "email", "role", "recovery_pass_question", "recovery_pass_answer");
 
+        int ai_level = 1;
+        switch (player_one.getBotLevel()) {
+            // case 1:
+            //     ai_level = 1;
+            //     break;
+            // case 2:
+            //     ai_level = 2;
+            //     break;
+            // case 3:
+            //     ai_level = 3;
+            //     break;
+            // case 4:
+            //     ai_level = 4;
+            //     break;
+
+            default:
+                // Boss!
+                ai_level = 5;
+                break;
+        }
+
         switch (input) {
             case "2":
-                Menu temp_men = new Game(player_one, player_two, "duel");
-                return temp_men;
+                System.out.println("\nSecond person login:\n");
+                secondPersonNeeded =true;
+                return new M_LoginMenu();
+
+            case "1":
+                AI AI = new AI(ai_level);
+                Menu temp_men2 = new Game(AI, player_one, "AI");
+                return temp_men2;
 
             default:
 

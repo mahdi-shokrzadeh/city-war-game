@@ -35,7 +35,7 @@ public abstract class Menu implements Initializable {
     private String name;
     ArrayList<Pattern> patterns;
     Matcher matcher;
-    static User loggedInUser = null;
+    static User loggedInUser ;
     static boolean secondPersonNeeded;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);

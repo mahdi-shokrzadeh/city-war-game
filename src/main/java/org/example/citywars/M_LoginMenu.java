@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import models.Response;
 import models.User;
+import models.game.Game;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class M_LoginMenu extends Menu {
     public Menu myMethods(){
         printMenu();
         String input;
+
         do {
             input = consoleScanner.nextLine().trim();
             if (input.toLowerCase().matches("^ *back *$")) {
@@ -49,7 +51,7 @@ public class M_LoginMenu extends Menu {
             }else if (patterns.get(0).matcher(input).find()) {
                 matcher = patterns.get(0).matcher(input);
                 matcher.find();
-                Response s = UserController.login(matcher.group("username").trim(),matcher.group("password").trim());
+                Response s=UserController.login(matcher.group("username").trim(),matcher.group("password").trim());
                 System.out.println(s.message);
                 if (s.ok){
                     loggedInUser = (User) s.body.get("user");

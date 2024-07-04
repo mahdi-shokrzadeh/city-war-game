@@ -6,12 +6,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.AA_Captcha;
 import models.Response;
+import models.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static controllers.UserController.sudoGetAllUsers;
 
 public class M_SignUpMenu extends Menu {
 
@@ -118,24 +122,6 @@ public class M_SignUpMenu extends Menu {
             }else {
                 System.out.println("Invalid command!");
             }
-
-
-//            System.out.println(randomPassword());
-//            System.out.println(randomPassword());
-//            System.out.println(randomPassword());
-//
-//            AA_Captcha a = new AA_Captcha();
-//            AA_Captcha b = new AA_Captcha();
-//            AA_Captcha c = new AA_Captcha();
-//
-//            System.out.println(a.showEquation());
-//            System.out.println(a.getAnswer());
-//
-//            System.out.println(b.showEquation());
-//            System.out.println(b.getAnswer());
-//
-//            System.out.println(c.showEquation());
-//            System.out.println(c.getAnswer());
         }while (true);
     }
 
@@ -171,9 +157,9 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        }  /*else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
+        }  else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
                 System.out.println("Username already exists!");
-            } */ else if (passwordProblem(password.trim()) != null) {
+            } else if (passwordProblem(password.trim()) != null) {
             System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
@@ -246,6 +232,23 @@ public class M_SignUpMenu extends Menu {
 
         captchaCountLeft = 3;
         return null;
+    }
+
+    private int getIndexFromUsername(String username){
+        Response res = sudoGetAllUsers();
+        List<User> allUsers = null;
+        if(res.ok) {
+            allUsers = (List<User>) res.body.get("allUsers");
+        }
+        boolean duplicateUserName = false;
+        if( allUsers != null ) {
+            for (int i = 0; i < allUsers.size() ; i++) {
+                if (allUsers.get(i).getUsername().equals(username)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     //Control Methods
