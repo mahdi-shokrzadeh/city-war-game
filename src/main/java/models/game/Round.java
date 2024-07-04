@@ -196,12 +196,12 @@ public class Round {
 
     public void changeBlocksForBoss() {
         // Only Boss!
-        this.board[1][0].setBlockUnavailable(true);
-        this.board[1][1].setBlockUnavailable(true);
+        // this.board[1][0].setBlockUnavailable(true);
+        // this.board[1][1].setBlockUnavailable(true);
         // this.board[1][2].setBlockUnavailable(true);
         // this.board[1][18].setBlockUnavailable(true);
-        this.board[1][19].setBlockUnavailable(true);
-        this.board[1][20].setBlockUnavailable(true);
+        // this.board[1][19].setBlockUnavailable(true);
+        // this.board[1][20].setBlockUnavailable(true);
     }
 
     public void handleBotInitiation() {

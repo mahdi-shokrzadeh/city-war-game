@@ -1,6 +1,7 @@
 package views.console.game;
 
 import models.User;
+import models.card.Card;
 import models.game.Block;
 
 public class ConsoleGame {
@@ -124,6 +125,14 @@ public class ConsoleGame {
 
     public static void printBuffCard(int index, int power) {
         System.out.println("\nBuff card increased the power of the card number " + index + " by " + power + "!!\n");
+    }
+
+    public static void printNoRegularCard() {
+        System.out.println("No regular card found to power boost!");
+    }
+
+    public static void printPowerBoostSuccess(Card card) {
+        System.out.println("Power boost is successful (+10) for the card: " + card.getName());
     }
 
 }

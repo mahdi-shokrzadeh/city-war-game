@@ -128,7 +128,7 @@ public class Turn {
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
                     if (card_number > 0 && card_number <= (current_player.getIsBonusActive() ? 6 : 5)
-                            && block_number >= 0
+                            && block_number > 0
                             && block_number <= 21) {
                         Card selected_card;
                         if (current_player == player_one) {
@@ -145,6 +145,19 @@ public class Turn {
                             }
                         } else {
                             // SPELL action
+                            SpellAffect s = new SpellAffect(selected_card, turn_index, block_number - 1, board,
+                                    current_player);
+
+                            if (s.spellHandler()) {
+                                try {
+                                    handleAffection(turn_index, block_number - 1);
+                                } catch (Exception e) {
+                                    System.out.println(e);
+                                }
+
+                            } else {
+
+                            }
                         }
                         // ConsoleBoard.printBoard(board, player_one, player_two,
                         // player_one.getDamage(),
@@ -188,7 +201,11 @@ public class Turn {
             for (int i = 0; i < card.getDuration(); i++) {
                 this.board[des_index][starting_block_number + i].setBlockCard(card);
                 this.board[des_index][starting_block_number + i].setBlockEmpty(false);
-                handleAffection(des_index, starting_block_number + i);
+                try {
+                    handleAffection(des_index, starting_block_number + i);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         } else {
             return false;
@@ -239,7 +256,11 @@ public class Turn {
         return true;
     }
 
-    public void handleAffection(int des_index, int block_number) {
+    public void handleAffection(int des_index, int block_number) throws Exception {
+        if (this.board[des_index][block_number].getBlockCard() == null) {
+            // should return if the crad is spell and has no duration!
+            return;
+        }
         Block bl = this.board[des_index][block_number];
         Block opponent_block = this.board[(des_index + 1) % 2][block_number];
         if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
