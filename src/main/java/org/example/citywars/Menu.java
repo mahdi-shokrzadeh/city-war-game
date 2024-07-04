@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -22,12 +24,18 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.example.citywars.HelloApplication.icon;
+
 public abstract class Menu implements Initializable {
+    boolean BGisImage = true;
      File file;
      Media media;
      MediaPlayer mediaPlayer;
-    @FXML
+     @FXML
      MediaView backGround;
+    Image BGim;
+    @FXML
+    ImageView backGroundIm;
     Parent root;
     Stage stage;
     Scene scene;
@@ -41,9 +49,10 @@ public abstract class Menu implements Initializable {
 
     public abstract Menu myMethods();
     public Menu(){};
-    public Menu(String name,String BG){
+    public Menu(String name,boolean isImage,String BG){
         this.name = name;
-        file= new File("src\\main\\resources\\BG-Videos\\"+BG);
+        this.BGisImage = isImage;
+        file= new File("src\\main\\resources\\"+BG);
     }
     public Menu(String name){
         this.name = name;
@@ -56,7 +65,9 @@ public abstract class Menu implements Initializable {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle(HelloApplication.menu.getName());
+        stage.getIcons().add(icon);
         stage.setScene(scene);
+//        stage.setFullScreen(true);
         stage.show();
     }
     String passwordProblem(String s){
@@ -79,11 +90,36 @@ public abstract class Menu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        backGround.setMediaPlayer(mediaPlayer);
+        if (!BGisImage) {
+            media = new Media(file.toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            backGround.setMediaPlayer(mediaPlayer);
 
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(-1);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setCycleCount(-1);
+        }
+        else {
+            BGim = new Image(file.toURI().toString());
+            backGroundIm.setImage(BGim);
+
+        }
+    }
+
+    //Control Methods
+    @FXML
+    protected void GoToSignUpButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_SignUpMenu();
+        switchMenus(event);
+    }
+
+    @FXML
+    protected void GoToLoginButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToIntroButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Intro();
+        switchMenus(event);
     }
 }

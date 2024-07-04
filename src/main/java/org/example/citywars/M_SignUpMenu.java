@@ -19,8 +19,11 @@ public class M_SignUpMenu extends Menu {
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
+    @FXML
     Label error;
+    @FXML
     TextField usernameField;
+    @FXML
     PasswordField passwordField;
     Label password;
     PasswordField passwordConfirmationField;
@@ -34,7 +37,7 @@ public class M_SignUpMenu extends Menu {
     private String securityQuestionAnswer;
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu", "BG1.mp4");
+        super("M_SignUpMenu",true, "BG-Videos/BG-signUp.png");
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
@@ -244,15 +247,6 @@ public class M_SignUpMenu extends Menu {
 
         captchaCountLeft = 3;
         return null;
-    }
-
-    //Control Methods
-    @FXML
-    protected void GoToLoginButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_LoginMenu();
-        switchMenus(event);
-
-//        mediaPlayer.play();
     }
 
 }

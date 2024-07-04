@@ -290,7 +290,7 @@ public class UserController {
                 }
             }, delay, period);
 
-            return new Response("Password and Username don’t match!",-401);
+            return new Response("Wrong Password! Try again after "+5*M_LoginMenu.failureCount+" second.",-401);
         }
 
         if( !user.getFirstLogin() || ((List<Card>)CardController.getAllCards().body.get("allCards")).isEmpty()){
