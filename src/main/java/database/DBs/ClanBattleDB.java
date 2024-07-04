@@ -24,7 +24,7 @@ public class ClanBattleDB {
                 data = mapper.readValue(file, new TypeReference<List<ClanBattle>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in ClanBattleDB: " +e.getMessage());
+            System.out.println("Exception in ClanBattleDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -40,7 +40,7 @@ public class ClanBattleDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             battle.setID(id);
             data.add(battle);

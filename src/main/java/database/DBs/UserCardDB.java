@@ -23,7 +23,7 @@ public class UserCardDB {
                 data = mapper.readValue(file, new TypeReference<List<UserCard>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in UserCardDB: " +e.getMessage());
+            System.out.println("Exception in UserCardDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -39,7 +39,7 @@ public class UserCardDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             userCard.setID(id);
             data.add(userCard);

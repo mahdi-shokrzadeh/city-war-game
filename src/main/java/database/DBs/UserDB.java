@@ -24,7 +24,7 @@ public class UserDB {
                 data = mapper.readValue(file, new TypeReference<List<User>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in UserDB: " + e.getMessage());
+            System.out.println("Exception in UserDB: " + e.getMessage());
         }
     }
     private void save(){
@@ -40,7 +40,7 @@ public class UserDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             user.setID(id);
             data.add(user);

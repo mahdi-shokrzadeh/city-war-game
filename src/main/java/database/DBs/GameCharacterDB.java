@@ -22,7 +22,7 @@ public class GameCharacterDB {
                 data = mapper.readValue(file, new TypeReference<List<GameCharacter>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in GameCharacterDB: " +e.getMessage());
+            System.out.println("Exception in GameCharacterDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -38,7 +38,7 @@ public class GameCharacterDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             gameCharacter.setID(id);
             data.add(gameCharacter);

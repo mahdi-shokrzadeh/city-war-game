@@ -22,7 +22,7 @@ public class SpellDB {
                 data = mapper.readValue(file, new TypeReference<List<Spell>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in SpellDB: " +e.getMessage());
+            System.out.println("Exception in SpellDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -39,7 +39,7 @@ public class SpellDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             spell.setID(id);
             data.add(spell);

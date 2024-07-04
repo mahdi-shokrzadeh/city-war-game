@@ -22,7 +22,7 @@ public class ClanGameDB {
                 data = mapper.readValue(file, new TypeReference<List<ClanGame>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in GameDB: " +e.getMessage());
+            System.out.println("Exception in GameDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -38,7 +38,7 @@ public class ClanGameDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             clanGame.setID(id);
             data.add(clanGame);

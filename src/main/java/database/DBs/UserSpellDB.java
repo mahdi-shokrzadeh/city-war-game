@@ -22,7 +22,7 @@ public class UserSpellDB {
                 data = mapper.readValue(file, new TypeReference<List<UserSpell>>(){});
             }
         }catch (Exception e){
-            System.out.print("Exception in UserSpellDB: " +e.getMessage());
+            System.out.println("Exception in UserSpellDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -38,7 +38,7 @@ public class UserSpellDB {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             userSpell.setID(id);
             data.add(userSpell);
