@@ -7,8 +7,10 @@ import org.example.citywars.M_GameOverMenu;
 import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
+import controllers.game.GameController;
 import models.AI;
 import models.GameCharacter;
+import models.Response;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleGame;
@@ -21,8 +23,11 @@ public class Game extends Menu {
         private String created_at;
         private String ended_at;
         private String winner;
+        private User winner_user;
         private String reward;
         private int number_of_rounds;
+        private String winner_reward;
+        private String looser_reward;
 
         // Only Class Vars
         private int bet_amount;
@@ -130,7 +135,8 @@ public class Game extends Menu {
                 else if (input.equals("start game")) {
                         if (this.startGame()) {
                                 // handle game over
-                                Menu menu = new M_GameOverMenu();
+                                Menu menu = new M_GameOverMenu(this.winner_user, this.winner_reward,
+                                                this.looser_reward);
                                 return menu;
                         } else {
                                 return this;
@@ -210,6 +216,49 @@ public class Game extends Menu {
                 }
                 ConsoleGame.printGameIsFinished();
                 this.findWinner();
+                // handle rewards
+
+                String w = this.winner.equals(this.player_one.getNickname()) ? "player_one" : "player_two";
+                Response res;
+                switch (this.mode) {
+
+                        case "duel":
+                                res = GameController.createGame(player_one, player_two, this.rounds.size(),
+                                                w, this.player_one_cards, this.player_two_cards);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        case "AI":
+                                res = GameController.createBotGame(player_two, this.rounds.size(), w,
+                                                player_two_cards);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        case "bet":
+                                res = GameController.createGambleGame(player_one, player_two, this.rounds.size(), w,
+                                                this.bet_amount);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        default:
+                                break;
+                }
+
                 return true;
 
         }
@@ -449,10 +498,12 @@ public class Game extends Menu {
 
         public void findWinner() {
                 if (player_one.getHitPoints() > player_two.getHitPoints()) {
-                        this.winner = player_one.getUsername();
+                        this.winner = player_one.getNickname();
+                        this.winner_user = player_one;
                         ConsoleGame.printWinner(player_one.getUsername());
                 } else {
-                        this.winner = player_two.getUsername();
+                        this.winner = player_two.getNickname();
+                        this.winner_user = player_two;
                         ConsoleGame.printWinner(player_two.getUsername());
                 }
         }

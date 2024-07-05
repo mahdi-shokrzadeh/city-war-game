@@ -79,9 +79,9 @@ public class M_GamePlayMenu extends Menu {
 
         }
 
-        if (gameOver) {
-            return new M_GameOverMenu();
-        }
+        // if (gameOver) {
+        //     return new M_GameOverMenu();
+        // }
 
         return this;
     }

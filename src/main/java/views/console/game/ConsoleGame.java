@@ -29,6 +29,13 @@ public class ConsoleGame {
 
     }
 
+    public static void printGameResult(String result) {
+        System.out.println("--------------------");
+        System.out.println("Game result: \n" + result + "\n");
+        System.out.println("Use back to main menu command to go back");
+        System.out.println("--------------------");
+    }
+
     public static void printBetNotSet() {
         System.out.println("Please set the bet amount first!");
     }
@@ -193,4 +200,5 @@ public class ConsoleGame {
     public static void printSuccessfulcharacterChoice(String character) {
         System.out.println("Character choice is successful! ");
     }
+
 }
