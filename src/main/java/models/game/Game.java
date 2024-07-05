@@ -34,6 +34,8 @@ public class Game extends Menu {
 
         private Round current_round;
 
+        public Game(){}
+
         public Game(User player_one, User player_two, String mode) {
                 super("GameProcess");
                 this.player_one = player_one;
@@ -72,8 +74,41 @@ public class Game extends Menu {
 
         }
 
-        public Game(User player_one, User player_two, String mode, String clan) {
+        public Game(User player_one, String mode) {
+                super("GameProcess");
+                this.player_one = player_one;
+                this.player_two = player_two;
+                this.mode = mode;
+                this.created_at = new java.util.Date().toString();
 
+                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
+                this.current_round = rounds.get(0);
+
+                ConsoleGame.printGreetings();
+
+                switch (mode) {
+
+                        case "duel":
+                                // this.handleUserTwoLogin
+                                // this.handleChooseCharacter
+                                // this.startGame();
+                                this.handleAddCardsToPlayers();
+                                break;
+
+                        case "AI":
+                                // this.handleChooseCharacter
+                                // this.startGame();
+                                this.handleAddCardsToPlayers();
+                                break;
+
+                        case "bet":
+                                this.handleAddCardsToPlayers();
+                                break;
+
+                        default:
+
+                                break;
+                }
         }
 
         @Override
@@ -434,5 +469,7 @@ public class Game extends Menu {
                         }
                 }
         }
+
+
 
 }
