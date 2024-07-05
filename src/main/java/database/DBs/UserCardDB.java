@@ -63,7 +63,7 @@ public class UserCardDB {
     }
     public List<UserCard> whereEquals(int id){
         List<UserCard> cards = null;
-        cards = data.stream().filter(o -> o.getUserID() != id).toList();
+        cards = data.stream().filter(o -> o.getUserID() == id).toList();
         return cards;
     }
     public List<UserCard> getAll(){
