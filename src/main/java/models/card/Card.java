@@ -8,6 +8,7 @@ public class Card extends CardStruct {
     private int damage;
     private GameCharacter character;
     private int level;
+    private SpellType spellType;
     public Card(String _name, int _price, int _duration, String _type, int _power, int _damage, int _upgradeLevel,
             int _upgradeCost, String _desc, GameCharacter _character) {
         super(_name, _price, _duration, _type, _upgradeLevel, _upgradeCost, _desc);
@@ -48,6 +49,9 @@ public class Card extends CardStruct {
     public void applyLevel(){
         damage += 15*level;
         power += 3*level;
+    }
+    public SpellType getSpellType() {
+        return spellType;
     }
 
 }
