@@ -1,7 +1,16 @@
 [{
   "id": 0,
-  "name": "cname"
+  "name": "panda"
 },{
   "id": 1,
   "name": "dragon"
+},{
+  "id": 2,
+  "name": "robot"
+},{
+  "id": 3,
+  "name": "warrior"
+},{
+  "id": 4,
+  "name": "wizard"
 }]
