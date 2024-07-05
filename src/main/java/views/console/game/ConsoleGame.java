@@ -189,4 +189,8 @@ public class ConsoleGame {
     public static void printSuccessfulSteal(Card card) {
         System.out.println("Steal was successful for the card: " + card.getName());
     }
+
+    public static void printSuccessfulcharacterChoice(String character) {
+        System.out.println("Character choice is successful! ");
+    }
 }

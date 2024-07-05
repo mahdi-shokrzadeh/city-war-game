@@ -7,6 +7,7 @@ import org.example.citywars.M_GameOverMenu;
 import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
+import models.AI;
 import models.GameCharacter;
 import models.User;
 import models.card.Card;
@@ -110,9 +111,15 @@ public class Game extends Menu {
         public Menu myMethods() {
                 String input = consoleScanner.nextLine();
                 if (input.equals("select character")) {
-                        this.handleChooseCharacter(this.player_one);
+                        if (!(player_one instanceof AI)) {
+                                this.handleChooseCharacter(this.player_one);
+                        }
+
                         this.handleChooseCharacter(this.player_two);
-                } else if (input.equals("bet amount")) {
+
+                } else if (input.equals("set bet amount"))
+
+                {
                         if (this.mode.equals("bet")) {
                                 this.handleGetBetAmount();
                         } else {
@@ -121,9 +128,15 @@ public class Game extends Menu {
                 }
 
                 else if (input.equals("start game")) {
-                        this.startGame();
-                        Menu menu = new M_GameOverMenu();
-                        return menu;
+                        if (this.startGame()) {
+                                // handle game over
+                                Menu menu = new M_GameOverMenu();
+                                return menu;
+                        } else {
+                                return this;
+                        }
+                } else {
+                        ConsoleGame.printInvaidInput();
                 }
                 return this;
         }
@@ -162,16 +175,19 @@ public class Game extends Menu {
                                 System.out.println("Please enter a valid number between 1 to 3");
                         }
                 }
+
+                ConsoleGame.printSuccessfulcharacterChoice("");
+
         }
 
-        public void startGame() {
+        public boolean startGame() {
                 if (this.player_one.getGameCharacter() == null ||
                                 this.player_two.getGameCharacter() == null) {
                         System.out.println("Please select characters for both players");
-                        return;
+                        return false;
                 } else if (this.mode.equals("bet") && this.bet_amount == 0) {
                         ConsoleGame.printBetNotSet();
-                        return;
+                        return false;
                 }
 
                 boolean con = true;
@@ -193,6 +209,7 @@ public class Game extends Menu {
                 }
                 ConsoleGame.printGameIsFinished();
                 this.findWinner();
+                return true;
 
         }
 
