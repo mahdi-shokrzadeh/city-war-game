@@ -80,9 +80,13 @@ public class SpellAffect {
                 handleHide();
                 return false;
 
-            default:
+            case "Steal":
+                handleSteal();
+                return false;
 
-                break;
+            default:
+                System.out.println("\n nothing!\n\n");
+                return false;
 
         }
 
@@ -294,5 +298,24 @@ public class SpellAffect {
             Collections.shuffle(this.round.getPlayer_one_cards().subList(0, 5));
         }
         ConsoleGame.printSuccessfulHide();
+    }
+
+    public void handleSteal() {
+
+        int i = (int) (Math.random() * 4);
+        Card card = null;
+        if (this.turn_index == 0) {
+            card = this.round.getPlayer_two_cards().get(i);
+            this.hand_cards.add(0, this.round.getPlayer_two_cards().get(i));
+            this.round.getPlayer_two_cards().remove(i);
+            this.round.getPlayer_two().setCardsAreStolen(true);
+        } else {
+            card = this.round.getPlayer_one_cards().get(i);
+            this.hand_cards.add(0, this.round.getPlayer_one_cards().get(i));
+            this.round.getPlayer_one_cards().remove(i);
+            this.round.getPlayer_one().setCardsAreStolen(true);
+        }
+        current_player.setIsBonusActive(true);
+        ConsoleGame.printSuccessfulSteal(card);
     }
 }

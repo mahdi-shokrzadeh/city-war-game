@@ -16,7 +16,12 @@ public class ConsoleCard {
         }
 
         for (int i = 0; i < cards.size(); i++) {
-            printCard(i + 1, cards.get(i));
+            if (i >= 4) {
+                if (!player.getCardsAreStolen())
+                    printCard(i + 1, cards.get(i));
+            } else {
+                printCard(i + 1, cards.get(i));
+            }
         }
         System.out.println("\n");
     }

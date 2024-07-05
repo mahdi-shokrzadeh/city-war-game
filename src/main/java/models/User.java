@@ -27,6 +27,7 @@ public class User implements Comparable<User> {
     private boolean is_bonus_active = false;
     private int bot_level;
     private boolean should_cards_be_hidden = false;
+    private boolean cards_are_stolen = false;
 
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
@@ -239,5 +240,13 @@ public class User implements Comparable<User> {
 
     public boolean getShouldCardsBeHidden() {
         return should_cards_be_hidden;
+    }
+
+    public void setCardsAreStolen(boolean cards_are_stolen) {
+        this.cards_are_stolen = cards_are_stolen;
+    }
+
+    public boolean getCardsAreStolen() {
+        return cards_are_stolen;
     }
 }

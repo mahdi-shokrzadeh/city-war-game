@@ -47,6 +47,10 @@ public class Round {
             this.handleBotInitiation();
         }
 
+        // reseting the stolen cards
+        this.player_one.setCardsAreStolen(false);
+        this.player_two.setCardsAreStolen(false);
+
     }
 
     public String processRound() {
