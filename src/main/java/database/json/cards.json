@@ -1,0 +1,17 @@
+[ {
+  "id" : 0,
+  "name" : "revolve",
+  "price" : 60,
+  "duration" : 1,
+  "cardType" : "Regular",
+  "upgradeLevel" : 2,
+  "upgradeCost" : 5,
+  "desc" : "this is also a dragon",
+  "power" : 29,
+  "damage" : 50,
+  "character" : {
+    "id" : 1,
+    "name" : "dragon"
+  },
+  "level" : 1
+} ]
