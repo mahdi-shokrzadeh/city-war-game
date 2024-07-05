@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import models.User;
 import models.card.Card;
@@ -71,8 +73,12 @@ public class SpellAffect {
                 break;
 
             case "Copy":
-                // handleCopy();
-                break;
+                handleCopy();
+                return false;
+
+            case "Hide":
+                handleHide();
+                return false;
 
             default:
 
@@ -275,5 +281,18 @@ public class SpellAffect {
         } catch (Exception e) {
             ConsoleGame.printNoValidCardToCopy();
         }
+    }
+
+    public void handleHide() {
+        if (this.turn_index == 0) {
+            this.round.getPlayer_two().setShouldCardsBeHidden(true);
+
+            Collections.shuffle(this.round.getPlayer_two_cards().subList(0, 5));
+
+        } else {
+            this.round.getPlayer_one().setShouldCardsBeHidden(true);
+            Collections.shuffle(this.round.getPlayer_one_cards().subList(0, 5));
+        }
+        ConsoleGame.printSuccessfulHide();
     }
 }
