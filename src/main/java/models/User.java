@@ -224,4 +224,6 @@ public class User implements Comparable<User> {
     public int getBotLevel() {
         return bot_level;
     }
+
+    public void resetProgress(){ progress = 1; }
 }
