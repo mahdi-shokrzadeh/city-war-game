@@ -56,7 +56,11 @@ public class M_LoginMenu extends Menu {
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {
-                        return new Game(loggedInUser,(User)s.body.get("user"),"duel");
+                        if (s.body.get("user").equals(loggedInUser)){
+                            System.out.println("\n!!! Same user, login again !!!\n");
+                            return this;
+                        } else
+                            return new Game(loggedInUser,(User)s.body.get("user"),"duel");
                     }
                     else {
                         loggedInUser=(User)s.body.get("user");
