@@ -19,7 +19,5 @@ public class ConsoleGameMenu {
         new ConsoleGameMenu();
     }
 
-
-
     
 }

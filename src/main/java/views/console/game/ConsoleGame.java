@@ -15,12 +15,22 @@ public class ConsoleGame {
                 "1. Warrior" + "\n" +
                 "2. Mage" + "\n" +
                 "3. Archer" + "\n" +
-                // "4. Cancel" + "\n" +
                 "Enter the number of the character you want to choose:" + "\n");
     }
 
     public static void printGreetings() {
+        System.out.println("--------------------");
         System.out.println("\n" + "Welcome to the game!" + "\n");
+        System.out.println("You can use following commands:\n" +
+                "\t start game : to start the game\n" +
+                "\t select character : to select your character\n" +
+                "\t set bet amount : to set the bet amount\n");
+        System.out.println("--------------------");
+
+    }
+
+    public static void printBetNotSet() {
+        System.out.println("Please set the bet amount first!");
     }
 
     public static void printInvalidCardNumber() {

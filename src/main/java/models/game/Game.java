@@ -34,7 +34,8 @@ public class Game extends Menu {
 
         private Round current_round;
 
-        public Game(){}
+        public Game() {
+        }
 
         public Game(User player_one, User player_two, String mode) {
                 super("GameProcess");
@@ -51,29 +52,26 @@ public class Game extends Menu {
                 switch (mode) {
 
                         case "duel":
-                                // this.handleUserTwoLogin
-                                // this.handleChooseCharacter
-                                // this.startGame();
                                 this.handleAddCardsToPlayers();
                                 break;
 
                         case "AI":
-                                // this.handleChooseCharacter
-                                // this.startGame();
+
                                 this.handleAddCardsToPlayers();
                                 break;
 
                         case "bet":
                                 this.handleAddCardsToPlayers();
+                                this.handleGetBetAmount();
                                 break;
 
                         default:
-
                                 break;
                 }
 
         }
 
+        // not related to me :)
         public Game(User player_one, String mode) {
                 super("GameProcess");
                 this.player_one = player_one;
@@ -86,38 +84,35 @@ public class Game extends Menu {
 
                 ConsoleGame.printGreetings();
 
-                switch (mode) {
+                // switch (mode) {
 
-                        case "duel":
-                                // this.handleUserTwoLogin
-                                // this.handleChooseCharacter
-                                // this.startGame();
-                                this.handleAddCardsToPlayers();
-                                break;
+                // case "duel":
 
-                        case "AI":
-                                // this.handleChooseCharacter
-                                // this.startGame();
-                                this.handleAddCardsToPlayers();
-                                break;
+                // this.handleAddCardsToPlayers();
+                // break;
 
-                        case "bet":
-                                this.handleAddCardsToPlayers();
-                                break;
+                // case "AI":
 
-                        default:
+                // this.handleAddCardsToPlayers();
+                // break;
 
-                                break;
-                }
+                // case "bet":
+                // this.handleAddCardsToPlayers();
+                // break;
+
+                // default:
+
+                // break;
+                // }
         }
 
         @Override
         public Menu myMethods() {
                 String input = consoleScanner.nextLine();
-                if (input.equals("-Select character")) {
+                if (input.equals("select character")) {
                         this.handleChooseCharacter(this.player_one);
                         this.handleChooseCharacter(this.player_two);
-                } else if (input.equals("-Bet amount")) {
+                } else if (input.equals("bet amount")) {
                         if (this.mode.equals("bet")) {
                                 this.handleGetBetAmount();
                         } else {
@@ -125,7 +120,7 @@ public class Game extends Menu {
                         }
                 }
 
-                else if (input.equals("-Start game")) {
+                else if (input.equals("start game")) {
                         this.startGame();
                         Menu menu = new M_GameOverMenu();
                         return menu;
@@ -175,7 +170,7 @@ public class Game extends Menu {
                         System.out.println("Please select characters for both players");
                         return;
                 } else if (this.mode.equals("bet") && this.bet_amount == 0) {
-                        System.out.println("Please enter a bet amount");
+                        ConsoleGame.printBetNotSet();
                         return;
                 }
 
@@ -469,7 +464,5 @@ public class Game extends Menu {
                         }
                 }
         }
-
-
 
 }
