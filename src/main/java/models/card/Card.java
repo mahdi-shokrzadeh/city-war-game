@@ -6,7 +6,7 @@ public class Card extends CardStruct {
 
     private int power;
     private int damage;
-    private final GameCharacter character;
+    private GameCharacter character;
     private int level;
     public Card(String _name, int _price, int _duration, String _type, int _power, int _damage, int _upgradeLevel,
             int _upgradeCost, String _desc, GameCharacter _character) {
@@ -16,6 +16,10 @@ public class Card extends CardStruct {
         character = _character;
         level = 1;
     }
+
+    public Card(){
+        super();
+    };
 
     public int getPower() {
         return power;
