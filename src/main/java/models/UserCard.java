@@ -4,8 +4,8 @@ import models.card.CardType;
 
 public class UserCard{
     private int id;
-    private final int userID;
-    private final int cardID;
+    private int userID;
+    private int cardID;
     private int experience;
     private int level;
     public UserCard(int _userID,int _cardID) {
@@ -14,6 +14,7 @@ public class UserCard{
         experience = 0;
         level = 1;
     }
+    public UserCard(){}
     public int getID(){ return id;}
     public void setID(int _id){ id = _id;}
 
