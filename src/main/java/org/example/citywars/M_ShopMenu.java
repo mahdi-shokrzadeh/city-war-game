@@ -23,26 +23,22 @@ public class M_ShopMenu extends Menu{
     private void printMenu(){
         System.out.println("SHOP MENU");
         System.out.println("Options: ");
+        System.out.println("    show available cards");
+        System.out.println("    show my cards");
+        System.out.println("    (admins only) show all cards");
+        System.out.println("    (admins only) show all users");
         System.out.println("    Back");
         System.out.println("Information: ");
-        System.out.println("    You can see the list available cards that you do not own using the command: ");
-        System.out.println("        show new cards");
         System.out.println("    You can buy a new card using the command: ");
         System.out.println("        buy card -n <name>");
-        System.out.println("    You can see a list of all owned cards using the command: ");
-        System.out.println("        show my cards");
         System.out.println("    You can upgrade one your cards using the command: ");
         System.out.println("        upgrade card -n <name>");
-        System.out.println("    (admins only) You can see the full list of existing cards using the command: ");
-        System.out.println("        show all cards");
         System.out.println("    (admins only) You can add a new card using the command: ");
         System.out.println("        add card -name <name> -prc <price> -dur <duration> -type <type> -pow <power> -dmg <damage> -upl <upgradeLevel> -upc <upgradeCost> -chr <gameCharacter>");
         System.out.println("    (admins only) You can edit a card using the command: ");
         System.out.println("        edit card -num <number> -name <name> -prc <price> -dur <duration> -pow <power> -dmg <damage> -upl <upgradeLevel> -upc <upgradeCost> -chr <gameCharacter>");
         System.out.println("    (admins only) You can remove a card using the command: ");
         System.out.println("        remove card -num <number>");
-        System.out.println("    (admins only) You can the full list of users using the command: ");
-        System.out.println("        show all users");
 
     }
     private void printUser(User user){
