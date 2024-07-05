@@ -83,8 +83,13 @@ public class M_LoginMenu extends Menu {
                         if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
                             System.out.println("\n!!! Same user, login again !!!\n");
                             return this;
-                        } else
-                            return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                        } else {
+                            if (!is_bet) {
+                                return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                            } else {
+                                return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                            }
+                        }
                     } else {
                         if (!is_bet) {
                             return new Game(loggedInUser, (User) s.body.get("user"), "duel");

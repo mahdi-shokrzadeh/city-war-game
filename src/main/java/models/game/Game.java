@@ -181,9 +181,10 @@ public class Game extends Menu {
         }
 
         public boolean startGame() {
-                if (this.player_one.getGameCharacter() == null ||
-                                this.player_two.getGameCharacter() == null) {
-                        System.out.println("Please select characters for both players");
+                if ((this.mode.equals("duel") && (this.player_one.getGameCharacter() == null ||
+                                this.player_two.getGameCharacter() == null))
+                                || (this.player_two.getGameCharacter() == null)) {
+                        System.out.println("Please select character first!");
                         return false;
                 } else if (this.mode.equals("bet") && this.bet_amount == 0) {
                         ConsoleGame.printBetNotSet();

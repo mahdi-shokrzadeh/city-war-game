@@ -3,6 +3,7 @@ package org.example.citywars;
 import controllers.UserController;
 import controllers.game.GameController;
 import models.AI;
+import models.GameCharacter;
 import models.User;
 import models.game.Game;
 import views.console.menu.ConsoleGameMenu;
@@ -54,6 +55,7 @@ public class M_GamePlayMenu extends Menu {
         switch (input) {
             case "1":
                 AI AI = new AI(ai_level);
+                AI.setGameCharacter(new GameCharacter("BOT"));
                 Menu temp_men2 = new Game(AI, loggedInUser, "AI");
                 return temp_men2;
 
