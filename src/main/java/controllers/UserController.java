@@ -32,17 +32,8 @@ public class UserController {
 
     }
 
-    public static Response getAllUsers(int userId) {
-        User admin;
-        try {
-            admin = userDB.getOne(userId);
-        } catch (Exception e) {
-            return new Response("an exception happened while fetching the user", -500, e);
-        }
-        if (admin == null) {
-            return new Response("could not find any user with the given id", -400);
-        }
-        if (!admin.getRole().equals("admin")) {
+    public static Response getAllUsers(User user) {
+        if (!user.getRole().equals("admin")) {
             return new Response("user is not an admin", -401);
         }
 
@@ -215,7 +206,7 @@ public class UserController {
             return new Response("Password and Username don't match\nTry again in " + M_LoginMenu.lockTime + " seconds", -401);
         }
 
-        if (!user.getFirstLogin() && !((List<Card>) CardController.getAllCards().body.get("allCards")).isEmpty()) {
+        if ( user.getFirstLogin() && !((List<Card>) CardController.getAllCards().body.get("allCards")).isEmpty()) {
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
             if (res.ok) {
