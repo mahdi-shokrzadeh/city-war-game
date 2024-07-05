@@ -95,10 +95,6 @@ public class UserCardsController {
             return new Response("a deep exception happened while fetching cards",-500,e);
         }
 
-        if( cards.isEmpty() ){
-            return new Response("no cards where found for this user",-400);
-        }
-
         return new Response("all users' cards fetched successfully",200,"cards",cards);
     }
 
