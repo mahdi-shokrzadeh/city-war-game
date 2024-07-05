@@ -20,6 +20,7 @@ public class Turn {
     private ArrayList<Card> player_two_cards;
     private User current_player;
     private Block[][] board = new Block[2][21];
+    private Round round;
 
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
 
@@ -34,7 +35,7 @@ public class Turn {
 
     public String processTurn(Block[][] board,
             Round round) {
-
+        this.round = round;
         int turn_index = round.getTurns().indexOf(this);
         if (turn_index % 2 == 0) {
             current_player = player_one;
@@ -145,8 +146,12 @@ public class Turn {
                             }
                         } else {
                             // SPELL action
+
+                            //
+
                             SpellAffect s = new SpellAffect(selected_card, turn_index, block_number - 1, board,
-                                    current_player);
+                                    current_player, this.round,
+                                    player_one == current_player ? player_one_cards : player_two_cards);
 
                             if (s.spellHandler()) {
                                 try {
@@ -178,9 +183,10 @@ public class Turn {
 
     public void printCurrentUserHand(User player) {
         if (player == player_one) {
-            ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
-                    this.player_one.getIsBonusActive() ? 6 : 5)),
-                    player);
+            if (!(player_one instanceof AI) || ((AI) player_one).getAiLevel() != 5)
+                ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
+                        this.player_one.getIsBonusActive() ? 6 : 5)),
+                        player);
         } else {
             ConsoleCard.printUserCards(new ArrayList<>(player_two_cards.subList(0,
                     this.player_two.getIsBonusActive() ? 6 : 5)),

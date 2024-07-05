@@ -1,18 +1,6 @@
 package org.example.citywars;
 
-import controllers.UserController;
-import controllers.game.GameController;
-import models.Response;
-import models.User;
-import models.game.Game;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 public class M_GameHistoryMenu extends Menu{
-    public List<Game> games;
-    private Exception exception = null;
     public M_GameHistoryMenu(){
         super("M_GameHistoryMenu");
     }
@@ -42,7 +30,9 @@ public class M_GameHistoryMenu extends Menu{
     public Menu myMethods() {
         printMenu();
         String input = null;
-        Response res = GameController.getAllUserGames(loggedInUser.getID());
+
+
+        Response res = GameController.getAllUserGames(/*loggedInUser.getID()*/ 1);
         if(res.ok){
             games = (List<Game>) res.body.get("games");
         }else{
@@ -76,13 +66,17 @@ public class M_GameHistoryMenu extends Menu{
                     }
                 }
             }else if(input.matches("^sort by date-ascending$")){
-                games.sort(Game.ascendingDateComparator);
+                games.sort(Comparator.comparing(Game::getCreated_at));
                 printHeadings();
                 for(int i=0;i< games.size();i++){
                     printGame(games.get(i),i);
                 }
             }else if(input.matches("^sort by date-descending$")){
-                games.sort(Game.descendingDateComparator);
+                games.sort((s1,s2)->{
+                    String s11 = s1.getCreated_at().replaceAll("\\D","");
+                    String s22 = s2.getCreated_at().replaceAll("\\D","");
+                    return s22.compareTo(s11);
+                });
                 printHeadings();
                 for(int i=0;i< games.size();i++){
                     printGame(games.get(i),i);

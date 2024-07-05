@@ -132,6 +132,14 @@ public class Round {
         this.board = board;
     }
 
+    public int getNumberOfRoundTurns() {
+        return number_of_round_turns;
+    }
+
+    public void setNumberOfRoundTurns(int number_of_round_turns) {
+        this.number_of_round_turns = number_of_round_turns;
+    }
+
     public boolean timeLine() {
         System.out.println("HEY here!");
         for (int i = 0; i <= 20; i++) {

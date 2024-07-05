@@ -135,4 +135,40 @@ public class ConsoleGame {
         System.out.println("Power boost is successful (+10) for the card: " + card.getName());
     }
 
+    public static void printNoEmptyBlock() {
+        System.out.println("No empty block found for space shift!");
+    }
+
+    public static void printSuccessSpaceShift() {
+        System.out.println("Space shift was successful!");
+    }
+
+    public static void printNoUnavailableBlock() {
+        System.out.println("No unavailable block found!");
+    }
+
+    public static void printSuccessRepair() {
+        System.out.println("Repair was successful!");
+    }
+
+    public static void printSuccessfulTurnReduce() {
+        System.out.println("The number of turns for current round reduced by 1!");
+    }
+
+    public static void printNoRegularCardForAttenuate() {
+        System.out.println("No regular card found to attenuate!");
+    }
+
+    public static void printAttenuateSuccess(Card card, Card card_2) {
+        System.out.println("Attenuate is successful (-1 power) for the card: " + card.getName());
+        System.out.println("Attenuate is successful (-10 damage) for the card: " + card_2.getName());
+    }
+
+    public static void printNoValidCardToCopy() {
+        System.out.println("No valid card found to copy!");
+    }
+
+    public static void printCopySuccess(Card card) {
+        System.out.println("Copy is successful for the card: " + card.getName());
+    }
 }
