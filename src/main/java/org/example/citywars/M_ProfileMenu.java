@@ -17,6 +17,7 @@ public class M_ProfileMenu extends Menu{
         System.out.println("PROFILE MENU");
         System.out.println("Options: ");
         System.out.println("    show my profile");
+        System.out.println("    Back");
         System.out.println("Information: ");
         System.out.println("    You can change your profile info using one the following commands: ");
         System.out.println("    Profile change -u <username>");
