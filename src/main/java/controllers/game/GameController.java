@@ -140,18 +140,29 @@ public class GameController {
         }
 
         try{
-            winnerUser.setExperience(winnerUser.getExperience() + winnerScore);
+            int winnerLevel = calculateUserLevel(winnerUser);
+            int winnerCoins = winnerUser.getCoins() + (winnerScore/10);
             winnerReward += "+" + winnerScore + " experience\n";
-            int level = calculateUserLevel(winnerUser);
-            winnerReward += "+" + (level - winnerUser.getLevel()) + " level\n";
-            winnerUser.setLevel(level);
-            winnerUser.setHitPoints(winnerOriginalHP + 25);
+            winnerReward += "+" + (winnerLevel - winnerUser.getLevel()) + " level\n";
             winnerReward += "+25 hit points\n";
-            int coins = winnerUser.getCoins() + (winnerScore/10);
-            winnerReward += "+" + (coins - winnerUser.getCoins()) + " coins\n";
-            winnerUser.setCoins(coins);
-            loserUser.setExperience(loserUser.getExperience() + loserScore );
+            winnerUser.setExperience(winnerUser.getExperience() + winnerScore);
+            winnerUser.setHitPoints(winnerOriginalHP + 25);
+            for(int i=0;i<winnerLevel-winnerUser.getLevel();i++){
+                winnerUser.setLevel( winnerUser.getLevel() + 1);
+                winnerCoins += winnerUser.getLevel() * 15;
+            }
+            winnerUser.setCoins(winnerCoins);
+            winnerReward += "+" + (winnerCoins - winnerUser.getCoins()) + " coins\n";
+            int loserLevel = calculateUserLevel(loserUser);
+            int loserCoins = 0;
             loserReward += "+" + loserScore + " experience\n";
+            loserUser.setExperience(loserUser.getExperience() + loserScore );
+            for(int i=0;i<loserLevel-loserUser.getLevel();i++){
+                loserUser.setLevel( loserUser.getLevel() + 1);
+                loserCoins += loserUser.getLevel() * 15;
+            }
+            loserUser.setCoins(loserUser.getCoins() + loserCoins);
+            loserReward += "+" + loserCoins + " coins\n";
             userDB.update(winnerUser, winnerUser.getID());
             userDB.update(loserUser, loserUser.getID());
         }catch (Exception e){
@@ -217,15 +228,18 @@ public class GameController {
 
         try{
             if( winner.equals("player_two") ){
+                int level = calculateUserLevel(player);
+                int coins = player.getCoins() + (score/10);
                 score = calculateWinnerScore(player,playerOriginalHP,numberOfRounds);
                 player.setExperience(player.getExperience() + score);
-                winnerReward += "+" + score + " experience\n";
-                int level = calculateUserLevel(player);
-                winnerReward += "+" + (level - player.getLevel()) + " level\n";
-                player.setLevel(level);
                 player.setHitPoints(playerOriginalHP + 25);
+                winnerReward += "+" + score + " experience\n";
                 winnerReward += "+25 hit points\n";
-                int coins = player.getCoins() + (score/10);
+                winnerReward += "+" + (level - player.getLevel()) + " level\n";
+                for(int i=0;i<level-player.getLevel();i++){
+                    player.setLevel( player.getLevel() + 1 );
+                    coins += player.getLevel() * 15;
+                }
                 winnerReward += "+" + (coins - player.getCoins()) + " coins\n";
                 player.setCoins(coins);
                 if (player.getProgress() == 5) {
