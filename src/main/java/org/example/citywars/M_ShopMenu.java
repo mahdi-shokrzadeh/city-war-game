@@ -53,27 +53,44 @@ public class M_ShopMenu extends Menu{
         System.out.println("coins: " + user.getCoins());
     }
     private void printNumberedCard(Card card, int n){
-        System.out.println("number: " + n);
-        System.out.println("name: " + card.getName());
-        System.out.println("type: " + card.getCardType());
-        System.out.println("power: " + card.getPower());
-        System.out.println("damage: " + card.getDamage());
-        System.out.println("duration: " + card.getDuration());
-        System.out.println("character: " + card.getCharacter());
-        System.out.println("price:" + card.getPrice());
-        System.out.println("upgrade level: " + card.getUpgradeLevel());
-        System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+        if( card.getCardType().toString().equals("Regular") ) {
+            System.out.println("number: " + n);
+            System.out.println("name: " + card.getName());
+            System.out.println("type: " + card.getCardType());
+            System.out.println("power: " + card.getPower());
+            System.out.println("damage: " + card.getDamage());
+            System.out.println("duration: " + card.getDuration());
+            System.out.println("character: " + card.getCharacter());
+            System.out.println("price:" + card.getPrice());
+            System.out.println("upgrade level: " + card.getUpgradeLevel());
+            System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+        }else if( card.getCardType().toString().equals("Spell") ){
+            System.out.println("name: " + card.getName());
+            System.out.println("type: " + card.getCardType());
+            System.out.println("duration: " + card.getDuration());
+            System.out.println("price:" + card.getPrice());
+            System.out.println("description: " + card.getDesc());
+        }
     }
     private void printCard(Card card){
-        System.out.println("name: " + card.getName());
-        System.out.println("type: " + card.getCardType());
-        System.out.println("power: " + card.getPower());
-        System.out.println("damage: " + card.getDamage());
-        System.out.println("duration: " + card.getDuration());
-        System.out.println("character: " + card.getCharacter());
-        System.out.println("price:" + card.getPrice());
-        System.out.println("upgrade level: " + card.getUpgradeLevel());
-        System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+        if( card.getCardType().toString().equals("Regular") ) {
+            System.out.println("name: " + card.getName());
+            System.out.println("type: " + card.getCardType());
+            System.out.println("power: " + card.getPower());
+            System.out.println("damage: " + card.getDamage());
+            System.out.println("duration: " + card.getDuration());
+            System.out.println("character: " + card.getCharacter());
+            System.out.println("price:" + card.getPrice());
+            System.out.println("upgrade level: " + card.getUpgradeLevel());
+            System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+            System.out.println("description: " + card.getDesc());
+        }else if( card.getCardType().toString().equals("Spell") ){
+            System.out.println("name: " + card.getName());
+            System.out.println("type: " + card.getCardType());
+            System.out.println("duration: " + card.getDuration());
+            System.out.println("price:" + card.getPrice());
+            System.out.println("description: " + card.getDesc());
+        }
     }
     private void printUpCard(Card card, UserCard uc){
         System.out.println("name: " + card.getName());
@@ -108,7 +125,7 @@ public class M_ShopMenu extends Menu{
         fetch();
         do {
             String input = consoleScanner.nextLine().trim();
-            if (input.matches("^show new cards$")){
+            if (input.matches("^show available cards$")){
                 for(Card card: notOwnedCards){
                     res = UserCardsController.getUserCard(loggedInUser.getID(), card.getID());
                     if( !res.ok ){
@@ -147,7 +164,11 @@ public class M_ShopMenu extends Menu{
                         res = UserCardsController.getUserCard(loggedInUser.getID(), card.getID());
                         UserCard uc = (UserCard) res.body.get("userCard");
                         if( res.ok ) {
-                            printUpCard(card, uc);
+                            if( card.getCardType().toString().equals("Regular")){
+                                printUpCard(card, uc);
+                            }else if( card.getCardType().toString().equals("Spell") ){
+                                printCard(card);
+                            }
                         }else{
                             System.out.println(res.message);
                             if( res.exception != null ){
