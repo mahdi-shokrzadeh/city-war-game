@@ -171,4 +171,12 @@ public class ConsoleGame {
     public static void printCopySuccess(Card card) {
         System.out.println("Copy is successful for the card: " + card.getName());
     }
+
+    public static void printSuccessfulHide() {
+        System.out.println("Hiding and  shuffling opponent cards was successful!");
+    }
+
+    public static void printSuccessfulSteal(Card card) {
+        System.out.println("Steal was successful for the card: " + card.getName());
+    }
 }

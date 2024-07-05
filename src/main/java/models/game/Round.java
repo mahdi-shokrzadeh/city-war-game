@@ -47,6 +47,10 @@ public class Round {
             this.handleBotInitiation();
         }
 
+        // reseting the stolen cards
+        this.player_one.setCardsAreStolen(false);
+        this.player_two.setCardsAreStolen(false);
+
     }
 
     public String processRound() {
@@ -126,6 +130,22 @@ public class Round {
 
     public Block[][] getBoard() {
         return board;
+    }
+
+    public ArrayList<Card> getPlayer_one_cards() {
+        return player_one_cards;
+    }
+
+    public void setPlayer_one_cards(ArrayList<Card> player_one_cards) {
+        this.player_one_cards = player_one_cards;
+    }
+
+    public ArrayList<Card> getPlayer_two_cards() {
+        return player_two_cards;
+    }
+
+    public void setPlayer_two_cards(ArrayList<Card> player_two_cards) {
+        this.player_two_cards = player_two_cards;
     }
 
     public void setBoard(Block[][] board) {

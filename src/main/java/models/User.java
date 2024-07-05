@@ -26,6 +26,8 @@ public class User implements Comparable<User> {
     private int damage = 0;
     private boolean is_bonus_active = false;
     private int bot_level;
+    private boolean should_cards_be_hidden = false;
+    private boolean cards_are_stolen = false;
 
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
@@ -118,7 +120,9 @@ public class User implements Comparable<User> {
         return character;
     }
 
-    public int getProgress(){ return progress; }
+    public int getProgress() {
+        return progress;
+    }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -172,7 +176,9 @@ public class User implements Comparable<User> {
         clanID = id;
     }
 
-    public void makeProgress(){ progress++; }
+    public void makeProgress() {
+        progress++;
+    }
 
     public void firstLogin() {
         firstLogin = false;
@@ -216,7 +222,6 @@ public class User implements Comparable<User> {
         return is_bonus_active;
     }
 
-
     public void setBotLevel(int bot_level) {
         this.bot_level = bot_level;
     }
@@ -225,5 +230,23 @@ public class User implements Comparable<User> {
         return bot_level;
     }
 
-    public void resetProgress(){ progress = 1; }
+    public void resetProgress() {
+        progress = 1;
+    }
+
+    public void setShouldCardsBeHidden(boolean should_cards_be_hidden) {
+        this.should_cards_be_hidden = should_cards_be_hidden;
+    }
+
+    public boolean getShouldCardsBeHidden() {
+        return should_cards_be_hidden;
+    }
+
+    public void setCardsAreStolen(boolean cards_are_stolen) {
+        this.cards_are_stolen = cards_are_stolen;
+    }
+
+    public boolean getCardsAreStolen() {
+        return cards_are_stolen;
+    }
 }

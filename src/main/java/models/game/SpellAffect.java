@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import models.User;
 import models.card.Card;
@@ -71,12 +73,20 @@ public class SpellAffect {
                 break;
 
             case "Copy":
-                // handleCopy();
-                break;
+                handleCopy();
+                return false;
+
+            case "Hide":
+                handleHide();
+                return false;
+
+            case "Steal":
+                handleSteal();
+                return false;
 
             default:
-
-                break;
+                System.out.println("\n nothing!\n\n");
+                return false;
 
         }
 
@@ -275,5 +285,37 @@ public class SpellAffect {
         } catch (Exception e) {
             ConsoleGame.printNoValidCardToCopy();
         }
+    }
+
+    public void handleHide() {
+        if (this.turn_index == 0) {
+            this.round.getPlayer_two().setShouldCardsBeHidden(true);
+
+            Collections.shuffle(this.round.getPlayer_two_cards().subList(0, 5));
+
+        } else {
+            this.round.getPlayer_one().setShouldCardsBeHidden(true);
+            Collections.shuffle(this.round.getPlayer_one_cards().subList(0, 5));
+        }
+        ConsoleGame.printSuccessfulHide();
+    }
+
+    public void handleSteal() {
+
+        int i = (int) (Math.random() * 4);
+        Card card = null;
+        if (this.turn_index == 0) {
+            card = this.round.getPlayer_two_cards().get(i);
+            this.hand_cards.add(0, this.round.getPlayer_two_cards().get(i));
+            this.round.getPlayer_two_cards().remove(i);
+            this.round.getPlayer_two().setCardsAreStolen(true);
+        } else {
+            card = this.round.getPlayer_one_cards().get(i);
+            this.hand_cards.add(0, this.round.getPlayer_one_cards().get(i));
+            this.round.getPlayer_one_cards().remove(i);
+            this.round.getPlayer_one().setCardsAreStolen(true);
+        }
+        current_player.setIsBonusActive(true);
+        ConsoleGame.printSuccessfulSteal(card);
     }
 }

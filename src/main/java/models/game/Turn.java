@@ -132,6 +132,11 @@ public class Turn {
                             && block_number > 0
                             && block_number <= 21) {
                         Card selected_card;
+
+                        if (current_player.getCardsAreStolen() && card_number >= 5) {
+                            ConsoleGame.printInvalidCardNumber();
+                            continue;
+                        }
                         if (current_player == player_one) {
                             selected_card = player_one_cards.get(card_number - 1);
                         } else {
