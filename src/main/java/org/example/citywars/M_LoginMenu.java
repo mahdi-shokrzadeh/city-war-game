@@ -46,7 +46,7 @@ public class M_LoginMenu extends Menu {
 
             if (input.toLowerCase().matches("^ *back *$")) {
                 if (secondPersonNeeded)
-                    return new M_GameModeChoiseMenu();
+                    return new M_GamePlayMenu();
                 else
                     return new M_Intro();
             }else if (patterns.get(0).matcher(input).find()) {
@@ -60,13 +60,13 @@ public class M_LoginMenu extends Menu {
                     }
                     else {
                         loggedInUser=(User)s.body.get("user");
-                        return new M_GamePlayMenu();
+                        return new M_GameMainMenu();
                     }
                 }
             }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
                 matcher.find();
-                Response s=UserController.forgotPassword(matcher.group("username").trim());
+                Response s = UserController.forgotPassword(matcher.group("username").trim());
                 System.out.println(s.message);
                 if (s.ok){
                     if (secondPersonNeeded) {
@@ -74,7 +74,7 @@ public class M_LoginMenu extends Menu {
                     }
                     else {
                         loggedInUser=(User)s.body.get("user");
-                        return new M_GamePlayMenu();
+                        return new M_GameMainMenu();
                     }
                 }
             }

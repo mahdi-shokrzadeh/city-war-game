@@ -1,6 +1,18 @@
 package org.example.citywars;
 
+import controllers.UserController;
+import controllers.game.GameController;
+import models.Response;
+import models.User;
+import models.game.Game;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class M_GameHistoryMenu extends Menu{
+    public ArrayList<Game> games;
+    private Exception exception = null;
     public M_GameHistoryMenu(){
         super("M_GameHistoryMenu");
     }
@@ -32,9 +44,13 @@ public class M_GameHistoryMenu extends Menu{
         String input = null;
 
 
-        Response res = GameController.getAllUserGames(/*loggedInUser.getID()*/ 1);
+        Response res = GameController.getAllUserGames(loggedInUser.getID());
         if(res.ok){
-            games = (List<Game>) res.body.get("games");
+            List<Game> temp = (List<Game>) res.body.get("games");
+            games = new ArrayList<>();
+            for (int i = 0; i < temp.size(); i++) {
+                games.add(temp.get(i));
+            }
         }else{
             System.out.println(res.message);
             if(res.exception != null){
@@ -43,6 +59,7 @@ public class M_GameHistoryMenu extends Menu{
         }
         if( games == null ){
             System.out.println("no games were found");
+            return this;
         }else{
             printHeadings();
             for(int i=0;i<games.size();i++){
@@ -54,14 +71,16 @@ public class M_GameHistoryMenu extends Menu{
             if(input.matches("^only show wins$")){
                 printHeadings();
                 for(int i=0;i<games.size();i++){
-                    if( games.get(i).getWinner().equals("p1") ){
+                    String userPos = games.get(i).getPlayer_one_id() == loggedInUser.getID()? "player_one":"player_two";
+                    if( games.get(i).getWinner().equals(userPos) ){
                         printGame(games.get(i),i);
                     }
                 }
             }else if(input.matches("^only show losses$")){
                 printHeadings();
                 for(int i=0;i<games.size();i++){
-                    if( games.get(i).getWinner().equals("p2") ){
+                    String oppPos = games.get(i).getPlayer_one_id() == loggedInUser.getID()? "player_two":"player_one";
+                    if( games.get(i).getWinner().equals(oppPos) ){
                         printGame(games.get(i),i);
                     }
                 }
@@ -95,18 +114,68 @@ public class M_GameHistoryMenu extends Menu{
                     } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
                         opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
                     }
-                    return Integer.compare(opponent1.getUsername().compareTo(opponent2.getUsername()), 0);
+                    return opponent1.getUsername().compareTo(opponent2.getUsername());
                 });
                 printHeadings();
                 for(int i=0;i<games.size();i++){
                     printGame(games.get(i),i);
                 }
             }else if(input.matches("^sort by opponent name-descending$")){
-
+                games.sort((g1, g2) -> {
+                    User opponent1 = null;
+                    User opponent2 = null;
+                    if (g1.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_two_id()).body.get("user");
+                    } else if (g1.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_one_id()).body.get("user");
+                    }
+                    if (g2.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_two_id()).body.get("user");
+                    } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
+                    }
+                    return -1*(opponent1.getUsername().compareTo(opponent2.getUsername()));
+                });
+                printHeadings();
+                for(int i=0;i<games.size();i++){
+                    printGame(games.get(i),i);
+                }
             }else if(input.matches("^sort by opponent level-ascending$")){
-
+                games.sort((g1, g2) -> {
+                    User opponent1 = null;
+                    User opponent2 = null;
+                    if (g1.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_two_id()).body.get("user");
+                    } else if (g1.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_one_id()).body.get("user");
+                    }
+                    if (g2.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_two_id()).body.get("user");
+                    } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
+                    }
+                    return opponent1.getLevel()-opponent2.getLevel();
+                });
+                printHeadings();
+                for(int i=0;i<games.size();i++){
+                    printGame(games.get(i),i);
+                }
             }else if(input.matches("^sort by opponent level-descending$")){
-
+                games.sort((g1, g2) -> {
+                    User opponent1 = null;
+                    User opponent2 = null;
+                    if (g1.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_two_id()).body.get("user");
+                    } else if (g1.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent1 = (User) UserController.getByID(g1.getPlayer_one_id()).body.get("user");
+                    }
+                    if (g2.getPlayer_one_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_two_id()).body.get("user");
+                    } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
+                        opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
+                    }
+                    return opponent2.getLevel()-opponent1.getLevel();
+                });
             }else if(input.matches("^show current menu$")){
                 System.out.println("You are currently in " + getName());
             }else if(input.matches("^Back$")){
