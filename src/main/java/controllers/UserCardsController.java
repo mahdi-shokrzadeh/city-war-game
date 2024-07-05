@@ -128,6 +128,10 @@ public class UserCardsController {
     public static Response upgradeCard(User user, Card card){
         UserCard userCard = null;
 
+        if( card.getCardType().toString().equals("Spell") ){
+            return new Response("only regular cards can be upgraded",-400);
+        }
+
         try {
             userCard = ucDB.firstWhereEquals(user.getID(), card.getID());
         }catch (Exception e){
