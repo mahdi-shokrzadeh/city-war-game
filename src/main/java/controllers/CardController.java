@@ -14,7 +14,7 @@ public class CardController {
     private static final UserDB userDB = new UserDB();
     private static final GameCharacterDB gcDB = new GameCharacterDB();
     private static final CardDB cardDB = new CardDB();
-    public static Response createRegularCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
+    public static Response createCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
         Response res;
 
 //        if (!user.getRole().equals("admin")) {
