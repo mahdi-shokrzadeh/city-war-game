@@ -4,6 +4,8 @@ import models.Response;
 import models.GameCharacter;
 import database.DBs.GameCharacterDB;
 
+import java.util.List;
+
 public class GameCharacterController {
     private static final GameCharacterDB gcDB = new GameCharacterDB();
     public static Response createGameCharacter(String name){
@@ -26,6 +28,16 @@ public class GameCharacterController {
             return new Response("an exceptio occurred while getting character",-500,e);
         }
         return new Response("fetched character successfully",200,"character",character);
+    }
+
+    public static Response getAll(){
+        List<GameCharacter> gcs = null;
+        try{
+            gcs = gcDB.getAll();
+        }catch (Exception e){
+            return new Response("an exception happened while",-500,e);
+        }
+        return new Response("all game characters fetched successfully",200,"gameCharacters",gcs);
     }
 
 }
