@@ -10,7 +10,7 @@ import models.card.Spell;
 import views.console.game.ConsoleGame;
 
 public class SpellAffect {
-
+    
     private int des_index;
     private Block[][] board;
     private Spell spell_card;
