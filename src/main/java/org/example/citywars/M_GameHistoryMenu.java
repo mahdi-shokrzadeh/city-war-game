@@ -10,13 +10,22 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class M_GameHistoryMenu extends Menu{
+public class M_GameHistoryMenu extends Menu {
     public ArrayList<Game> games;
+    int gamePerPage;
+    int currentPage;
+    int allPagesCount;
+    SortKind sortKind;
+    boolean nextOrPre;
+
     private Exception exception = null;
-    public M_GameHistoryMenu(){
+
+    public M_GameHistoryMenu() {
         super("M_GameHistoryMenu");
+        gamePerPage = 7;
     }
-    private void printMenu(){
+
+    private void printMenu() {
         System.out.println("GAME HISTORY MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
@@ -28,79 +37,105 @@ public class M_GameHistoryMenu extends Menu{
         System.out.println("    sort by opponent name-descending");
         System.out.println("    sort by opponent level-ascending");
         System.out.println("    sort by opponent level-descending");
+        System.out.println("    next page");
+        System.out.println("    previous page");
+
     }
-    private void printHeadings(){
+
+    private void printHeadings() {
         System.out.println();
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\tPage " + currentPage + " of " + allPagesCount);
         System.out.print("\t\t\t\t\tOpponent\t\tMode\t\t\tCreated at\t\t\t\t\tWinner\t\t\t\tNumber of rounds");
         System.out.println();
     }
-    public void printGame(Game game,int i){
+
+    public void printGame(Game game, int i) {
         User opponent = (User) UserController.getByID(game.getPlayer_two_id()).body.get("user");
-        System.out.print("Game #" + (i/10 == 0 ? ("0"+i) : i) + "\t\t\t" + opponent.getUsername()  + "\t\t\t" + game.getMode() + "\t\t\t" + game.getCreated_at() + "\t\t\t" + game.getWinner() + "\t\t\t" + game.getNumber_of_rounds());
+        System.out.print("Game #" + (i / 10 == 0 ? ("0" + i) : i) + "\t\t\t" + opponent.getUsername() + "\t\t\t" + game.getMode() + "\t\t\t" + game.getCreated_at() + "\t\t\t" + game.getWinner() + "\t\t\t" + game.getNumber_of_rounds());
         System.out.println();
     }
+
     public Menu myMethods() {
         printMenu();
         String input = null;
 
-
         Response res = GameController.getAllUserGames(loggedInUser.getID());
-        if(res.ok){
+        if (res.ok) {
             List<Game> temp = (List<Game>) res.body.get("games");
             games = new ArrayList<>();
             for (int i = 0; i < temp.size(); i++) {
                 games.add(temp.get(i));
             }
-        }else{
+        } else {
             System.out.println(res.message);
-            if(res.exception != null){
+            if (res.exception != null) {
                 System.out.println(res.exception.getMessage());
             }
         }
-        if( games == null ){
+
+        if (games == null) {
             System.out.println("no games were found");
             return this;
-        }else{
+        } else {
+            sortKind=SortKind.no_filter;
+            nextOrPre=false;
+            currentPage=1;
+            allPagesCount = games.size()%gamePerPage ==0 ? games.size()/gamePerPage : (games.size()/gamePerPage)+1 ;
             printHeadings();
-            for(int i=0;i<games.size();i++){
-                printGame(games.get(i),i);
+            for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                printGame(games.get(i), i);
             }
         }
         do {
-            input = consoleScanner.nextLine().trim();
-            if(input.matches("^only show wins$")){
+            if (!nextOrPre) {
+                input = consoleScanner.nextLine().trim();
+            }
+            else
+                input="";
+
+            if (input.matches("^only show wins$") || (sortKind.equals(SortKind.only_wins) && nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.only_wins;
                 printHeadings();
-                for(int i=0;i<games.size();i++){
-                    String userPos = games.get(i).getPlayer_one_id() == loggedInUser.getID()? "player_one":"player_two";
-                    if( games.get(i).getWinner().equals(userPos) ){
-                        printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    String userPos = games.get(i).getPlayer_one_id() == loggedInUser.getID() ? "player_one" : "player_two";
+                    if (games.get(i).getWinner().equals(userPos)) {
+                        printGame(games.get(i), i);
                     }
                 }
-            }else if(input.matches("^only show losses$")){
+            } else if (input.matches("^only show losses$") || (sortKind.equals(SortKind.only_losses)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.only_losses;
                 printHeadings();
-                for(int i=0;i<games.size();i++){
-                    String oppPos = games.get(i).getPlayer_one_id() == loggedInUser.getID()? "player_two":"player_one";
-                    if( games.get(i).getWinner().equals(oppPos) ){
-                        printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    String oppPos = games.get(i).getPlayer_one_id() == loggedInUser.getID() ? "player_two" : "player_one";
+                    if (games.get(i).getWinner().equals(oppPos)) {
+                        printGame(games.get(i), i);
                     }
                 }
-            }else if(input.matches("^sort by date-ascending$")){
+            } else if (input.matches("^sort by date-ascending$") || (sortKind.equals(SortKind.date_ascending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.date_ascending;
                 games.sort(Comparator.comparing(Game::getCreated_at));
                 printHeadings();
-                for(int i=0;i< games.size();i++){
-                    printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
                 }
-            }else if(input.matches("^sort by date-descending$")){
-                games.sort((s1,s2)->{
-                    String s11 = s1.getCreated_at().replaceAll("\\D","");
-                    String s22 = s2.getCreated_at().replaceAll("\\D","");
+            } else if (input.matches("^sort by date-descending$") || (sortKind.equals(SortKind.date_descending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.date_descending;
+                games.sort((s1, s2) -> {
+                    String s11 = s1.getCreated_at().replaceAll("\\D", "");
+                    String s22 = s2.getCreated_at().replaceAll("\\D", "");
                     return s22.compareTo(s11);
                 });
                 printHeadings();
-                for(int i=0;i< games.size();i++){
-                    printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
                 }
-            }else if(input.matches("^sort by opponent name-ascending$")){
+            } else if (input.matches("^sort by opponent name-ascending$") || (sortKind.equals(SortKind.opponent_name_ascending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.opponent_name_ascending;
                 games.sort((g1, g2) -> {
                     User opponent1 = null;
                     User opponent2 = null;
@@ -117,10 +152,12 @@ public class M_GameHistoryMenu extends Menu{
                     return opponent1.getUsername().compareTo(opponent2.getUsername());
                 });
                 printHeadings();
-                for(int i=0;i<games.size();i++){
-                    printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
                 }
-            }else if(input.matches("^sort by opponent name-descending$")){
+            } else if (input.matches("^sort by opponent name-descending$") || (sortKind.equals(SortKind.opponent_name_descending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.opponent_name_descending;
                 games.sort((g1, g2) -> {
                     User opponent1 = null;
                     User opponent2 = null;
@@ -134,13 +171,15 @@ public class M_GameHistoryMenu extends Menu{
                     } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
                         opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
                     }
-                    return -1*(opponent1.getUsername().compareTo(opponent2.getUsername()));
+                    return -1 * (opponent1.getUsername().compareTo(opponent2.getUsername()));
                 });
                 printHeadings();
-                for(int i=0;i<games.size();i++){
-                    printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
                 }
-            }else if(input.matches("^sort by opponent level-ascending$")){
+            } else if (input.matches("^sort by opponent level-ascending$") || (sortKind.equals(SortKind.opponent_level_ascending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.opponent_level_ascending;
                 games.sort((g1, g2) -> {
                     User opponent1 = null;
                     User opponent2 = null;
@@ -154,13 +193,15 @@ public class M_GameHistoryMenu extends Menu{
                     } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
                         opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
                     }
-                    return opponent1.getLevel()-opponent2.getLevel();
+                    return opponent1.getLevel() - opponent2.getLevel();
                 });
                 printHeadings();
-                for(int i=0;i<games.size();i++){
-                    printGame(games.get(i),i);
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
                 }
-            }else if(input.matches("^sort by opponent level-descending$")){
+            } else if (input.matches("^sort by opponent level-descending$") || (sortKind.equals(SortKind.opponent_level_descending)&& nextOrPre)) {
+                nextOrPre=false;
+                sortKind=SortKind.opponent_level_descending;
                 games.sort((g1, g2) -> {
                     User opponent1 = null;
                     User opponent2 = null;
@@ -174,15 +215,38 @@ public class M_GameHistoryMenu extends Menu{
                     } else if (g2.getPlayer_two_id() == loggedInUser.getID()) {
                         opponent2 = (User) UserController.getByID(g2.getPlayer_one_id()).body.get("user");
                     }
-                    return opponent2.getLevel()-opponent1.getLevel();
+                    return opponent2.getLevel() - opponent1.getLevel();
                 });
-            }else if(input.matches("^show current menu$")){
+                printHeadings();
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
+                }
+            } else if (input.matches("^show current menu$")) {
                 System.out.println("You are currently in " + getName());
-            }else if(input.matches("^Back$")){
+            } else if (input.matches("^next page$")) {
+                if (currentPage < allPagesCount) {
+                    nextOrPre=true;
+                    currentPage++;
+                } else
+                    System.out.println("It's last page!");
+            } else if (input.matches("^previous page$")) {
+                if (1 < currentPage) {
+                    nextOrPre =true;
+                    currentPage--;
+                } else
+                    System.out.println("It's first page!");
+            } else  if (sortKind.equals(SortKind.no_filter)&&nextOrPre){
+                nextOrPre=false;
+                printHeadings();
+                for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
+                    printGame(games.get(i), i);
+                }
+            }
+            else if (input.matches("^Back$")) {
                 return new M_GameMainMenu();
-            }else{
+            } else {
                 System.out.println("invalid command!");
             }
-        }while (true);
+        } while (true);
     }
 }
