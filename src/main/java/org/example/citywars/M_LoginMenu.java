@@ -27,9 +27,8 @@ public class M_LoginMenu extends Menu {
         patterns.add(Pattern.compile("^ *user +login +-u(?<username>[\\S ]+)-p(?<password>[\\S ]+) *$"));
         patterns.add(Pattern.compile("^ *Forgot +my +password +-u(?<username>[\\S ]+) *$"));
     }
-
-    private void printMenu() {
-        System.out.println("Login menu");
+    private void printMenu(){
+        System.out.println("LOGIN MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
         System.out.println("Information: ");
