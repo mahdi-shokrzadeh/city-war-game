@@ -2,13 +2,13 @@ package org.example.citywars;
 
 public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
-        super("M_GameMainMenu");
+        super("M_GameMainMenu",true, "BG-Videos\\BG-login.png");
     }
 
     public Menu myMethods() {
         String input = consoleScanner.nextLine();
         if (input.toLowerCase().matches("^ *start +game *$"))
-            return new M_GameModeChoiseMenu();
+            return new M_GamePlayMenu();
         else if (input.toLowerCase().matches("^ *show +cards *$"))
             return new M_MyCardsMenu();
         else if (input.toLowerCase().matches("^ *game +history *$"))

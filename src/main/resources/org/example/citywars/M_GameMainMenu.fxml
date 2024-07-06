@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_GameMainMenu">
+
+    <ImageView fx:id="backGroundIm" fitHeight="1080.0" fitWidth="1920.0" />
+   <GridPane layoutX="495.0" layoutY="546.0" prefHeight="291.0" prefWidth="1084.0">
+     <columnConstraints>
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="217.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="323.0" minWidth="10.0" prefWidth="181.0" />
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="280.0" />
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="180.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="223.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="184.0" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="122.0" minHeight="3.0" prefHeight="18.0" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="141.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+      <children>
+         <Button onAction="#GoToShopButton" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="230.0" text="Shop" textFill="#650349">
+            <font>
+               <Font size="30.0" />
+            </font></Button>
+         <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <font>
+               <Font size="28.0" />
+            </font></Button>
+         <Button onAction="#GoToGameStartButton" mnemonicParsing="false" prefHeight="125.0" prefWidth="280.0" text="Start Game" GridPane.columnIndex="2">
+            <font>
+               <Font size="34.0" />
+            </font></Button>
+         <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Log out" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <font>
+               <Font size="28.0" />
+            </font></Button>
+         <Button onAction="#GoToGameHistoryButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="230.0" text="Game History" GridPane.columnIndex="4">
+            <font>
+               <Font size="30.0" />
+            </font></Button>
+      </children>
+   </GridPane>
+
+</Pane>
