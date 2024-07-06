@@ -22,6 +22,8 @@ public class Game extends Menu {
         private String winner;
         private String reward;
         private int number_of_rounds;
+        private String winnerReward;
+        private String loserReward;
 
         // Only Class Vars
         private int bet_amount;
@@ -34,7 +36,8 @@ public class Game extends Menu {
 
         private Round current_round;
 
-        public Game(){}
+        public Game() {
+        }
 
         public Game(User player_one, User player_two, String mode) {
                 super("GameProcess");
@@ -434,6 +437,22 @@ public class Game extends Menu {
                 this.rounds = rounds;
         }
 
+        public String getWinnerReward() {
+                return winnerReward;
+        }
+
+        public void setWinnerReward(String r) {
+                winnerReward = r;
+        }
+
+        public String getLoserReward() {
+                return loserReward;
+        }
+
+        public void setLoserReward(String r) {
+                loserReward = r;
+        }
+
         public void findWinner() {
                 if (player_one.getHitPoints() > player_two.getHitPoints()) {
                         this.winner = player_one.getUsername();
@@ -469,7 +488,5 @@ public class Game extends Menu {
                         }
                 }
         }
-
-
 
 }
