@@ -66,16 +66,18 @@ public class M_ShopMenu extends Menu {
             System.out.println("power: " + card.getPower());
             System.out.println("damage: " + card.getDamage());
             System.out.println("duration: " + card.getDuration());
-            System.out.println("character: " + card.getCharacter());
+            System.out.println("character: " + card.getCharacter().getName());
             System.out.println("price:" + card.getPrice());
             System.out.println("upgrade level: " + card.getUpgradeLevel());
             System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+            System.out.println();
         } else if (card.getCardType().toString().equals("Spell")) {
             System.out.println("name: " + card.getName());
             System.out.println("type: " + card.getCardType());
             System.out.println("duration: " + card.getDuration());
             System.out.println("price:" + card.getPrice());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         }
     }
 
@@ -91,12 +93,14 @@ public class M_ShopMenu extends Menu {
             System.out.println("upgrade level: " + card.getUpgradeLevel());
             System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         } else if (card.getCardType().toString().equals("Spell")) {
             System.out.println("name: " + card.getName());
             System.out.println("type: " + card.getCardType());
             System.out.println("duration: " + card.getDuration());
             System.out.println("price:" + card.getPrice());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         }
     }
 
