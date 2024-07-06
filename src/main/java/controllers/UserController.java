@@ -13,7 +13,6 @@ import database.DBs.UserCardDB;
 import org.example.citywars.M_LoginMenu;
 import org.example.citywars.Menu;
 
-
 public class UserController {
     private static final UserDB userDB = new UserDB();
     private static final CardDB cardDB = new CardDB();
@@ -51,12 +50,15 @@ public class UserController {
 
     }
 
-    public static Response createUser(String username, String password, String nickname, String email, String role, String passRecoveryQuestion, String passRecoveryAnswer) {
+    public static Response createUser(String username, String password, String nickname, String email, String role,
+            String passRecoveryQuestion, String passRecoveryAnswer) {
         if (username.isBlank()) {
             return new Response("username can not be blank", -422);
         }
         if (!Pattern.compile("^[a-zA-Z0-9_]+$").matcher(username).find()) {
-            return new Response("username should only contain lower case letters, upper case letters, numbers and under score", -422);
+            return new Response(
+                    "username should only contain lower case letters, upper case letters, numbers and under score",
+                    -422);
         }
         Response res = sudoGetAllUsers();
         List<User> allUsers = null;
@@ -124,8 +126,8 @@ public class UserController {
 
     }
 
-    public static Response testCreateUser(String username, String password, String nickname, String email, String role, String passRecoveryQuestion, String passRecoveryAnswer) {
-
+    public static Response testCreateUser(String username, String password, String nickname, String email, String role,
+            String passRecoveryQuestion, String passRecoveryAnswer) {
 
         User user;
         try {
@@ -203,10 +205,11 @@ public class UserController {
                     setInterval();
                 }
             }, delay, period);
-            return new Response("Password and Username don't match\nTry again in " + M_LoginMenu.lockTime + " seconds", -401);
+            return new Response("Password and Username don't match\nTry again in " + M_LoginMenu.lockTime + " seconds",
+                    -401);
         }
 
-        if ( user.getFirstLogin() && !((List<Card>) CardController.getAllCards().body.get("allCards")).isEmpty()) {
+        if (user.getFirstLogin() && !((List<Card>) CardController.getAllCards().body.get("allCards")).isEmpty()) {
             Response res = CardController.getAllCards();
             List<Card> allCards = null;
             if (res.ok) {
@@ -238,6 +241,11 @@ public class UserController {
             }
 
             user.firstLogin();
+            try {
+                userDB.update(user, user.getID());
+            } catch (Exception e) {
+                return new Response("unable to update user", -500, e);
+            }
         }
 
         return new Response("user logged in successfully", 200, "user", user);
@@ -250,7 +258,6 @@ public class UserController {
         }
         return --M_LoginMenu.lockTime;
     }
-
 
     public static Response forgotPassword(String username) {
 
@@ -284,13 +291,13 @@ public class UserController {
             }
 
             System.out.println("Enter you new password: ");
-            String password ;
+            String password;
             do {
-                password= sc.nextLine().trim();
-                if (Menu.passwordProblem(password)!=null)
+                password = sc.nextLine().trim();
+                if (Menu.passwordProblem(password) != null)
                     System.out.println(Menu.passwordProblem(password));
 
-            }while (Menu.passwordProblem(password) != null);
+            } while (Menu.passwordProblem(password) != null);
 
             try {
                 user.setPassword(password);
@@ -299,7 +306,7 @@ public class UserController {
                 return new Response("an exception happened while saving new password", -500);
             }
 
-            return new Response("password changed successfully!", 201,"user", user);
+            return new Response("password changed successfully!", 201, "user", user);
         }
     }
 
@@ -309,7 +316,9 @@ public class UserController {
             return new Response("username can not be blank", -422);
         }
         if (!Pattern.compile("^[a-zA-Z0-9_]+$").matcher(value).find()) {
-            return new Response("username should only contain lower case letters, upper case letters, numbers and under score", -422);
+            return new Response(
+                    "username should only contain lower case letters, upper case letters, numbers and under score",
+                    -422);
         }
 
         User user;
@@ -377,8 +386,8 @@ public class UserController {
             return new Response("an exception happened while updating user", -500, e);
         }
 
-            return new Response("password updated successfully", 200);
-        }
+        return new Response("password updated successfully", 200);
+    }
 
     public static Response editNickname(int id, String value) {
 
@@ -436,5 +445,3 @@ public class UserController {
     }
 
 }
-
-

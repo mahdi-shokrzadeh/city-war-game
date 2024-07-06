@@ -2,8 +2,8 @@ package models;
 
 public class ClanGame {
     private int id;
-    private final User attacker;
-    private final User defender;
+    private User attacker;
+    private User defender;
     private User winner;
     private User loser;
     private boolean hasEnded;
@@ -14,6 +14,7 @@ public class ClanGame {
         loser = null;
         hasEnded = false;
     }
+    public ClanGame(){}
     public int getID(){ return id; }
     public void setID(int _id){ id = _id;}
     public User getAttacker(){ return attacker; }

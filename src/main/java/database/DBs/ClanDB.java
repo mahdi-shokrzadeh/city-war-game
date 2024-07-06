@@ -60,6 +60,11 @@ public class ClanDB {
         clan = data.stream().filter(o -> o.getBattleKey().equals(key) ).findFirst().orElse(null);
         return clan;
     }
+    public Clan getByJoiningKey(String key){
+        Clan clan = null;
+        clan = data.stream().filter(o -> o.getJoiningKey().equals(key) ).findFirst().orElse(null);
+        return clan;
+    }
     public List<Clan> getAll(){
         return data;
     }

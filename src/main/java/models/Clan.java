@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class Clan {
     private int id;
-    private final String name;
+    private String name;
     private String joiningKey;
     private String battleKey;
-    private final int leaderID;
+    private int leaderID;
     private List<User> members;
     private Integer battleID;
     public Clan(int id,String _name){
@@ -18,6 +18,7 @@ public class Clan {
         leaderID = id;
         members = new ArrayList<>();
     }
+    public Clan(){}
     public int getID(){ return id; }
     public void setID(int _id){ id = _id;}
     public String getName(){return name;}
