@@ -82,7 +82,7 @@ public class ClanController {
             id = clanDB.create(clan);
             clan.setJoiningKey(name + "/" + id);
             clan.setBattleKey(name);
-            clan.addMember(user);
+            clan.addMemberID(user.getID());
             clanDB.update(clan, clan.getID());
         } catch (Exception e) {
             return new Response("an exception happened while creating clan", -500, e);
@@ -127,7 +127,7 @@ public class ClanController {
             return new Response("an exception happened while saving user's clan id", -500, e);
         }
 
-        clan.addMember(user);
+        clan.addMemberID(user.getID());
 
         try {
             clanDB.update(clan, clan.getID());
@@ -158,7 +158,7 @@ public class ClanController {
         }
 
         ClanBattle battle = new ClanBattle(attackerClan.getID(), defenderClan.getID(),
-                Math.min(attackerClan.getMembers().size(), defenderClan.getMembers().size()));
+                Math.min(attackerClan.getMembersIDS().size(), defenderClan.getMembersIDS().size()));
         defenderClan.startBattle(battle.getID());
         attackerClan.startBattle(battle.getID());
         try {

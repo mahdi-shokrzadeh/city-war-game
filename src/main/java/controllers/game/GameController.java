@@ -359,9 +359,9 @@ public class GameController {
             if (attackerClan.getLeaderID() != user.getID()) {
                 return new Response("the battle is in finale phase, only leaders are allowed to play game", -401);
             }
-            for (User u : defenderClan.getMembers()) {
-                if (u.getID() == defenderClan.getLeaderID()) {
-                    opponent = u;
+            for (int uID : defenderClan.getMembersIDS()) {
+                if (uID == defenderClan.getLeaderID()) {
+                    opponent = userDB.getOne(uID);
                 }
             }
 
@@ -381,17 +381,17 @@ public class GameController {
 
             Random random = new Random();
             if (user.getClanID() == battle.getAttackerID()) {
-                List<User> defenders = defenderClan.getMembers();
+                List<Integer> defenders = defenderClan.getMembersIDS();
                 for (int id : battle.getPlayedDefendersIDS()) {
-                    defenders.removeIf(o -> o.getID() == id);
+                    defenders.removeIf(o -> o == id);
                 }
-                opponent = defenders.get(random.nextInt(defenders.size()));
+                opponent = userDB.getOne(defenders.get(random.nextInt(defenders.size())));
             } else if (user.getClanID() == battle.getDefenderID()) {
-                List<User> attackers = attackerClan.getMembers();
+                List<Integer> attackers = attackerClan.getMembersIDS();
                 for (int id : battle.getPlayedAttackersIDS()) {
-                    attackers.removeIf(o -> o.getID() == id);
+                    attackers.removeIf(o -> o == id);
                 }
-                opponent = attackers.get(random.nextInt(attackers.size()));
+                opponent = userDB.getOne(attackers.get(random.nextInt(attackers.size())));
             }
             if (opponent == null) {
                 return new Response("no opponent was found", -404);

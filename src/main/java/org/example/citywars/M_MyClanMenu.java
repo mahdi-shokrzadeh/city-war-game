@@ -27,7 +27,7 @@ public class M_MyClanMenu extends Menu {
         System.out.println("name: " + myClan.getName());
         System.out.println("joining key: " + myClan.getJoiningKey());
         System.out.println("battle key: " + myClan.getBattleID());
-        System.out.println("number of members: " + myClan.getMembers().size());
+        System.out.println("number of members: " + myClan.getMembersIDS().size());
         System.out.println("number of wins: " + battles.get("numberOfWins"));
         System.out.println("number of losses: " + battles.get("numberOfLosses"));
         if (shouldPlay) {
