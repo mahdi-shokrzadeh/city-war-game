@@ -11,7 +11,8 @@
   "damage" : 50,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
@@ -28,7 +29,8 @@
   "damage" : 40,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
