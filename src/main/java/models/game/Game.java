@@ -85,14 +85,14 @@ public class Game extends Menu {
         public Game(User player_one, String mode) {
                 super("GameProcess");
                 this.player_one = player_one;
-                this.player_two = player_two;
                 this.mode = mode;
                 this.created_at = new java.util.Date().toString();
 
-                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
-                this.current_round = rounds.get(0);
+                // rounds.add(new Round(player_one, player_two, player_one_cards,
+                // player_two_cards));
+                // this.current_round = rounds.get(0);
 
-                ConsoleGame.printGreetings();
+                // ConsoleGame.printGreetings();
 
                 // switch (mode) {
 
@@ -143,11 +143,13 @@ public class Game extends Menu {
                                                 this.looser_reward);
                                 return menu;
                         } else {
+
                                 return this;
                         }
                 } else {
                         ConsoleGame.printInvaidInput();
                 }
+
                 return this;
         }
         // handlers
