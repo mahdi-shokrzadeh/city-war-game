@@ -2,7 +2,7 @@ package org.example.citywars;
 
 public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
-        super("M_GameMainMenu");
+        super("M_GameMainMenu",true, "BG-Videos\\BG-login.png");
     }
     private void printMenu(){
         System.out.println("Main menu");

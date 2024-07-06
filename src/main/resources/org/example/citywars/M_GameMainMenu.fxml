@@ -29,7 +29,7 @@
             <font>
                <Font size="30.0" />
             </font></Button>
-         <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <Button onAction="#GoToSettingButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <font>
                <Font size="28.0" />
             </font></Button>

@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        menu = new M_Intro();
+        menu = new M_GameMainMenu();
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName()+".fxml"));
         Scene scene = new Scene(fxmlLoader.load());

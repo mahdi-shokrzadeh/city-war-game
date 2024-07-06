@@ -2,12 +2,18 @@ package org.example.citywars;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class M_Intro extends Menu {
     public M_Intro() {
-        super("M_Intro", "Bgintro.m4v");
+        super("M_Intro", false, "BG-Videos\\Bgintro.m4v");
         secondPersonNeeded = false;
         playMode = null;
     }
@@ -35,17 +41,20 @@ public class M_Intro extends Menu {
         } while(true);
     }
 
-    @FXML
-    protected void GoToLoginButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_LoginMenu();
-        switchMenus(event);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-//        mediaPlayer.play();
-    }
+        if (!BGisImage) {
+            media = new Media(file.toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            backGround.setMediaPlayer(mediaPlayer);
 
-    @FXML
-    protected void GoToSignUpButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_SignUpMenu();
-        switchMenus(event);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setCycleCount(-1);
+        }
+
+        File file2 = new File("src\\main\\resources\\BG-Videos\\BGIn.png");
+        BGim = new Image(file2.toURI().toString());
+        backGroundIm.setImage(BGim);
     }
 }

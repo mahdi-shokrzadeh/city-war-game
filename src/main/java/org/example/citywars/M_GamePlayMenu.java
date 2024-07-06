@@ -12,7 +12,7 @@ public class M_GamePlayMenu extends Menu {
     boolean gameOver;
 
     public M_GamePlayMenu() {
-        super("M_GamePlayMenu");
+        super("M_GamePlayMenu",true,"BG-Videos\\BG-signUp.png");
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
     }

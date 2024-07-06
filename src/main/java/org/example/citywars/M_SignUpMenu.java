@@ -40,7 +40,7 @@ public class M_SignUpMenu extends Menu {
     private String pass; // for command line
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu", "BG1.mp4");
+        super("M_SignUpMenu",true, "BG-Videos\\BG-signUp.png");
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
@@ -249,15 +249,6 @@ public class M_SignUpMenu extends Menu {
             }
         }
         return -1;
-    }
-
-    //Control Methods
-    @FXML
-    protected void GoToLoginButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_LoginMenu();
-        switchMenus(event);
-
-//        mediaPlayer.play();
     }
 
 }
