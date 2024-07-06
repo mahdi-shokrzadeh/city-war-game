@@ -10,7 +10,7 @@ import models.card.Spell;
 import views.console.game.ConsoleGame;
 
 public class SpellAffect {
-    
+
     private int des_index;
     private Block[][] board;
     private Spell spell_card;
@@ -24,7 +24,7 @@ public class SpellAffect {
         this.des_index = des_index;
         this.board = board;
         this.spell_card = (Spell) spell_card;
-        this.turn_index = turn_index;
+        this.turn_index = turn_index % 2;
         this.current_player = current_player;
         this.round = round;
         this.hand_cards = hand_cards;
@@ -86,7 +86,6 @@ public class SpellAffect {
 
             // special spell cards
 
-
             default:
                 System.out.println("\n nothing!\n\n");
                 return false;
@@ -138,6 +137,7 @@ public class SpellAffect {
         this.board[this.turn_index][this.des_index].setBlockPower(999);
         this.board[this.turn_index][this.des_index].setBlockDamage(0);
         this.board[this.turn_index][this.des_index].setBlockEmpty(false);
+        this.removeCardFromHand(this.spell_card);
     }
 
     public void handleHeal() {
@@ -146,6 +146,7 @@ public class SpellAffect {
         this.board[this.turn_index][this.des_index].setBlockDamage(0);
         this.board[this.turn_index][this.des_index].setBlockEmpty(false);
         this.current_player.setHitPoints(this.current_player.getHitPoints() + added_hit_points);
+        this.removeCardFromHand(this.spell_card);
     }
 
     public boolean handlePowerBoost() {
@@ -168,6 +169,7 @@ public class SpellAffect {
         } else {
             found_card.setPower(found_card.getPower() + 10);
             ConsoleGame.printPowerBoostSuccess(found_card);
+            this.removeCardFromHand(this.spell_card);
         }
 
         return true;
@@ -186,15 +188,20 @@ public class SpellAffect {
         int unavailable_block_player_two = findUnavailableBlock(1);
 
         // swap the blocks
-        this.board[0][block_number_player_one].setBlockUnavailable(true);
-        this.board[0][unavailable_block_player_one].setBlockUnavailable(false);
-        this.board[0][unavailable_block_player_one].setBlockEmpty(true);
-
-        this.board[1][block_number_player_two].setBlockUnavailable(true);
-        this.board[1][unavailable_block_player_two].setBlockUnavailable(false);
-        this.board[1][unavailable_block_player_two].setBlockEmpty(true);
+        if (unavailable_block_player_one != -1) {
+            this.board[0][block_number_player_one].setBlockUnavailable(true);
+            this.board[0][unavailable_block_player_one].setBlockUnavailable(false);
+            this.board[0][unavailable_block_player_one].setBlockEmpty(true);
+        }
+        
+        if (unavailable_block_player_two != -1) {
+            this.board[1][block_number_player_two].setBlockUnavailable(true);
+            this.board[1][unavailable_block_player_two].setBlockUnavailable(false);
+            this.board[1][unavailable_block_player_two].setBlockEmpty(true);
+        }
 
         ConsoleGame.printSuccessSpaceShift();
+        this.removeCardFromHand(this.spell_card);
 
     }
 
@@ -230,11 +237,14 @@ public class SpellAffect {
 
         this.board[this.turn_index][unavailable_block_index].setBlockUnavailable(false);
         ConsoleGame.printSuccessRepair();
+        this.removeCardFromHand(this.spell_card);
+
     }
 
     public void handleRoundReduce() {
         this.round.setNumberOfRoundTurns(this.round.getNumberOfRoundTurns() - 1);
         ConsoleGame.printSuccessfulTurnReduce();
+        this.removeCardFromHand(this.spell_card);
     }
 
     public void handleAttenuate() {
@@ -277,6 +287,7 @@ public class SpellAffect {
             }
         }
         ConsoleGame.printAttenuateSuccess(found_card_one, found_card_two);
+        this.removeCardFromHand(this.spell_card);
     }
 
     public void handleCopy() {
@@ -285,6 +296,7 @@ public class SpellAffect {
             this.hand_cards.add(0, copy_card);
             this.current_player.setIsBonusActive(true);
             ConsoleGame.printCopySuccess(copy_card);
+            this.removeCardFromHand(this.spell_card);
         } catch (Exception e) {
             ConsoleGame.printNoValidCardToCopy();
         }
@@ -293,7 +305,6 @@ public class SpellAffect {
     public void handleHide() {
         if (this.turn_index == 0) {
             this.round.getPlayer_two().setShouldCardsBeHidden(true);
-
             Collections.shuffle(this.round.getPlayer_two_cards().subList(0, 5));
 
         } else {
@@ -301,6 +312,7 @@ public class SpellAffect {
             Collections.shuffle(this.round.getPlayer_one_cards().subList(0, 5));
         }
         ConsoleGame.printSuccessfulHide();
+        this.removeCardFromHand(this.spell_card);
     }
 
     public void handleSteal() {
@@ -320,5 +332,10 @@ public class SpellAffect {
         }
         current_player.setIsBonusActive(true);
         ConsoleGame.printSuccessfulSteal(card);
+        this.removeCardFromHand(this.spell_card);
+    }
+
+    public void removeCardFromHand(Card card) {
+        this.hand_cards.remove(card);
     }
 }

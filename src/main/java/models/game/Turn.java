@@ -164,7 +164,7 @@ public class Turn {
                                 } catch (Exception e) {
                                     System.out.println(e);
                                 }
-
+                                cond = true;
                             } else {
 
                             }
