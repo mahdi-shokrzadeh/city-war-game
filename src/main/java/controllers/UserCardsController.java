@@ -94,6 +94,35 @@ public class UserCardsController {
         return new Response("all users' cards fetched successfully", 200, "cards", cards);
     }
 
+    public static Response getUnleveledCards(User user) {
+        List<UserCard> allUsersCards;
+
+        try {
+            allUsersCards = ucDB.whereEquals(user.getID());
+        } catch (Exception e) {
+            return new Response("an exception occurred while fetching user cards", -500, e);
+        }
+        if (allUsersCards == null) {
+            return new Response("could not find users cards", -400);
+        }
+
+        List<Card> cards = new ArrayList<>();
+
+        try {
+            for (UserCard userCard : allUsersCards) {
+                Card card = cardDB.getOne(userCard.getCardID());
+                if (card == null) {
+                    return new Response("a deep error happened while fetching one of the cards", -400);
+                }
+                cards.add(card);
+            }
+        } catch (Exception e) {
+            return new Response("a deep exception happened while fetching cards", -500, e);
+        }
+
+        return new Response("all users' cards fetched successfully", 200, "cards", cards);
+    }
+
     public static Response removeUserCard(int userID, Card card) {
         User user;
         try {
