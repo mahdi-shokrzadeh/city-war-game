@@ -231,6 +231,9 @@ public class GameController {
             }
         }
 
+        winnerReward += "/ User: ";
+        loserReward += "/ User: ";
+
         try {
             if (winner.equals("player_two")) {
                 int level = calculateUserLevel(player);
