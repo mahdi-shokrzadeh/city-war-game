@@ -43,7 +43,7 @@ public class User implements Comparable<User> {
         this.hitPoints = 100;
         this.coins = 0;
         this.clanID = null;
-        this.firstLogin = false;
+        this.firstLogin = true;
         this.userCardIDS = new ArrayList<>();
         progress = 1;
     }
