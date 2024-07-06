@@ -238,13 +238,13 @@
   "spellType" : null
 }, {
   "id" : 14,
-  "name" : "UndercoverDron",
+  "name" : "Undere",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
-  "desc" : "A stleathy dron that suddenly appears, strikes and then vanishes",
+  "desc" : "A stleathy drone that suddenly appears, strikes and then vanishes",
   "power" : 34,
   "damage" : 28,
   "character" : {
