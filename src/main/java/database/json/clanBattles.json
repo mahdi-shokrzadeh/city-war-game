@@ -1,0 +1,15 @@
+[ {
+  "id" : 0,
+  "attackerID" : 1,
+  "defenderID" : 2,
+  "hasEnded" : false,
+  "numberOfRemainingGames" : 1,
+  "playedAttackersIDS" : [ ],
+  "playedDefendersIDS" : [ ],
+  "gameIDS" : [ ],
+  "attackerWins" : 0,
+  "defenderWins" : 0,
+  "winnerClanID" : 0,
+  "loserClanID" : 0,
+  "hasFinale" : false
+} ]

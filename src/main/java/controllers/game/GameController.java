@@ -364,7 +364,7 @@ public class GameController {
         attackerClan = ((Clan) ClanController.getCLanById(battle.getAttackerID()).body.get("clan"));
         defenderClan = ((Clan) ClanController.getCLanById(battle.getDefenderID()).body.get("clan"));
 
-        if (battle.hasFinale()) {
+        if (battle.getHasFinale()) {
             if (attackerClan.getLeaderID() != user.getID()) {
                 return new Response("the battle is in finale phase, only leaders are allowed to play game", -401);
             }
@@ -376,7 +376,7 @@ public class GameController {
 
         } else {
             List<Integer> playedUserIDS = Stream
-                    .concat(battle.getPlayedAttackersIDS().stream(), battle.getPlayedDefendersIDs().stream()).toList();
+                    .concat(battle.getPlayedAttackersIDS().stream(), battle.getPlayedDefendersIDS().stream()).toList();
             boolean userHasPlayed = false;
             for (int id : playedUserIDS) {
                 if (user.getID() == id) {
@@ -391,7 +391,7 @@ public class GameController {
             Random random = new Random();
             if (user.getClanID() == battle.getAttackerID()) {
                 List<User> defenders = defenderClan.getMembers();
-                for (int id : battle.getPlayedDefendersIDs()) {
+                for (int id : battle.getPlayedDefendersIDS()) {
                     defenders.removeIf(o -> o.getID() == id);
                 }
                 opponent = defenders.get(random.nextInt(defenders.size()));
