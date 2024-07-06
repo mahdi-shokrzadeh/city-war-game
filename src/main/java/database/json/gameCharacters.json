@@ -1,25 +1,25 @@
 [{
   "id": 0,
   "name": "panda",
-  "pFactor": 0.9
+  "pfactor": 0.9
 },{
   "id": 1,
   "name": "dragon",
-  "pFactor": 0.8
+  "pfactor": 0.8
 },{
   "id": 2,
   "name": "robot",
-  "pFactor": 0.5
+  "pfactor": 0.5
 },{
   "id": 3,
   "name": "warrior",
-  "pFactor": 0.6
+  "pfactor": 0.6
 },{
   "id": 4,
   "name": "wizard",
-  "pFactor": 0.7
+  "pfactor": 0.7
 },{
   "id": 5,
   "name": "wolf",
-  "pFactor": 0.4
+  "pfactor": 0.4
 }]
