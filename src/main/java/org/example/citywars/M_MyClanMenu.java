@@ -61,7 +61,7 @@ public class M_MyClanMenu extends Menu {
             }
         }
         boolean shouldPlay;
-        res = ClanController.getShouldPlayed(loggedInUser, myClan);
+        res = ClanController.getShouldPlay(loggedInUser);
         shouldPlay = (boolean) res.body.get("shouldPlay");
         if (res.exception != null) {
             System.out.println(res.message);
