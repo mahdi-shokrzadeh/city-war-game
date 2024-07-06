@@ -1,579 +1,614 @@
-[ {
-  "id" : 0,
-  "name" : "revolve",
-  "price" : 60,
-  "duration" : 1,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 5,
-  "desc" : "this is also a dragon",
-  "power" : 29,
-  "damage" : 50,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+[
+  {
+    "id": 0,
+    "name": "revolve",
+    "price": 60,
+    "duration": 1,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 5,
+    "desc": "this is also a dragon",
+    "power": 29,
+    "damage": 50,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 1,
-  "name" : "strike",
-  "price" : 70,
-  "duration" : 2,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 5,
-  "desc" : "desc",
-  "power" : 30,
-  "damage" : 40,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 1,
+    "name": "strike",
+    "price": 70,
+    "duration": 2,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 5,
+    "desc": "desc",
+    "power": 30,
+    "damage": 40,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 2,
-  "name" : "KnifeSlash",
-  "price" : 60,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "A panda should not rely on his magic only",
-  "power" : 28,
-  "damage" : 27,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 2,
+    "name": "KnifeSlash",
+    "price": 60,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "A panda should not rely on his magic only",
+    "power": 28,
+    "damage": 27,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 3,
-  "name" : "SpearOfLight",
-  "price" : 70,
-  "duration" : 1,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "A Spear that shines when thrown and destroyes all the darkness",
-  "power" : 27,
-  "damage" : 50,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 3,
+    "name": "SpearOfLight",
+    "price": 70,
+    "duration": 1,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "A Spear that shines when thrown and destroyes all the darkness",
+    "power": 27,
+    "damage": 50,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 4,
-  "name" : "StaffOfWisdom",
-  "price" : 65,
-  "duration" : 2,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "Each time this staff hits you in the head you become wiser",
-  "power" : 30,
-  "damage" : 20,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 4,
+    "name": "StaffOfWisdom",
+    "price": 65,
+    "duration": 2,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "Each time this staff hits you in the head you become wiser",
+    "power": 30,
+    "damage": 20,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 5,
-  "name" : "FistOfJustice",
-  "price" : 70,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 50,
-  "desc" : "This fist came from justice league as a gift",
-  "power" : 30,
-  "damage" : 33,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 5,
+    "name": "FistOfJustice",
+    "price": 70,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 50,
+    "desc": "This fist came from justice league as a gift",
+    "power": 30,
+    "damage": 33,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 6,
-  "name" : "VortexOfPower",
-  "price" : 80,
-  "duration" : 4,
-  "cardType" : "Regular",
-  "upgradeLevel" : 3,
-  "upgradeCost" : 50,
-  "desc" : "Send your enemies whirling around with this vortex",
-  "power" : 29,
-  "damage" : 40,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 6,
+    "name": "VortexOfPower",
+    "price": 80,
+    "duration": 4,
+    "cardType": "Regular",
+    "upgradeLevel": 3,
+    "upgradeCost": 50,
+    "desc": "Send your enemies whirling around with this vortex",
+    "power": 29,
+    "damage": 40,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 7,
-  "name" : "SharpBite",
-  "price" : 50,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "The teeth of wolf are always sharp",
-  "power" : 31,
-  "damage" : 30,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 7,
+    "name": "SharpBite",
+    "price": 50,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "The teeth of wolf are always sharp",
+    "power": 31,
+    "damage": 30,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 8,
-  "name" : "HowlToMoon",
-  "price" : 60,
-  "duration" : 5,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "Howl to the moon and summon the rest of the flock",
-  "power" : 29,
-  "damage" : 50,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 8,
+    "name": "HowlToMoon",
+    "price": 60,
+    "duration": 5,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "Howl to the moon and summon the rest of the flock",
+    "power": 29,
+    "damage": 50,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 9,
-  "name" : "PawOfSpeed",
-  "price" : 60,
-  "duration" : 2,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "A speedy slash you are not expecting from an old wolf",
-  "power" : 27,
-  "damage" : 28,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 9,
+    "name": "PawOfSpeed",
+    "price": 60,
+    "duration": 2,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "A speedy slash you are not expecting from an old wolf",
+    "power": 27,
+    "damage": 28,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 10,
-  "name" : "Flank",
-  "price" : 70,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 50,
-  "desc" : "Wolves do not fight fair!",
-  "power" : 28,
-  "damage" : 36,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 10,
+    "name": "Flank",
+    "price": 70,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 50,
+    "desc": "Wolves do not fight fair!",
+    "power": 28,
+    "damage": 36,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 11,
-  "name" : "BackToTheWall",
-  "price" : 80,
-  "duration" : 4,
-  "cardType" : "Regular",
-  "upgradeLevel" : 3,
-  "upgradeCost" : 50,
-  "desc" : "A wolf is nevet back to the wall unless it wants to",
-  "power" : 29,
-  "damage" : 44,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 11,
+    "name": "BackToTheWall",
+    "price": 80,
+    "duration": 4,
+    "cardType": "Regular",
+    "upgradeLevel": 3,
+    "upgradeCost": 50,
+    "desc": "A wolf is nevet back to the wall unless it wants to",
+    "power": 29,
+    "damage": 44,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 12,
-  "name" : "SwordOfHonor",
-  "price" : 75,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "Legends say this sword will bring justice to our village",
-  "power" : 30,
-  "damage" : 36,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 12,
+    "name": "SwordOfHonor",
+    "price": 75,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "Legends say this sword will bring justice to our village",
+    "power": 30,
+    "damage": 36,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 13,
-  "name" : "Teleportation",
-  "price" : 60,
-  "duration" : 1,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "Teleport through another demension and attack your enemy from behind",
-  "power" : 34,
-  "damage" : 40,
-  "character" : {
-    "id" : 3,
-    "name" : "warrior"
+  {
+    "id": 13,
+    "name": "Teleportation",
+    "price": 60,
+    "duration": 1,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "Teleport through another demension and attack your enemy from behind",
+    "power": 34,
+    "damage": 40,
+    "character": {
+      "id": 3,
+      "name": "warrior"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 14,
-  "name" : "UndercoverDron",
-  "price" : 80,
-  "duration" : 4,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "A stleathy dron that suddenly appears, strikes and then vanishes",
-  "power" : 34,
-  "damage" : 28,
-  "character" : {
-    "id" : 3,
-    "name" : "warrior"
+  {
+    "id": 14,
+    "name": "UndercoverDron",
+    "price": 80,
+    "duration": 4,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "A stleathy dron that suddenly appears, strikes and then vanishes",
+    "power": 34,
+    "damage": 28,
+    "character": {
+      "id": 3,
+      "name": "warrior"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 15,
-  "name" : "CavalrySupport",
-  "price" : 70,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 50,
-  "desc" : "Call in reinforcements to help you in battle",
-  "power" : 32,
-  "damage" : 30,
-  "character" : {
-    "id" : 3,
-    "name" : "warrior"
+  {
+    "id": 15,
+    "name": "CavalrySupport",
+    "price": 70,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 50,
+    "desc": "Call in reinforcements to help you in battle",
+    "power": 32,
+    "damage": 30,
+    "character": {
+      "id": 3,
+      "name": "warrior"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 16,
-  "name" : "AwesomePunch",
-  "price" : 80,
-  "duration" : 5,
-  "cardType" : "Regular",
-  "upgradeLevel" : 3,
-  "upgradeCost" : 50,
-  "desc" : "An Awesome Punch",
-  "power" : 34,
-  "damage" : 50,
-  "character" : {
-    "id" : 3,
-    "name" : "warrior"
+  {
+    "id": 16,
+    "name": "AwesomePunch",
+    "price": 80,
+    "duration": 5,
+    "cardType": "Regular",
+    "upgradeLevel": 3,
+    "upgradeCost": 50,
+    "desc": "An Awesome Punch",
+    "power": 34,
+    "damage": 50,
+    "character": {
+      "id": 3,
+      "name": "warrior"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 17,
-  "name" : "LazyAttack",
-  "price" : 80,
-  "duration" : 5,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 50,
-  "desc" : "A lazy attack, but a powerfull one",
-  "power" : 30,
-  "damage" : 50,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 17,
+    "name": "LazyAttack",
+    "price": 80,
+    "duration": 5,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 50,
+    "desc": "A lazy attack, but a powerfull one",
+    "power": 30,
+    "damage": 50,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 18,
-  "name" : "JumpScare",
-  "price" : 70,
-  "duration" : 1,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 2,
-  "desc" : "Surprizingly opponents take damage when jump scared",
-  "power" : 33,
-  "damage" : 25,
-  "character" : {
-    "id" : 5,
-    "name" : "wolf"
+  {
+    "id": 18,
+    "name": "JumpScare",
+    "price": 70,
+    "duration": 1,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 2,
+    "desc": "Surprizingly opponents take damage when jump scared",
+    "power": 33,
+    "damage": 25,
+    "character": {
+      "id": 5,
+      "name": "wolf"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 19,
-  "name" : "FireBreath",
-  "price" : 60,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "Flames coming out the dragons mouth and burning its way",
-  "power" : 30,
-  "damage" : 42,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 19,
+    "name": "FireBreath",
+    "price": 60,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "Flames coming out the dragons mouth and burning its way",
+    "power": 30,
+    "damage": 42,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 20,
-  "name" : "WingSlap",
-  "price" : 50,
-  "duration" : 2,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "When the dragon slap its wings together a powerfull wind blows which damages the enemy",
-  "power" : 29,
-  "damage" : 28,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 20,
+    "name": "WingSlap",
+    "price": 50,
+    "duration": 2,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "When the dragon slap its wings together a powerfull wind blows which damages the enemy",
+    "power": 29,
+    "damage": 28,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 21,
-  "name" : "TailSlam",
-  "price" : 50,
-  "duration" : 3,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 50,
-  "desc" : "The dragon slams its tail on the ground that could cause the opponent to fall, and get fall damage",
-  "power" : 30,
-  "damage" : 32,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 21,
+    "name": "TailSlam",
+    "price": 50,
+    "duration": 3,
+    "cardType": "Regular",
+    "upgradeLevel": 1,
+    "upgradeCost": 50,
+    "desc": "The dragon slams its tail on the ground that could cause the opponent to fall, and get fall damage",
+    "power": 30,
+    "damage": 32,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 22,
-  "name" : "MagicSlash",
-  "price" : 70,
-  "duration" : 4,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 50,
-  "desc" : "Multiple magical slashes with a dragons paw",
-  "power" : 30,
-  "damage" : 40,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 22,
+    "name": "MagicSlash",
+    "price": 70,
+    "duration": 4,
+    "cardType": "Regular",
+    "upgradeLevel": 2,
+    "upgradeCost": 50,
+    "desc": "Multiple magical slashes with a dragons paw",
+    "power": 30,
+    "damage": 40,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 23,
-  "name" : "FireBall",
-  "price" : 80,
-  "duration" : 5,
-  "cardType" : "Regular",
-  "upgradeLevel" : 3,
-  "upgradeCost" : 50,
-  "desc" : "Throws multiple fire balls at the enemy dealing enormous damage",
-  "power" : 44,
-  "damage" : 50,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
+  {
+    "id": 23,
+    "name": "FireBall",
+    "price": 80,
+    "duration": 5,
+    "cardType": "Regular",
+    "upgradeLevel": 3,
+    "upgradeCost": 50,
+    "desc": "Throws multiple fire balls at the enemy dealing enormous damage",
+    "power": 44,
+    "damage": 50,
+    "character": {
+      "id": 1,
+      "name": "dragon"
+    },
+    "level": 1,
+    "spellType": null
   },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 23,
-  "name" : "Shield",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "A shield that defends against the enemy's attack preventing hp loss",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 3,
-    "name" : "warrior"
+  {
+    "id": 23,
+    "name": "Shield",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "A shield that defends against the enemy's attack preventing hp loss",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 3,
+      "name": "warrior"
+    },
+    "level": 1,
+    "spellType": "Shield"
   },
-  "level" : 1,
-  "spellType" : "Shield"
-}, {
-  "id" : 23,
-  "name" : "Heal",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Replanishes an amount of player's hp",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 0,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "Heal",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Replanishes an amount of player's hp",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 0,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Heal"
   },
-  "level" : 1,
-  "spellType" : "Heal"
-}, {
-  "id" : 23,
-  "name" : "PowerBoost",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Boost's power",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "PowerBoost",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Boost's power",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "PowerBoost"
   },
-  "level" : 1,
-  "spellType" : "PowerBoost"
-}, {
-  "id" : 23,
-  "name" : "SpaceShift",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Shift's space",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "SpaceShift",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Shift's space",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "SpaceShift"
   },
-  "level" : 1,
-  "spellType" : "SpaceShift"
-}, {
-  "id" : 23,
-  "name" : "Repair",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Repairs",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "Repair",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Repairs",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Repair"
   },
-  "level" : 1,
-  "spellType" : "Repair"
-}, {
-  "id" : 23,
-  "name" : "RoundReduce",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Reduces round",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "RoundReduce",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Reduces round",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "RoundReduce"
   },
-  "level" : 1,
-  "spellType" : "RoundReduce"
-}, {
-  "id" : 23,
-  "name" : "Steal",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Steals a card from opponents hand",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "Steal",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Steals a card from opponents hand",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Steal"
   },
-  "level" : 1,
-  "spellType" : "Steal"
-}, {
-  "id" : 23,
-  "name" : "Attenuate",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Atenuates",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "Attenuate",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Atenuates",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Attenuate"
   },
-  "level" : 1,
-  "spellType" : "Attenuate"
-}, {
-  "id" : 23,
-  "name" : "Copy",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Copies",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
+  {
+    "id": 23,
+    "name": "Copy",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Copies",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Copy"
   },
-  "level" : 1,
-  "spellType" : "Copy"
-},, {
-  "id" : 23,
-  "name" : "Hide",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Hides the enemys' cards and shufles them for a round",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda"
-  },
-  "level" : 1,
-  "spellType" : "Hide"
-}]
+  {
+    "id": 23,
+    "name": "Hide",
+    "price": 80,
+    "duration": 1,
+    "cardType": "Spell",
+    "upgradeLevel": 1,
+    "upgradeCost": 1,
+    "desc": "Hides the enemys' cards and shufles them for a round",
+    "power": 0,
+    "damage": 0,
+    "character": {
+      "id": 1,
+      "name": "panda"
+    },
+    "level": 1,
+    "spellType": "Hide"
+  }
+]

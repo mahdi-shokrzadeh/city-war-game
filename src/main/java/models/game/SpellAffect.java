@@ -84,6 +84,9 @@ public class SpellAffect {
                 handleSteal();
                 return false;
 
+            // special spell cards
+
+
             default:
                 System.out.println("\n nothing!\n\n");
                 return false;
