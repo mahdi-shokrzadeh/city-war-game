@@ -59,21 +59,11 @@ public class UserCardsController {
         }
         return new Response("user card fetched successfully",200,"userCard",userCard);
     }
-    public static Response getUsersCards(int userID){
-        User user;
+    public static Response getUsersCards(User user){
         List<UserCard> allUsersCards;
 
-        try{
-            user = userDB.getOne(userID);
-        }catch (Exception e){
-            return new Response("an exception occurred while fetching user",-500,e);
-        }
-        if( user == null ){
-            return new Response("no user found with this id",-400);
-        }
-
         try {
-            allUsersCards = ucDB.whereEquals(userID);
+            allUsersCards = ucDB.whereEquals(user.getID());
         }catch (Exception e){
             return new Response("an exception occurred while fetching user cards",-500,e);
         }
