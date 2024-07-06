@@ -82,7 +82,10 @@ public class UserCardsController {
                 if (card == null) {
                     return new Response("a deep error happened while fetching one of the cards", -400);
                 }
-                ;
+                if (user.getGameCharacter().getName().equals(card.getCharacter().getName())) {
+                    card.setDamage(card.getDamage() + card.getDuration());
+                    card.setPower(card.getPower() + 2);
+                }
                 card.setLevel(userCard.getLevel());
                 card.applyLevel();
                 cards.add(card);
