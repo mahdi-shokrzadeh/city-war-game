@@ -50,9 +50,9 @@ public class GameController {
         return level;
     }
 
-    public static Response createGame(User p1, User p2, int numberOfRounds, String winnerString, List<Card> p1Cards,
+    public static Response createGame(Game game, User p1, User p2, int numberOfRounds, String winnerString,
+            List<Card> p1Cards,
             List<Card> p2Cards) {
-        Game game = null;
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
         User winnerUser = null;
@@ -133,8 +133,10 @@ public class GameController {
             }
         }
 
+        if (game == null) {
+            return new Response("game is null", -400);
+        }
         try {
-            game = new Game(p1, p2, "duel");
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winnerString);
             game.setEnded_at(new Date().toString());
@@ -142,9 +144,6 @@ public class GameController {
             result.put("game", game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
-        }
-        if (game == null) {
-            return new Response("unable to create game", -400);
         }
 
         try {
@@ -186,8 +185,7 @@ public class GameController {
 
     }
 
-    public static Response createBotGame(User player, int numberOfRounds, String winner, List<Card> cards) {
-        Game game = null;
+    public static Response createBotGame(Game game, User player, int numberOfRounds, String winner, List<Card> cards) {
         int playerOriginalHP = userDB.getOne(player.getID()).getHitPoints();
         Map<String, Object> result = new HashMap<>();
         String winnerReward = "";
@@ -200,17 +198,16 @@ public class GameController {
             return new Response("invalid winner", -422);
         }
 
+        if (game == null) {
+            return new Response("game is null", -400);
+        }
         try {
-            game = new Game(player, "AI");
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winner);
             game.setEnded_at(new Date().toString());
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
-        }
-        if (game == null) {
-            return new Response("unable to create game", -400);
         }
 
         List<Card> allP1Cards = ((List<Card>) UserCardsController.getUsersCards(player).body.get("cards"));
@@ -279,8 +276,8 @@ public class GameController {
         return new Response("game created successfully", 200, result);
     }
 
-    public static Response createGambleGame(User p1, User p2, int numberOfRounds, String winner, int betAmount) {
-        Game game = null;
+    public static Response createGambleGame(Game game, User p1, User p2, int numberOfRounds, String winner,
+            int betAmount) {
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
         String winnerReward = "+" + betAmount + " coins\n";
@@ -291,17 +288,16 @@ public class GameController {
             return new Response("invalid winner", -422);
         }
 
+        if (game == null) {
+            return new Response("game is null", -400);
+        }
         try {
-            game = new Game(p1, p2, "duel");
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winner);
             game.setEnded_at(new Date().toString());
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
-        }
-        if (game == null) {
-            return new Response("unable to create game", -400);
         }
 
         try {
@@ -403,7 +399,7 @@ public class GameController {
                 opponent = attackers.get(random.nextInt(attackers.size()));
             }
             if (opponent == null) {
-                return new Response("no opponents were found", -400);
+                return new Response("no opponent was found", -404);
             }
         }
 
@@ -415,10 +411,11 @@ public class GameController {
         return new Response("clan game essentials fetched successfully", 200, result);
     }
 
-    public static Response creatGameClan(ClanBattle battle, Clan attackerClan, Clan defenderClan, User p1, User p2,
+    public static Response creatGameClan(Game game, ClanBattle battle, Clan attackerClan, Clan defenderClan, User p1,
+            User p2,
             int numberOfRounds, String winner, List<Card> p1Cards, List<Card> p2Cards) {
 
-        Response res = createGame(p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
+        Response res = createGame(game, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
         if (res.body.get("game") == null) {
             return new Response("unable to create game", -400);
         }
