@@ -258,10 +258,10 @@ public class SpellAffect {
                 if (this.board[(this.turn_index + 1) % 2][i].getBlockCard().getCardType().toString()
                         .equals("Regular")) {
                     if (!found) {
-                        found_card_one = this.board[(this.turn_index + 1)][i].getBlockCard();
+                        found_card_one = this.board[(this.turn_index + 1) % 2][i].getBlockCard();
                         found = true;
                     } else {
-                        found_card_two = this.board[(this.turn_index + 1)][i].getBlockCard();
+                        found_card_two = this.board[(this.turn_index + 1) % 2][i].getBlockCard();
                         break;
                     }
                 }
