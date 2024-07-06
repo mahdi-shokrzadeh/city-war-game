@@ -193,7 +193,7 @@ public class SpellAffect {
             this.board[0][unavailable_block_player_one].setBlockUnavailable(false);
             this.board[0][unavailable_block_player_one].setBlockEmpty(true);
         }
-        
+
         if (unavailable_block_player_two != -1) {
             this.board[1][block_number_player_two].setBlockUnavailable(true);
             this.board[1][unavailable_block_player_two].setBlockUnavailable(false);
@@ -219,7 +219,7 @@ public class SpellAffect {
     public int findUnavailableBlock(int turn_index) {
 
         for (int i = 0; i <= 20; i++) {
-            if (!this.board[turn_index][i].isBlockEmpty() && this.board[turn_index][i].isBlockUnavailable()) {
+            if (this.board[turn_index][i].isBlockUnavailable()) {
                 return i;
             }
         }

@@ -74,7 +74,7 @@ public class Turn {
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
                     Card selected_card = player_one_cards.get(card_number - 1);
-                    ConsoleCard.printCard(card_number, selected_card , "normal");
+                    ConsoleCard.printCard(card_number, selected_card, "normal");
                     if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
                         // Turn is finished
                         ConsoleGame.printTurnIsFinished(turn_index + 1);
@@ -108,14 +108,14 @@ public class Turn {
                     if (player_number == 1) {
                         if (card_number > 0 && card_number <= 6) {
                             Card selected_card = player_one_cards.get(card_number - 1);
-                            ConsoleCard.printCard(card_number, selected_card , "complete");
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
                         } else {
                             ConsoleGame.printInvalidCardNumber();
                         }
                     } else if (player_number == 2) {
                         if (card_number > 0 && card_number <= 6) {
                             Card selected_card = player_two_cards.get(card_number - 1);
-                            ConsoleCard.printCard(card_number, selected_card , "complete");
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
                         } else {
                             ConsoleGame.printInvalidCardNumber();
                         }
@@ -164,10 +164,9 @@ public class Turn {
                                 } catch (Exception e) {
                                     System.out.println(e);
                                 }
-                                cond = true;
                             } else {
-
                             }
+                            cond = true;
                         }
                         // ConsoleBoard.printBoard(board, player_one, player_two,
                         // player_one.getDamage(),

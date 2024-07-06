@@ -470,8 +470,8 @@ public class Game extends Menu {
                 // Attenuate,
                 // Copy,
                 // Hide;
-                player_two_cards.add(new Spell("Shield", 0, 1, "Spell", "Shield", 1, 0, "shield description"));
-                player_two_cards.add(new Spell("Heal", 0, 1, "Spell", "Heal", 1, 0, "heal description"));
+                // player_two_cards.add(new Spell("Shield", 0, 1, "Spell", "Shield", 1, 0, "shield description"));
+                // player_two_cards.add(new Spell("Heal", 0, 1, "Spell", "Heal", 1, 0, "heal description"));
                 player_two_cards.add(
                                 new Spell("PowerBoost", 0, 1, "Spell", "PowerBoost", 1, 0, "power boost description"));
                 player_two_cards.add(
