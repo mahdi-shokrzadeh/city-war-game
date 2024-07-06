@@ -101,7 +101,7 @@ public class ClanController {
 
     public static Response addMember(User user, String key) {
 
-        if (user.getClanID() != null) {
+        if (user.getClanID() == null) {
             return new Response("you are already in a clan", -400);
         }
 
