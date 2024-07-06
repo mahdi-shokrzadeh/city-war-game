@@ -223,11 +223,11 @@ public class Turn {
         ConsoleGame.printSuccessfulCardPlacement();
         // Check for Bonous
         this.checkBonous();
-
-        // handle Buff, now only for Regular , now p = 1
+        // card.getCharacter().getPFactor()
         if (des_index == 0) {
             if (Math.random() < 1 && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
+
                 if (card.getCardType().toString().equals(player_one_cards.get(2).getCardType().toString())) {
                     player_one_cards.get(2).setPower(player_one_cards.get(2).getPower() + 2);
                     ConsoleGame.printBuffCard(3, 2);
@@ -332,7 +332,7 @@ public class Turn {
                 ConsoleGame.printBonous();
 
                 if (Math.random() < 0.6) {
-                    this.current_player.setCoins(this.current_player.getCoins() + 40);
+                    this.current_player.setCoins(this.current_player.getCoins() + 10);
                     ConsoleGame.printCoinBonous();
                 }
 
