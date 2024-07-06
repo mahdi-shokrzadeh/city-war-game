@@ -1,19 +1,25 @@
 [{
   "id": 0,
-  "name": "panda"
+  "name": "panda",
+  "pFactor": 0.9
 },{
   "id": 1,
-  "name": "dragon"
+  "name": "dragon",
+  "pFactor": 0.8
 },{
   "id": 2,
-  "name": "robot"
+  "name": "robot",
+  "pFactor": 0.5
 },{
   "id": 3,
-  "name": "warrior"
+  "name": "warrior",
+  "pFactor": 0.6
 },{
   "id": 4,
-  "name": "wizard"
+  "name": "wizard",
+  "pFactor": 0.7
 },{
   "id": 5,
-  "name": "wolf"
+  "name": "wolf",
+  "pFactor": 0.4
 }]
