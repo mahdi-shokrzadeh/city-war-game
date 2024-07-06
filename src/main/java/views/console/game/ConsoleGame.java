@@ -1,5 +1,8 @@
 package views.console.game;
 
+import java.util.ArrayList;
+
+import models.GameCharacter;
 import models.User;
 import models.card.Card;
 import models.game.Block;
@@ -10,12 +13,15 @@ public class ConsoleGame {
 
     }
 
-    public static void printCharacterMenu(String player_name) {
+    public static void printCharacterMenu(String player_name, ArrayList<GameCharacter> characters) {
+        String c = "";
+
+        for (int i = 0; i < characters.size(); i++) {
+            c += (i + 1) + "- " + characters.get(i).getName() + "\n";
+        }
         System.out.println("\n" + "Choose your character " + player_name + " :" + "\n" +
-                "1. Warrior" + "\n" +
-                "2. Mage" + "\n" +
-                "3. Archer" + "\n" +
-                "Enter the number of the character you want to choose:" + "\n");
+                c + "\n");
+
     }
 
     public static void printGreetings() {
@@ -198,7 +204,7 @@ public class ConsoleGame {
     }
 
     public static void printSuccessfulcharacterChoice(String character) {
-        System.out.println("Character choice is successful! ");
+        System.out.println("Character choice was successful! ");
     }
 
 }
