@@ -7,8 +7,8 @@ import java.util.List;
 
 public class ClanBattle {
     private int id;
-    private final int attackerID;
-    private final int defenderID;
+    private int attackerID;
+    private int defenderID;
     private boolean hasEnded;
     private int numberOfRemainingGames;
     private List<Integer> playedAttackersIDs;
@@ -31,6 +31,7 @@ public class ClanBattle {
         defenderWins = 0;
         hasFinale = false;
     }
+    public ClanBattle(){}
     public int getID(){ return id; }
     public int getAttackerID(){ return attackerID; }
     public int getDefenderID(){ return defenderID; }
