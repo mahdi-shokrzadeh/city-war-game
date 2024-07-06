@@ -207,4 +207,8 @@ public class ConsoleGame {
         System.out.println("Character choice was successful! ");
     }
 
+    public static void printSuccessfulBetSet(int bet) {
+        System.out.println("Bet amount was set to " + bet + "!");
+    }
+
 }

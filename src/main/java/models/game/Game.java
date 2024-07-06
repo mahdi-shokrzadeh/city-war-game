@@ -7,6 +7,8 @@ import org.example.citywars.M_GameOverMenu;
 import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
+import com.almasb.fxgl.dev.Console;
+
 import controllers.CardController;
 import controllers.GameCharacterController;
 import controllers.UserCardsController;
@@ -263,7 +265,7 @@ public class Game extends Menu {
                                                 w, this.player_one_cards, this.player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
-                                        this.looser_reward = (String) res.body.get("looser");
+                                        this.looser_reward = (String) res.body.get("loser");
                                 } else {
                                         System.out.println(res.message);
                                 }
@@ -274,7 +276,7 @@ public class Game extends Menu {
                                                 player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
-                                        this.looser_reward = (String) res.body.get("looser");
+                                        this.looser_reward = (String) res.body.get("loser");
                                 } else {
                                         System.out.println(res.message);
                                 }
@@ -286,7 +288,7 @@ public class Game extends Menu {
                                                 this.bet_amount);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
-                                        this.looser_reward = (String) res.body.get("looser");
+                                        this.looser_reward = (String) res.body.get("loser");
                                 } else {
                                         System.out.println(res.message);
                                 }
@@ -299,7 +301,7 @@ public class Game extends Menu {
                                                 w, this.player_one_cards, this.player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
-                                        this.looser_reward = (String) res.body.get("looser");
+                                        this.looser_reward = (String) res.body.get("loser");
                                 } else {
                                         System.out.println(res.message);
                                 }
@@ -316,77 +318,77 @@ public class Game extends Menu {
         public void handleAddCardsToPlayers() {
 
                 player_one_cards.add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "desc1",
-                new GameCharacter("c1")));
+                                new GameCharacter("c1")));
 
                 player_one_cards
-                .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description",
-                new GameCharacter("c1")));
+                                .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description",
-                new GameCharacter("c1")));
+                                .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description",
-                new GameCharacter("c1")));
+                                .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
-                new GameCharacter("c1")));
+                                .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(
-                new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description",
-                new GameCharacter("c1")));
+                                new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description",
-                new GameCharacter("c1")));
+                                .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description",
-                new GameCharacter("c1")));
+                                .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description",
-                new GameCharacter("c1")));
+                                .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description",
-                new GameCharacter("c1")));
+                                .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0,
-                "mega knight description",
-                new GameCharacter("c1")));
+                                "mega knight description",
+                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description",
-                new GameCharacter("c1")));
+                                .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description",
-                new GameCharacter("c1")));
+                                .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description",
-                new GameCharacter("c1")));
+                                .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description",
-                new GameCharacter("c1")));
+                                .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description",
-                new GameCharacter("c1")));
+                                .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(
-                new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description",
-                new GameCharacter("c1")));
+                                new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(
-                new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description",
-                new GameCharacter("c1")));
+                                new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description",
+                                                new GameCharacter("c1")));
                 player_one_cards
-                .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description",
-                new GameCharacter("c1")));
+                                .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0,
-                "lava hound description",
-                new GameCharacter("c1")));
+                                "lava hound description",
+                                new GameCharacter("c1")));
                 player_one_cards.add(
-                new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description",
-                new GameCharacter("c1")));
+                                new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0,
-                "baby dragon description",
-                new GameCharacter("c1")));
+                                "baby dragon description",
+                                new GameCharacter("c1")));
                 player_one_cards.add(
-                new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giantskeletondescription",
-                new GameCharacter("c1")));
+                                new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giantskeletondescription",
+                                                new GameCharacter("c1")));
                 player_one_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0,
-                "barbarians description",
-                new GameCharacter("c1")));
+                                "barbarians description",
+                                new GameCharacter("c1")));
 
                 // player_two_cards
                 // .add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
@@ -654,15 +656,16 @@ public class Game extends Menu {
         }
 
         public void handleGetBetAmount() {
-                Scanner sc = new Scanner(System.in);
+                Scanner scanner = new Scanner(System.in);
                 boolean cond = false;
                 System.out.println("Please enter the bet amount:");
                 while (!cond) {
-                        String input = sc.nextLine();
-                        if (input.matches("[0-9]+")) {
-
-                                if (this.player_one.getCoins() < this.bet_amount
-                                                || this.player_two.getCoins() < this.bet_amount) {
+                        String inputt = scanner.nextLine();
+                        if (inputt.matches("[0-9]+")) {
+                                int b = Integer.parseInt(inputt);
+                                this.bet_amount = b;
+                                if (this.player_one.getCoins() < b
+                                                || this.player_two.getCoins() < b) {
                                         System.out.println(
                                                         "One of the players does not have enough coins to bet this amount"
                                                                         + "\n" +
@@ -670,8 +673,8 @@ public class Game extends Menu {
 
                                 } else {
                                         cond = true;
-                                        this.bet_amount = Integer.parseInt(input);
-
+                                        this.bet_amount = Integer.parseInt(inputt);
+                                        ConsoleGame.printSuccessfulBetSet(b);
                                 }
                         } else {
                                 System.out.println("Please enter a valid number");

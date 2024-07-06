@@ -8,8 +8,8 @@
   "id" : 1,
   "userID" : 2,
   "cardID" : 11,
-  "experience" : 0,
-  "level" : 1
+  "experience" : -10,
+  "level" : 2
 }, {
   "id" : 2,
   "userID" : 2,
@@ -20,8 +20,8 @@
   "id" : 3,
   "userID" : 2,
   "cardID" : 13,
-  "experience" : 0,
-  "level" : 1
+  "experience" : -10,
+  "level" : 2
 }, {
   "id" : 4,
   "userID" : 2,
