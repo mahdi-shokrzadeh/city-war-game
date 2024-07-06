@@ -84,6 +84,18 @@ public class SpellAffect {
                 handleSteal();
                 return false;
 
+            case "Mirror":
+                // duration 1
+                // handleMirror();
+                break;
+
+            case "AddSpace":
+                break;
+
+            
+            
+                
+
             // special spell cards
 
             default:
