@@ -104,9 +104,6 @@ public class GameController {
                 }
                 userCard.setLevel(level);
                 ucDB.update(userCard, userCard.getID());
-                if (p1.getGameCharacter().getName().equals(card.getCharacter().getName())) {
-                    p1Score += 100 * userCard.getLevel();
-                }
             } catch (Exception e) {
                 exception = e;
             }
@@ -125,9 +122,6 @@ public class GameController {
                 }
                 userCard.setLevel(level);
                 ucDB.update(userCard, userCard.getID());
-                if (p2.getGameCharacter().getName().equals(card.getCharacter().getName())) {
-                    p2Score += 100 * userCard.getLevel();
-                }
             } catch (Exception e) {
                 exception = e;
             }
@@ -225,9 +219,6 @@ public class GameController {
                 }
                 userCard.setLevel(calculateCardLevel(userCard));
                 ucDB.update(userCard, userCard.getID());
-                if (player.getGameCharacter().getName().equals(card.getCharacter().getName())) {
-                    score += 100 * userCard.getLevel();
-                }
             } catch (Exception e) {
                 exception = e;
             }
