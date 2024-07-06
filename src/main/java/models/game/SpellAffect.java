@@ -317,7 +317,7 @@ public class SpellAffect {
 
     public void handleSteal() {
 
-        int i = (int) (Math.random() * 4);
+        int i = (int) (Math.random() * 5);
         Card card = null;
         if (this.turn_index == 0) {
             card = this.round.getPlayer_two_cards().get(i);
