@@ -51,7 +51,7 @@ public class Card extends CardStruct {
     }
 
     public void applyLevel() {
-        damage += 10 * (level - 1);
+        damage += 5 * getDuration() * (level - 1);
         power += 3 * (level - 1);
     }
 
