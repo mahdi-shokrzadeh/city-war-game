@@ -627,19 +627,19 @@ public class Game extends Menu {
         }
 
         public String getWinnerReward() {
-                return winnerReward;
+                return winner_reward;
         }
 
         public void setWinnerReward(String r) {
-                winnerReward = r;
+                winner_reward = r;
         }
 
         public String getLoserReward() {
-                return loserReward;
+                return looser_reward;
         }
 
         public void setLoserReward(String r) {
-                loserReward = r;
+                looser_reward = r;
         }
 
         public void findWinner() {
