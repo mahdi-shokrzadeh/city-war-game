@@ -1,5 +1,8 @@
 package views.console.game;
 
+import java.util.ArrayList;
+
+import models.GameCharacter;
 import models.User;
 import models.card.Card;
 import models.game.Block;
@@ -10,17 +13,37 @@ public class ConsoleGame {
 
     }
 
-    public static void printCharacterMenu(String player_name) {
+    public static void printCharacterMenu(String player_name, ArrayList<GameCharacter> characters) {
+        String c = "";
+
+        for (int i = 0; i < characters.size(); i++) {
+            c += (i + 1) + "- " + characters.get(i).getName() + "\n";
+        }
         System.out.println("\n" + "Choose your character " + player_name + " :" + "\n" +
-                "1. Warrior" + "\n" +
-                "2. Mage" + "\n" +
-                "3. Archer" + "\n" +
-                // "4. Cancel" + "\n" +
-                "Enter the number of the character you want to choose:" + "\n");
+                c + "\n");
+
     }
 
     public static void printGreetings() {
+        System.out.println("--------------------");
         System.out.println("\n" + "Welcome to the game!" + "\n");
+        System.out.println("You can use following commands:\n" +
+                "\t start game : to start the game\n" +
+                "\t select character : to select your character\n" +
+                "\t set bet amount : to set the bet amount\n");
+        System.out.println("--------------------");
+
+    }
+
+    public static void printGameResult(String result) {
+        System.out.println("--------------------");
+        System.out.println("Game result: \n" + result + "\n");
+        System.out.println("Use back to main menu command to go back");
+        System.out.println("--------------------");
+    }
+
+    public static void printBetNotSet() {
+        System.out.println("Please set the bet amount first!");
     }
 
     public static void printInvalidCardNumber() {
@@ -179,4 +202,9 @@ public class ConsoleGame {
     public static void printSuccessfulSteal(Card card) {
         System.out.println("Steal was successful for the card: " + card.getName());
     }
+
+    public static void printSuccessfulcharacterChoice(String character) {
+        System.out.println("Character choice was successful! ");
+    }
+
 }

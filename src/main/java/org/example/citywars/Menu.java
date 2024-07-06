@@ -37,6 +37,7 @@ public abstract class Menu implements Initializable {
     Matcher matcher;
     static User loggedInUser ;
     static boolean secondPersonNeeded;
+    static boolean is_bet=false;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
 

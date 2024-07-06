@@ -17,7 +17,7 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
-    private int number_of_round_turns = 4;
+    private int number_of_round_turns = 8;
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
@@ -50,6 +50,15 @@ public class Round {
         // reseting the stolen cards
         this.player_one.setCardsAreStolen(false);
         this.player_two.setCardsAreStolen(false);
+
+        // put 1 destroyed block in board
+
+        // choose a number between 0 and 20
+        int rand_1 = (int) (Math.random() * 21);
+        int rand_2 = (int) (Math.random() * 21);
+
+        this.board[0][rand_1].setBlockUnavailable(true);
+        this.board[1][rand_2].setBlockUnavailable(true);
 
     }
 
