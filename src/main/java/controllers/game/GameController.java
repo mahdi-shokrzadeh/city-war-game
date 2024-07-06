@@ -143,6 +143,9 @@ public class GameController {
             return new Response("an exception happened while creating game", -500, e);
         }
 
+        winnerReward += "/ User: ";
+        loserReward += "/ User: ";
+
         try {
             int winnerLevel = calculateUserLevel(winnerUser);
             int winnerCoins = winnerUser.getCoins() + (winnerScore / 10);
