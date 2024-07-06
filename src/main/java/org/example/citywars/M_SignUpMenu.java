@@ -6,24 +6,26 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.AA_Captcha;
 import models.Response;
+import models.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static controllers.UserController.sudoGetAllUsers;
+
 public class M_SignUpMenu extends Menu {
 
-    final String securityQuestions = "Please choose a security question :\n" +
+    final String securityQuestions = "Please choose a security question using the following format :\n" +
+            "question pick -q question_number -a answer -c answer_confirmation\n"+
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
-    @FXML
     Label error;
-    @FXML
     TextField usernameField;
-    @FXML
     PasswordField passwordField;
     Label password;
     PasswordField passwordConfirmationField;
@@ -35,9 +37,10 @@ public class M_SignUpMenu extends Menu {
     int captchaCountLeft;
     private String securityQuestion;
     private String securityQuestionAnswer;
+    private String pass; // for command line
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu",true, "BG-Videos/BG-signUp.png");
+        super("M_SignUpMenu", "BG1.mp4");
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
@@ -46,13 +49,13 @@ public class M_SignUpMenu extends Menu {
     }
 
     private void printMenu(){
-        System.out.println("Signup menu");
+        System.out.println("SIGN UP MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
         System.out.println("Information: ");
         System.out.println("    You can signup in this menu using the one of the two following formats: ");
-        System.out.println("        user create -u username -p password password_confirmation -email email -n nickname");
-        System.out.println("        user create -u username -p random -email email -n nickname");
+        System.out.println("        user create -u <username> -p <password> <password_confirmation> -email <email> -n <nickname>");
+        System.out.println("        user create -u <username> -p random -email <email> -n <nickname>");
     }
 
     public Menu myMethods() {
@@ -83,13 +86,13 @@ public class M_SignUpMenu extends Menu {
                     System.out.println("Wrong Answer; Sign Up again from beginning :( ");
                     continue;
                 }
+                pass =  passConf;
 
                 System.out.println(s);
 
                 Menu menu = securityQuestionAndCaptcha(matcher.group("username").trim());
                 if( menu == null ){
                     printMenu();
-                    continue;
                 }else{
                     return menu;
                 }
@@ -107,11 +110,11 @@ public class M_SignUpMenu extends Menu {
                     printMenu();
                     continue;
                 }
+
+                pass = matcher.group("password");
+
                 Menu menu =  securityQuestionAndCaptcha(matcher.group("username").trim());
-                if( menu == null ){
-                    printMenu();
-                    continue;
-                }else{
+                if( menu != null ){
                     return menu;
                 }
             }else if(Pattern.compile("^show current menu$").matcher(input).find()){
@@ -119,24 +122,6 @@ public class M_SignUpMenu extends Menu {
             }else {
                 System.out.println("Invalid command!");
             }
-
-
-//            System.out.println(randomPassword());
-//            System.out.println(randomPassword());
-//            System.out.println(randomPassword());
-//
-//            AA_Captcha a = new AA_Captcha();
-//            AA_Captcha b = new AA_Captcha();
-//            AA_Captcha c = new AA_Captcha();
-//
-//            System.out.println(a.showEquation());
-//            System.out.println(a.getAnswer());
-//
-//            System.out.println(b.showEquation());
-//            System.out.println(b.getAnswer());
-//
-//            System.out.println(c.showEquation());
-//            System.out.println(c.getAnswer());
         }while (true);
     }
 
@@ -172,10 +157,10 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        }  /*else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
+        }  else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
                 System.out.println("Username already exists!");
-            } */ else if (passwordProblem(password.trim()) != null) {
-            System.out.println("|" + password.trim() + "|");
+            } else if (passwordProblem(password.trim()) != null) {
+//            System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
             out = "Password confirmation doesn't match!";
@@ -226,13 +211,13 @@ public class M_SignUpMenu extends Menu {
             System.out.print("Answer = ");
 
             try {
-                ans = consoleScanner.nextInt();
+                ans = Integer.parseInt(consoleScanner.nextLine().trim());
             } catch (Exception e) {
                 System.out.println("Type Number!");
             }
 
             if (ans == captcha.getAnswer()) {
-                Response res = UserController.createUser(matcher.group("username"),matcher.group("password"),matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
+                Response res = UserController.createUser(matcher.group("username"),pass,matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
                 if(res.ok) {
                     System.out.println("User " + username + " created successfully!");
                     return new M_LoginMenu();
@@ -247,6 +232,32 @@ public class M_SignUpMenu extends Menu {
 
         captchaCountLeft = 3;
         return null;
+    }
+
+    private int getIndexFromUsername(String username){
+        Response res = sudoGetAllUsers();
+        List<User> allUsers = null;
+        if(res.ok) {
+            allUsers = (List<User>) res.body.get("allUsers");
+        }
+        boolean duplicateUserName = false;
+        if( allUsers != null ) {
+            for (int i = 0; i < allUsers.size() ; i++) {
+                if (allUsers.get(i).getUsername().equals(username)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //Control Methods
+    @FXML
+    protected void GoToLoginButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+
+//        mediaPlayer.play();
     }
 
 }

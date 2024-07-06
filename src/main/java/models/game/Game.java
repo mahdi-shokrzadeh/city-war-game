@@ -7,7 +7,10 @@ import org.example.citywars.M_GameOverMenu;
 import org.example.citywars.M_Intro;
 import org.example.citywars.Menu;
 
+import controllers.game.GameController;
+import models.AI;
 import models.GameCharacter;
+import models.Response;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleGame;
@@ -20,8 +23,11 @@ public class Game extends Menu {
         private String created_at;
         private String ended_at;
         private String winner;
+        private User winner_user;
         private String reward;
         private int number_of_rounds;
+        private String winner_reward;
+        private String looser_reward;
 
         // Only Class Vars
         private int bet_amount;
@@ -33,6 +39,9 @@ public class Game extends Menu {
         private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
         private Round current_round;
+
+        public Game() {
+        }
 
         public Game(User player_one, User player_two, String mode) {
                 super("GameProcess");
@@ -49,37 +58,91 @@ public class Game extends Menu {
                 switch (mode) {
 
                         case "duel":
-                                // this.handleUserTwoLogin
-                                // this.handleChooseCharacter
-                                // this.startGame();
                                 this.handleAddCardsToPlayers();
                                 break;
 
-                        case "normal":
+                        case "AI":
 
+                                this.handleAddCardsToPlayers();
+                                break;
+
+                        case "bet":
+                                this.handleAddCardsToPlayers();
+                                this.handleGetBetAmount();
                                 break;
 
                         default:
-
                                 break;
                 }
 
         }
 
-        public Game(User player_one, User player_two, String mode, String clan) {
+        // not related to me :)
+        public Game(User player_one, String mode) {
+                super("GameProcess");
+                this.player_one = player_one;
+                this.player_two = player_two;
+                this.mode = mode;
+                this.created_at = new java.util.Date().toString();
 
+                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
+                this.current_round = rounds.get(0);
+
+                ConsoleGame.printGreetings();
+
+                // switch (mode) {
+
+                // case "duel":
+
+                // this.handleAddCardsToPlayers();
+                // break;
+
+                // case "AI":
+
+                // this.handleAddCardsToPlayers();
+                // break;
+
+                // case "bet":
+                // this.handleAddCardsToPlayers();
+                // break;
+
+                // default:
+
+                // break;
+                // }
         }
 
         @Override
         public Menu myMethods() {
                 String input = consoleScanner.nextLine();
-                if (input.equals("-Select character")) {
-                        this.handleChooseCharacter(this.player_one);
+                if (input.equals("select character")) {
+                        if (!(player_one instanceof AI)) {
+                                this.handleChooseCharacter(this.player_one);
+                        }
+
                         this.handleChooseCharacter(this.player_two);
-                } else if (input.equals("-Start game")) {
-                        this.startGame();
-                        Menu menu = new M_GameOverMenu();
-                        return menu;
+
+                } else if (input.equals("set bet amount"))
+
+                {
+                        if (this.mode.equals("bet")) {
+                                this.handleGetBetAmount();
+                        } else {
+                                System.out.println("This mode does not require a bet amount");
+                        }
+                }
+
+                else if (input.equals("start game")) {
+                        if (this.startGame()) {
+                                // handle game over
+                                Menu menu = new M_GameOverMenu(this.winner_user, this.winner_reward,
+                                                this.looser_reward);
+                                return menu;
+                        } else {
+                                return this;
+                        }
+                } else {
+                        ConsoleGame.printInvaidInput();
                 }
                 return this;
         }
@@ -118,14 +181,21 @@ public class Game extends Menu {
                                 System.out.println("Please enter a valid number between 1 to 3");
                         }
                 }
+
+                ConsoleGame.printSuccessfulcharacterChoice("");
+
         }
 
-        public void startGame() {
-                // if (this.player_one.getGameCharacter() == null ||
-                // this.player_two.getGameCharacter() == null) {
-                // System.out.println("Please select characters for both players");
-                // return;
-                // }
+        public boolean startGame() {
+                if ((this.mode.equals("duel") && (this.player_one.getGameCharacter() == null ||
+                                this.player_two.getGameCharacter() == null))
+                                || (this.player_two.getGameCharacter() == null)) {
+                        System.out.println("Please select character first!");
+                        return false;
+                } else if (this.mode.equals("bet") && this.bet_amount == 0) {
+                        ConsoleGame.printBetNotSet();
+                        return false;
+                }
 
                 boolean con = true;
                 while (con) {
@@ -146,6 +216,50 @@ public class Game extends Menu {
                 }
                 ConsoleGame.printGameIsFinished();
                 this.findWinner();
+                // handle rewards
+
+                String w = this.winner.equals(this.player_one.getNickname()) ? "player_one" : "player_two";
+                Response res;
+                switch (this.mode) {
+
+                        case "duel":
+                                res = GameController.createGame(player_one, player_two, this.rounds.size(),
+                                                w, this.player_one_cards, this.player_two_cards);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        case "AI":
+                                res = GameController.createBotGame(player_two, this.rounds.size(), w,
+                                                player_two_cards);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        case "bet":
+                                res = GameController.createGambleGame(player_one, player_two, this.rounds.size(), w,
+                                                this.bet_amount);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        default:
+                                break;
+                }
+
+                return true;
 
         }
 
@@ -384,11 +498,39 @@ public class Game extends Menu {
 
         public void findWinner() {
                 if (player_one.getHitPoints() > player_two.getHitPoints()) {
-                        this.winner = player_one.getUsername();
+                        this.winner = player_one.getNickname();
+                        this.winner_user = player_one;
                         ConsoleGame.printWinner(player_one.getUsername());
                 } else {
-                        this.winner = player_two.getUsername();
+                        this.winner = player_two.getNickname();
+                        this.winner_user = player_two;
                         ConsoleGame.printWinner(player_two.getUsername());
+                }
+        }
+
+        public void handleGetBetAmount() {
+                Scanner sc = new Scanner(System.in);
+                boolean cond = false;
+                System.out.println("Please enter the bet amount:");
+                while (!cond) {
+                        String input = sc.nextLine();
+                        if (input.matches("[0-9]+")) {
+
+                                if (this.player_one.getCoins() < this.bet_amount
+                                                || this.player_two.getCoins() < this.bet_amount) {
+                                        System.out.println(
+                                                        "One of the players does not have enough coins to bet this amount"
+                                                                        + "\n" +
+                                                                        "Please enter a valid amount");
+
+                                } else {
+                                        cond = true;
+                                        this.bet_amount = Integer.parseInt(input);
+
+                                }
+                        } else {
+                                System.out.println("Please enter a valid number");
+                        }
                 }
         }
 

@@ -45,6 +45,7 @@ public abstract class Menu implements Initializable {
     Matcher matcher;
     static User loggedInUser ;
     static boolean secondPersonNeeded;
+    static boolean is_bet=false;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
 
@@ -71,7 +72,7 @@ public abstract class Menu implements Initializable {
 //        stage.setFullScreen(true);
         stage.show();
     }
-    String passwordProblem(String s){
+    public static String passwordProblem(String s){
         if (s.isBlank())
             return "Blank Field!";
         else if(!s.matches(".*[a-z]+.*") || !s.matches(".*[A-Z]+.*"))

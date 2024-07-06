@@ -22,7 +22,7 @@ public class ClanGameDB {
                 data = mapper.readValue(file, new TypeReference<List<ClanGame>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.println("Exception in GameDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -30,44 +30,32 @@ public class ClanGameDB {
             File file = new File("./src/main/java/database/json/clanGames.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in GameDB: " +e.getMessage());
         }
     }
     public int create(ClanGame clanGame){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             clanGame.setID(id);
             data.add(clanGame);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public ClanGame getOne(int id){
         ClanGame clanGame = null;
-        try{
-            clanGame = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        clanGame = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return clanGame;
     }
     public List<ClanGame> getAll(){
         return data;
     }
     public void update(ClanGame clanGame, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? clanGame: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? clanGame: o);
+        save();
     }
     public void delete(int id){
         data.removeIf(o -> o.getID() == id);

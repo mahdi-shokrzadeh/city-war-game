@@ -14,7 +14,7 @@ public class CardController {
     private static final UserDB userDB = new UserDB();
     private static final GameCharacterDB gcDB = new GameCharacterDB();
     private static final CardDB cardDB = new CardDB();
-    public static Response createRegularCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
+    public static Response createCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
         Response res;
 
 //        if (!user.getRole().equals("admin")) {
@@ -71,15 +71,18 @@ public class CardController {
         try{
             gameCharacter = gcDB.getByName(characterName);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("a deep exception happened while fetching the character",-500);
+            return new Response("a deep exception happened while fetching the character",-500,e);
         }
         if( gameCharacter == null ){
             return  new Response("no character was found with this name",-400);
         }
 
         Card card = new Card(name, price, duration, type, power, damage, upgradeLevel, upgradeCost, "desc", gameCharacter);
-        cardDB.create(card);
+        try {
+            cardDB.create(card);
+        }catch (Exception e){
+            return new Response("an exception happened while saving card",-500,e);
+        }
 
         res = new Response("Card created successfully", 201,"card", card);
         return res;
@@ -158,8 +161,7 @@ public class CardController {
         try{
             gameCharacter = gcDB.getByName(characterName);
         }catch (Exception e){
-            e.printStackTrace();
-            return new Response("a deep exception happened while fetching the character",-500);
+            return new Response("a deep exception happened while fetching the character",-500,e);
         }
         if( gameCharacter == null ){
             return  new Response("no character was found with this name",-400);
@@ -172,7 +174,11 @@ public class CardController {
         }
 
         Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
-        cardDB.update(card, card.getID());
+        try {
+            cardDB.update(card, card.getID());
+        }catch (Exception e){
+            return new Response("an exception happened while updating card",-500,e);
+        }
 
         res = new Response("card updated successfully", 200);
         return res;
