@@ -251,7 +251,7 @@ public class Game extends Menu {
                 switch (this.mode) {
 
                         case "duel":
-                                res = GameController.createGame(player_one, player_two, this.rounds.size(),
+                                res = GameController.createGame(this, player_one, player_two, this.rounds.size(),
                                                 w, this.player_one_cards, this.player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
@@ -262,7 +262,7 @@ public class Game extends Menu {
                                 break;
 
                         case "AI":
-                                res = GameController.createBotGame(player_two, this.rounds.size(), w,
+                                res = GameController.createBotGame(this, player_two, this.rounds.size(), w,
                                                 player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
@@ -273,7 +273,8 @@ public class Game extends Menu {
                                 break;
 
                         case "bet":
-                                res = GameController.createGambleGame(player_one, player_two, this.rounds.size(), w,
+                                res = GameController.createGambleGame(this, player_one, player_two, this.rounds.size(),
+                                                w,
                                                 this.bet_amount);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
@@ -284,7 +285,8 @@ public class Game extends Menu {
                                 break;
 
                         case "clan":
-                                res = GameController.creatGameClan(this.battle, this.attackerClan, this.defenderClan,
+                                res = GameController.creatGameClan(this, this.battle, this.attackerClan,
+                                                this.defenderClan,
                                                 player_one, player_two, this.rounds.size(),
                                                 w, this.player_one_cards, this.player_two_cards);
                                 if (res.ok) {
