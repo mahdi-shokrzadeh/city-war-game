@@ -11,6 +11,8 @@ import controllers.CardController;
 import controllers.UserCardsController;
 import controllers.game.GameController;
 import models.AI;
+import models.Clan;
+import models.ClanBattle;
 import models.GameCharacter;
 import models.Response;
 import models.User;
@@ -41,6 +43,9 @@ public class Game extends Menu {
         private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
         private Round current_round;
+        private ClanBattle battle;
+        private Clan attackerClan;
+        private Clan defenderClan;
 
         public Game() {
         }
@@ -79,6 +84,23 @@ public class Game extends Menu {
                                 break;
                 }
 
+        }
+
+        public Game(User player_one, User player_two, String mode, ClanBattle battle,
+                        Clan attackerClan, Clan defenderClan) {
+                super("GameProcess");
+                this.player_one = player_one;
+                this.player_two = player_two;
+                this.mode = mode;
+                this.created_at = new java.util.Date().toString();
+
+                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
+                this.current_round = rounds.get(0);
+                this.player_one_id = player_one.getID();
+                this.player_two_id = player_two.getID();
+
+                ConsoleGame.printGreetings();
+                this.handleAddCardsToPlayers();
         }
 
         // not related to me :)
@@ -253,6 +275,18 @@ public class Game extends Menu {
                         case "bet":
                                 res = GameController.createGambleGame(player_one, player_two, this.rounds.size(), w,
                                                 this.bet_amount);
+                                if (res.ok) {
+                                        this.winner_reward = (String) res.body.get("winner");
+                                        this.looser_reward = (String) res.body.get("looser");
+                                } else {
+                                        System.out.println(res.message);
+                                }
+                                break;
+
+                        case "clan":
+                                res = GameController.creatGameClan(this.battle, this.attackerClan, this.defenderClan,
+                                                player_one, player_two, this.rounds.size(),
+                                                w, this.player_one_cards, this.player_two_cards);
                                 if (res.ok) {
                                         this.winner_reward = (String) res.body.get("winner");
                                         this.looser_reward = (String) res.body.get("looser");
