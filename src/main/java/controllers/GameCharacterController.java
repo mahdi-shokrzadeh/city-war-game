@@ -54,14 +54,4 @@ public class GameCharacterController {
         return new Response("game character fetched successfully", 200, "gameCharacter", gameCharacter);
     }
 
-    public static Response getAll(){
-        List<GameCharacter> gcs = null;
-        try{
-            gcs = gcDB.getAll();
-        }catch (Exception e){
-            return new Response("an exception happened while",-500,e);
-        }
-        return new Response("all game characters fetched successfully",200,"gameCharacters",gcs);
-    }
-
 }

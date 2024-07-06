@@ -418,7 +418,7 @@ public class Game extends Menu {
                 // new GameCharacter("c1")));
 
                 // from database
-                Response res_1 = UserCardsController.getUsersCards(this.player_one_id);
+                Response res_1 = UserCardsController.getUsersCards(this.player_one);
                 if (res_1.ok) {
                         // this.player_one_cards = (ArrayList<Card>) res_1.body.get("userCard");
                         Object obj = res_1.body.get("cards");
@@ -433,7 +433,7 @@ public class Game extends Menu {
                         System.out.println(res_1.message);
                 }
 
-                Response res_2 = UserCardsController.getUsersCards(this.player_two_id);
+                Response res_2 = UserCardsController.getUsersCards(this.player_two);
                 if (res_1.ok) {
                         // this.player_two_cards = (ArrayList<Card>) res_2.body.get("userCard");
                         Object obj = res_2.body.get("cards");
