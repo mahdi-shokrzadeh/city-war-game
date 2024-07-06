@@ -102,8 +102,8 @@ public class M_ShopMenu extends Menu {
 
     private void printUpCard(Card card, UserCard uc) {
         System.out.println("name: " + card.getName());
-        System.out.println("power after upgrade: " + (card.getDamage() + 15 * (uc.getLevel() + 1)));
-        System.out.println("damage after upgrade: " + (card.getPower() + 3 * (uc.getLevel() + 1)));
+        System.out.println("power after upgrade: " + (card.getDamage() + 10 * (uc.getLevel())));
+        System.out.println("damage after upgrade: " + (card.getPower() + 3 * (uc.getLevel())));
         System.out.println("upgrade cost: " + card.getUpgradeCost() * uc.getLevel());
         System.out.println("minimum user level required to upgrade: " + card.getUpgradeLevel());
     }
