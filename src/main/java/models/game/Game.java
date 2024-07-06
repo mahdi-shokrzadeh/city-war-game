@@ -626,6 +626,22 @@ public class Game extends Menu {
                 this.rounds = rounds;
         }
 
+        public String getWinnerReward() {
+                return winnerReward;
+        }
+
+        public void setWinnerReward(String r) {
+                winnerReward = r;
+        }
+
+        public String getLoserReward() {
+                return loserReward;
+        }
+
+        public void setLoserReward(String r) {
+                loserReward = r;
+        }
+
         public void findWinner() {
                 if (player_one.getHitPoints() > player_two.getHitPoints()) {
                         this.winner = player_one.getNickname();
