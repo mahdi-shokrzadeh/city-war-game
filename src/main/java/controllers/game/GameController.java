@@ -148,7 +148,7 @@ public class GameController {
 
         try {
             int winnerLevel = calculateUserLevel(winnerUser);
-            int winnerCoins = winnerUser.getCoins() + (winnerScore / 10);
+            int winnerCoins = (winnerScore / 10);
             winnerReward += "+" + winnerScore + " experience\t";
             winnerReward += "+" + (winnerLevel - winnerUser.getLevel()) + " level\t";
             winnerReward += "+25 hit points\t";
@@ -158,8 +158,8 @@ public class GameController {
                 winnerUser.setLevel(winnerUser.getLevel() + 1);
                 winnerCoins += winnerUser.getLevel() * 15;
             }
-            winnerUser.setCoins(winnerCoins);
-            winnerReward += "+" + (winnerCoins - winnerUser.getCoins()) + " coins\t";
+            winnerReward += "+" + (winnerCoins) + " coins\t";
+            winnerUser.setCoins(winnerUser.getCoins() + winnerCoins);
             int loserLevel = calculateUserLevel(loserUser);
             int loserCoins = 0;
             loserReward += "+" + loserScore + " experience\t";
