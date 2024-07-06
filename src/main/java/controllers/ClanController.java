@@ -208,7 +208,7 @@ public class ClanController {
         return new Response("battles fetched successfully", 200, result);
     }
 
-    public static Response getShouldPlayed(User user) {
+    public static Response getShouldPlay(User user) {
         Clan clan = null;
         try {
             clan = clanDB.getOne(user.getID());
