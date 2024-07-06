@@ -117,7 +117,7 @@ public class M_ShopMenu extends Menu {
             }
         }
         allCards = (List<Card>) res.body.get("allCards");
-        res = UserCardsController.getUsersCards(loggedInUser);
+        res = UserCardsController.getUnleveledCards(loggedInUser);
         if (!res.ok) {
             System.out.println(res.message);
             if (res.exception != null) {
