@@ -65,19 +65,23 @@ public class Turn {
             if (((AI) current_player).getAiLevel() == 5) {
                 ((AI) current_player).handleBoss(board);
             } else {
-                String input = ((AI) current_player).chooseTheMove(board, player_one_cards);
+                String input = ((AI) current_player).chooseTheMove(board, player_one_cards , this.round);
                 if (input.equals("No valid card to place")) {
                     ConsoleGame.printNoValidCardToPlace();
                 } else {
                     ConsoleGame.printAIChoice(input);
-                    String[] parts = input.split(" ");
-                    int card_number = Integer.parseInt(parts[3]);
-                    int block_number = Integer.parseInt(parts[6]);
-                    Card selected_card = player_one_cards.get(card_number - 1);
-                    ConsoleCard.printCard(card_number, selected_card, "normal");
-                    if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
-                        // Turn is finished
-                        ConsoleGame.printTurnIsFinished(turn_index + 1);
+                    if (!input.startsWith("Spell")) {
+                        String[] parts = input.split(" ");
+                        int card_number = Integer.parseInt(parts[3]);
+                        int block_number = Integer.parseInt(parts[6]);
+                        Card selected_card = player_one_cards.get(card_number - 1);
+                        ConsoleCard.printCard(card_number, selected_card, "normal");
+                        if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                            // Turn is finished
+                            ConsoleGame.printTurnIsFinished(turn_index + 1);
+                            cond = true;
+                        }
+                    } else {
                         cond = true;
                     }
                 }
