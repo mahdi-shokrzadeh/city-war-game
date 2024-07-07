@@ -259,7 +259,7 @@
   "spellType" : null
 }, {
   "id" : 14,
-  "name" : "Undere",
+  "name" : "UndercoverDrone",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
