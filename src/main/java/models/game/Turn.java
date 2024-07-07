@@ -131,7 +131,8 @@ public class Turn {
                     }
                 }
                 // regex for -Placing card number n in block i
-                else if (input.matches("^placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                // else if (input.matches("^placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                else if (input.matches("^put card ([1-6]) in ([1-9]|1[0-9]|2[0-1])$")) {
                     String[] parts = input.split(" ");
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
