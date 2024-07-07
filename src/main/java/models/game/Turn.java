@@ -24,6 +24,9 @@ public class Turn {
 
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
 
+    public Turn() {
+    }
+
     public Turn(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards,
             Block[][] board) {
         this.player_one = player_one;
