@@ -3,7 +3,6 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.almasb.fxgl.dev.Console;
 
 import models.AI;
 import models.User;
@@ -52,13 +51,13 @@ public class Round {
         this.player_two.setCardsAreStolen(false);
 
         // put 1 destroyed block in board
+        if (!(player_one instanceof AI) || (player_one instanceof AI && player_one.getProgress() != 5)) {
+            int rand_1 = (int) (Math.random() * 21);
+            int rand_2 = (int) (Math.random() * 21);
 
-        // choose a number between 0 and 20
-        int rand_1 = (int) (Math.random() * 21);
-        int rand_2 = (int) (Math.random() * 21);
-
-        this.board[0][rand_1].setBlockUnavailable(true);
-        this.board[1][rand_2].setBlockUnavailable(true);
+            this.board[0][rand_1].setBlockUnavailable(true);
+            this.board[1][rand_2].setBlockUnavailable(true);
+        }
 
     }
 
