@@ -232,7 +232,7 @@ public class Turn {
         this.checkBonous();
         // card.getCharacter().getPFactor()
         if (des_index == 0) {
-            if (Math.random() < 1 && !this.player_one.getIsBonusActive()
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
 
                 if (card.getCardType().toString().equals(player_one_cards.get(2).getCardType().toString())) {
@@ -243,7 +243,7 @@ public class Turn {
 
             player_one_cards.remove(card);
         } else {
-            if (Math.random() < 1 && !this.player_two.getIsBonusActive()
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_two.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
                 if (card.getCardType().toString().equals(player_two_cards.get(2).getCardType().toString())) {
                     player_two_cards.get(2).setPower(player_two_cards.get(2).getPower() + 2);
