@@ -6,16 +6,21 @@ public class Card extends CardStruct {
 
     private int power;
     private int damage;
-    private final GameCharacter character;
+    private GameCharacter character;
     private int level;
+    private SpellType spellType;
     public Card(String _name, int _price, int _duration, String _type, int _power, int _damage, int _upgradeLevel,
             int _upgradeCost, String _desc, GameCharacter _character) {
         super(_name, _price, _duration, _type, _upgradeLevel, _upgradeCost, _desc);
-    power = _power;
+        power = _power;
         damage = _damage;
         character = _character;
         level = 1;
     }
+
+    public Card() {
+        super();
+    };
 
     public int getPower() {
         return power;
@@ -37,13 +42,22 @@ public class Card extends CardStruct {
         this.damage = damage;
     }
 
-    public int getLevel(){ return level; }
-
-    public void setLevel(int lvl){  level = lvl; }
-
-    public void applyLevel(){
-        damage += 15*level;
-        power += 3*level;
+    public int getLevel() {
+        return level;
     }
+
+    public void setLevel(int lvl) {
+        level = lvl;
+    }
+
+    public void applyLevel() {
+        damage += 5 * getDuration() * (level - 1);
+        power += 3 * (level - 1);
+    }
+
+    public SpellType getSpellType() {
+        return spellType;
+    }
+
 
 }

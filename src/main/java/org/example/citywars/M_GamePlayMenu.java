@@ -1,9 +1,16 @@
 package org.example.citywars;
 
+import java.util.HashMap;
+import java.util.Scanner;
+
 import controllers.UserController;
 import controllers.game.GameController;
+
 import models.AI;
+import models.Clan;
+import models.ClanBattle;
 import models.GameCharacter;
+import models.Response;
 import models.User;
 import models.game.Game;
 import views.console.menu.ConsoleGameMenu;
@@ -65,7 +72,33 @@ public class M_GamePlayMenu extends Menu {
                 return new M_LoginMenu();
 
             case "3":
-                // clan
+
+                Response res = GameController.getGameEssentials(loggedInUser);
+                if (res.ok) {
+                    ClanBattle battle = (ClanBattle) res.body.get("battle");
+                    Clan attackerClan = (Clan) res.body.get("attackerClan");
+                    Clan defenderClan = (Clan) res.body.get("defenderClan");
+                    User opponent = (User) res.body.get("opponent");
+
+                    // hadnle second user login
+                    System.out.println("Second player login!");
+                    System.out.println(opponent.getNickname() + "! Please enter you password:");
+                    boolean cond = false;
+                    Scanner sc = new Scanner(System.in);
+                    while (!cond) {
+                        String k = sc.nextLine();
+                        if (k.equals(opponent.getPassword())) {
+                            cond = false;
+                            return new Game(loggedInUser, opponent,
+                                    "clan", battle, attackerClan, defenderClan);
+                        } else {
+                            System.out.println("Password is not true!");
+                        }
+                    }
+                } else {
+                    System.out.println(res.message);
+                }
+
                 break;
 
             case "4":
@@ -80,7 +113,7 @@ public class M_GamePlayMenu extends Menu {
         }
 
         // if (gameOver) {
-        //     return new M_GameOverMenu();
+        // return new M_GameOverMenu();
         // }
 
         return this;

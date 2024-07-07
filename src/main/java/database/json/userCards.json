@@ -1,0 +1,241 @@
+[ {
+  "id" : 0,
+  "userID" : 2,
+  "cardID" : 21,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 1,
+  "userID" : 2,
+  "cardID" : 11,
+  "experience" : -10,
+  "level" : 2
+}, {
+  "id" : 2,
+  "userID" : 2,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 3,
+  "userID" : 2,
+  "cardID" : 13,
+  "experience" : -10,
+  "level" : 2
+}, {
+  "id" : 4,
+  "userID" : 2,
+  "cardID" : 8,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 5,
+  "userID" : 2,
+  "cardID" : 17,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 6,
+  "userID" : 2,
+  "cardID" : 17,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 7,
+  "userID" : 2,
+  "cardID" : 8,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 8,
+  "userID" : 2,
+  "cardID" : 14,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 9,
+  "userID" : 2,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 10,
+  "userID" : 2,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 11,
+  "userID" : 2,
+  "cardID" : 15,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 12,
+  "userID" : 2,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 13,
+  "userID" : 2,
+  "cardID" : 22,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 14,
+  "userID" : 2,
+  "cardID" : 18,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 15,
+  "userID" : 2,
+  "cardID" : 3,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 16,
+  "userID" : 2,
+  "cardID" : 4,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 17,
+  "userID" : 2,
+  "cardID" : 4,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 18,
+  "userID" : 2,
+  "cardID" : 22,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 19,
+  "userID" : 2,
+  "cardID" : 21,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 20,
+  "userID" : 1,
+  "cardID" : 14,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 21,
+  "userID" : 1,
+  "cardID" : 15,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 22,
+  "userID" : 1,
+  "cardID" : 11,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 23,
+  "userID" : 1,
+  "cardID" : 19,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 24,
+  "userID" : 1,
+  "cardID" : 10,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 25,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 26,
+  "userID" : 1,
+  "cardID" : 20,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 27,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 28,
+  "userID" : 1,
+  "cardID" : 20,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 29,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 30,
+  "userID" : 1,
+  "cardID" : 10,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 31,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 32,
+  "userID" : 1,
+  "cardID" : 0,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 33,
+  "userID" : 1,
+  "cardID" : 14,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 34,
+  "userID" : 1,
+  "cardID" : 3,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 35,
+  "userID" : 1,
+  "cardID" : 15,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 36,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 37,
+  "userID" : 1,
+  "cardID" : 5,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 38,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 39,
+  "userID" : 1,
+  "cardID" : 10,
+  "experience" : 0,
+  "level" : 1
+} ]

@@ -20,8 +20,8 @@ public class M_GameMainMenu extends Menu {
             String input = consoleScanner.nextLine();
             if (input.toLowerCase().matches("^ *start +game *$"))
                 return new M_GamePlayMenu();
-            else if (input.toLowerCase().matches("^ *show +cards *$"))
-                return new M_MyCardsMenu();
+            else if(input.toLowerCase().matches("^clans$"))
+                return new M_ClanMainMenu();
             else if (input.toLowerCase().matches("^ *game +history *$"))
                 return new M_GameHistoryMenu();
             else if (input.toLowerCase().matches("^ *shop *$"))

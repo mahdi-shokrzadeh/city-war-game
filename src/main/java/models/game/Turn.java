@@ -74,7 +74,7 @@ public class Turn {
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
                     Card selected_card = player_one_cards.get(card_number - 1);
-                    ConsoleCard.printCard(card_number, selected_card);
+                    ConsoleCard.printCard(card_number, selected_card, "normal");
                     if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
                         // Turn is finished
                         ConsoleGame.printTurnIsFinished(turn_index + 1);
@@ -101,21 +101,21 @@ public class Turn {
                     }
                 }
 
-                else if (input.matches("^Select card number ([1-6]) player ([1-2])$")) {
+                else if (input.matches("^select card number ([1-6]) player ([1-2])$")) {
                     String[] parts = input.split(" ");
                     int card_number = Integer.parseInt(parts[3]);
                     int player_number = Integer.parseInt(parts[5]);
                     if (player_number == 1) {
                         if (card_number > 0 && card_number <= 6) {
                             Card selected_card = player_one_cards.get(card_number - 1);
-                            ConsoleCard.printCard(card_number, selected_card);
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
                         } else {
                             ConsoleGame.printInvalidCardNumber();
                         }
                     } else if (player_number == 2) {
                         if (card_number > 0 && card_number <= 6) {
                             Card selected_card = player_two_cards.get(card_number - 1);
-                            ConsoleCard.printCard(card_number, selected_card);
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
                         } else {
                             ConsoleGame.printInvalidCardNumber();
                         }
@@ -124,7 +124,7 @@ public class Turn {
                     }
                 }
                 // regex for -Placing card number n in block i
-                else if (input.matches("^Placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                else if (input.matches("^placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
                     String[] parts = input.split(" ");
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
@@ -164,10 +164,9 @@ public class Turn {
                                 } catch (Exception e) {
                                     System.out.println(e);
                                 }
-
                             } else {
-
                             }
+                            cond = true;
                         }
                         // ConsoleBoard.printBoard(board, player_one, player_two,
                         // player_one.getDamage(),
@@ -224,11 +223,11 @@ public class Turn {
         ConsoleGame.printSuccessfulCardPlacement();
         // Check for Bonous
         this.checkBonous();
-
-        // handle Buff, now only for Regular , now p = 1
+        // card.getCharacter().getPFactor()
         if (des_index == 0) {
             if (Math.random() < 1 && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
+
                 if (card.getCardType().toString().equals(player_one_cards.get(2).getCardType().toString())) {
                     player_one_cards.get(2).setPower(player_one_cards.get(2).getPower() + 2);
                     ConsoleGame.printBuffCard(3, 2);
@@ -333,7 +332,7 @@ public class Turn {
                 ConsoleGame.printBonous();
 
                 if (Math.random() < 0.6) {
-                    this.current_player.setCoins(this.current_player.getCoins() + 40);
+                    this.current_player.setCoins(this.current_player.getCoins() + 10);
                     ConsoleGame.printCoinBonous();
                 }
 

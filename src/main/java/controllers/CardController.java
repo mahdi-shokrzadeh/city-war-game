@@ -14,13 +14,13 @@ public class CardController {
     private static final UserDB userDB = new UserDB();
     private static final GameCharacterDB gcDB = new GameCharacterDB();
     private static final CardDB cardDB = new CardDB();
-    public static Response createCard(String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String characterName) {
+    public static Response createCard(User user, String name, int price, int duration, String type,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName) {
         Response res;
 
-//        if (!user.getRole().equals("admin")) {
-//            res = new Response("only admins can add cards", -401);
-//            return res;
-//        }
+        if (!user.getRole().equals("admin")) {
+            res = new Response("only admins can add cards", -401);
+            return res;
+        }
 
         if (!CardType.includes(type)) {
             res = new Response("invalid card type", -422);
@@ -38,10 +38,10 @@ public class CardController {
             res = new Response("card duration cannot be negative", -422);
             return res;
         }
-//        if (desc.isEmpty()) {
-//            res = new Response("invalid card description", -422);
-//            return res;
-//        }
+        if (desc.isEmpty()) {
+            res = new Response("invalid card description", -422);
+            return res;
+        }
         if(damage < 10 || damage > 50){
             res = new Response("invalid card power", -422);
             return res;
@@ -67,7 +67,7 @@ public class CardController {
             return new Response("character name can not be blank",-422);
         }
 
-        GameCharacter gameCharacter = new GameCharacter(characterName);
+        GameCharacter gameCharacter;
         try{
             gameCharacter = gcDB.getByName(characterName);
         }catch (Exception e){
@@ -90,34 +90,36 @@ public class CardController {
 
     public static Response getCardByName(String name) {
         Card card = null;
-        Response res;
         try {
             card = cardDB.getByName(name);
-            res = new Response("Card found", 200,"card", card);
         } catch (Exception e) {
-            e.printStackTrace();
-            card = null;
-            res = new Response("Card not found", -404);
+            return new Response("an exception happened while fetching card",-500,e);
         }
-        return res;
+        if( card == null ){
+            return new Response("no card with this name was found",-400);
+        }
+        return new Response("card fetched successfully",200);
     }
 
-    public static Response removeCard(Card card) {
+    public static Response removeCard(User user,Card card) {
         Response res;
+
+        if( !user.getRole().equals("admin") ){
+            return new Response("only admins can remove cards",-401);
+        }
 
         try {
             cardDB.delete(card.getID());
             res = new Response("card deleted successfully", 200);
         } catch (Exception e) {
-            e.printStackTrace();
-            res = new Response("an error has occured while deleting card", -500);
+            res = new Response("an error has occured while deleting card", -500,e);
         }
 
         return res;
 
     }
 
-    public static Response editCard(User user, String name, int price, int duration,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName){
+    public static Response editCard(User user,int cardID, String name, int price, int duration,int power,int damage, int upgradeLevel, int upgradeCost, String desc, String characterName){
         Response res;
 
         if (!user.getRole().equals("admin")) {
@@ -167,13 +169,13 @@ public class CardController {
             return  new Response("no character was found with this name",-400);
         }
 
-        Response existingCard = getCardByName(name);
-        if (!existingCard.ok) {
-            res = new Response("card with this does not exist exists", -409);
+        Card existingCard = cardDB.getOne(cardID);
+        if (existingCard == null) {
+            res = new Response("card with this does name not exist exists", -409);
             return res;
         }
 
-        Card card = new Card(name, price, duration,((Card) existingCard.body.get("card")).getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
+        Card card = new Card(name, price, duration,existingCard.getCardType().toString(), power, damage, upgradeLevel, upgradeCost, desc, gameCharacter);
         try {
             cardDB.update(card, card.getID());
         }catch (Exception e){
