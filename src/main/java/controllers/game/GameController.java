@@ -5,6 +5,7 @@ import controllers.UserCardsController;
 import database.DBs.*;
 import models.*;
 import models.card.Card;
+import models.game.SimpleGame;
 import models.game.Game;
 
 import java.util.*;
@@ -12,18 +13,18 @@ import java.util.stream.Stream;
 
 public class GameController {
     private static final UserDB userDB = new UserDB();
-    private static final GameDB gameDB = new GameDB();
+    private static final SimpleGameDB gameDB = new SimpleGameDB();
     private static final ClanDB clanDB = new ClanDB();
     private static final ClanBattleDB cbDB = new ClanBattleDB();
     private static final UserCardDB ucDB = new UserCardDB();
 
     private static int calculateWinnerScore(User user, int hp, int n) {
         int temp = Math.max(1, hp - user.getHitPoints());
-        return Math.max((user.getDamage() + temp) / n, 75);
+        return Math.max(2 * (user.getDamage() + temp) / n, 75);
     }
 
     private static int calculateLoserScore(User user, int hp, int n) {
-        return Math.max((user.getDamage() / 10 + 1000 / hp) * n, 25);
+        return Math.max(2 * (user.getDamage() / 10 + 1000 / hp) * n, 25);
     }
 
     private static int calculateUserLevel(User user) {
@@ -38,9 +39,9 @@ public class GameController {
     }
 
     private static int calculateCardLevel(UserCard uc) {
-        int sum = 0;
+        int sum = (int) (uc.getLevel() * (uc.getLevel() + 1) * 0.5);
         int level = uc.getLevel();
-        while (sum < uc.getExperience()) {
+        while (50 * sum < uc.getExperience()) {
             sum = (int) (uc.getLevel() * (uc.getLevel() + 1) * 0.5);
             uc.setExperience(uc.getExperience() - 50 * sum);
             level++;
@@ -50,9 +51,15 @@ public class GameController {
         return level;
     }
 
-    public static Response createGame(Game game, User p1, User p2, int numberOfRounds, String winnerString,
+    public static Response createGame(Game originalGame, User p1, User p2, int numberOfRounds, String winnerString,
             List<Card> p1Cards,
             List<Card> p2Cards) {
+
+        if (originalGame == null) {
+            return new Response("game is null", -400);
+        }
+
+        SimpleGame game = new SimpleGame(originalGame);
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
         User winnerUser = null;
@@ -101,9 +108,11 @@ public class GameController {
                 userCard.setExperience(userCard.getExperience() + p1Score);
                 int level = calculateCardLevel(userCard);
                 if (winnerString.equals("player_one")) {
-                    winnerReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        winnerReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 } else {
-                    loserReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        loserReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 }
                 userCard.setLevel(level);
                 ucDB.update(userCard, userCard.getID());
@@ -119,9 +128,11 @@ public class GameController {
                 userCard.setExperience(userCard.getExperience() + p2Score);
                 int level = calculateCardLevel(userCard);
                 if (winnerString.equals("player_two")) {
-                    winnerReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        winnerReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 } else {
-                    loserReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        loserReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 }
                 userCard.setLevel(level);
                 ucDB.update(userCard, userCard.getID());
@@ -130,11 +141,8 @@ public class GameController {
             }
         }
 
-        if (game == null) {
-            return new Response("game is null", -400);
-        }
         try {
-            game.setNumber_of_rounds(numberOfRounds);
+            game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winnerString);
             // game.setEnded_at(new Date().toString());
             gameDB.create(game);
@@ -149,27 +157,27 @@ public class GameController {
         try {
             int winnerLevel = calculateUserLevel(winnerUser);
             int winnerCoins = (winnerScore / 10);
-            winnerReward += "+" + winnerScore + " experience\t";
-            winnerReward += "+" + (winnerLevel - winnerUser.getLevel()) + " level\t";
-            winnerReward += "+25 hit points\t";
+            winnerReward += "+" + winnerScore + " experience ";
+            winnerReward += "+" + (winnerLevel - winnerUser.getLevel()) + " level ";
+            winnerReward += "+25 hit points ";
             winnerUser.setExperience(winnerUser.getExperience() + winnerScore);
             winnerUser.setHitPoints(winnerOriginalHP + 25);
             for (int i = 0; i < winnerLevel - winnerUser.getLevel(); i++) {
                 winnerUser.setLevel(winnerUser.getLevel() + 1);
                 winnerCoins += winnerUser.getLevel() * 15;
             }
-            winnerReward += "+" + (winnerCoins) + " coins\t";
+            winnerReward += "+" + (winnerCoins) + " coins";
             winnerUser.setCoins(winnerUser.getCoins() + winnerCoins);
             int loserLevel = calculateUserLevel(loserUser);
             int loserCoins = 0;
-            loserReward += "+" + loserScore + " experience\t";
+            loserReward += "+" + loserScore + " experience ";
             loserUser.setExperience(loserUser.getExperience() + loserScore);
             for (int i = 0; i < loserLevel - loserUser.getLevel(); i++) {
                 loserUser.setLevel(loserUser.getLevel() + 1);
                 loserCoins += loserUser.getLevel() * 15;
             }
             loserUser.setCoins(loserUser.getCoins() + loserCoins);
-            loserReward += "+" + loserCoins + " coins\t";
+            loserReward += "+" + loserCoins + " coins ";
             loserUser.setHitPoints(loserOriginalHP);
             winnerUser.setDamage(0);
             loserUser.setDamage(0);
@@ -188,7 +196,14 @@ public class GameController {
 
     }
 
-    public static Response createBotGame(Game game, User player, int numberOfRounds, String winner, List<Card> cards) {
+    public static Response createBotGame(Game originalGame, User player, int numberOfRounds, String winner,
+            List<Card> cards) {
+
+        if (originalGame == null) {
+            return new Response("game is null", -400);
+        }
+
+        SimpleGame game = new SimpleGame(originalGame);
         int playerOriginalHP = userDB.getOne(player.getID()).getHitPoints();
         Map<String, Object> result = new HashMap<>();
         String winnerReward = "Cards: ";
@@ -201,11 +216,8 @@ public class GameController {
             return new Response("invalid winner", -422);
         }
 
-        if (game == null) {
-            return new Response("game is null", -400);
-        }
         try {
-            game.setNumber_of_rounds(numberOfRounds);
+            game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winner);
             // game.setEnded_at(new Date().toString());
             gameDB.create(game);
@@ -222,9 +234,11 @@ public class GameController {
                 userCard.setExperience(userCard.getExperience() + score);
                 int level = calculateCardLevel(userCard);
                 if (winner.equals("player_two")) {
-                    winnerReward += "-card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        winnerReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 } else {
-                    loserReward += "-card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    if (level - userCard.getLevel() != 0)
+                        loserReward += card.getName() + ": +" + (level - userCard.getLevel()) + " level ";
                 }
                 userCard.setLevel(calculateCardLevel(userCard));
                 ucDB.update(userCard, userCard.getID());
@@ -243,14 +257,14 @@ public class GameController {
                 score = calculateWinnerScore(player, playerOriginalHP, numberOfRounds);
                 player.setExperience(player.getExperience() + score);
                 player.setHitPoints(playerOriginalHP + 25);
-                winnerReward += "+" + score + " experience\t";
-                winnerReward += "+25 hit points\t";
+                winnerReward += "+" + score + " experience ";
+                winnerReward += "+25 hit points ";
                 winnerReward += "+" + (level - player.getLevel()) + " level";
                 for (int i = 0; i < level - player.getLevel(); i++) {
                     player.setLevel(player.getLevel() + 1);
                     coins += player.getLevel() * 15;
                 }
-                winnerReward += "+" + (coins - player.getCoins()) + " coins\t";
+                winnerReward += "+" + (coins - player.getCoins()) + " coins ";
                 player.setCoins(coins);
                 if (player.getProgress() == 5) {
                     player.resetProgress();
@@ -260,10 +274,10 @@ public class GameController {
             } else {
                 score = calculateLoserScore(player, playerOriginalHP, numberOfRounds);
                 player.setExperience(player.getExperience() + score);
-                loserReward += "+" + score + " experience\t";
+                loserReward += "+" + score + " experience ";
                 int level = calculateUserLevel(player);
                 player.setLevel(level);
-                loserReward += "+" + level + " level\t";
+                loserReward += "+" + level + " level ";
                 player.setHitPoints(playerOriginalHP);
             }
             player.setDamage(0);
@@ -280,23 +294,26 @@ public class GameController {
         return new Response("game created successfully", 200, result);
     }
 
-    public static Response createGambleGame(Game game, User p1, User p2, int numberOfRounds, String winner,
+    public static Response createGambleGame(Game originalGame, User p1, User p2, int numberOfRounds, String winner,
             int betAmount) {
+
+        if (originalGame == null) {
+            return new Response("game is null", -400);
+        }
+
+        SimpleGame game = new SimpleGame(originalGame);
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
-        String winnerReward = "+" + betAmount + " coins\t";
-        String loserReward = "-" + betAmount + " coins\t";
+        String winnerReward = "+" + betAmount + " coins ";
+        String loserReward = "-" + betAmount + " coins ";
         Map<String, Object> result = new HashMap<>();
 
         if (!winner.equals("player_one") && !winner.equals("player_two")) {
             return new Response("invalid winner", -422);
         }
 
-        if (game == null) {
-            return new Response("game is null", -400);
-        }
         try {
-            game.setNumber_of_rounds(numberOfRounds);
+            game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winner);
             // game.setEnded_at(new Date().toString());
             gameDB.create(game);
@@ -328,7 +345,7 @@ public class GameController {
     }
 
     public static Response getAllUserGames(int id) {
-        List<Game> games = null;
+        List<SimpleGame> games = null;
         try {
             games = gameDB.getByUserID(id);
         } catch (Exception e) {
@@ -417,15 +434,19 @@ public class GameController {
         return new Response("clan game essentials fetched successfully", 200, result);
     }
 
-    public static Response creatGameClan(Game game, ClanBattle battle, Clan attackerClan, Clan defenderClan, User p1,
+    public static Response creatGameClan(Game originalGame, ClanBattle battle, Clan attackerClan, Clan defenderClan,
+            User p1,
             User p2,
             int numberOfRounds, String winner, List<Card> p1Cards, List<Card> p2Cards) {
 
-        Response res = createGame(game, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
+        if (originalGame == null) {
+            return new Response("game is null", -400);
+        }
+        Response res = createGame(originalGame, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
         if (res.body.get("game") == null) {
             return new Response("unable to create game", -400);
         }
-        battle.playAGame((Game) res.body.get("game"));
+        battle.playAGame((SimpleGame) res.body.get("game"));
         if (battle.getNumberOfRemainingGames() == 0) {
             boolean hasFinale = battle.endBattle();
             if (!hasFinale) {
