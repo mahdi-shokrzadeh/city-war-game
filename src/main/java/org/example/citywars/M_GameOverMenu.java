@@ -18,7 +18,7 @@ public class M_GameOverMenu extends Menu {
 
         String res = "Winner: " + winner.getNickname() + "\n" +
                 "Reward: " + winner_reward + "\n" +
-                "Looser rewards:" + "\n" +
+                "Loser rewards:" + "\n" +
                 "Reward: " + looser_reward + "\n";
         ConsoleGame.printGameResult(res);
     }

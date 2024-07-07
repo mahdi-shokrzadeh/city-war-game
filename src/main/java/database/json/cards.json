@@ -11,7 +11,8 @@
   "damage" : 50,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
@@ -28,7 +29,8 @@
   "damage" : 40,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
@@ -231,7 +233,7 @@
   "damage" : 36,
   "character" : {
     "id" : 5,
-    "name" : "wolf",
+    "name" : "warrior",
     "pfactor": 0.4
 
   },
@@ -257,7 +259,7 @@
   "spellType" : null
 }, {
   "id" : 14,
-  "name" : "Undere",
+  "name" : "UndercoverDrone",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",

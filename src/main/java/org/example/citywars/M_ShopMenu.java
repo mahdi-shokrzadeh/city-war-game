@@ -66,16 +66,18 @@ public class M_ShopMenu extends Menu {
             System.out.println("power: " + card.getPower());
             System.out.println("damage: " + card.getDamage());
             System.out.println("duration: " + card.getDuration());
-            System.out.println("character: " + card.getCharacter());
+            System.out.println("character: " + card.getCharacter().getName());
             System.out.println("price:" + card.getPrice());
             System.out.println("upgrade level: " + card.getUpgradeLevel());
             System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
+            System.out.println();
         } else if (card.getCardType().toString().equals("Spell")) {
             System.out.println("name: " + card.getName());
             System.out.println("type: " + card.getCardType());
             System.out.println("duration: " + card.getDuration());
             System.out.println("price:" + card.getPrice());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         }
     }
 
@@ -91,12 +93,14 @@ public class M_ShopMenu extends Menu {
             System.out.println("upgrade level: " + card.getUpgradeLevel());
             System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         } else if (card.getCardType().toString().equals("Spell")) {
             System.out.println("name: " + card.getName());
             System.out.println("type: " + card.getCardType());
             System.out.println("duration: " + card.getDuration());
             System.out.println("price:" + card.getPrice());
             System.out.println("description: " + card.getDesc());
+            System.out.println();
         }
     }
 
@@ -106,9 +110,19 @@ public class M_ShopMenu extends Menu {
         System.out.println("damage after upgrade: " + (card.getPower() + 3 * (uc.getLevel())));
         System.out.println("upgrade cost: " + card.getUpgradeCost() * uc.getLevel());
         System.out.println("minimum user level required to upgrade: " + card.getUpgradeLevel());
+        System.out.println();
     }
 
-    private void fetch() {
+    private void revalidate() {
+        res = UserController.getByID(loggedInUser.getID());
+        if (res.ok) {
+            loggedInUser = (User) res.body.get("user");
+        } else {
+            System.out.println(res.message);
+            if (res.exception != null) {
+                System.out.println(res.exception.getMessage());
+            }
+        }
         res = CardController.getAllCards();
         if (!res.ok) {
             System.out.println(res.message);
@@ -132,13 +146,13 @@ public class M_ShopMenu extends Menu {
 
     public Menu myMethods() {
         printMenu();
-        fetch();
+        revalidate();
         do {
             String input = consoleScanner.nextLine().trim();
             if (input.matches("^show available cards$")) {
                 for (Card card : notOwnedCards) {
                     res = UserCardsController.getUserCard(loggedInUser.getID(), card.getID());
-                    if (!res.ok) {
+                    if (!res.ok && res.status != -404) {
                         System.out.println(res.message);
                         if (res.exception != null) {
                             System.out.println(res.exception.getMessage());
@@ -153,7 +167,7 @@ public class M_ShopMenu extends Menu {
                     String name = matcher.group("name");
                     for (Card card : notOwnedCards) {
                         if (card.getName().equals(name)) {
-                            res = UserCardsController.buyCard(loggedInUser.getID(), card);
+                            res = UserCardsController.buyCard(loggedInUser, card);
                             break;
                         }
                     }
@@ -164,7 +178,7 @@ public class M_ShopMenu extends Menu {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                fetch();
+                revalidate();
             } else if (input.matches("^show my cards$")) {
                 if (cards.isEmpty()) {
                     System.out.println("you do not have any cards");
@@ -194,20 +208,26 @@ public class M_ShopMenu extends Menu {
                 matcher.find();
                 try {
                     String name = matcher.group("name");
+                    boolean found = false;
                     for (Card card : cards) {
                         if (card.getName().equals(name)) {
+                            found = true;
                             res = UserCardsController.upgradeCard(loggedInUser, card);
                             break;
                         }
                     }
-                    System.out.println(res.message);
-                    if (res.exception != null) {
-                        System.out.println(res.exception.getMessage());
+                    if (found) {
+                        System.out.println(res.message);
+                        if (res.exception != null) {
+                            System.out.println(res.exception.getMessage());
+                        }
+                    } else {
+                        System.out.println("card not found");
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                fetch();
+                revalidate();
             } else if (input.matches("^show all cards$")) {
                 if (allCards.isEmpty()) {
                     System.out.println("there are no cards yet");
@@ -241,7 +261,7 @@ public class M_ShopMenu extends Menu {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                fetch();
+                revalidate();
             } else if (input.matches(
                     "^edit card -num (?<number>[0-9]+) -name (?<name>[a-zA-Z]+) -prc (?<price>[0-9]+) -dur (?<duration>[0-9]+) -pow (?<power>[0-9]+) -dmg (?<damage>[0-9]+) -upl (?<upgradeLevel>[0-9]+) -upc (?<upgradeCost>[0-9]+) -chr (?<gameCharacter>[a-zA-Z]+)$")) {
                 matcher = Pattern.compile(
@@ -257,7 +277,8 @@ public class M_ShopMenu extends Menu {
                 }
                 try {
                     res = CardController.editCard(loggedInUser,
-                            allCards.get(Integer.parseInt(matcher.group("number"))).getID(), matcher.group("name"),
+                            allCards.get((Integer.parseInt(matcher.group("number"))) - 1).getID(),
+                            matcher.group("name"),
                             Integer.parseInt(matcher.group("price")), Integer.parseInt(matcher.group("duration")),
                             Integer.parseInt(matcher.group("power")), Integer.parseInt(matcher.group("damage")),
                             Integer.parseInt(matcher.group("upgradeLevel")),
@@ -269,7 +290,7 @@ public class M_ShopMenu extends Menu {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                fetch();
+                revalidate();
             } else if (input.matches("^remove card -num (?<number>[0-9]+)$")) {
                 matcher = Pattern.compile("^remove card -num (?<number>[0-9]+)$").matcher(input);
                 matcher.find();
@@ -284,7 +305,7 @@ public class M_ShopMenu extends Menu {
                     System.out.println("here 3");
                     System.out.println(e.getMessage());
                 }
-                fetch();
+                revalidate();
             } else if (input.matches("^show all users$")) {
                 try {
                     List<User> allUsers = (List<User>) UserController.getAllUsers(loggedInUser).body.get("allUsers");
