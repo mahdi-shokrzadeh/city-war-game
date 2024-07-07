@@ -170,7 +170,7 @@
   "id" : 69,
   "userID" : 11,
   "cardID" : 2,
-  "experience" : 0,
+  "experience" : 25,
   "level" : 1
 }, {
   "id" : 70,
@@ -212,7 +212,7 @@
   "id" : 76,
   "userID" : 11,
   "cardID" : 18,
-  "experience" : 0,
+  "experience" : 25,
   "level" : 1
 }, {
   "id" : 77,
@@ -248,13 +248,13 @@
   "id" : 82,
   "userID" : 1,
   "cardID" : 20,
-  "experience" : -25,
+  "experience" : 0,
   "level" : 3
 }, {
   "id" : 83,
   "userID" : 1,
   "cardID" : 8,
-  "experience" : -34,
+  "experience" : 64,
   "level" : 3
 }, {
   "id" : 84,
@@ -278,7 +278,7 @@
   "id" : 87,
   "userID" : 1,
   "cardID" : 16,
-  "experience" : -34,
+  "experience" : 0,
   "level" : 3
 }, {
   "id" : 88,
@@ -302,8 +302,8 @@
   "id" : 91,
   "userID" : 1,
   "cardID" : 7,
-  "experience" : 0,
-  "level" : 1
+  "experience" : 30,
+  "level" : 2
 }, {
   "id" : 92,
   "userID" : 1,
@@ -338,8 +338,8 @@
   "id" : 97,
   "userID" : 1,
   "cardID" : 9,
-  "experience" : 0,
-  "level" : 1
+  "experience" : 25,
+  "level" : 2
 }, {
   "id" : 98,
   "userID" : 1,
@@ -362,19 +362,19 @@
   "id" : 101,
   "userID" : 2,
   "cardID" : 3,
-  "experience" : -24,
+  "experience" : 0,
   "level" : 2
 }, {
   "id" : 102,
   "userID" : 2,
   "cardID" : 6,
-  "experience" : -124,
+  "experience" : 0,
   "level" : 3
 }, {
   "id" : 103,
   "userID" : 2,
   "cardID" : 0,
-  "experience" : -25,
+  "experience" : 0,
   "level" : 2
 }, {
   "id" : 104,
@@ -386,13 +386,13 @@
   "id" : 105,
   "userID" : 2,
   "cardID" : 19,
-  "experience" : -58,
+  "experience" : 0,
   "level" : 3
 }, {
   "id" : 106,
   "userID" : 2,
   "cardID" : 7,
-  "experience" : -125,
+  "experience" : 0,
   "level" : 3
 }, {
   "id" : 107,
@@ -614,7 +614,7 @@
   "id" : 143,
   "userID" : 13,
   "cardID" : 17,
-  "experience" : 0,
+  "experience" : 25,
   "level" : 1
 }, {
   "id" : 144,
