@@ -1,7 +1,7 @@
 [ {
   "id" : 2,
-  "playerOneID" : 1,
-  "playerTwoID" : 2,
+  "playerOneID" : 0,
+  "playerTwoID" : 0,
   "mode" : "duel",
   "createdAt" : "2024-07-07 20:19:45",
   "winner" : "player_one",
@@ -10,9 +10,9 @@
   "betAmount" : 0,
   "loserReward" : null
 }, {
-  "id" : 3,
-  "playerOneID" : 1,
-  "playerTwoID" : 2,
+  "id" : 2,
+  "playerOneID" : 0,
+  "playerTwoID" : 0,
   "mode" : "duel",
   "createdAt" : "2024-07-07 22:06:12",
   "winner" : "player_one",
@@ -20,4 +20,15 @@
   "winnerReward" : "revolve: +1 level BackToTheWall: +1 level / User: +88 experience +1 level +25 hit points +83 coins",
   "betAmount" : 0,
   "loserReward" : "AwesomePunch: +1 level Flank: +1 level / User: +66 experience +60 coins "
+}, {
+  "id" : 3,
+  "playerOneID" : 12,
+  "playerTwoID" : 1,
+  "mode" : "duel",
+  "createdAt" : "2024-07-08 00:33:15",
+  "winner" : "player_two",
+  "numberOfRounds" : 2,
+  "winnerReward" : "strike: +1 level SwordOfHonor: +1 level / User: +75 experience +1 level +25 hit points +142 coins",
+  "betAmount" : 0,
+  "loserReward" : "/ User: +25 experience +30 coins "
 } ]

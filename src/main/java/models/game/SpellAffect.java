@@ -40,8 +40,7 @@ public class SpellAffect {
                     return false;
                 }
                 handleShield();
-
-                break;
+                return true;
 
             case "Heal":
                 if (!handlePutSpell()) {
@@ -71,7 +70,7 @@ public class SpellAffect {
 
             case "Attenuate":
                 handleAttenuate();
-                break;
+                return true;
 
             case "Copy":
                 handleCopy();
@@ -267,7 +266,8 @@ public class SpellAffect {
 
         boolean found = false;
         for (int i = 0; i <= 20; i++) {
-            if (!this.board[(this.turn_index + 1) % 2][i].isBlockEmpty()) {
+            if (!this.board[(this.turn_index + 1) % 2][i].isBlockEmpty()
+                    && this.board[(this.turn_index + 1) % 2][i].getBlockCard() != null) {
                 if (this.board[(this.turn_index + 1) % 2][i].getBlockCard().getCardType().toString()
                         .equals("Regular")) {
                     if (!found) {
@@ -293,10 +293,10 @@ public class SpellAffect {
             } else if (op_block.getBlockCard().equals(found_card_two)) {
                 op_block.setBlockDamage(op_block.getBlockDamage() - 10);
             }
-            if (this.turn_index == 0) {
-                round.getPlayer_two().setDamage(round.getPlayer_two().getDamage() - 10 * found_card_two.getDuration());
+            if (this.turn_index % 2 == 0) {
+                round.getPlayer_two().setDamage(round.getPlayer_two().getDamage() - 3);
             } else {
-                round.getPlayer_one().setDamage(round.getPlayer_one().getDamage() - 10 * found_card_two.getDuration());
+                round.getPlayer_one().setDamage(round.getPlayer_one().getDamage() - 3);
             }
         }
         ConsoleGame.printAttenuateSuccess(found_card_one, found_card_two);
@@ -316,7 +316,7 @@ public class SpellAffect {
     }
 
     public void handleHide() {
-        if (this.turn_index == 0) {
+        if (this.turn_index % 2 == 0) {
             this.round.getPlayer_two().setShouldCardsBeHidden(true);
             Collections.shuffle(this.round.getPlayer_two_cards().subList(0, 5));
 
