@@ -1,6 +1,11 @@
 package models.game;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.Scanner;
 
 import org.example.citywars.M_GameOverMenu;
@@ -59,7 +64,9 @@ public class Game extends Menu {
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
