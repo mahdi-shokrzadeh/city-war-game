@@ -141,16 +141,6 @@ public class GameController {
             }
         }
 
-        try {
-            game.setNumberOfRounds(numberOfRounds);
-            game.setWinner(winnerString);
-            // game.setEnded_at(new Date().toString());
-            gameDB.create(game);
-            result.put("game", game);
-        } catch (Exception e) {
-            return new Response("an exception happened while creating game", -500, e);
-        }
-
         winnerReward += "/ User: ";
         loserReward += "/ User: ";
 
@@ -187,6 +177,18 @@ public class GameController {
             return new Response("an exception happened while saving users", -500, e);
         }
 
+        try {
+            game.setNumberOfRounds(numberOfRounds);
+            game.setWinner(winnerString);
+            // game.setEnded_at(new Date().toString());
+            game.setWinnerReward(winnerReward);
+            game.setLoserReward(loserReward);
+            gameDB.create(game);
+            result.put("game", game);
+        } catch (Exception e) {
+            return new Response("an exception happened while creating game", -500, e);
+        }
+
         result.put("winner", winnerReward);
         result.put("loser", loserReward);
         if (exception != null) {
@@ -214,15 +216,6 @@ public class GameController {
 
         if (!winner.equals("player_two") && !winner.equals("bot")) {
             return new Response("invalid winner", -422);
-        }
-
-        try {
-            game.setNumberOfRounds(numberOfRounds);
-            game.setWinner(winner);
-            // game.setEnded_at(new Date().toString());
-            gameDB.create(game);
-        } catch (Exception e) {
-            return new Response("an exception happened while creating game", -500, e);
         }
 
         List<Card> allP1Cards = ((List<Card>) UserCardsController.getUsersCards(player).body.get("cards"));
@@ -286,6 +279,17 @@ public class GameController {
             return new Response("an exception happened while saving user", -500, e);
         }
 
+        try {
+            game.setNumberOfRounds(numberOfRounds);
+            game.setWinner(winner);
+            game.setWinnerReward(winnerReward);
+            game.setLoserReward(loserReward);
+            // game.setEnded_at(new Date().toString());
+            gameDB.create(game);
+        } catch (Exception e) {
+            return new Response("an exception happened while creating game", -500, e);
+        }
+
         result.put("winner", winnerReward);
         result.put("loser", loserReward);
         if (exception != null) {
@@ -313,15 +317,6 @@ public class GameController {
         }
 
         try {
-            game.setNumberOfRounds(numberOfRounds);
-            game.setWinner(winner);
-            // game.setEnded_at(new Date().toString());
-            gameDB.create(game);
-        } catch (Exception e) {
-            return new Response("an exception happened while creating game", -500, e);
-        }
-
-        try {
             if (winner.equals("player_one")) {
                 p1.setCoins(p1.getCoins() + betAmount);
                 p2.setCoins(p2.getCoins() - betAmount);
@@ -337,6 +332,17 @@ public class GameController {
             userDB.update(p2, p2.getID());
         } catch (Exception e) {
             return new Response("an exception happened while saving users", -500, e);
+        }
+
+        try {
+            game.setNumberOfRounds(numberOfRounds);
+            game.setWinner(winner);
+            // game.setEnded_at(new Date().toString());
+            game.setWinnerReward(winnerReward);
+            game.setLoserReward(loserReward);
+            gameDB.create(game);
+        } catch (Exception e) {
+            return new Response("an exception happened while creating game", -500, e);
         }
 
         result.put("winner", winnerReward);
