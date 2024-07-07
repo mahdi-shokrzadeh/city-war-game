@@ -177,12 +177,6 @@ public class GameController {
             return new Response("an exception happened while saving users", -500, e);
         }
 
-        // List<SimpleGame> l = gameDB.getAll();
-        // for (SimpleGame s : l) {
-        // System.out.println(s.getPlayerOneID());
-        // System.out.println(s.getPlayerTwoID());
-        // }
-
         try {
             game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winnerString);

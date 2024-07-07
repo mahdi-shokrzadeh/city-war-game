@@ -13,7 +13,6 @@ public class SimpleGame {
     private int betAmount;
 
     public SimpleGame() {
-
     }
 
     public SimpleGame(Game game) {
@@ -69,14 +68,6 @@ public class SimpleGame {
     }
 
     public void setID(int _id) {
-        id = _id;
-    }
-
-    public void setPlayerOneID(int _id) {
-        id = _id;
-    }
-
-    public void setPlayerTwoID(int _id) {
         id = _id;
     }
 
