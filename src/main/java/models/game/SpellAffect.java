@@ -13,7 +13,7 @@ public class SpellAffect {
 
     private int des_index;
     private Block[][] board;
-    private Spell spell_card;
+    private Card spell_card;
     private int turn_index;
     private User current_player;
     private Round round;
@@ -23,7 +23,8 @@ public class SpellAffect {
             Block[][] board, User current_player, Round round, ArrayList<Card> hand_cards) {
         this.des_index = des_index;
         this.board = board;
-        this.spell_card = (Spell) spell_card;
+        // this.spell_card = (Spell) spell_card;
+        this.spell_card = spell_card;
         this.turn_index = turn_index % 2;
         this.current_player = current_player;
         this.round = round;

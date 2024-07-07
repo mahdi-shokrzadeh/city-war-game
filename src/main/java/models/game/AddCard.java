@@ -97,7 +97,6 @@ public class AddCard {
                                 new GameCharacter("warrior")));
 
                 cards.add(new Spell("AddSpace", 0, 0, "Spell", "AddSpace", 0, 0, "Adds unavailalbe block"));
-
                 cards.add(new Spell("RoundReduce", 0, 0, "Spell", "RoundReduce", 0, 0, "Reduces round by one"));
                 cards.add(new Spell("Repair", 0, 0, "Spell", "Repair", 0, 0, "Repairs an unavailable block"));
 
