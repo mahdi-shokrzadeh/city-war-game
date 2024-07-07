@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Scanner;
@@ -451,6 +452,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_one_cards);
+
                 } else {
                         System.out.println(res_1.exception.getMessage());
                 }
@@ -465,6 +468,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_two_cards);
+
                 } else {
                         System.out.println(res_2.message);
                 }
