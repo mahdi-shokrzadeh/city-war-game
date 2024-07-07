@@ -30,7 +30,7 @@ public class ClanController {
     public static Response getMyClan(User user) {
 
         if (user.getClanID() == null) {
-            return new Response("you are not a member of any clan", -400);
+            return new Response("you are not a member of any clan", -404);
         }
 
         Clan myCLan;
@@ -40,7 +40,7 @@ public class ClanController {
             return new Response("an exception happened while fetching the clan", -500, e);
         }
         if (myCLan == null) {
-            return new Response("your not in any clan", 200, "myClan", null);
+            return new Response("your not in any clan", -404);
         }
 
         return new Response("clan fetched successfully", 200, "myClan", myCLan);
@@ -62,7 +62,7 @@ public class ClanController {
             return new Response("the user does not have enough coins to create a clan", -400);
         }
 
-        if (user.getClanID() == null) {
+        if (user.getClanID() != null) {
             return new Response("you are already in a clan", -400);
         }
 
@@ -101,7 +101,7 @@ public class ClanController {
 
     public static Response addMember(User user, String key) {
 
-        if (user.getClanID() == null) {
+        if (user.getClanID() != null) {
             return new Response("you are already in a clan", -400);
         }
 
@@ -151,6 +151,9 @@ public class ClanController {
         }
         if (defenderClan == null) {
             return new Response("the defender clan was not found", -400);
+        }
+        if (defenderClan.getBattleID() != null) {
+            return new Response("the defender clan is already in a battle", -400);
         }
 
         if (attackerClan.getLeaderID() != leader.getID()) {
@@ -203,7 +206,7 @@ public class ClanController {
         }
         Map<String, Object> result = new HashMap<>();
         result.put("numberOfWins", numberOfWins);
-        result.put("numberOfLoses", numberOfLoses);
+        result.put("numberOfLosses", numberOfLoses);
         result.put("battles", battles);
         return new Response("battles fetched successfully", 200, result);
     }
@@ -211,12 +214,12 @@ public class ClanController {
     public static Response getShouldPlay(User user) {
         Clan clan = null;
         try {
-            clan = clanDB.getOne(user.getID());
+            clan = clanDB.getOne(user.getClanID());
         } catch (Exception e) {
             return new Response("an exception happened while fetching clan", -500, e);
         }
         if (clan == null) {
-            return new Response("you are not in any clan", 200, "shouldPlay", false);
+            return new Response("you are not in any clan", -404, "shouldPlay", false);
         }
 
         ClanBattle battle = null;
