@@ -233,7 +233,7 @@
   "damage" : 36,
   "character" : {
     "id" : 5,
-    "name" : "wolf",
+    "name" : "warrior",
     "pfactor": 0.4
 
   },
