@@ -69,6 +69,7 @@ public class SpellAffect {
                 return false;
 
             case "Attenuate":
+            
                 handleAttenuate();
                 return true;
 
@@ -263,6 +264,9 @@ public class SpellAffect {
         // randomly choose two reqular cards from opponent
         Card found_card_one = null;
         Card found_card_two = null;
+
+
+        System.out.println("Attenuate");
 
         boolean found = false;
         for (int i = 0; i <= 20; i++) {
