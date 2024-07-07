@@ -1,21 +1,19 @@
 package controllers;
 
 import java.util.*;
-import java.util.stream.Stream;
 
-import database.DBs.GameDB;
+import database.DBs.SimpleGameDB;
 import database.DBs.UserDB;
 import database.DBs.ClanDB;
 import database.DBs.ClanBattleDB;
 import models.*;
-import models.game.Game;
 
 public class ClanController {
     private static final int clanCreationCost = 1000;
     private static final UserDB userDB = new UserDB();
     private static final ClanDB clanDB = new ClanDB();
     private static final ClanBattleDB cbDB = new ClanBattleDB();
-    private static final GameDB gameDB = new GameDB();
+    private static final SimpleGameDB gameDB = new SimpleGameDB();
 
     public static Response getCLanById(int id) {
         Clan clan;
