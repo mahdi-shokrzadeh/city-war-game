@@ -111,6 +111,8 @@ public class Game extends Menu {
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
                 this.battle = battle;
+                this.defenderClan = defenderClan;
+                this.attackerClan = attackerClan;
                 ConsoleGame.printGreetings();
                 // this.handleAddCardsToPlayers();
         }
