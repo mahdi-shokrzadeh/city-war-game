@@ -18,12 +18,12 @@ public class GameController {
     private static final UserCardDB ucDB = new UserCardDB();
 
     private static int calculateWinnerScore(User user, int hp, int n) {
-        int temp = hp - user.getHitPoints() == 0 ? 1 : hp - user.getHitPoints();
-        return (user.getDamage() + temp) / n;
+        int temp = Math.max(1, hp - user.getHitPoints());
+        return Math.max((user.getDamage() + temp) / n, 75);
     }
 
     private static int calculateLoserScore(User user, int hp, int n) {
-        return (user.getDamage() / 10 + 1000 / hp) * n;
+        return Math.max((user.getDamage() / 10 + 1000 / hp) * n, 25);
     }
 
     private static int calculateUserLevel(User user) {
@@ -136,7 +136,7 @@ public class GameController {
         try {
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winnerString);
-            game.setEnded_at(new Date().toString());
+            // game.setEnded_at(new Date().toString());
             gameDB.create(game);
             result.put("game", game);
         } catch (Exception e) {
@@ -171,6 +171,8 @@ public class GameController {
             loserUser.setCoins(loserUser.getCoins() + loserCoins);
             loserReward += "+" + loserCoins + " coins\t";
             loserUser.setHitPoints(loserOriginalHP);
+            winnerUser.setDamage(0);
+            loserUser.setDamage(0);
             userDB.update(winnerUser, winnerUser.getID());
             userDB.update(loserUser, loserUser.getID());
         } catch (Exception e) {
@@ -189,8 +191,8 @@ public class GameController {
     public static Response createBotGame(Game game, User player, int numberOfRounds, String winner, List<Card> cards) {
         int playerOriginalHP = userDB.getOne(player.getID()).getHitPoints();
         Map<String, Object> result = new HashMap<>();
-        String winnerReward = "";
-        String loserReward = "";
+        String winnerReward = "Cards: ";
+        String loserReward = "Cards: ";
         Exception exception = null;
         int score = winner.equals("player_two") ? calculateWinnerScore(player, playerOriginalHP, numberOfRounds)
                 : calculateLoserScore(player, playerOriginalHP, numberOfRounds);
@@ -205,7 +207,7 @@ public class GameController {
         try {
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winner);
-            game.setEnded_at(new Date().toString());
+            // game.setEnded_at(new Date().toString());
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
@@ -220,9 +222,9 @@ public class GameController {
                 userCard.setExperience(userCard.getExperience() + score);
                 int level = calculateCardLevel(userCard);
                 if (winner.equals("player_two")) {
-                    winnerReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    winnerReward += "-card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
                 } else {
-                    loserReward += "card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
+                    loserReward += "-card " + card.getName() + ": +" + (level - userCard.getLevel()) + " level\t";
                 }
                 userCard.setLevel(calculateCardLevel(userCard));
                 ucDB.update(userCard, userCard.getID());
@@ -243,7 +245,7 @@ public class GameController {
                 player.setHitPoints(playerOriginalHP + 25);
                 winnerReward += "+" + score + " experience\t";
                 winnerReward += "+25 hit points\t";
-                winnerReward += "+" + (level - player.getLevel()) + " level\t";
+                winnerReward += "+" + (level - player.getLevel()) + " level";
                 for (int i = 0; i < level - player.getLevel(); i++) {
                     player.setLevel(player.getLevel() + 1);
                     coins += player.getLevel() * 15;
@@ -258,12 +260,13 @@ public class GameController {
             } else {
                 score = calculateLoserScore(player, playerOriginalHP, numberOfRounds);
                 player.setExperience(player.getExperience() + score);
-                loserReward += "+" + score + " experiencet";
+                loserReward += "+" + score + " experience\t";
                 int level = calculateUserLevel(player);
                 player.setLevel(level);
                 loserReward += "+" + level + " level\t";
                 player.setHitPoints(playerOriginalHP);
             }
+            player.setDamage(0);
             userDB.update(player, player.getID());
         } catch (Exception e) {
             return new Response("an exception happened while saving user", -500, e);
@@ -295,7 +298,7 @@ public class GameController {
         try {
             game.setNumber_of_rounds(numberOfRounds);
             game.setWinner(winner);
-            game.setEnded_at(new Date().toString());
+            // game.setEnded_at(new Date().toString());
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
@@ -311,6 +314,8 @@ public class GameController {
             }
             p1.setHitPoints(p1OriginalHP);
             p2.setHitPoints(p2OriginalHP);
+            p1.setDamage(0);
+            p2.setDamage(0);
             userDB.update(p1, p1.getID());
             userDB.update(p2, p2.getID());
         } catch (Exception e) {
