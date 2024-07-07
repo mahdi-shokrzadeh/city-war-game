@@ -1,14 +1,12 @@
 package controllers;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import database.DBs.GameDB;
 import database.DBs.UserDB;
 import database.DBs.ClanDB;
 import database.DBs.ClanBattleDB;
 import models.*;
-import models.game.Game;
 
 public class ClanController {
     private static final int clanCreationCost = 1000;

@@ -1,6 +1,6 @@
 package models;
 
-import models.game.Game;
+import org.example.citywars.M_Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +124,7 @@ public class ClanBattle {
         playedDefendersIDS = list;
     }
 
-    public void playAGame(Game game) {
+    public void playAGame(M_Game game) {
         playedAttackersIDS.add(game.getPlayer_one_id());
         playedDefendersIDS.add(game.getPlayer_two_id());
         gameIDS.add(game.getID());

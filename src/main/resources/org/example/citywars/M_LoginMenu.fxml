@@ -60,7 +60,7 @@
                <Font size="32.0" />
             </font>
          </Label>
-         <Button fx:id="back" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToIntroButton" prefHeight="69.0" prefWidth="186.0" text="Back" textFill="#650349" GridPane.rowIndex="5">
+         <Button fx:id="back" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginBack" prefHeight="69.0" prefWidth="186.0" text="Back" textFill="#650349" GridPane.rowIndex="5">
             <font>
                <Font size="30.0" />
             </font>

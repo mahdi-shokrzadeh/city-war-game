@@ -8,12 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import models.Response;
 import models.User;
-import models.game.Game;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,7 +45,7 @@ public class M_LoginMenu extends Menu {
     Label title;
 
     public M_LoginMenu() {
-        super("M_LoginMenu", true, "BG-Videos\\BG-login.png");
+        super("M_LoginMenu", new String[]{"BG-Videos\\BG-login.png"});
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn = false;
@@ -93,9 +90,9 @@ public class M_LoginMenu extends Menu {
                             return this;
                         } else {
                             if (!is_bet) {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                             } else {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                             }
                         }
                     } else {
@@ -115,16 +112,16 @@ public class M_LoginMenu extends Menu {
                             return this;
                         } else {
                             if (!is_bet) {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                             } else {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                             }
                         }
                     } else {
                         if (!is_bet) {
-                            return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                            return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                         } else {
-                            return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                            return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                         }
                     }
                 }
@@ -164,18 +161,12 @@ public class M_LoginMenu extends Menu {
         if (s.ok) {
             if (secondPersonNeeded) {
                 if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
-                    System.out.println("\n!!! Same user, login again !!!\n");
+                    error.setText("\n!!! Same user, login again !!!\n");
                     return;
                 } else {
-                    if (!is_bet) {
-                        HelloApplication.menu = new Game(loggedInUser, (User) s.body.get("user"), "duel");
-                        switchMenus(event);
-
-                    } else {
-                        HelloApplication.menu = new Game(loggedInUser, (User) s.body.get("user"), "bet");
-                        switchMenus(event);
-
-                    }
+                    secondUser =(User) s.body.get("user");
+                    HelloApplication.menu = new M_CharacterChoice();
+                    switchMenus(event);
                 }
             } else {
                 loggedInUser = (User) s.body.get("user");
@@ -185,7 +176,17 @@ public class M_LoginMenu extends Menu {
             }
         }
     }
-
+    @FXML
+    protected void loginBack(ActionEvent event) throws IOException {
+        if (secondPersonNeeded) {
+            HelloApplication.menu = new M_GamePlayMenu();
+            switchMenus(event);
+        }
+        else{
+            HelloApplication.menu = new M_Intro();
+            switchMenus(event);
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -194,8 +195,6 @@ public class M_LoginMenu extends Menu {
         else
             title.setText("Login");
 
-        BGim = new Image(file.toURI().toString());
-        backGroundIm.setImage(BGim);
-
+        backGroundIm.setImage(BGims.get(themeIndex));
     }
 }

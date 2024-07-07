@@ -23,7 +23,7 @@ public class M_CharacterChoice extends Menu {
     ImageView imv4;
 
     public M_CharacterChoice() {
-        super("M_CharacterChoice", true, "BG-Videos\\BG1.jpg");
+        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg"});
 
         imageFiles = new File[4];
         imageFiles[0]=  new File("src/main/resources/Characters/Igoribuki.png");
@@ -44,8 +44,7 @@ public class M_CharacterChoice extends Menu {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BGim = new Image(file.toURI().toString());
-        backGroundIm.setImage(BGim);
+        backGroundIm.setImage(BGims.get(themeIndex));
 
         imv1.setImage(charsImages[1]);
         imv2.setImage(charsImages[2]);
@@ -56,7 +55,10 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh1 (MouseEvent event) throws IOException {
         //....
-        HelloApplication.menu = new M_GamePlayMenu();
+        if (secondPersonNeeded)
+            HelloApplication.menu = new M_Game();
+        else
+            HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
     @FXML
@@ -79,7 +81,10 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh2 (MouseEvent event) throws IOException {
         //....
-        HelloApplication.menu = new M_GamePlayMenu();
+        if (secondPersonNeeded)
+            HelloApplication.menu = new M_Game();
+        else
+            HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
     @FXML
@@ -102,7 +107,10 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh3 (MouseEvent event) throws IOException {
         //....
-        HelloApplication.menu = new M_GamePlayMenu();
+        if (secondPersonNeeded)
+            HelloApplication.menu = new M_Game();
+        else
+            HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
     @FXML
@@ -125,7 +133,10 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh4 (MouseEvent event) throws IOException {
         //....
-        HelloApplication.menu = new M_GamePlayMenu();
+        if (secondPersonNeeded)
+            HelloApplication.menu = new M_Game();
+        else
+            HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
     @FXML

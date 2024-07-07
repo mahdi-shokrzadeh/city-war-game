@@ -1,15 +1,13 @@
-package models.game;
+package org.example.citywars;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import org.example.citywars.M_GameOverMenu;
-import org.example.citywars.M_Intro;
-import org.example.citywars.Menu;
+import models.game.Round;
 
-import com.almasb.fxgl.dev.Console;
-
-import controllers.CardController;
 import controllers.GameCharacterController;
 import controllers.UserCardsController;
 import controllers.game.GameController;
@@ -20,10 +18,11 @@ import models.GameCharacter;
 import models.Response;
 import models.User;
 import models.card.Card;
-import models.card.Spell;
 import views.console.game.ConsoleGame;
 
-public class Game extends Menu {
+public class M_Game extends Menu {
+
+
         private int id;
         private int player_one_id;
         private int player_two_id;
@@ -51,11 +50,23 @@ public class Game extends Menu {
         private Clan attackerClan;
         private Clan defenderClan;
 
-        public Game() {
+        public M_Game() {
+                super("M_Game", new String[]{"BG-Videos\\GameBGs\\bg1.png","BG-Videos\\GameBGs\\bg2.png"});
+                this.player_one = loggedInUser;
+                if (secondPersonNeeded){
+                        this.player_two = secondUser;
+                        if (is_bet){
+                                mode="bet";
+                        }else {
+                                mode="duel";
+                        }
+                }else
+                        mode="AI";
         }
 
-        public Game(User player_one, User player_two, String mode) {
-                super("GameProcess");
+
+        public M_Game(User player_one, User player_two, String mode) {
+                super("M_Game");
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
@@ -90,9 +101,9 @@ public class Game extends Menu {
 
         }
 
-        public Game(User player_one, User player_two, String mode, ClanBattle battle,
-                        Clan attackerClan, Clan defenderClan) {
-                super("GameProcess");
+        public M_Game(User player_one, User player_two, String mode, ClanBattle battle,
+                      Clan attackerClan, Clan defenderClan) {
+                super("M_Game");
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
@@ -108,8 +119,8 @@ public class Game extends Menu {
         }
 
         // not related to me :)
-        public Game(User player_one, String mode) {
-                super("GameProcess");
+        public M_Game(User player_one, String mode) {
+                super("M_Game");
                 this.player_one = player_one;
                 this.mode = mode;
                 this.created_at = new java.util.Date().toString();
@@ -140,6 +151,13 @@ public class Game extends Menu {
 
                 // break;
                 // }
+        }
+
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+                Random random= new Random();
+                int i = random.nextInt(BGims.size());
+                backGroundIm.setImage(BGims.get(i));
         }
 
         @Override

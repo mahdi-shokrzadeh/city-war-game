@@ -4,14 +4,13 @@ import controllers.UserController;
 import controllers.game.GameController;
 import models.Response;
 import models.User;
-import models.game.Game;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class M_GameHistoryMenu extends Menu {
-    public ArrayList<Game> games;
+    public ArrayList<M_Game> games;
     int gamePerPage;
     int currentPage;
     int allPagesCount;
@@ -21,7 +20,7 @@ public class M_GameHistoryMenu extends Menu {
     private Exception exception = null;
 
     public M_GameHistoryMenu() {
-        super("M_GameHistoryMenu",true,"BG-Videos\\BG-signUp.png");
+        super("M_GameHistoryMenu", new String[]{"BG-Videos\\BG-signUp.png"});
         gamePerPage = 7;
     }
 
@@ -49,7 +48,7 @@ public class M_GameHistoryMenu extends Menu {
         System.out.println("\t\tOpponent Name\t\tOpponent Level\t\tWinner\t\t\tCreated at");
     }
 
-    public void printGame(Game game, int i) {
+    public void printGame(M_Game game, int i) {
         User opponent = (User) UserController.getByID(game.getPlayer_two_id()).body.get("user");
         System.out.println("Game #" + (i / 10 == 0 ? ("0" + i) : i) + "\t" + opponent.getUsername() + "\t\t\t"
                 + opponent.getLevel() + "\t\t\t" + game.getWinner() + "\t\t" + game.getCreated_at());
@@ -64,7 +63,7 @@ public class M_GameHistoryMenu extends Menu {
 
         Response res = GameController.getAllUserGames(loggedInUser.getID());
         if (res.ok) {
-            List<Game> temp = (List<Game>) res.body.get("games");
+            List<M_Game> temp = (List<M_Game>) res.body.get("games");
             games = new ArrayList<>();
             for (int i = 0; i < temp.size(); i++) {
                 games.add(temp.get(i));
@@ -122,7 +121,7 @@ public class M_GameHistoryMenu extends Menu {
                     || (sortKind.equals(SortKind.date_ascending) && nextOrPre)) {
                 nextOrPre = false;
                 sortKind = SortKind.date_ascending;
-                games.sort(Comparator.comparing(Game::getCreated_at));
+                games.sort(Comparator.comparing(M_Game::getCreated_at));
                 printHeadings();
                 for (int i = (currentPage - 1) * gamePerPage; i < currentPage * gamePerPage && i < games.size(); i++) {
                     printGame(games.get(i), i);

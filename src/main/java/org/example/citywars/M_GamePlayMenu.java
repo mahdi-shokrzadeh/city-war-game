@@ -3,11 +3,9 @@ package org.example.citywars;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import controllers.UserController;
 import controllers.game.GameController;
 
 import javafx.fxml.FXML;
@@ -21,7 +19,6 @@ import models.ClanBattle;
 import models.GameCharacter;
 import models.Response;
 import models.User;
-import models.game.Game;
 import views.console.menu.ConsoleGameMenu;
 
 public class M_GamePlayMenu extends Menu {
@@ -39,7 +36,7 @@ public class M_GamePlayMenu extends Menu {
     Label name;
 
     public M_GamePlayMenu() {
-        super("M_GamePlayMenu",true,"BG-Videos\\BG-signUp.png");
+        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png"});
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
 
@@ -92,7 +89,7 @@ public class M_GamePlayMenu extends Menu {
             case "1":
                 AI AI = new AI(ai_level);
                 AI.setGameCharacter(new GameCharacter("BOT"));
-                Menu temp_men2 = new Game(AI, loggedInUser, "AI");
+                Menu temp_men2 = new M_Game(AI, loggedInUser, "AI");
                 return temp_men2;
 
             case "2":
@@ -118,7 +115,7 @@ public class M_GamePlayMenu extends Menu {
                         String k = sc.nextLine();
                         if (k.equals(opponent.getPassword())) {
                             cond = false;
-                            return new Game(loggedInUser, opponent,
+                            return new M_Game(loggedInUser, opponent,
                                     "clan", battle, attackerClan, defenderClan);
                         } else {
                             System.out.println("Password is not true!");
@@ -149,8 +146,7 @@ public class M_GamePlayMenu extends Menu {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BGim = new Image(file.toURI().toString());
-        backGroundIm.setImage(BGim);
+        backGroundIm.setImage(BGims.get(themeIndex));
 
         imv1.setImage(charsImages[0]);
         imv2.setImage(charsImages[1]);
@@ -181,6 +177,7 @@ public class M_GamePlayMenu extends Menu {
 
     @FXML
     protected void choiceCh2 (MouseEvent event) throws IOException {
+        is_bet=true;
         secondPersonNeeded = true;
         HelloApplication.menu = new M_LoginMenu();
         switchMenus(event);
@@ -207,7 +204,7 @@ public class M_GamePlayMenu extends Menu {
         int ai_level = loggedInUser.getProgress();
         AI AI = new AI(ai_level);
         AI.setGameCharacter(new GameCharacter("BOT"));
-        HelloApplication.menu = new Game(AI, loggedInUser, "AI");
+        HelloApplication.menu = new M_Game();
 
         switchMenus(event);
     }

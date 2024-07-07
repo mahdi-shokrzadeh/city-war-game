@@ -12,8 +12,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class M_Intro extends Menu {
+    File file;
     public M_Intro() {
-        super("M_Intro", false, "BG-Videos\\Bgintro.m4v");
+        super("M_Intro");
+        file=new File("src\\main\\resources\\BG-Videos\\\\Bgintro.m4v");
+
         secondPersonNeeded = false;
         playMode = null;
     }
@@ -44,17 +47,16 @@ public class M_Intro extends Menu {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (!BGisImage) {
             media = new Media(file.toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             backGround.setMediaPlayer(mediaPlayer);
 
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setCycleCount(-1);
-        }
+        
 
         File file2 = new File("src\\main\\resources\\BG-Videos\\BGIn.png");
-        BGim = new Image(file2.toURI().toString());
+        Image BGim = new Image(file2.toURI().toString());
         backGroundIm.setImage(BGim);
     }
 }

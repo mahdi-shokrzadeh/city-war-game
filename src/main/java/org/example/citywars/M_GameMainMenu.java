@@ -1,8 +1,13 @@
 package org.example.citywars;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+
+import java.io.IOException;
+
 public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
-        super("M_GameMainMenu",true, "BG-Videos\\BG-login.png");
+        super("M_GameMainMenu", new String[]{"BG-Videos\\BG-login.png"});
     }
     private void printMenu(){
         System.out.println("Main menu");
@@ -33,5 +38,12 @@ public class M_GameMainMenu extends Menu {
             else
                 System.out.println("invalid command!");
         }while (true);
+    }
+
+    @FXML
+    protected void logout(ActionEvent event) throws IOException {
+        loggedInUser =null;
+        HelloApplication.menu = new M_Intro();
+        switchMenus(event);
     }
 }

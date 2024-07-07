@@ -40,7 +40,7 @@ public class M_SignUpMenu extends Menu {
     private String pass; // for command line
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu",true, "BG-Videos\\BG-signUp.png");
+        super("M_SignUpMenu", new String[]{"BG-Videos\\BG-signUp.png"});
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));

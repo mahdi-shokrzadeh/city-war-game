@@ -29,13 +29,13 @@ import java.util.regex.Pattern;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
-    boolean BGisImage = true;
-     File file;
+    static int themeIndex=0;
+    ArrayList<File> files;
      Media media;
      MediaPlayer mediaPlayer;
      @FXML
      MediaView backGround;
-    Image BGim;
+    ArrayList<Image> BGims;
     @FXML
     ImageView backGroundIm;
     Parent root;
@@ -45,6 +45,7 @@ public abstract class Menu implements Initializable {
     ArrayList<Pattern> patterns;
     Matcher matcher;
     static User loggedInUser ;
+    static User secondUser ;
     static boolean secondPersonNeeded;
     static boolean is_bet=false;
     P_PlayMode playMode;
@@ -52,10 +53,15 @@ public abstract class Menu implements Initializable {
 
     public abstract Menu myMethods();
     public Menu(){};
-    public Menu(String name,boolean isImage,String BG){
+
+    public Menu(String name,String[] BG){
         this.name = name;
-        this.BGisImage = isImage;
-        file= new File("src\\main\\resources\\"+BG);
+        files = new ArrayList<>();
+        BGims= new ArrayList<>();
+        for (int i = 0; i < BG.length; i++) {
+            files.add(new File("src\\main\\resources\\"+BG[i]));
+            BGims.add( new Image(files.get(i).toURI().toString()));
+        }
     }
     public Menu(String name){
         this.name = name;
@@ -64,6 +70,8 @@ public abstract class Menu implements Initializable {
         return name;
     }
     void switchMenus(Event event) throws IOException {
+        System.out.println(HelloApplication.menu.getName());////////////////
+
         root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -93,19 +101,8 @@ public abstract class Menu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (!BGisImage) {
-            media = new Media(file.toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            backGround.setMediaPlayer(mediaPlayer);
+            backGroundIm.setImage(BGims.get(themeIndex));
 
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setCycleCount(-1);
-        }
-        else {
-            BGim = new Image(file.toURI().toString());
-            backGroundIm.setImage(BGim);
-
-        }
     }
 
     //Control Methods
@@ -126,6 +123,11 @@ public abstract class Menu implements Initializable {
         switchMenus(event);
     }
     @FXML
+    protected void GoToPauseButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_PauseMenu();
+        switchMenus(event);
+    }
+    @FXML
     protected void GoToShopButton(ActionEvent event) throws IOException {
         HelloApplication.menu = new M_ShopMenu();
         switchMenus(event);
@@ -141,8 +143,13 @@ public abstract class Menu implements Initializable {
         switchMenus(event);
     }
     @FXML
-    protected void GoToGameStartButton(ActionEvent event) throws IOException {
+    protected void GoToGamePlayModeButton(ActionEvent event) throws IOException {
         HelloApplication.menu = new M_GamePlayMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToGameMainMenuButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_GameMainMenu();
         switchMenus(event);
     }
     @FXML

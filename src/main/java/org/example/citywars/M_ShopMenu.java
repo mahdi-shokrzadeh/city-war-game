@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class M_ShopMenu extends Menu {
     public M_ShopMenu() {
-        super("M_ShopMenu",true,"BG-Videos\\shopMenu.png");
+        super("M_ShopMenu", new String[]{"BG-Videos\\shopMenu.png"});
     }
 
     private List<Card> allCards = null;

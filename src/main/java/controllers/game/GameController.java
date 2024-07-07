@@ -5,7 +5,7 @@ import controllers.UserCardsController;
 import database.DBs.*;
 import models.*;
 import models.card.Card;
-import models.game.Game;
+import org.example.citywars.M_Game;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -50,9 +50,9 @@ public class GameController {
         return level;
     }
 
-    public static Response createGame(Game game, User p1, User p2, int numberOfRounds, String winnerString,
-            List<Card> p1Cards,
-            List<Card> p2Cards) {
+    public static Response createGame(M_Game game, User p1, User p2, int numberOfRounds, String winnerString,
+                                      List<Card> p1Cards,
+                                      List<Card> p2Cards) {
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
         User winnerUser = null;
@@ -183,7 +183,7 @@ public class GameController {
 
     }
 
-    public static Response createBotGame(Game game, User player, int numberOfRounds, String winner, List<Card> cards) {
+    public static Response createBotGame(M_Game game, User player, int numberOfRounds, String winner, List<Card> cards) {
         int playerOriginalHP = userDB.getOne(player.getID()).getHitPoints();
         Map<String, Object> result = new HashMap<>();
         String winnerReward = "";
@@ -271,8 +271,8 @@ public class GameController {
         return new Response("game created successfully", 200, result);
     }
 
-    public static Response createGambleGame(Game game, User p1, User p2, int numberOfRounds, String winner,
-            int betAmount) {
+    public static Response createGambleGame(M_Game game, User p1, User p2, int numberOfRounds, String winner,
+                                            int betAmount) {
         int p1OriginalHP = userDB.getOne(p1.getID()).getHitPoints();
         int p2OriginalHP = userDB.getOne(p2.getID()).getHitPoints();
         String winnerReward = "+" + betAmount + " coins\t";
@@ -317,7 +317,7 @@ public class GameController {
     }
 
     public static Response getAllUserGames(int id) {
-        List<Game> games = null;
+        List<M_Game> games = null;
         try {
             games = gameDB.getByUserID(id);
         } catch (Exception e) {
@@ -406,15 +406,15 @@ public class GameController {
         return new Response("clan game essentials fetched successfully", 200, result);
     }
 
-    public static Response creatGameClan(Game game, ClanBattle battle, Clan attackerClan, Clan defenderClan, User p1,
-            User p2,
-            int numberOfRounds, String winner, List<Card> p1Cards, List<Card> p2Cards) {
+    public static Response creatGameClan(M_Game game, ClanBattle battle, Clan attackerClan, Clan defenderClan, User p1,
+                                         User p2,
+                                         int numberOfRounds, String winner, List<Card> p1Cards, List<Card> p2Cards) {
 
         Response res = createGame(game, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
         if (res.body.get("game") == null) {
             return new Response("unable to create game", -400);
         }
-        battle.playAGame((Game) res.body.get("game"));
+        battle.playAGame((M_Game) res.body.get("game"));
         if (battle.getNumberOfRemainingGames() == 0) {
             boolean hasFinale = battle.endBattle();
             if (!hasFinale) {
