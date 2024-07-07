@@ -220,8 +220,19 @@ public class UserController {
             }
 
             Random random = new Random();
-            for (int i = 0; i < 20; i++) {
+            while (user.getUserCardIDS().size() < 20) {
                 Card card = allCards.get(random.nextInt(allCards.size()));
+                boolean duplicateCard = false;
+                for (int ucID : user.getUserCardIDS()) {
+                    UserCard uc = ucDB.getOne(ucID);
+                    if (uc.getCardID() == card.getID()) {
+                        duplicateCard = true;
+                        break;
+                    }
+                }
+                if (duplicateCard) {
+                    continue;
+                }
                 UserCard userCard = new UserCard(user.getID(), card.getID());
                 int id;
                 try {
