@@ -628,4 +628,42 @@
   },
   "level" : 1,
   "spellType" : "Hide"
+}, {
+  "id" : 23,
+  "name" : "AddSpace",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Adds Space",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor": 0.9
+
+  },
+  "level" : 1,
+  "spellType" : "AddSpace"
+}, {
+  "id" : 23,
+  "name" : "Mirror",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Mirrors damage",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor": 0.9
+
+  },
+  "level" : 1,
+  "spellType" : "Mirror"
 }]
