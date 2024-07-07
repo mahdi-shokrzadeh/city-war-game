@@ -96,7 +96,7 @@ public class SimpleGame {
         numberOfRounds = n;
     }
 
-    public void winnerReward(String reward) {
+    public void setWinnerReward(String reward) {
         winnerReward = reward;
     }
 
