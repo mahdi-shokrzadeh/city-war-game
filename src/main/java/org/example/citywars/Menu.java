@@ -1,6 +1,7 @@
 package org.example.citywars;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -62,7 +63,7 @@ public abstract class Menu implements Initializable {
     public String getName(){
         return name;
     }
-    void switchMenus(ActionEvent event) throws IOException {
+    void switchMenus(Event event) throws IOException {
         root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -127,6 +128,11 @@ public abstract class Menu implements Initializable {
     @FXML
     protected void GoToShopButton(ActionEvent event) throws IOException {
         HelloApplication.menu = new M_ShopMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToCharChoiceButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_CharacterChoice();
         switchMenus(event);
     }
     @FXML

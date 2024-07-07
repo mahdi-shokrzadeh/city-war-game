@@ -7,13 +7,18 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import models.Response;
 import models.User;
 import models.game.Game;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
@@ -39,17 +44,21 @@ public class M_LoginMenu extends Menu {
     CheckBox isAdmin;
     @FXML
     ProgressBar ErrorTimer;
+    @FXML
+    Label title;
 
     public M_LoginMenu() {
-        super("M_LoginMenu",true, "BG-Videos\\BG-login.png");
+        super("M_LoginMenu", true, "BG-Videos\\BG-login.png");
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn = false;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^ *user +login +-u(?<username>[\\S ]+)-p(?<password>[\\S ]+) *$"));
         patterns.add(Pattern.compile("^ *Forgot +my +password +-u(?<username>[\\S ]+) *$"));
+
     }
-    private void printMenu(){
+
+    private void printMenu() {
         System.out.println("LOGIN MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
@@ -153,13 +162,40 @@ public class M_LoginMenu extends Menu {
 
         }
         if (s.ok) {
-            if (M_GameModeChoiseMenu.secondPersonNeeded) {
-                HelloApplication.menu = new Game(loggedInUser,(User)s.body.get("user"),"duel");
-                switchMenus(event);
+            if (secondPersonNeeded) {
+                if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
+                    System.out.println("\n!!! Same user, login again !!!\n");
+                    return;
+                } else {
+                    if (!is_bet) {
+                        HelloApplication.menu = new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                        switchMenus(event);
+
+                    } else {
+                        HelloApplication.menu = new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                        switchMenus(event);
+
+                    }
+                }
             } else {
+                loggedInUser = (User) s.body.get("user");
                 HelloApplication.menu = new M_GameMainMenu();
                 switchMenus(event);
+
             }
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (secondPersonNeeded)
+            title.setText("Second Person Login");
+        else
+            title.setText("Login");
+
+        BGim = new Image(file.toURI().toString());
+        backGroundIm.setImage(BGim);
+
     }
 }

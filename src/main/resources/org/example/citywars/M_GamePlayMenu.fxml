@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<Pane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.citywars.M_GamePlayMenu"
-            prefHeight="1080" prefWidth="1920">
-    <ImageView fx:id="backGroundIm" fitHeight="1080.0" fitWidth="1920.0" />
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
+<Pane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_GamePlayMenu">
+    <ImageView fx:id="backGroundIm" fitHeight="1080.0" fitWidth="1920.0" />
+    <HBox layoutX="560.0" layoutY="250.0" prefHeight="404.0" prefWidth="1200.0">
+        <children>
+            <ImageView fx:id="imv1" fitHeight="400.0" fitWidth="400.0" onMouseClicked="#choiceCh1" onMouseEntered="#mouseInterCh1" onMouseExited="#mouseExitCh1" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imv2" fitHeight="400.0" fitWidth="400.0" onMouseClicked="#choiceCh2" onMouseEntered="#mouseInterCh2" onMouseExited="#mouseExitCh2" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imv3" fitHeight="400.0" fitWidth="400.0" onMouseClicked="#choiceCh3" onMouseEntered="#mouseInterCh3" onMouseExited="#mouseExitCh3" pickOnBounds="true" preserveRatio="true" />
+        </children>
+    </HBox>
+
+    <Label fx:id="name" alignment="CENTER" contentDisplay="CENTER" layoutX="874.0" layoutY="640.0" prefHeight="135.0" prefWidth="600.0" text=" " textAlignment="CENTER" textFill="#f5c6de">
+        <font>
+            <Font size="45.0" />
+        </font>
+    </Label>
 </Pane>

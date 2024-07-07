@@ -1,11 +1,20 @@
 package org.example.citywars;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import controllers.UserController;
 import controllers.game.GameController;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.AI;
 import models.Clan;
 import models.ClanBattle;
@@ -18,10 +27,30 @@ import views.console.menu.ConsoleGameMenu;
 public class M_GamePlayMenu extends Menu {
     boolean gameOver;
 
+    File[] imageFiles;
+    Image[] charsImages;
+    @FXML
+    ImageView imv1;
+    @FXML
+    ImageView imv2;
+    @FXML
+    ImageView imv3;
+    @FXML
+    Label name;
+
     public M_GamePlayMenu() {
         super("M_GamePlayMenu",true,"BG-Videos\\BG-signUp.png");
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
+
+        imageFiles = new File[3];
+        imageFiles[0]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon1.png");
+        imageFiles[1]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon2.png");
+        imageFiles[2]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon3.png");
+        charsImages=new Image[imageFiles.length];
+        for (int i = 0; i < imageFiles.length; i++) {
+            charsImages[i] = new Image(imageFiles[i].toURI().toString());
+        }
     }
 
     public Menu myMethods() {
@@ -118,4 +147,85 @@ public class M_GamePlayMenu extends Menu {
 
         return this;
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        BGim = new Image(file.toURI().toString());
+        backGroundIm.setImage(BGim);
+
+        imv1.setImage(charsImages[0]);
+        imv2.setImage(charsImages[1]);
+        imv3.setImage(charsImages[2]);
+    }
+    @FXML
+    protected void choiceCh1 (MouseEvent event) throws IOException {
+        secondPersonNeeded = true;
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh1 (MouseEvent event) throws IOException {
+        imv1.setFitHeight(430.0);
+        imv1.setFitWidth(430.0);
+        imv2.setOpacity(0.5);
+        imv3.setOpacity(0.5);
+        name.setText("Duel");
+    }
+    @FXML
+    protected void mouseExitCh1 (MouseEvent event) throws IOException {
+        imv1.setFitHeight(400.0);
+        imv1.setFitWidth(400.0);
+        imv2.setOpacity(1);
+        imv3.setOpacity(1);
+        name.setText(" ");
+    }
+
+    @FXML
+    protected void choiceCh2 (MouseEvent event) throws IOException {
+        secondPersonNeeded = true;
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh2 (MouseEvent event) throws IOException {
+        imv2.setFitHeight(430.0);
+        imv2.setFitWidth(430.0);
+        imv1.setOpacity(0.5);
+        imv3.setOpacity(0.5);
+        name.setText("Gamble");
+    }
+    @FXML
+    protected void mouseExitCh2 (MouseEvent event) throws IOException {
+        imv2.setFitHeight(400.0);
+        imv2.setFitWidth(400.0);
+        imv1.setOpacity(1);
+        imv3.setOpacity(1);
+        name.setText(" ");
+    }
+
+    @FXML
+    protected void choiceCh3 (MouseEvent event) throws IOException {
+        int ai_level = loggedInUser.getProgress();
+        AI AI = new AI(ai_level);
+        AI.setGameCharacter(new GameCharacter("BOT"));
+        HelloApplication.menu = new Game(AI, loggedInUser, "AI");
+
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh3 (MouseEvent event) throws IOException {
+        imv3.setFitHeight(430.0);
+        imv3.setFitWidth(430.0);
+        imv2.setOpacity(0.5);
+        imv1.setOpacity(0.5);
+        name.setText("Mono");
+    }
+    @FXML
+    protected void mouseExitCh3 (MouseEvent event) throws IOException {
+        imv3.setFitHeight(400.0);
+        imv3.setFitWidth(400.0);
+        imv2.setOpacity(1);
+        imv1.setOpacity(1);
+        name.setText(" ");
+    }
+
 }

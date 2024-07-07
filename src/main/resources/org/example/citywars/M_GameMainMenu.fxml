@@ -33,7 +33,7 @@
             <font>
                <Font size="28.0" />
             </font></Button>
-         <Button onAction="#GoToGameStartButton" mnemonicParsing="false" prefHeight="125.0" prefWidth="280.0" text="Start Game" GridPane.columnIndex="2">
+         <Button onAction="#GoToCharChoiceButton" mnemonicParsing="false" prefHeight="125.0" prefWidth="280.0" text="Start Game" GridPane.columnIndex="2">
             <font>
                <Font size="34.0" />
             </font></Button>
