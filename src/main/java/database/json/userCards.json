@@ -147,13 +147,13 @@
   "userID" : 1,
   "cardID" : 10,
   "experience" : 0,
-  "level" : 1
+  "level" : 2
 }, {
   "id" : 25,
   "userID" : 1,
   "cardID" : 23,
   "experience" : 0,
-  "level" : 1
+  "level" : 2
 }, {
   "id" : 26,
   "userID" : 1,
@@ -236,6 +236,252 @@
   "id" : 39,
   "userID" : 1,
   "cardID" : 10,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 40,
+  "userID" : 1,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 41,
+  "userID" : 10,
+  "cardID" : 13,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 42,
+  "userID" : 10,
+  "cardID" : 3,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 43,
+  "userID" : 10,
+  "cardID" : 21,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 44,
+  "userID" : 10,
+  "cardID" : 20,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 45,
+  "userID" : 10,
+  "cardID" : 4,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 46,
+  "userID" : 10,
+  "cardID" : 11,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 47,
+  "userID" : 10,
+  "cardID" : 14,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 48,
+  "userID" : 10,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 49,
+  "userID" : 10,
+  "cardID" : 0,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 50,
+  "userID" : 10,
+  "cardID" : 9,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 51,
+  "userID" : 10,
+  "cardID" : 6,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 52,
+  "userID" : 10,
+  "cardID" : 8,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 53,
+  "userID" : 10,
+  "cardID" : 16,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 54,
+  "userID" : 10,
+  "cardID" : 24,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 55,
+  "userID" : 10,
+  "cardID" : 2,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 56,
+  "userID" : 10,
+  "cardID" : 5,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 57,
+  "userID" : 10,
+  "cardID" : 12,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 58,
+  "userID" : 10,
+  "cardID" : 1,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 59,
+  "userID" : 10,
+  "cardID" : 7,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 60,
+  "userID" : 10,
+  "cardID" : 10,
+  "experience" : 0,
+  "level" : 2
+}, {
+  "id" : 61,
+  "userID" : 11,
+  "cardID" : 10,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 62,
+  "userID" : 11,
+  "cardID" : 16,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 63,
+  "userID" : 11,
+  "cardID" : 23,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 64,
+  "userID" : 11,
+  "cardID" : 17,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 65,
+  "userID" : 11,
+  "cardID" : 4,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 66,
+  "userID" : 11,
+  "cardID" : 20,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 67,
+  "userID" : 11,
+  "cardID" : 0,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 68,
+  "userID" : 11,
+  "cardID" : 14,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 69,
+  "userID" : 11,
+  "cardID" : 2,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 70,
+  "userID" : 11,
+  "cardID" : 9,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 71,
+  "userID" : 11,
+  "cardID" : 12,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 72,
+  "userID" : 11,
+  "cardID" : 22,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 73,
+  "userID" : 11,
+  "cardID" : 3,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 74,
+  "userID" : 11,
+  "cardID" : 21,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 75,
+  "userID" : 11,
+  "cardID" : 1,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 76,
+  "userID" : 11,
+  "cardID" : 18,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 77,
+  "userID" : 11,
+  "cardID" : 11,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 78,
+  "userID" : 11,
+  "cardID" : 7,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 79,
+  "userID" : 11,
+  "cardID" : 6,
+  "experience" : 0,
+  "level" : 1
+}, {
+  "id" : 80,
+  "userID" : 11,
+  "cardID" : 8,
   "experience" : 0,
   "level" : 1
 } ]
