@@ -104,7 +104,7 @@ public class Game extends Menu {
                 this.player_two_id = player_two.getID();
 
                 ConsoleGame.printGreetings();
-                this.handleAddCardsToPlayers();
+                // this.handleAddCardsToPlayers();
         }
 
         // not related to me :)
@@ -224,8 +224,9 @@ public class Game extends Menu {
         }
 
         public boolean startGame() {
-                if ((this.mode.equals("duel") && (this.player_one.getGameCharacter() == null ||
-                                this.player_two.getGameCharacter() == null))
+                if (((this.mode.equals("duel") || this.mode.equals("clan"))
+                                && (this.player_one.getGameCharacter() == null ||
+                                                this.player_two.getGameCharacter() == null))
                                 || (this.player_two.getGameCharacter() == null)) {
                         System.out.println("Please select character first!");
                         return false;
@@ -435,7 +436,6 @@ public class Game extends Menu {
                 // from database
                 Response res_1 = UserCardsController.getUsersCards(this.player_one);
                 if (res_1.ok) {
-                        // this.player_one_cards = (ArrayList<Card>) res_1.body.get("userCard");
                         Object obj = res_1.body.get("cards");
                         if (obj instanceof ArrayList<?>) {
                                 for (Object o : (ArrayList<?>) obj) {
@@ -450,7 +450,6 @@ public class Game extends Menu {
 
                 Response res_2 = UserCardsController.getUsersCards(this.player_two);
                 if (res_2.ok) {
-                        // this.player_two_cards = (ArrayList<Card>) res_2.body.get("userCard");
                         Object obj = res_2.body.get("cards");
                         if (obj instanceof ArrayList<?>) {
                                 for (Object o : (ArrayList<?>) obj) {
