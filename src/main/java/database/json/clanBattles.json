@@ -3,7 +3,7 @@
   "attackerID" : 1,
   "defenderID" : 2,
   "hasEnded" : false,
-  "numberOfRemainingGames" : 1,
+  "numberOfRemainingGames" : 2,
   "playedAttackersIDS" : [ ],
   "playedDefendersIDS" : [ ],
   "gameIDS" : [ ],

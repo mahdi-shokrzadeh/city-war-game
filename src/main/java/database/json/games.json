@@ -1,4 +1,3 @@
-
 [ {
   "id" : 0,
   "playerOneID" : 1,
@@ -10,4 +9,4 @@
   "winnerReward" : null,
   "betAmount" : 0,
   "loserReward" : null
-} ]
+}]
