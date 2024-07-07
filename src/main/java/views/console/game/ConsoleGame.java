@@ -211,4 +211,12 @@ public class ConsoleGame {
         System.out.println("Bet amount was set to " + bet + "!");
     }
 
+    public static void printSuccessfulMirror() {
+        System.out.println("Mirror card successfully placed!");
+    }
+
+    public static void printSuccessfulAddSpecialCard() {
+        System.out.println("Special card successfully added space to your opponent!");
+    }
+
 }
