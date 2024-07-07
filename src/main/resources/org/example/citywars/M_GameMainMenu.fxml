@@ -11,37 +11,36 @@
 <Pane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_GameMainMenu">
 
     <ImageView fx:id="backGroundIm" fitHeight="1080.0" fitWidth="1920.0" />
-   <GridPane layoutX="495.0" layoutY="546.0" prefHeight="291.0" prefWidth="1084.0">
+   <GridPane layoutX="1128.0" layoutY="348.0" prefHeight="377.0" prefWidth="634.0">
      <columnConstraints>
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="217.0" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="323.0" minWidth="10.0" prefWidth="181.0" />
-       <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="280.0" />
-       <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="180.0" />
-         <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="223.0" />
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.0" minWidth="10.0" prefWidth="302.0" />
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="0.0" prefWidth="37.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="295.0" />
      </columnConstraints>
      <rowConstraints>
-       <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="184.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="122.0" minHeight="3.0" prefHeight="18.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="141.0" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="184.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="224.0" minHeight="3.0" prefHeight="142.0" vgrow="SOMETIMES" />
+       <RowConstraints maxHeight="237.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <Button onAction="#GoToShopButton" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="230.0" text="Shop" textFill="#650349">
+         <Button alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToShopButton" prefHeight="100.0" prefWidth="300.0" text="Shop" textFill="#650349" GridPane.rowIndex="1">
             <font>
                <Font size="30.0" />
             </font></Button>
-         <Button onAction="#GoToSettingButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Settings" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <Button mnemonicParsing="false" onAction="#GoToSettingButton" prefHeight="80.0" prefWidth="324.0" text="Settings" GridPane.rowIndex="2">
             <font>
                <Font size="28.0" />
             </font></Button>
-         <Button onAction="#GoToCharChoiceButton" mnemonicParsing="false" prefHeight="125.0" prefWidth="280.0" text="Start Game" GridPane.columnIndex="2">
+         <Button mnemonicParsing="false" onAction="#GoToCharChoiceButton" prefHeight="125.0" prefWidth="638.0" text="Start Game" GridPane.columnSpan="3">
             <font>
                <Font size="34.0" />
-            </font></Button>
-         <Button onAction="#logout" mnemonicParsing="false" prefHeight="80.0" prefWidth="180.0" text="Log out" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onAction="#logout" prefHeight="80.0" prefWidth="312.0" text="Log out" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <font>
                <Font size="28.0" />
             </font></Button>
-         <Button onAction="#GoToGameHistoryButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="230.0" text="Game History" GridPane.columnIndex="4">
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToGameHistoryButton" prefHeight="100.0" prefWidth="300.0" text="Game History" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <font>
                <Font size="30.0" />
             </font></Button>

@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import models.game.Round;
 
 import controllers.GameCharacterController;
@@ -50,8 +52,11 @@ public class M_Game extends Menu {
         private Clan attackerClan;
         private Clan defenderClan;
 
+        @FXML
+        ImageView timeLineWalker;
+
         public M_Game() {
-                super("M_Game", new String[]{"BG-Videos\\GameBGs\\bg1.png","BG-Videos\\GameBGs\\bg2.png"});
+                super("M_Game", new String[]{"BG-Videos\\GameBGs\\bg1.png","BG-Videos\\GameBGs\\bg2.png","BG-Videos\\GameBGs\\bg3.png"});
                 this.player_one = loggedInUser;
                 if (secondPersonNeeded){
                         this.player_two = secondUser;

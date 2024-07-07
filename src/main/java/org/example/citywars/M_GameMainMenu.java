@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
-        super("M_GameMainMenu", new String[]{"BG-Videos\\BG-login.png"});
+        super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png"});
     }
     private void printMenu(){
         System.out.println("Main menu");
