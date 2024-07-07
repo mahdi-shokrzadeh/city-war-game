@@ -134,13 +134,13 @@
   "id" : 22,
   "userID" : 1,
   "cardID" : 11,
-  "experience" : 0,
+  "experience" : -13,
   "level" : 1
 }, {
   "id" : 23,
   "userID" : 1,
   "cardID" : 19,
-  "experience" : 0,
+  "experience" : -13,
   "level" : 1
 }, {
   "id" : 24,

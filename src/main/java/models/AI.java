@@ -187,7 +187,7 @@ public class AI extends User {
             Random random = new Random();
             int random1 = random.nextInt(21);
             if (!board[0][random1].isBlockDestroyed()) {
-                int random_power = random.nextInt(7) + 3;
+                int random_power = random.nextInt(2) + 3;
                 board[0][random1].setBlockPower(board[0][random1].getBlockPower() + random_power);
                 i++;
                 ConsoleGame.printBossDecision(random1 + 1, random_power);

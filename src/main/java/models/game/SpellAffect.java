@@ -85,16 +85,16 @@ public class SpellAffect {
                 return false;
 
             case "Mirror":
-                // duration 1
-                // handleMirror();
-                break;
+
+                if (!handlePutSpell()) {
+                    return false;
+                }
+                handleMirror();
+                return false;
 
             case "AddSpace":
-                break;
-
-            
-            
-                
+                handleAddSpace();
+                return false;
 
             // special spell cards
 
@@ -349,5 +349,31 @@ public class SpellAffect {
 
     public void removeCardFromHand(Card card) {
         this.hand_cards.remove(card);
+    }
+
+    public void handleMirror() {
+        Block op_block = this.board[(this.turn_index + 1) % 2][this.des_index];
+        if (this.turn_index % 2 == 0) {
+            this.round.getPlayer_two().setDamage(this.round.getPlayer_two().getDamage() - op_block.getBlockDamage());
+            this.current_player.setDamage(this.current_player.getDamage() + op_block.getBlockDamage());
+        } else {
+            this.round.getPlayer_one().setDamage(this.round.getPlayer_one().getDamage() - op_block.getBlockDamage());
+            this.current_player.setDamage(this.current_player.getDamage() + op_block.getBlockDamage());
+        }
+
+        this.removeCardFromHand(this.spell_card);
+        ConsoleGame.printSuccessfulMirror();
+    }
+
+    public void handleAddSpace() {
+        int block_number = findEmptyBlock((this.turn_index + 1) % 2);
+        if (block_number == -1) {
+            ConsoleGame.printNoEmptyBlock();
+            return;
+        }
+
+        this.board[this.turn_index][block_number].setBlockUnavailable(true);
+        ConsoleGame.printSuccessfulAddSpecialCard();
+        this.removeCardFromHand(this.spell_card);
     }
 }
