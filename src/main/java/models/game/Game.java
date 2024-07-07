@@ -1,6 +1,7 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import org.example.citywars.M_GameOverMenu;
@@ -444,6 +445,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                Collections.shuffle(player_one_cards);
+
                 } else {
                         System.out.println(res_1.exception.getMessage());
                 }
@@ -458,6 +461,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                Collections.shuffle(player_two_cards);
+
                 } else {
                         System.out.println(res_2.message);
                 }
