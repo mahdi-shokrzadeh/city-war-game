@@ -30,7 +30,7 @@ public class GameController {
     private static int calculateUserLevel(User user) {
         int sum = 0;
         int level = user.getLevel();
-        while (sum <= user.getExperience()) {
+        while (50 * sum <= user.getExperience()) {
             sum = (int) (level * (level + 1) * 0.5);
             user.setExperience(user.getExperience() - 50 * sum);
             level++;
@@ -177,6 +177,12 @@ public class GameController {
             return new Response("an exception happened while saving users", -500, e);
         }
 
+        // List<SimpleGame> l = gameDB.getAll();
+        // for (SimpleGame s : l) {
+        // System.out.println(s.getPlayerOneID());
+        // System.out.println(s.getPlayerTwoID());
+        // }
+
         try {
             game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winnerString);
@@ -285,7 +291,7 @@ public class GameController {
             game.setWinner(winner);
             game.setWinnerReward(winnerReward);
             game.setLoserReward(loserReward);
-            // game.setEnded_at(new Date().toString());
+            // game.setEnded_at(new Date().toString())
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
@@ -466,12 +472,8 @@ public class GameController {
             clanDB.update(defenderClan, defenderClan.getID());
             cbDB.update(battle, battle.getID());
         } catch (Exception e) {
-            System.out.println("this is exception message: " + e.getMessage());
             return new Response("an exception happened while creating battle", -500, e);
         }
-
-        System.out.println("this is winner reward : " + res.body.get("winnerReward"));
-        System.out.println("this is losere reward :" + res.body.get("this is loser reward"));
 
         return new Response("game created successfully", 200, res.body);
     }
