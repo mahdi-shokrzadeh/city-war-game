@@ -191,6 +191,7 @@ public class GameController {
 
         result.put("winner", winnerReward);
         result.put("loser", loserReward);
+        result.put("game", game);
         if (exception != null) {
             return new Response("an exception happened while upgrading a card", -500, exception);
         }
@@ -449,8 +450,8 @@ public class GameController {
             return new Response("game is null", -400);
         }
         Response res = createGame(originalGame, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
-        if (res.body.get("game") == null) {
-            return new Response("unable to create game", -400);
+        if (!res.ok) {
+            return new Response(res.message, res.status);
         }
         battle.playAGame((SimpleGame) res.body.get("game"));
         if (battle.getNumberOfRemainingGames() == 0) {
@@ -465,8 +466,12 @@ public class GameController {
             clanDB.update(defenderClan, defenderClan.getID());
             cbDB.update(battle, battle.getID());
         } catch (Exception e) {
+            System.out.println("this is exception message: " + e.getMessage());
             return new Response("an exception happened while creating battle", -500, e);
         }
+
+        System.out.println("this is winner reward : " + res.body.get("winnerReward"));
+        System.out.println("this is losere reward :" + res.body.get("this is loser reward"));
 
         return new Response("game created successfully", 200, res.body);
     }
