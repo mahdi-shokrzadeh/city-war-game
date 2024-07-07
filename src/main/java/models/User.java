@@ -40,7 +40,7 @@ public class User implements Comparable<User> {
         this.passRecoveryAnswer = recovery_pass_answer;
         this.level = 1;
         this.experience = 0;
-        this.hitPoints = 100;
+        this.hitPoints = 150;
         this.coins = 0;
         this.clanID = null;
         this.firstLogin = true;
