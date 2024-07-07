@@ -22,7 +22,7 @@ public class GameCharacterDB {
                 data = mapper.readValue(file, new TypeReference<List<GameCharacter>>(){});
             }
         }catch (Exception e){
-            System.out.print(e.getMessage());
+            System.out.println("Exception in GameCharacterDB: " +e.getMessage());
         }
     }
     private void save(){
@@ -30,41 +30,29 @@ public class GameCharacterDB {
             File file = new File("./src/main/java/database/json/gameCharacters.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in GameCharacterDB: " +e.getMessage());
         }
     }
     public int create(GameCharacter gameCharacter){
         int id = -1;
-        try {
             if( data.isEmpty() ){
                 id = 0;
             }else {
-                id = data.getLast().getID();
+                id = data.getLast().getID() + 1;
             }
             gameCharacter.setID(id);
             data.add(gameCharacter);
             save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         return id;
     }
     public GameCharacter getOne(int id){
         GameCharacter gameCharacter = null;
-        try{
-            gameCharacter = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        gameCharacter = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return gameCharacter;
     }
     public GameCharacter getByName(String name){
         GameCharacter gameCharacter = null;
-        try{
-            gameCharacter = data.stream().filter(o -> o.getName().equals(name)).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        gameCharacter = data.stream().filter(o -> o.getName().equals(name)).findFirst().orElse(null);
         return gameCharacter;
     }
     public List<GameCharacter> getAll(){

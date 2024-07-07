@@ -23,6 +23,8 @@ public abstract class CardStruct {
         desc = _desc;
     }
 
+    public CardStruct(){}
+
     public String getName() {
         return name;
     }

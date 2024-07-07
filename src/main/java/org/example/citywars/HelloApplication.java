@@ -27,8 +27,8 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
 //        launch();
 
-        // menu = new M_SignUpMenu();
-        menu = new M_GamePlayMenu();
+         menu = new M_Intro();
+//        menu = new M_GameHistoryMenu();
 
         Scanner sc = new Scanner(System.in);//for console version
         String input;//for console version

@@ -13,7 +13,7 @@ public class M_Intro extends Menu {
     }
 
     private void printMenu(){
-        System.out.println("Intro menu");
+        System.out.println("INTRO MENU");
         System.out.println("Options: ");
         System.out.println("    signup");
         System.out.println("    login");

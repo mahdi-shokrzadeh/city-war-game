@@ -12,6 +12,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.P_PlayMode;
+import models.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +35,9 @@ public abstract class Menu implements Initializable {
     private String name;
     ArrayList<Pattern> patterns;
     Matcher matcher;
-    //static User loggedInUser = null;
+    static User loggedInUser ;
     static boolean secondPersonNeeded;
+    static boolean is_bet=false;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
 
@@ -59,7 +61,7 @@ public abstract class Menu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    String passwordProblem(String s){
+    public static String passwordProblem(String s){
         if (s.isBlank())
             return "Blank Field!";
         else if(!s.matches(".*[a-z]+.*") || !s.matches(".*[A-Z]+.*"))

@@ -14,73 +14,73 @@ import java.util.Map;
 public class ClanBattleDB {
     private final ObjectMapper mapper;
     private List<ClanBattle> data;
-    public ClanBattleDB(){
+
+    public ClanBattleDB() {
         mapper = new ObjectMapper();
-        try{
+        try {
             File file = new File("./src/main/java/database/json/clanBattles.json");
-            if(file.length() == 0){
+            if (file.length() == 0) {
                 data = new ArrayList<>();
-            }else{
-                data = mapper.readValue(file, new TypeReference<List<ClanBattle>>(){});
+            } else {
+                data = mapper.readValue(file, new TypeReference<List<ClanBattle>>() {
+                });
             }
-        }catch (Exception e){
-            System.out.print(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception in ClanBattleDB: " + e.getMessage());
         }
     }
-    private void save(){
+
+    private void save() {
         try {
             File file = new File("./src/main/java/database/json/clanBattles.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception in ClanBattleDB: " + e.getMessage());
         }
     }
-    public int create(ClanBattle battle){
+
+    public int create(ClanBattle battle) {
         int id = -1;
-        try {
-            if( data.isEmpty() ){
-                id = 0;
-            }else {
-                id = data.getLast().getID();
-            }
-            battle.setID(id);
-            data.add(battle);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        if (data.isEmpty()) {
+            id = 0;
+        } else {
+            id = data.getLast().getID() + 1;
         }
+        battle.setID(id);
+        data.add(battle);
+        save();
         return id;
     }
-    public ClanBattle getOne(int id){
+
+    public ClanBattle getOne(int id) {
         ClanBattle battle = null;
-        try{
-            battle = data.stream().filter(o -> o.getID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        battle = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return battle;
     }
-    public ClanBattle firstWhereEqualsOr(int id){
+
+    public ClanBattle firstWhereEqualsOr(int id) {
         ClanBattle battle = null;
-        try{
-            battle = data.stream().filter(o -> o.getAttackerID() == id || o.getDefenderID() == id).toList().getFirst();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        battle = data.stream().filter(o -> (o.getAttackerID() == id || o.getDefenderID() == id) && !o.getHasEnded())
+                .findFirst().orElse(null);
         return battle;
     }
-    public List<ClanBattle> getAll(){
+
+    public List<ClanBattle> whereEqualsOr(int id) {
+        List<ClanBattle> battles = null;
+        battles = data.stream().filter(o -> o.getAttackerID() == id || o.getDefenderID() == id).toList();
+        return battles;
+    }
+
+    public List<ClanBattle> getAll() {
         return data;
     }
+
     public void update(ClanBattle battle, int id) {
-        try{
-            data.replaceAll(o -> o.getID() == id ? battle: o);
-            save();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        data.replaceAll(o -> o.getID() == id ? battle : o);
+        save();
     }
-    public void delete(int id){
+
+    public void delete(int id) {
         data.removeIf(o -> o.getID() == id);
         save();
     }

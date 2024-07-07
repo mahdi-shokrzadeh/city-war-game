@@ -3,8 +3,8 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.almasb.fxgl.dev.Console;
 
+import models.AI;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleGame;
@@ -16,7 +16,7 @@ public class Round {
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
     private Turn current_turn;
-
+    private int number_of_round_turns = 4;
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
@@ -40,6 +40,25 @@ public class Round {
             }
         }
 
+        // Boss
+        if ((this.player_one instanceof AI) && ((AI) this.player_one).getAiLevel() == 5) {
+            this.changeBlocksForBoss();
+            this.handleBotInitiation();
+        }
+
+        // reseting the stolen cards
+        this.player_one.setCardsAreStolen(false);
+        this.player_two.setCardsAreStolen(false);
+
+        // put 1 destroyed block in board
+        if (!(player_one instanceof AI) || (player_one instanceof AI && player_one.getProgress() != 5)) {
+            int rand_1 = (int) (Math.random() * 21);
+            int rand_2 = (int) (Math.random() * 21);
+
+            this.board[0][rand_1].setBlockUnavailable(true);
+            this.board[1][rand_2].setBlockUnavailable(true);
+        }
+
     }
 
     public String processRound() {
@@ -50,7 +69,7 @@ public class Round {
             String result = current_turn.processTurn(board,
                     this);
             if (result.equals("turn_is_finished")) {
-                if (this.turns.size() < 6) {
+                if (this.turns.size() < this.number_of_round_turns) {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
@@ -121,8 +140,32 @@ public class Round {
         return board;
     }
 
+    public ArrayList<Card> getPlayer_one_cards() {
+        return player_one_cards;
+    }
+
+    public void setPlayer_one_cards(ArrayList<Card> player_one_cards) {
+        this.player_one_cards = player_one_cards;
+    }
+
+    public ArrayList<Card> getPlayer_two_cards() {
+        return player_two_cards;
+    }
+
+    public void setPlayer_two_cards(ArrayList<Card> player_two_cards) {
+        this.player_two_cards = player_two_cards;
+    }
+
     public void setBoard(Block[][] board) {
         this.board = board;
+    }
+
+    public int getNumberOfRoundTurns() {
+        return number_of_round_turns;
+    }
+
+    public void setNumberOfRoundTurns(int number_of_round_turns) {
+        this.number_of_round_turns = number_of_round_turns;
     }
 
     public boolean timeLine() {
@@ -136,27 +179,27 @@ public class Round {
 
             } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
                 this.player_one
-                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
                 // reduce the damage of the player
-                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
+                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
             } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
                 this.player_two
-                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
 
                 // reduce the damage of the player
-                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
+                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
             } else {
                 if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
                     this.player_two
-                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockCard().getDamage());
+                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
                     this.player_one
-                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockCard().getDamage());
+                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
 
                 } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
                     this.player_one
-                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockCard().getDamage());
+                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
                     this.player_two
-                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockCard().getDamage());
+                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
                 }
 
             }
@@ -187,4 +230,35 @@ public class Round {
         return false;
     }
 
+    public void changeBlocksForBoss() {
+        // Only Boss!
+        // this.board[1][0].setBlockUnavailable(true);
+        // this.board[1][1].setBlockUnavailable(true);
+        // this.board[1][2].setBlockUnavailable(true);
+        // this.board[1][18].setBlockUnavailable(true);
+        // this.board[1][19].setBlockUnavailable(true);
+        // this.board[1][20].setBlockUnavailable(true);
+    }
+
+    public void handleBotInitiation() {
+        // Boss cards
+        Card card_one = new Card("boss_one", 0, 21, "Regular", 20, 30, 0, 0, winner, null);
+        // Card card_two = new Card("two", 0, 10, "Regular", 20, 30, 0, 0, winner,
+        // null);
+        // Card card_three = new Card("three", 0, 7, "Regular", 20, 30, 0, 0, winner,
+        // null);
+
+        int total_damage = 0;
+        for (int i = 0; i <= 20; i++) {
+            int random = (int) (Math.random() * 10) + 20;
+            this.board[0][i].setBlockCard(card_one);
+            this.board[0][i].setBlockEmpty(false);
+            this.board[0][i].setCardHidden(true);
+            this.board[0][i].setBlockPower(random);
+            this.board[0][i].setBlockDamage(random);
+            total_damage += random;
+        }
+
+        this.player_one.setDamage(total_damage);
+    }
 }

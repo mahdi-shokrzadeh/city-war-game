@@ -10,6 +10,8 @@ public class Block {
     private boolean card_is_hidden = false;
     private boolean block_is_destroyed = false; // it was attacked!
     private int bloc_power = 0;
+    private int block_damage = 0;
+
     public Block() {
 
     }
@@ -19,16 +21,15 @@ public class Block {
         this.is_empty = false;
     }
 
-
-
     // setter and getters:
     public Card getBlockCard() {
         return block_card;
     }
 
-    public void setBlockCard(Card block_card) {
-        this.block_card = block_card;
-        this.bloc_power = block_card.getPower()/block_card.getDuration();
+    public void setBlockCard(Card c) {
+        this.block_card = c;
+        this.bloc_power = c.getPower();
+        this.block_damage = c.getDamage() / c.getDuration();
     }
 
     public boolean isBlockEmpty() {
@@ -63,7 +64,6 @@ public class Block {
         this.block_is_destroyed = block_is_destroyed;
     }
 
-
     public int getBlockPower() {
         return bloc_power;
     }
@@ -72,5 +72,12 @@ public class Block {
         this.bloc_power = bloc_power;
     }
 
-}
+    public int getBlockDamage() {
+        return block_damage;
+    }
 
+    public void setBlockDamage(int block_damage) {
+        this.block_damage = block_damage;
+    }
+
+}

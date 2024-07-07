@@ -1,0 +1,17 @@
+[ {
+  "id" : 1,
+  "name" : "alpine",
+  "joiningKey" : "alpine/1",
+  "battleKey" : "alpine",
+  "leaderID" : 1,
+  "membersIDS" : [ 1 ],
+  "battleID" : 0
+}, {
+  "id" : 2,
+  "name" : "ferrari",
+  "joiningKey" : "ferrari/2",
+  "battleKey" : "ferrari",
+  "leaderID" : 2,
+  "membersIDS" : [ 2 ],
+  "battleID" : 0
+} ]

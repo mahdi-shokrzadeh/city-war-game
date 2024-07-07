@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import java.util.Map;
+
+import models.AI;
 import models.User;
 import models.card.Card;
 import views.console.game.ConsoleBoard;
@@ -18,6 +20,7 @@ public class Turn {
     private ArrayList<Card> player_two_cards;
     private User current_player;
     private Block[][] board = new Block[2][21];
+    private Round round;
 
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
 
@@ -32,7 +35,7 @@ public class Turn {
 
     public String processTurn(Block[][] board,
             Round round) {
-
+        this.round = round;
         int turn_index = round.getTurns().indexOf(this);
         if (turn_index % 2 == 0) {
             current_player = player_one;
@@ -57,80 +60,133 @@ public class Turn {
             System.out.println(player_two.getUsername() + "'s turn, choose a card!");
         }
 
-        while (!cond) {
-            String input = sc.nextLine();
-            if (input.equals("Print board")) {
-                ConsoleBoard.printBoard(board, player_one, player_two,
-                        player_one.getDamage(),
-                        player_two.getDamage());
-            } else if (input.equals("Print my cards")) {
-                this.printCurrentUserHand(current_player);
-            } else if (input.equals("Print opponent cards")) {
-                if (current_player == player_one) {
-                    ConsoleCard.printUserCards(new ArrayList<Card>(player_two_cards.subList(0,
-                            this.player_two.getIsBonusActive() ? 6 : 5)), player_two);
+        // AI or no?
+        if (this.current_player instanceof AI) {
+            if (((AI) current_player).getAiLevel() == 5) {
+                ((AI) current_player).handleBoss(board);
+            } else {
+                String input = ((AI) current_player).chooseTheMove(board, player_one_cards, this.round);
+                if (input.equals("No valid card to place")) {
+                    ConsoleGame.printNoValidCardToPlace();
                 } else {
-                    ConsoleCard.printUserCards(new ArrayList<Card>(player_one_cards.subList(0,
-                            this.player_one.getIsBonusActive() ? 6 : 5)), player_one);
-                }
-            }
-
-            else if (input.matches("^Select card number ([1-6]) player ([1-2])$")) {
-                String[] parts = input.split(" ");
-                int card_number = Integer.parseInt(parts[3]);
-                int player_number = Integer.parseInt(parts[5]);
-                if (player_number == 1) {
-                    if (card_number > 0 && card_number <= 6) {
+                    ConsoleGame.printAIChoice(input);
+                    if (!input.startsWith("Spell")) {
+                        String[] parts = input.split(" ");
+                        int card_number = Integer.parseInt(parts[3]);
+                        int block_number = Integer.parseInt(parts[6]);
                         Card selected_card = player_one_cards.get(card_number - 1);
-                        ConsoleCard.printCard(card_number, selected_card);
-                    } else {
-                        ConsoleGame.printInvalidCardNumber();
-                    }
-                } else if (player_number == 2) {
-                    if (card_number > 0 && card_number <= 6) {
-                        Card selected_card = player_two_cards.get(card_number - 1);
-                        ConsoleCard.printCard(card_number, selected_card);
-                    } else {
-                        ConsoleGame.printInvalidCardNumber();
-                    }
-                } else {
-                    ConsoleGame.printInvalidPlayerNumber();
-                }
-            }
-            // regex for -Placing card number n in block i
-            else if (input.matches("^Placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
-                String[] parts = input.split(" ");
-                int card_number = Integer.parseInt(parts[3]);
-                int block_number = Integer.parseInt(parts[6]);
-                if (card_number > 0 && card_number <= (current_player.getIsBonusActive() ? 6 : 5) && block_number >= 0
-                        && block_number <= 21) {
-                    Card selected_card;
-                    if (current_player == player_one) {
-                        selected_card = player_one_cards.get(card_number - 1);
-                    } else {
-                        selected_card = player_two_cards.get(card_number - 1);
-                    }
-
-                    if (selected_card.getCardType().toString().equals("Regular")) {
+                        ConsoleCard.printCard(card_number, selected_card, "normal");
                         if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
                             // Turn is finished
                             ConsoleGame.printTurnIsFinished(turn_index + 1);
                             cond = true;
                         }
                     } else {
-                        // SPELL action
+                        cond = true;
                     }
-                    // ConsoleBoard.printBoard(board, player_one, player_two,
-                    // player_one.getDamage(),
-                    // player_two.getDamage());
-
-                } else {
-                    ConsoleGame.printInvalidBlockNumber();
                 }
-            } else {
-                ConsoleGame.printInvaidInput();
             }
+        } else {
+            while (!cond) {
+                String input = sc.nextLine();
+                if (input.equals("Print board")) {
+                    ConsoleBoard.printBoard(board, player_one, player_two,
+                            player_one.getDamage(),
+                            player_two.getDamage());
+                } else if (input.equals("Print my cards")) {
+                    this.printCurrentUserHand(current_player);
+                } else if (input.equals("Print opponent cards")) {
+                    if (current_player == player_one) {
+                        ConsoleCard.printUserCards(new ArrayList<Card>(player_two_cards.subList(0,
+                                this.player_two.getIsBonusActive() ? 6 : 5)), player_two);
+                    } else {
+                        ConsoleCard.printUserCards(new ArrayList<Card>(player_one_cards.subList(0,
+                                this.player_one.getIsBonusActive() ? 6 : 5)), player_one);
+                    }
+                }
 
+                else if (input.matches("^select card number ([1-6]) player ([1-2])$")) {
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int player_number = Integer.parseInt(parts[5]);
+                    if (player_number == 1) {
+                        if (card_number > 0 && card_number <= 6) {
+                            Card selected_card = player_one_cards.get(card_number - 1);
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
+                        } else {
+                            ConsoleGame.printInvalidCardNumber();
+                        }
+                    } else if (player_number == 2) {
+                        if (card_number > 0 && card_number <= 6) {
+                            Card selected_card = player_two_cards.get(card_number - 1);
+                            ConsoleCard.printCard(card_number, selected_card, "complete");
+                        } else {
+                            ConsoleGame.printInvalidCardNumber();
+                        }
+                    } else {
+                        ConsoleGame.printInvalidPlayerNumber();
+                    }
+                }
+                // regex for -Placing card number n in block i
+                else if (input.matches("^placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int block_number = Integer.parseInt(parts[6]);
+                    if (card_number > 0 && card_number <= (current_player.getIsBonusActive() ? 6 : 5)
+                            && block_number > 0
+                            && block_number <= 21) {
+                        Card selected_card;
+
+                        if (current_player.getCardsAreStolen() && card_number >= 5) {
+                            ConsoleGame.printInvalidCardNumber();
+                            continue;
+                        }
+                        if (current_player == player_one) {
+                            selected_card = player_one_cards.get(card_number - 1);
+                        } else {
+                            selected_card = player_two_cards.get(card_number - 1);
+                        }
+
+                        if (selected_card.getCardType().toString().equals("Regular")) {
+                            if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                                // Turn is finished
+                                ConsoleGame.printTurnIsFinished(turn_index + 1);
+                                cond = true;
+                            }
+                        } else {
+                            // SPELL action
+
+                            //
+
+                            SpellAffect s = new SpellAffect(selected_card, turn_index, block_number - 1, board,
+                                    current_player, this.round,
+                                    player_one == current_player ? player_one_cards : player_two_cards);
+                            try {
+                                if (s.spellHandler()) {
+                                    try {
+                                        handleAffection(turn_index, block_number - 1);
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+                                } else {
+                                }
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                            cond = true;
+                        }
+                        // ConsoleBoard.printBoard(board, player_one, player_two,
+                        // player_one.getDamage(),
+                        // player_two.getDamage());
+
+                    } else {
+                        ConsoleGame.printInvalidBlockNumber();
+                    }
+                } else {
+                    ConsoleGame.printInvaidInput();
+                }
+
+            }
         }
 
         return "turn_is_finished";
@@ -138,9 +194,10 @@ public class Turn {
 
     public void printCurrentUserHand(User player) {
         if (player == player_one) {
-            ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
-                    this.player_one.getIsBonusActive() ? 6 : 5)),
-                    player);
+            if (!(player_one instanceof AI) || ((AI) player_one).getAiLevel() != 5)
+                ConsoleCard.printUserCards(new ArrayList<>(player_one_cards.subList(0,
+                        this.player_one.getIsBonusActive() ? 6 : 5)),
+                        player);
         } else {
             ConsoleCard.printUserCards(new ArrayList<>(player_two_cards.subList(0,
                     this.player_two.getIsBonusActive() ? 6 : 5)),
@@ -161,7 +218,11 @@ public class Turn {
             for (int i = 0; i < card.getDuration(); i++) {
                 this.board[des_index][starting_block_number + i].setBlockCard(card);
                 this.board[des_index][starting_block_number + i].setBlockEmpty(false);
-                handleAffection(des_index, starting_block_number + i);
+                try {
+                    handleAffection(des_index, starting_block_number + i);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         } else {
             return false;
@@ -169,11 +230,29 @@ public class Turn {
         ConsoleGame.printSuccessfulCardPlacement();
         // Check for Bonous
         this.checkBonous();
+        // card.getCharacter().getPFactor()
         if (des_index == 0) {
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_one.getIsBonusActive()
+                    && card.getCardType().toString().equals("Regular")) {
+
+                if (card.getCardType().toString().equals(player_one_cards.get(2).getCardType().toString())) {
+                    player_one_cards.get(2).setPower(player_one_cards.get(2).getPower() + 2);
+                    ConsoleGame.printBuffCard(3, 2);
+                }
+            }
+
             player_one_cards.remove(card);
         } else {
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_two.getIsBonusActive()
+                    && card.getCardType().toString().equals("Regular")) {
+                if (card.getCardType().toString().equals(player_two_cards.get(2).getCardType().toString())) {
+                    player_two_cards.get(2).setPower(player_two_cards.get(2).getPower() + 2);
+                    ConsoleGame.printBuffCard(3, 2);
+                }
+            }
             player_two_cards.remove(card);
         }
+
         return true;
     }
 
@@ -194,11 +273,15 @@ public class Turn {
         return true;
     }
 
-    public void handleAffection(int des_index, int block_number) {
+    public void handleAffection(int des_index, int block_number) throws Exception {
+        if (this.board[des_index][block_number].getBlockCard() == null) {
+            // should return if the crad is spell and has no duration!
+            return;
+        }
         Block bl = this.board[des_index][block_number];
         Block opponent_block = this.board[(des_index + 1) % 2][block_number];
         if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
-            this.current_player.setDamage(this.current_player.getDamage() + bl.getBlockCard().getDamage());
+            this.current_player.setDamage(this.current_player.getDamage() + bl.getBlockDamage());
         }
         if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
             User op = getOpponent(this.current_player);
@@ -206,22 +289,22 @@ public class Turn {
                 opponent_block.setBlockDestroyed(true);
                 opponent_destroyed_blocks.add(opponent_block);
                 // reduce the damage
-                op.setDamage(op.getDamage() - opponent_block.getBlockCard().getDamage());
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
 
             } else if (bl.getBlockPower() < opponent_block.getBlockPower()) {
                 bl.setBlockDestroyed(true);
                 // reduce the damage
                 this.current_player.setDamage(this.current_player.getDamage()
-                        - bl.getBlockCard().getDamage());
+                        - bl.getBlockDamage());
             } else {
                 // powers are equal
                 bl.setBlockDestroyed(true);
                 opponent_block.setBlockDestroyed(true);
                 // reduce the damage
                 this.current_player.setDamage(this.current_player.getDamage()
-                        - bl.getBlockCard().getDamage());
+                        - bl.getBlockDamage());
 
-                op.setDamage(op.getDamage() - opponent_block.getBlockCard().getDamage());
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
 
             }
         }
@@ -256,12 +339,12 @@ public class Turn {
                 ConsoleGame.printBonous();
 
                 if (Math.random() < 0.6) {
-                    this.current_player.setCoins(this.current_player.getCoins() + 40);
+                    this.current_player.setCoins(this.current_player.getCoins() + 10);
                     ConsoleGame.printCoinBonous();
                 }
-                // for 0.6 possibility add 50 Xp to user
+
                 if (Math.random() < 0.6) {
-                    // this.current_player.set
+
                 }
                 current_player.setIsBonusActive(true);
             }
