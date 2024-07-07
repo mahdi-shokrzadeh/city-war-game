@@ -48,7 +48,7 @@ public class SpellAffect {
                     return false;
                 }
                 handleHeal();
-                break;
+                return false;
 
             case "PowerBoost":
                 if (!handlePowerBoost()) {

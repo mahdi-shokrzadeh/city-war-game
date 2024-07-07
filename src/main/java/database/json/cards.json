@@ -468,7 +468,7 @@
   "upgradeLevel" : 1,
   "upgradeCost" : 1,
   "desc" : "Replanishes an amount of player's hp",
-  "power" : 0,
+  "power" : 999,
   "damage" : 0,
   "character" : {
     "id" : 0,
