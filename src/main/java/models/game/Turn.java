@@ -65,7 +65,7 @@ public class Turn {
             if (((AI) current_player).getAiLevel() == 5) {
                 ((AI) current_player).handleBoss(board);
             } else {
-                String input = ((AI) current_player).chooseTheMove(board, player_one_cards , this.round);
+                String input = ((AI) current_player).chooseTheMove(board, player_one_cards, this.round);
                 if (input.equals("No valid card to place")) {
                     ConsoleGame.printNoValidCardToPlace();
                 } else {
@@ -161,14 +161,17 @@ public class Turn {
                             SpellAffect s = new SpellAffect(selected_card, turn_index, block_number - 1, board,
                                     current_player, this.round,
                                     player_one == current_player ? player_one_cards : player_two_cards);
-
-                            if (s.spellHandler()) {
-                                try {
-                                    handleAffection(turn_index, block_number - 1);
-                                } catch (Exception e) {
-                                    System.out.println(e);
+                            try {
+                                if (s.spellHandler()) {
+                                    try {
+                                        handleAffection(turn_index, block_number - 1);
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+                                } else {
                                 }
-                            } else {
+                            } catch (Exception e) {
+                                System.out.println(e);
                             }
                             cond = true;
                         }

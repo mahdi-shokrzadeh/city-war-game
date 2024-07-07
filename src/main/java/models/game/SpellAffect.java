@@ -30,7 +30,7 @@ public class SpellAffect {
         this.hand_cards = hand_cards;
     }
 
-    public boolean spellHandler() {
+    public boolean spellHandler() throws Exception {
 
         switch (this.spell_card.getSpellType().toString()) {
 
