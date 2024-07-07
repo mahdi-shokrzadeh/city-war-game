@@ -1,7 +1,7 @@
 [ {
   "id" : 2,
-  "playerOneID" : 0,
-  "playerTwoID" : 0,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
   "mode" : "duel",
   "createdAt" : "2024-07-07 20:19:45",
   "winner" : "player_one",

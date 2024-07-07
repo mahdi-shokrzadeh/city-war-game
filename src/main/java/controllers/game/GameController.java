@@ -30,7 +30,7 @@ public class GameController {
     private static int calculateUserLevel(User user) {
         int sum = 0;
         int level = user.getLevel();
-        while (sum <= user.getExperience()) {
+        while (50 * sum <= user.getExperience()) {
             sum = (int) (level * (level + 1) * 0.5);
             user.setExperience(user.getExperience() - 50 * sum);
             level++;
@@ -177,6 +177,12 @@ public class GameController {
             return new Response("an exception happened while saving users", -500, e);
         }
 
+        // List<SimpleGame> l = gameDB.getAll();
+        // for (SimpleGame s : l) {
+        // System.out.println(s.getPlayerOneID());
+        // System.out.println(s.getPlayerTwoID());
+        // }
+
         try {
             game.setNumberOfRounds(numberOfRounds);
             game.setWinner(winnerString);
@@ -191,6 +197,7 @@ public class GameController {
 
         result.put("winner", winnerReward);
         result.put("loser", loserReward);
+        result.put("game", game);
         if (exception != null) {
             return new Response("an exception happened while upgrading a card", -500, exception);
         }
@@ -284,7 +291,7 @@ public class GameController {
             game.setWinner(winner);
             game.setWinnerReward(winnerReward);
             game.setLoserReward(loserReward);
-            // game.setEnded_at(new Date().toString());
+            // game.setEnded_at(new Date().toString())
             gameDB.create(game);
         } catch (Exception e) {
             return new Response("an exception happened while creating game", -500, e);
@@ -449,8 +456,8 @@ public class GameController {
             return new Response("game is null", -400);
         }
         Response res = createGame(originalGame, p1, p2, numberOfRounds, winner, p1Cards, p2Cards);
-        if (res.body.get("game") == null) {
-            return new Response("unable to create game", -400);
+        if (!res.ok) {
+            return new Response(res.message, res.status);
         }
         battle.playAGame((SimpleGame) res.body.get("game"));
         if (battle.getNumberOfRemainingGames() == 0) {

@@ -51,7 +51,7 @@ public class M_ShopMenu extends Menu {
         System.out.println("nickname: " + user.getNickname());
         System.out.println("email: " + user.getEmail());
         System.out.println("role: " + user.getRole());
-        System.out.println("character: " + user.getGameCharacter());
+        System.out.println("character: " + user.getGameCharacter().getName());
         System.out.println("progress: " + user.getProgress());
         System.out.println("hp: " + user.getHitPoints());
         System.out.println("level: " + user.getLevel());
@@ -88,7 +88,7 @@ public class M_ShopMenu extends Menu {
             System.out.println("power: " + card.getPower());
             System.out.println("damage: " + card.getDamage());
             System.out.println("duration: " + card.getDuration());
-            System.out.println("character: " + card.getCharacter());
+            System.out.println("character: " + card.getCharacter().getName());
             System.out.println("price:" + card.getPrice());
             System.out.println("upgrade level: " + card.getUpgradeLevel());
             System.out.println("upgrade cost (upgrade cost increases with each upgrade): " + card.getUpgradeCost());
@@ -165,15 +165,21 @@ public class M_ShopMenu extends Menu {
                 matcher.find();
                 try {
                     String name = matcher.group("name");
+                    boolean found = false;
                     for (Card card : notOwnedCards) {
                         if (card.getName().equals(name)) {
                             res = UserCardsController.buyCard(loggedInUser, card);
+                            found = true;
                             break;
                         }
                     }
-                    System.out.println(res.message);
-                    if (res.exception != null) {
-                        System.out.println(res.exception.getMessage());
+                    if (found) {
+                        System.out.println(res.message);
+                        if (res.exception != null) {
+                            System.out.println(res.exception.getMessage());
+                        }
+                    } else {
+                        System.out.println("card not found");
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -229,6 +235,10 @@ public class M_ShopMenu extends Menu {
                 }
                 revalidate();
             } else if (input.matches("^show all cards$")) {
+                if (!loggedInUser.getRole().equals("admin")) {
+                    System.out.println("admins only!");
+                    continue;
+                }
                 if (allCards.isEmpty()) {
                     System.out.println("there are no cards yet");
                 }
@@ -237,6 +247,10 @@ public class M_ShopMenu extends Menu {
                 }
             } else if (input.matches(
                     "^add card -name (?<name>[a-zA-Z]+) -prc (?<price>[0-9]+) -dur (?<duration>[0-9]+) -pow (?<power>[0-9]+) -dmg (?<damage>[0-9]+) -upl (?<upgradeLevel>[0-9]+) -upc (?<upgradeCost>[0-9]+) -chr (?<gameCharacter>[a-zA-Z]+)$")) {
+                if (!loggedInUser.getRole().equals("admin")) {
+                    System.out.println("admins only!");
+                    continue;
+                }
                 matcher = Pattern.compile(
                         "^add card -name (?<name>[a-zA-Z]+) -prc (?<price>[0-9]+) -dur (?<duration>[0-9]+) -pow (?<power>[0-9]+) -dmg (?<damage>[0-9]+) -upl (?<upgradeLevel>[0-9]+) -upc (?<upgradeCost>[0-9]+) -chr (?<gameCharacter>[a-zA-Z]+)$")
                         .matcher(input);
@@ -264,6 +278,10 @@ public class M_ShopMenu extends Menu {
                 revalidate();
             } else if (input.matches(
                     "^edit card -num (?<number>[0-9]+) -name (?<name>[a-zA-Z]+) -prc (?<price>[0-9]+) -dur (?<duration>[0-9]+) -pow (?<power>[0-9]+) -dmg (?<damage>[0-9]+) -upl (?<upgradeLevel>[0-9]+) -upc (?<upgradeCost>[0-9]+) -chr (?<gameCharacter>[a-zA-Z]+)$")) {
+                if (!loggedInUser.getRole().equals("admin")) {
+                    System.out.println("admins only!");
+                    continue;
+                }
                 matcher = Pattern.compile(
                         "^edit card -num (?<number>[0-9]+) -name (?<name>[a-zA-Z]+) -prc (?<price>[0-9]+) -dur (?<duration>[0-9]+) -pow (?<power>[0-9]+) -dmg (?<damage>[0-9]+) -upl (?<upgradeLevel>[0-9]+) -upc (?<upgradeCost>[0-9]+) -chr (?<gameCharacter>[a-zA-Z]+)$")
                         .matcher(input);
@@ -292,6 +310,10 @@ public class M_ShopMenu extends Menu {
                 }
                 revalidate();
             } else if (input.matches("^remove card -num (?<number>[0-9]+)$")) {
+                if (!loggedInUser.getRole().equals("admin")) {
+                    System.out.println("admins only!");
+                    continue;
+                }
                 matcher = Pattern.compile("^remove card -num (?<number>[0-9]+)$").matcher(input);
                 matcher.find();
                 Card card = allCards.get(Integer.parseInt(matcher.group("number")) - 1);
@@ -307,6 +329,10 @@ public class M_ShopMenu extends Menu {
                 }
                 revalidate();
             } else if (input.matches("^show all users$")) {
+                if (!loggedInUser.getRole().equals("admin")) {
+                    System.out.println("admins only!");
+                    continue;
+                }
                 try {
                     List<User> allUsers = (List<User>) UserController.getAllUsers(loggedInUser).body.get("allUsers");
                     for (User u : allUsers) {
