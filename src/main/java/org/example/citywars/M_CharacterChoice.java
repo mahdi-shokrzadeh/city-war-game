@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class M_CharacterChoice extends Menu {
-    File[] imageFiles;
-    Image[] charsImages;
     @FXML
     ImageView imv1;
     @FXML
@@ -24,17 +22,6 @@ public class M_CharacterChoice extends Menu {
 
     public M_CharacterChoice() {
         super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg"});
-
-        imageFiles = new File[4];
-        imageFiles[0]=  new File("src/main/resources/Characters/Igoribuki.png");
-        imageFiles[1]=  new File("src/main/resources/Characters/Master_Masher.png");
-        imageFiles[2]=  new File("src/main/resources/Characters/Nahane.png");
-        imageFiles[3]=  new File("src/main/resources/Characters/Sensei_Pandaken.png");
-        charsImages=new Image[imageFiles.length];
-        for (int i = 0; i < imageFiles.length; i++) {
-            charsImages[i] = new Image(imageFiles[i].toURI().toString());
-        }
-
     }
 
     @Override
@@ -46,10 +33,10 @@ public class M_CharacterChoice extends Menu {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         backGroundIm.setImage(BGims.get(themeIndex));
 
-        imv1.setImage(charsImages[1]);
-        imv2.setImage(charsImages[2]);
-        imv3.setImage(charsImages[0]);
-        imv4.setImage(charsImages[3]);
+        imv1.setImage(charsImages[5]);
+        imv2.setImage(charsImages[7]);
+        imv3.setImage(charsImages[4]);
+        imv4.setImage(charsImages[6]);
     }
 
     @FXML
@@ -65,6 +52,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseInterCh1 (MouseEvent event) throws IOException {
         imv1.setFitHeight(430.0);
         imv1.setFitWidth(430.0);
+        imv1.setImage(charsImages[1]);
         imv2.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv4.setOpacity(0.5);
@@ -73,6 +61,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseExitCh1 (MouseEvent event) throws IOException {
         imv1.setFitHeight(400.0);
         imv1.setFitWidth(400.0);
+        imv1.setImage(charsImages[5]);
         imv2.setOpacity(1);
         imv3.setOpacity(1);
         imv4.setOpacity(1);
@@ -91,6 +80,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseInterCh2 (MouseEvent event) throws IOException {
         imv2.setFitHeight(430.0);
         imv2.setFitWidth(430.0);
+        imv2.setImage(charsImages[3]);
         imv1.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv4.setOpacity(0.5);
@@ -99,6 +89,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseExitCh2 (MouseEvent event) throws IOException {
         imv2.setFitHeight(400.0);
         imv2.setFitWidth(400.0);
+        imv2.setImage(charsImages[7]);
         imv1.setOpacity(1);
         imv3.setOpacity(1);
         imv4.setOpacity(1);
@@ -117,6 +108,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseInterCh3 (MouseEvent event) throws IOException {
         imv3.setFitHeight(430.0);
         imv3.setFitWidth(430.0);
+        imv3.setImage(charsImages[0]);
         imv2.setOpacity(0.5);
         imv1.setOpacity(0.5);
         imv4.setOpacity(0.5);
@@ -125,6 +117,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseExitCh3 (MouseEvent event) throws IOException {
         imv3.setFitHeight(400.0);
         imv3.setFitWidth(400.0);
+        imv3.setImage(charsImages[4]);
         imv2.setOpacity(1);
         imv1.setOpacity(1);
         imv4.setOpacity(1);
@@ -143,6 +136,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseInterCh4 (MouseEvent event) throws IOException {
         imv4.setFitHeight(430.0);
         imv4.setFitWidth(430.0);
+        imv4.setImage(charsImages[2]);
         imv2.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv1.setOpacity(0.5);
@@ -151,6 +145,7 @@ public class M_CharacterChoice extends Menu {
     protected void mouseExitCh4 (MouseEvent event) throws IOException {
         imv4.setFitHeight(400.0);
         imv4.setFitWidth(400.0);
+        imv4.setImage(charsImages[6]);
         imv2.setOpacity(1);
         imv3.setOpacity(1);
         imv1.setOpacity(1);
