@@ -254,7 +254,7 @@
   "id" : 83,
   "userID" : 1,
   "cardID" : 8,
-  "experience" : 64,
+  "experience" : 139,
   "level" : 3
 }, {
   "id" : 84,
@@ -296,7 +296,7 @@
   "id" : 90,
   "userID" : 1,
   "cardID" : 0,
-  "experience" : 38,
+  "experience" : 113,
   "level" : 2
 }, {
   "id" : 91,
@@ -314,8 +314,8 @@
   "id" : 93,
   "userID" : 1,
   "cardID" : 1,
-  "experience" : 0,
-  "level" : 1
+  "experience" : 25,
+  "level" : 2
 }, {
   "id" : 94,
   "userID" : 1,
@@ -326,8 +326,8 @@
   "id" : 95,
   "userID" : 1,
   "cardID" : 12,
-  "experience" : 0,
-  "level" : 1
+  "experience" : 25,
+  "level" : 2
 }, {
   "id" : 96,
   "userID" : 1,
@@ -524,7 +524,7 @@
   "id" : 131,
   "userID" : 12,
   "cardID" : 13,
-  "experience" : 0,
+  "experience" : 25,
   "level" : 1
 }, {
   "id" : 132,
@@ -538,70 +538,70 @@
   "cardID" : 22,
   "experience" : 0,
   "level" : 1
-} , {
-  "id" : 141,
-  "userID" : 12,
-  "cardID" : 23,
-  "experience" : 0,
-  "level" : 1
-} , {
-  "id" : 141,
-  "userID" : 12,
-  "cardID" : 24,
-  "experience" : 0,
-  "level" : 1
-} , {
-  "id" : 141,
-  "userID" : 12,
-  "cardID" : 25,
-  "experience" : 0,
-  "level" : 1
-} , {
-  "id" : 141,
-  "userID" : 12,
-  "cardID" : 26,
-  "experience" : 0,
-  "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
   "cardID" : 27,
-  "experience" : 0,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 28,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 29,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 30,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 31,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 32,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
-} , {
+}, {
   "id" : 141,
   "userID" : 12,
-  "cardID" : 33,
-  "experience" : 0,
+  "cardID" : 27,
+  "experience" : 25,
+  "level" : 1
+}, {
+  "id" : 141,
+  "userID" : 12,
+  "cardID" : 27,
+  "experience" : 25,
+  "level" : 1
+}, {
+  "id" : 141,
+  "userID" : 12,
+  "cardID" : 27,
+  "experience" : 25,
+  "level" : 1
+}, {
+  "id" : 141,
+  "userID" : 12,
+  "cardID" : 27,
+  "experience" : 25,
+  "level" : 1
+}, {
+  "id" : 141,
+  "userID" : 12,
+  "cardID" : 27,
+  "experience" : 25,
   "level" : 1
 } ]

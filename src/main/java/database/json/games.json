@@ -1,7 +1,7 @@
 [ {
   "id" : 2,
-  "playerOneID" : 1,
-  "playerTwoID" : 2,
+  "playerOneID" : 0,
+  "playerTwoID" : 0,
   "mode" : "duel",
   "createdAt" : "2024-07-07 20:19:45",
   "winner" : "player_one",
@@ -10,9 +10,9 @@
   "betAmount" : 0,
   "loserReward" : null
 }, {
-  "id" : 3,
-  "playerOneID" : 1,
-  "playerTwoID" : 2,
+  "id" : 2,
+  "playerOneID" : 0,
+  "playerTwoID" : 0,
   "mode" : "duel",
   "createdAt" : "2024-07-07 22:06:12",
   "winner" : "player_one",
@@ -21,36 +21,14 @@
   "betAmount" : 0,
   "loserReward" : "AwesomePunch: +1 level Flank: +1 level / User: +66 experience +60 coins "
 }, {
-  "id" : 11,
-  "playerOneID" : 1,
-  "playerTwoID" : 2,
+  "id" : 3,
+  "playerOneID" : 12,
+  "playerTwoID" : 1,
   "mode" : "duel",
-  "createdAt" : "2024-07-08 00:13:39",
-  "winner" : "player_one",
-  "numberOfRounds" : 1,
-  "winnerReward" : "JumpScare: +2 level / User: +216 experience +1 level +25 hit points +156 coins",
+  "createdAt" : "2024-07-08 00:33:15",
+  "winner" : "player_two",
+  "numberOfRounds" : 2,
+  "winnerReward" : "strike: +1 level SwordOfHonor: +1 level / User: +75 experience +1 level +25 hit points +142 coins",
   "betAmount" : 0,
-  "loserReward" : "StaffOfWisdom: +2 level UndercoverDrone: +2 level BackToTheWall: +2 level / User: +210 experience +60 coins "
-}, {
-  "id" : 12,
-  "playerOneID" : 1,
-  "playerTwoID" : 11,
-  "mode" : "duel",
-  "createdAt" : "2024-07-08 00:20:41",
-  "winner" : "player_one",
-  "numberOfRounds" : 1,
-  "winnerReward" : "LazyAttack: +2 level SwordOfHonor: +2 level MagicSlash: +1 level / User: +260 experience +0 level +25 hit points +26 coins",
-  "betAmount" : 0,
-  "loserReward" : "revolve: +2 level KnifeSlash: +2 level PawOfSpeed: +2 level / User: +214 experience +0 coins "
-}, {
-  "id" : 13,
-  "playerOneID" : 1,
-  "playerTwoID" : 11,
-  "mode" : "duel",
-  "createdAt" : "2024-07-08 00:32:31",
-  "winner" : "player_one",
-  "numberOfRounds" : 1,
-  "winnerReward" : "TailSlam: +1 level / User: +75 experience +0 level +25 hit points +7 coins",
-  "betAmount" : 0,
-  "loserReward" : "FireBall: +2 level / User: +212 experience +75 coins "
+  "loserReward" : "/ User: +25 experience +30 coins "
 } ]
