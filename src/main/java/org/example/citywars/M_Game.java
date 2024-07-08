@@ -90,7 +90,7 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                this.current_round = rounds.get(0);
+                // this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
                 this.startGraphicGame();

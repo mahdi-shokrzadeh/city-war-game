@@ -8,7 +8,9 @@
 <?import javafx.scene.text.Font?>
 
 <Pane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_Round">
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_Round"
+    fx:id="rootElement"
+    >
     <ImageView fx:id="backGroundIm" fitHeight="1080.0" fitWidth="1920.0" />
     <Button alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" layoutX="12.0"
         layoutY="12.0" mnemonicParsing="false" onAction="#GoToPauseButton" prefHeight="40.0"

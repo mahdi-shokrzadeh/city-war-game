@@ -1,8 +1,14 @@
 package org.example.citywars;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import models.AI;
 import models.User;
 import models.card.Card;
@@ -26,6 +32,11 @@ public class M_Round extends Menu {
     private int player_two_remaining_turns = number_of_round_turns / 2;
 
     private Block[][] board = new Block[2][21];
+
+    // java fx vars
+
+    @FXML
+    private Pane rootElement;
 
     public M_Round() {
         super("M_Round", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
@@ -92,6 +103,111 @@ public class M_Round extends Menu {
 
             this.board[0][rand_1].setBlockUnavailable(true);
             this.board[1][rand_2].setBlockUnavailable(true);
+        }
+
+        // add user cards
+        initialUserCards();
+    }
+
+    public boolean timeLine() {
+        // System.out.println("HEY here!");
+        for (int i = 0; i <= 20; i++) {
+
+            Block player_one_block = this.board[0][i];
+            Block player_two_block = this.board[1][i];
+
+            if (player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
+
+            } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
+                this.player_one
+                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
+                // reduce the damage of the player
+                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
+            } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
+                this.player_two
+                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
+
+                // reduce the damage of the player
+                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
+            } else {
+                if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
+                    this.player_two
+                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
+                    this.player_one
+                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
+
+                } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
+                    this.player_one
+                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
+                    this.player_two
+                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
+                }
+
+            }
+            ConsoleGame.printBlockIndex(i + 1);
+            ConsoleGame.printBlocksStatus(player_one_block, player_two_block);
+            ConsoleGame.printDamageStatus(this.player_one, this.player_two);
+            ConsoleGame.printHPStatus(this.player_one, this.player_two);
+
+            if (this.checkGameIsFinished()) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public boolean checkGameIsFinished() {
+        if (this.player_one.getHitPoints() <= 0) {
+            this.game_is_finished = true;
+            this.winner = this.player_two.getUsername();
+            return true;
+        } else if (this.player_two.getHitPoints() <= 0) {
+            this.game_is_finished = true;
+            this.winner = this.player_one.getUsername();
+            return true;
+        }
+        return false;
+    }
+
+    public void changeBlocksForBoss() {
+
+    }
+
+    private void initialUserCards() {
+        // Example: Add images based on player's cards
+        this.addImage(1, this.player_one.getIsBonusActive() ? 6 : 2);
+        this.addImage(2, this.player_two.getIsBonusActive() ? 6 : 2);
+    }
+
+    private void addImage(int user_index, int number_of_cards) {
+        File file = new File("src\\main\\resources\\SampleCards\\1.png");
+        Image image = new Image(file.toURI().toString());
+        // Image image = new Image("src/main/resources/SampleCards/1.png");
+
+        for (int i = 0; i < number_of_cards; i++) {
+            ImageView imageView = new ImageView(image);
+
+            // Set the ID for the ImageView
+            imageView.setId("user" + user_index + "card" + i);
+            imageView.setFitHeight(250);
+            imageView.setFitWidth(200);
+
+            if (user_index == 1) {
+                imageView.setX(300 + i * 300);
+
+            } else {
+                imageView.setX(900 + i * 300);
+            }
+
+            if (i <= 3) {
+                imageView.setY(350);
+            } else {
+                imageView.setY(650);
+            }
+
+            rootElement.getChildren().add(imageView);
         }
     }
 
@@ -166,72 +282,6 @@ public class M_Round extends Menu {
 
     public void setNumberOfRoundTurns(int number_of_round_turns) {
         this.number_of_round_turns = number_of_round_turns;
-    }
-
-    public boolean timeLine() {
-        // System.out.println("HEY here!");
-        for (int i = 0; i <= 20; i++) {
-
-            Block player_one_block = this.board[0][i];
-            Block player_two_block = this.board[1][i];
-
-            if (player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
-
-            } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
-                this.player_one
-                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
-                // reduce the damage of the player
-                this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
-            } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
-                this.player_two
-                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
-
-                // reduce the damage of the player
-                this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
-            } else {
-                if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
-                    this.player_two
-                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
-                    this.player_one
-                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
-
-                } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
-                    this.player_one
-                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
-                    this.player_two
-                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
-                }
-
-            }
-            ConsoleGame.printBlockIndex(i + 1);
-            ConsoleGame.printBlocksStatus(player_one_block, player_two_block);
-            ConsoleGame.printDamageStatus(this.player_one, this.player_two);
-            ConsoleGame.printHPStatus(this.player_one, this.player_two);
-
-            if (this.checkGameIsFinished()) {
-                return true;
-            }
-
-        }
-
-        return false;
-    }
-
-    public boolean checkGameIsFinished() {
-        if (this.player_one.getHitPoints() <= 0) {
-            this.game_is_finished = true;
-            this.winner = this.player_two.getUsername();
-            return true;
-        } else if (this.player_two.getHitPoints() <= 0) {
-            this.game_is_finished = true;
-            this.winner = this.player_one.getUsername();
-            return true;
-        }
-        return false;
-    }
-
-    public void changeBlocksForBoss() {
-
     }
 
     public M_Game getGame() {
