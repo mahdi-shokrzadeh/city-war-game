@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -107,6 +108,9 @@ public class M_Round extends Menu {
 
         // add user cards
         initialUserCards();
+        putRemainingTurns();
+        putTotalDameges();
+        putHitPoints();
     }
 
     public boolean timeLine() {
@@ -190,7 +194,7 @@ public class M_Round extends Menu {
             ImageView imageView = new ImageView(image);
 
             // Set the ID for the ImageView
-            imageView.setId("user" + user_index + "card" + i);
+            imageView.setId("cardImage_" + user_index + "_" + i);
             imageView.setFitHeight(250);
             imageView.setFitWidth(200);
 
@@ -209,6 +213,72 @@ public class M_Round extends Menu {
 
             rootElement.getChildren().add(imageView);
         }
+    }
+
+    public void putRemainingTurns() {
+        // create a label
+        Label label_1 = new Label(String.valueOf(this.player_one_remaining_turns));
+        Label label_2 = new Label(String.valueOf(this.player_two_remaining_turns));
+
+        label_1.setLayoutX(100);
+        label_1.setLayoutY(120);
+
+        label_1.setId("turn_label_1");
+        label_2.setId("turn_label_2");
+
+        label_2.setLayoutX(100);
+        label_2.setLayoutY(220);
+
+        // set color and size
+        label_1.setStyle("-fx-text-fill: white; -fx-font-size: 20px;");
+        label_2.setStyle("-fx-text-fill: white; -fx-font-size: 20px;");
+
+        rootElement.getChildren().add(label_1);
+        rootElement.getChildren().add(label_2);
+    }
+
+    public void putTotalDameges() {
+        // create a label
+
+        Label label_1 = new Label(String.valueOf(this.player_one.getDamage()));
+        Label label_2 = new Label(String.valueOf(this.player_two.getDamage()));
+
+        label_1.setLayoutX(1800);
+        label_1.setLayoutY(120);
+
+        label_1.setId("damage_label_1");
+        label_2.setId("damage_label_2");
+
+        label_2.setLayoutX(1800);
+        label_2.setLayoutY(220);
+
+        // set color and size
+        label_1.setStyle("-fx-text-fill: white; -fx-font-size: 25px; -fx-font-weight: bold;");
+        label_2.setStyle("-fx-text-fill: white; -fx-font-size: 25px; -fx-font-weight: bold;");
+
+        rootElement.getChildren().add(label_1);
+        rootElement.getChildren().add(label_2);
+    }
+
+    public void putHitPoints() {
+
+        Label label_1 = new Label(String.valueOf(this.player_one.getHitPoints()));
+        Label label_2 = new Label(String.valueOf(this.player_two.getHitPoints()));
+
+        label_1.setLayoutX(170);
+        label_1.setLayoutY(440);
+
+        label_1.setId("hp_label_1");
+        label_2.setId("hp_label_2");
+
+        label_2.setLayoutX(1730);
+        label_2.setLayoutY(440);
+
+        label_1.setStyle("-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;");
+        label_2.setStyle("-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;");
+
+        rootElement.getChildren().add(label_1);
+        rootElement.getChildren().add(label_2);
     }
 
     // getters and setters
