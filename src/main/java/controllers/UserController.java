@@ -205,7 +205,7 @@ public class UserController {
                     setInterval();
                 }
             }, delay, period);
-            return new Response("Password and Username don't match\nTry again in " + M_LoginMenu.lockTime + " seconds",
+            return new Response("Wrong Password! Try again in " + M_LoginMenu.lockTime + " seconds",
                     -401);
         }
 

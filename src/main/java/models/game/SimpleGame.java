@@ -1,5 +1,7 @@
 package models.game;
 
+import org.example.citywars.M_Game;
+
 public class SimpleGame {
     private int id;
     private int playerOneID;
@@ -15,7 +17,7 @@ public class SimpleGame {
     public SimpleGame() {
     }
 
-    public SimpleGame(Game game) {
+    public SimpleGame(M_Game game) {
         playerOneID = game.getPlayer_one_id();
         playerTwoID = game.getPlayer_two_id();
         mode = game.getMode();

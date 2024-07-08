@@ -1,12 +1,15 @@
 package org.example.citywars;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -23,12 +26,18 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.example.citywars.HelloApplication.icon;
+
 public abstract class Menu implements Initializable {
-     File file;
+    static int themeIndex=0;
+    ArrayList<File> files;
      Media media;
      MediaPlayer mediaPlayer;
-    @FXML
+     @FXML
      MediaView backGround;
+    ArrayList<Image> BGims;
+    @FXML
+    ImageView backGroundIm;
     Parent root;
     Stage stage;
     Scene scene;
@@ -36,6 +45,7 @@ public abstract class Menu implements Initializable {
     ArrayList<Pattern> patterns;
     Matcher matcher;
     static User loggedInUser ;
+    static User secondUser ;
     static boolean secondPersonNeeded;
     static boolean is_bet=false;
     P_PlayMode playMode;
@@ -43,9 +53,15 @@ public abstract class Menu implements Initializable {
 
     public abstract Menu myMethods();
     public Menu(){};
-    public Menu(String name,String BG){
+
+    public Menu(String name,String[] BG){
         this.name = name;
-        file= new File("src\\main\\resources\\BG-Videos\\"+BG);
+        files = new ArrayList<>();
+        BGims= new ArrayList<>();
+        for (int i = 0; i < BG.length; i++) {
+            files.add(new File("src\\main\\resources\\"+BG[i]));
+            BGims.add( new Image(files.get(i).toURI().toString()));
+        }
     }
     public Menu(String name){
         this.name = name;
@@ -53,12 +69,16 @@ public abstract class Menu implements Initializable {
     public String getName(){
         return name;
     }
-    void switchMenus(ActionEvent event) throws IOException {
+    void switchMenus(Event event) throws IOException {
+        System.out.println(HelloApplication.menu.getName());////////////////
+
         root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle(HelloApplication.menu.getName());
+        stage.getIcons().add(icon);
         stage.setScene(scene);
+//        stage.setFullScreen(true);
         stage.show();
     }
     public static String passwordProblem(String s){
@@ -81,11 +101,60 @@ public abstract class Menu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        backGround.setMediaPlayer(mediaPlayer);
+            backGroundIm.setImage(BGims.get(themeIndex));
 
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(-1);
+    }
+
+    //Control Methods
+    @FXML
+    protected void GoToSignUpButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_SignUpMenu();
+        switchMenus(event);
+    }
+
+    @FXML
+    protected void GoToLoginButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToIntroButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Intro();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToPauseButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_PauseMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToShopButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_ShopMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToCharChoiceButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_CharacterChoice();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToGameHistoryButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_GameHistoryMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToGamePlayModeButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_GamePlayMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToGameMainMenuButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_GameMainMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToSettingButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Setting();
+        switchMenus(event);
     }
 }

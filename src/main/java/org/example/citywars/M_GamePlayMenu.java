@@ -1,27 +1,53 @@
 package org.example.citywars;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import controllers.UserController;
 import controllers.game.GameController;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.AI;
 import models.Clan;
 import models.ClanBattle;
 import models.GameCharacter;
 import models.Response;
 import models.User;
-import models.game.Game;
 import views.console.menu.ConsoleGameMenu;
 
 public class M_GamePlayMenu extends Menu {
     boolean gameOver;
 
+    File[] imageFiles;
+    Image[] charsImages;
+    @FXML
+    ImageView imv1;
+    @FXML
+    ImageView imv2;
+    @FXML
+    ImageView imv3;
+    @FXML
+    Label name;
+
     public M_GamePlayMenu() {
-        super("M_GamePlayMenu");
+        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png"});
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
+
+        imageFiles = new File[3];
+        imageFiles[0]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon1.png");
+        imageFiles[1]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon2.png");
+        imageFiles[2]=  new File("src/main/resources/BG-Videos/GameModeIcons/icon3.png");
+        charsImages=new Image[imageFiles.length];
+        for (int i = 0; i < imageFiles.length; i++) {
+            charsImages[i] = new Image(imageFiles[i].toURI().toString());
+        }
     }
 
     public Menu myMethods() {
@@ -63,7 +89,7 @@ public class M_GamePlayMenu extends Menu {
             case "1":
                 AI AI = new AI(ai_level);
                 AI.setGameCharacter(new GameCharacter("BOT"));
-                Menu temp_men2 = new Game(AI, loggedInUser, "AI");
+                Menu temp_men2 = new M_Game(AI, loggedInUser, "AI");
                 return temp_men2;
 
             case "2":
@@ -89,7 +115,7 @@ public class M_GamePlayMenu extends Menu {
                         String k = sc.nextLine();
                         if (k.equals(opponent.getPassword())) {
                             cond = false;
-                            return new Game(loggedInUser, opponent,
+                            return new M_Game(loggedInUser, opponent,
                                     "clan", battle, attackerClan, defenderClan);
                         } else {
                             System.out.println("Password is not true!");
@@ -118,4 +144,85 @@ public class M_GamePlayMenu extends Menu {
 
         return this;
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        backGroundIm.setImage(BGims.get(themeIndex));
+
+        imv1.setImage(charsImages[0]);
+        imv2.setImage(charsImages[1]);
+        imv3.setImage(charsImages[2]);
+    }
+    @FXML
+    protected void choiceCh1 (MouseEvent event) throws IOException {
+        secondPersonNeeded = true;
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh1 (MouseEvent event) throws IOException {
+        imv1.setFitHeight(430.0);
+        imv1.setFitWidth(430.0);
+        imv2.setOpacity(0.5);
+        imv3.setOpacity(0.5);
+        name.setText("Duel");
+    }
+    @FXML
+    protected void mouseExitCh1 (MouseEvent event) throws IOException {
+        imv1.setFitHeight(400.0);
+        imv1.setFitWidth(400.0);
+        imv2.setOpacity(1);
+        imv3.setOpacity(1);
+        name.setText(" ");
+    }
+
+    @FXML
+    protected void choiceCh2 (MouseEvent event) throws IOException {
+        is_bet=true;
+        secondPersonNeeded = true;
+        HelloApplication.menu = new M_LoginMenu();
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh2 (MouseEvent event) throws IOException {
+        imv2.setFitHeight(430.0);
+        imv2.setFitWidth(430.0);
+        imv1.setOpacity(0.5);
+        imv3.setOpacity(0.5);
+        name.setText("Gamble");
+    }
+    @FXML
+    protected void mouseExitCh2 (MouseEvent event) throws IOException {
+        imv2.setFitHeight(400.0);
+        imv2.setFitWidth(400.0);
+        imv1.setOpacity(1);
+        imv3.setOpacity(1);
+        name.setText(" ");
+    }
+
+    @FXML
+    protected void choiceCh3 (MouseEvent event) throws IOException {
+        int ai_level = loggedInUser.getProgress();
+        AI AI = new AI(ai_level);
+        AI.setGameCharacter(new GameCharacter("BOT"));
+        HelloApplication.menu = new M_Game();
+
+        switchMenus(event);
+    }
+    @FXML
+    protected void mouseInterCh3 (MouseEvent event) throws IOException {
+        imv3.setFitHeight(430.0);
+        imv3.setFitWidth(430.0);
+        imv2.setOpacity(0.5);
+        imv1.setOpacity(0.5);
+        name.setText("Mono");
+    }
+    @FXML
+    protected void mouseExitCh3 (MouseEvent event) throws IOException {
+        imv3.setFitHeight(400.0);
+        imv3.setFitWidth(400.0);
+        imv2.setOpacity(1);
+        imv1.setOpacity(1);
+        name.setText(" ");
+    }
+
 }

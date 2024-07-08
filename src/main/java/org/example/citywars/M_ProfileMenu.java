@@ -78,15 +78,15 @@ public class M_ProfileMenu extends Menu {
                     printMenu();
                     continue;
                 }
-                Response res = UserController.editPassword(loggedInUser.getID(), newPass);
-                System.out.println(res.message);
-                if (res.exception != null) {
-                    System.out.println(res.exception.getMessage());
-                }
-                if (res.ok) {
-                    loggedInUser.setPassword(newPass);
-                }
-                revalidate();
+                // Response res = UserController.editPassword(loggedInUser.getID(), newPass);
+                // System.out.println(res.message);
+                // if( res.exception != null ){
+                // System.out.println(res.exception.getMessage());
+                // }
+                // if( res.ok ){
+                // loggedInUser.setPassword(newPass);
+                // }
+                // revalidate();
             } else if (input.matches("^Profile change -u (?<username>\\S+)$")) {
                 matcher = Pattern.compile("^Profile change -u (?<username>\\S+)$").matcher(input);
                 matcher.find();
@@ -95,39 +95,38 @@ public class M_ProfileMenu extends Menu {
                     System.out.println("new username can not be the same as the last username");
                     continue;
                 }
-                Response res = UserController.editUsername(loggedInUser.getID(), newUsername);
-                System.out.println(res.message);
-                if (res.exception != null) {
-                    System.out.println(res.exception.getMessage());
-                }
-                if (res.ok) {
-                    loggedInUser.setUsername(newUsername);
-                }
-                revalidate();
+                // Response res = UserController.editUsername(loggedInUser.getID(),newUsername);
+                // System.out.println(res.message);
+                // if(res.exception != null){
+                // System.out.println(res.exception.getMessage());
+                // }
+                // if( res.ok ){
+                // loggedInUser.setUsername(newUsername);
+                // }
             } else if (input.matches("^Profile change -n (?<nickname>\\S+)$")) {
                 matcher = Pattern.compile("^Profile change -n (?<nickname>\\S+)$").matcher(input);
                 matcher.find();
-                Response res = UserController.editNickname(loggedInUser.getID(), matcher.group("nickname").trim());
-                System.out.println(res.message);
-                if (res.exception != null) {
-                    System.out.println(res.exception.getMessage());
-                }
-                if (res.ok) {
-                    loggedInUser.setNickname(matcher.group("nickname").trim());
-                }
-                revalidate();
+                // Response res = UserController.editNickname(loggedInUser.getID(),
+                // matcher.group("nickname").trim());
+                // System.out.println(res.message);
+                // if(res.exception != null){
+                // System.out.println(res.exception.getMessage());
+                // }
+                // if( res.ok ){
+                // loggedInUser.setNickname(matcher.group("nickname").trim());
+                // }
             } else if (input.matches("^Profile change -e (?<email>\\S+)$")) {
                 matcher = Pattern.compile("^Profile change -e (?<email>\\S+)$").matcher(input);
                 matcher.find();
-                Response res = UserController.editEmail(loggedInUser.getID(), matcher.group("email").trim());
-                System.out.println(res.message);
-                if (res.exception != null) {
-                    System.out.println(res.exception.getMessage());
-                }
-                if (res.ok) {
-                    loggedInUser.setEmail(matcher.group("email").trim());
-                }
-                revalidate();
+                // Response res = UserController.editEmail(loggedInUser.getID(),
+                // matcher.group("email").trim());
+                // System.out.println(res.message);
+                // if(res.exception != null){
+                // System.out.println(res.exception.getMessage());
+                // }
+                // if( res.ok ){
+                // loggedInUser.setEmail(matcher.group("email").trim());
+                // }
             } else if (input.matches("^show current menu$")) {
                 System.out.println("You are currently in " + getName());
             } else if (input.matches("^Back$")) {

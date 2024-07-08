@@ -1,14 +1,21 @@
 package org.example.citywars;
 
 import controllers.UserController;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.util.Duration;
 import models.Response;
 import models.User;
-import models.game.Game;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
@@ -18,16 +25,37 @@ public class M_LoginMenu extends Menu {
     public static int lockTime;
     public static int failureCount;
 
+    @FXML
+    Label error;
+    @FXML
+    TextField usernameField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    Button back;
+    @FXML
+    Button forgotPass;
+    @FXML
+    Button ok;
+    @FXML
+    CheckBox isAdmin;
+    @FXML
+    ProgressBar ErrorTimer;
+    @FXML
+    Label title;
+
     public M_LoginMenu() {
-        super("M_LoginMenu", "BG1.mp4");
+        super("M_LoginMenu", new String[]{"BG-Videos\\BG-login.png"});
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn = false;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^ *user +login +-u(?<username>[\\S ]+)-p(?<password>[\\S ]+) *$"));
         patterns.add(Pattern.compile("^ *Forgot +my +password +-u(?<username>[\\S ]+) *$"));
+
     }
-    private void printMenu(){
+
+    private void printMenu() {
         System.out.println("LOGIN MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
@@ -62,9 +90,9 @@ public class M_LoginMenu extends Menu {
                             return this;
                         } else {
                             if (!is_bet) {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                             } else {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                             }
                         }
                     } else {
@@ -84,16 +112,16 @@ public class M_LoginMenu extends Menu {
                             return this;
                         } else {
                             if (!is_bet) {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                             } else {
-                                return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                                return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                             }
                         }
                     } else {
                         if (!is_bet) {
-                            return new Game(loggedInUser, (User) s.body.get("user"), "duel");
+                            return new M_Game(loggedInUser, (User) s.body.get("user"), "duel");
                         } else {
-                            return new Game(loggedInUser, (User) s.body.get("user"), "bet");
+                            return new M_Game(loggedInUser, (User) s.body.get("user"), "bet");
                         }
                     }
                 }
@@ -107,8 +135,66 @@ public class M_LoginMenu extends Menu {
 
     // Control Methods
     @FXML
-    protected void GoToSignUpButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_SignUpMenu();
-        switchMenus(event);
+    protected void loginButton(ActionEvent event) throws IOException {
+
+        if (usernameField.getText().isBlank()) {
+            error.setText("Username Field is blank!");
+            return;
+        }
+        if (passwordField.getText().isBlank()) {
+            error.setText("Password Field is blank!");
+            return;
+        }
+        Response s = UserController.login(usernameField.getText(), passwordField.getText());
+        error.setText(s.message);
+
+        if (timerIsOn && s.message.contains("Wrong Password")) {
+            ErrorTimer.progressProperty().setValue(1);
+
+            Timeline timeline = new Timeline();
+            KeyValue key = new KeyValue(ErrorTimer.progressProperty(), 0);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(5 * failureCount), key);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.play();
+
+        }
+        if (s.ok) {
+            if (secondPersonNeeded) {
+                if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
+                    error.setText("\n!!! Same user, login again !!!\n");
+                    return;
+                } else {
+                    secondUser =(User) s.body.get("user");
+                    HelloApplication.menu = new M_CharacterChoice();
+                    switchMenus(event);
+                }
+            } else {
+                loggedInUser = (User) s.body.get("user");
+                HelloApplication.menu = new M_GameMainMenu();
+                switchMenus(event);
+
+            }
+        }
+    }
+    @FXML
+    protected void loginBack(ActionEvent event) throws IOException {
+        if (secondPersonNeeded) {
+            HelloApplication.menu = new M_GamePlayMenu();
+            switchMenus(event);
+        }
+        else{
+            HelloApplication.menu = new M_Intro();
+            switchMenus(event);
+        }
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (secondPersonNeeded)
+            title.setText("Second Person Login");
+        else
+            title.setText("Login");
+
+        backGroundIm.setImage(BGims.get(themeIndex));
     }
 }

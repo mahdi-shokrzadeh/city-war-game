@@ -6,7 +6,7 @@ import database.DBs.*;
 import models.*;
 import models.card.Card;
 import models.game.SimpleGame;
-import models.game.Game;
+import org.example.citywars.M_Game;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -51,7 +51,7 @@ public class GameController {
         return level;
     }
 
-    public static Response createGame(Game originalGame, User p1, User p2, int numberOfRounds, String winnerString,
+    public static Response createGame(M_Game originalGame, User p1, User p2, int numberOfRounds, String winnerString,
             List<Card> p1Cards,
             List<Card> p2Cards) {
 
@@ -199,7 +199,7 @@ public class GameController {
 
     }
 
-    public static Response createBotGame(Game originalGame, User player, int numberOfRounds, String winner,
+    public static Response createBotGame(M_Game originalGame, User player, int numberOfRounds, String winner,
             List<Card> cards) {
 
         if (originalGame == null) {
@@ -299,7 +299,7 @@ public class GameController {
         return new Response("game created successfully", 200, result);
     }
 
-    public static Response createGambleGame(Game originalGame, User p1, User p2, int numberOfRounds, String winner,
+    public static Response createGambleGame(M_Game originalGame, User p1, User p2, int numberOfRounds, String winner,
             int betAmount) {
 
         if (originalGame == null) {
@@ -441,7 +441,7 @@ public class GameController {
         return new Response("clan game essentials fetched successfully", 200, result);
     }
 
-    public static Response creatGameClan(Game originalGame, ClanBattle battle, Clan attackerClan, Clan defenderClan,
+    public static Response creatGameClan(M_Game originalGame, ClanBattle battle, Clan attackerClan, Clan defenderClan,
             User p1,
             User p2,
             int numberOfRounds, String winner, List<Card> p1Cards, List<Card> p2Cards) {
