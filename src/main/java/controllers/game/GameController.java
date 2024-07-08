@@ -28,8 +28,8 @@ public class GameController {
     }
 
     private static int calculateUserLevel(User user) {
-        int sum = 0;
         int level = user.getLevel();
+        int sum = (int) (level * (level + 1) * 0.5);
         while (50 * sum <= user.getExperience()) {
             sum = (int) (level * (level + 1) * 0.5);
             user.setExperience(user.getExperience() - 50 * sum);
