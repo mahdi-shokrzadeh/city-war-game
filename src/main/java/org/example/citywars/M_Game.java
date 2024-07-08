@@ -72,8 +72,15 @@ public class M_Game extends Menu {
                         } else {
                                 mode = "duel";
                         }
-                } else
-                        mode = "AI";
+                } else {
+                        this.mode = "AI";
+                        this.player_two = loggedInUser;
+                        AI AI = new AI(loggedInUser.getProgress());
+                        AI.setGameCharacter(new GameCharacter("BOT"));
+                        this.player_one = AI;
+                }
+                // System.out.println("HEY I'M HERE!");
+                this.startGraphicGame();
         }
 
         public M_Game(User player_one, User player_two, String mode) {
@@ -143,33 +150,6 @@ public class M_Game extends Menu {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
-
-                // rounds.add(new Round(player_one, player_two, player_one_cards,
-                // player_two_cards));
-                // this.current_round = rounds.get(0);
-
-                // ConsoleGame.printGreetings();
-
-                // switch (mode) {
-
-                // case "duel":
-
-                // this.handleAddCardsToPlayers();
-                // break;
-
-                // case "AI":
-
-                // this.handleAddCardsToPlayers();
-                // break;
-
-                // case "bet":
-                // this.handleAddCardsToPlayers();
-                // break;
-
-                // default:
-
-                // break;
-                // }
         }
 
         @Override
@@ -214,11 +194,6 @@ public class M_Game extends Menu {
                 }
 
                 return this;
-        }
-        // handlers
-
-        public void handleUserTwoLogin() {
-
         }
 
         public void handleChooseCharacter(User player) {
@@ -357,118 +332,6 @@ public class M_Game extends Menu {
                 if (this.mode.equals("AI")) {
                         AddCard.addCard(this.player_one_cards);
                 }
-
-                // player_two_cards
-                // .add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(
-                // new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0,
-                // "mega knight description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(
-                // new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(
-                // new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description",
-                // new GameCharacter("c1")));
-                // player_two_cards
-                // .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0,
-                // "lava hound description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(
-                // new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0,
-                // "baby dragon description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(
-                // new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giant skeleton
-                // description",
-                // new GameCharacter("c1")));
-                // player_two_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0,
-                // "barbarians description",
-                // new GameCharacter("c1")));
-
-                // public Spell(String _name, int _price, int _duration, String _type, String
-                // _spellType, int _upgradeLevel,
-                // int _upgradeCost, String _desc) {
-
-                // Shield,
-                // Heal,
-                // PowerBoost,
-                // SpaceShift,
-                // Repair,
-                // RoundReduce,
-                // Steal,
-                // Attenuate,
-                // Copy,
-                // Hide;
-                // player_two_cards.add(new Spell("Shield", 0, 1, "Spell", "Shield", 1, 0,
-                // "shield description"));
-                // player_two_cards.add(new Spell("Heal", 0, 1, "Spell", "Heal", 1, 0, "heal
-                // description"));
-                // player_two_cards.add(
-                // new Spell("PowerBoost", 0, 1, "Spell", "PowerBoost", 1, 0, "power boost
-                // description"));
-                // player_two_cards.add(
-                // new Spell("SpaceShift", 0, 1, "Spell", "SpaceShift", 1, 0, "space shift
-                // description"));
-                // player_two_cards.add(new Spell("Repair", 0, 1, "Spell", "Repair", 1, 0,
-                // "repair description"));
-                // player_two_cards.add(new Spell("RoundReduce", 0, 1, "Spell", "RoundReduce",
-                // 1, 0,
-                // "round reduce description"));
-                // player_two_cards.add(new Spell("Steal", 0, 1, "Spell", "Steal", 1, 0, "steal
-                // description"));
-                // player_two_cards.add(new Spell("Attenuate", 0, 1, "Spell", "Attenuate", 1, 0,
-                // "attenuate description"));
-                // player_two_cards.add(new Spell("Copy", 0, 1, "Spell", "Copy", 1, 0, "copy
-                // description"));
-                // player_two_cards.add(new Spell("Hide", 0, 1, "Spell", "Hide", 1, 0, "hide
-                // description"));
 
                 // from database
                 Response res_1 = UserCardsController.getUsersCards(this.player_one);
@@ -650,6 +513,21 @@ public class M_Game extends Menu {
                                 System.out.println("Please enter a valid number");
                         }
                 }
+        }
+
+        // graphic related!
+        public boolean startGraphicGame() {
+                if (((this.mode.equals("duel"))
+                                && (this.player_one.getGameCharacter() == null ||
+                                                this.player_two.getGameCharacter() == null))
+                                || (this.player_two.getGameCharacter() == null)) {
+                        System.out.println("Please select character first!");
+                        return false;
+                } else if (this.mode.equals("bet") && this.bet_amount == 0) {
+                        ConsoleGame.printBetNotSet();
+                        return false;
+                }
+                return true;
         }
 
 }

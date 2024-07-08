@@ -23,14 +23,14 @@ public class M_CharacterChoice extends Menu {
     ImageView imv4;
 
     public M_CharacterChoice() {
-        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg"});
+        super("M_CharacterChoice", new String[] { "BG-Videos\\BG1.jpg" });
 
         imageFiles = new File[4];
-        imageFiles[0]=  new File("src/main/resources/Characters/Igoribuki.png");
-        imageFiles[1]=  new File("src/main/resources/Characters/Master_Masher.png");
-        imageFiles[2]=  new File("src/main/resources/Characters/Nahane.png");
-        imageFiles[3]=  new File("src/main/resources/Characters/Sensei_Pandaken.png");
-        charsImages=new Image[imageFiles.length];
+        imageFiles[0] = new File("src/main/resources/Characters/Igoribuki.png");
+        imageFiles[1] = new File("src/main/resources/Characters/Master_Masher.png");
+        imageFiles[2] = new File("src/main/resources/Characters/Nahane.png");
+        imageFiles[3] = new File("src/main/resources/Characters/Sensei_Pandaken.png");
+        charsImages = new Image[imageFiles.length];
         for (int i = 0; i < imageFiles.length; i++) {
             charsImages[i] = new Image(imageFiles[i].toURI().toString());
         }
@@ -53,24 +53,26 @@ public class M_CharacterChoice extends Menu {
     }
 
     @FXML
-    protected void choiceCh1 (MouseEvent event) throws IOException {
-        //....
+    protected void choiceCh1(MouseEvent event) throws IOException {
+        // ....
         if (secondPersonNeeded)
             HelloApplication.menu = new M_Game();
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
+
     @FXML
-    protected void mouseInterCh1 (MouseEvent event) throws IOException {
+    protected void mouseInterCh1(MouseEvent event) throws IOException {
         imv1.setFitHeight(430.0);
         imv1.setFitWidth(430.0);
         imv2.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv4.setOpacity(0.5);
     }
+
     @FXML
-    protected void mouseExitCh1 (MouseEvent event) throws IOException {
+    protected void mouseExitCh1(MouseEvent event) throws IOException {
         imv1.setFitHeight(400.0);
         imv1.setFitWidth(400.0);
         imv2.setOpacity(1);
@@ -79,24 +81,26 @@ public class M_CharacterChoice extends Menu {
     }
 
     @FXML
-    protected void choiceCh2 (MouseEvent event) throws IOException {
-        //....
+    protected void choiceCh2(MouseEvent event) throws IOException {
+        // ....
         if (secondPersonNeeded)
             HelloApplication.menu = new M_Game();
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
+
     @FXML
-    protected void mouseInterCh2 (MouseEvent event) throws IOException {
+    protected void mouseInterCh2(MouseEvent event) throws IOException {
         imv2.setFitHeight(430.0);
         imv2.setFitWidth(430.0);
         imv1.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv4.setOpacity(0.5);
     }
+
     @FXML
-    protected void mouseExitCh2 (MouseEvent event) throws IOException {
+    protected void mouseExitCh2(MouseEvent event) throws IOException {
         imv2.setFitHeight(400.0);
         imv2.setFitWidth(400.0);
         imv1.setOpacity(1);
@@ -105,24 +109,26 @@ public class M_CharacterChoice extends Menu {
     }
 
     @FXML
-    protected void choiceCh3 (MouseEvent event) throws IOException {
-        //....
+    protected void choiceCh3(MouseEvent event) throws IOException {
+        // ....
         if (secondPersonNeeded)
             HelloApplication.menu = new M_Game();
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
+
     @FXML
-    protected void mouseInterCh3 (MouseEvent event) throws IOException {
+    protected void mouseInterCh3(MouseEvent event) throws IOException {
         imv3.setFitHeight(430.0);
         imv3.setFitWidth(430.0);
         imv2.setOpacity(0.5);
         imv1.setOpacity(0.5);
         imv4.setOpacity(0.5);
     }
+
     @FXML
-    protected void mouseExitCh3 (MouseEvent event) throws IOException {
+    protected void mouseExitCh3(MouseEvent event) throws IOException {
         imv3.setFitHeight(400.0);
         imv3.setFitWidth(400.0);
         imv2.setOpacity(1);
@@ -131,24 +137,26 @@ public class M_CharacterChoice extends Menu {
     }
 
     @FXML
-    protected void choiceCh4 (MouseEvent event) throws IOException {
-        //....
+    protected void choiceCh4(MouseEvent event) throws IOException {
+        // ....
         if (secondPersonNeeded)
             HelloApplication.menu = new M_Game();
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
+
     @FXML
-    protected void mouseInterCh4 (MouseEvent event) throws IOException {
+    protected void mouseInterCh4(MouseEvent event) throws IOException {
         imv4.setFitHeight(430.0);
         imv4.setFitWidth(430.0);
         imv2.setOpacity(0.5);
         imv3.setOpacity(0.5);
         imv1.setOpacity(0.5);
     }
+
     @FXML
-    protected void mouseExitCh4 (MouseEvent event) throws IOException {
+    protected void mouseExitCh4(MouseEvent event) throws IOException {
         imv4.setFitHeight(400.0);
         imv4.setFitWidth(400.0);
         imv2.setOpacity(1);

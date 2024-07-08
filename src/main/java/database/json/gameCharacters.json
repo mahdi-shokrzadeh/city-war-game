@@ -12,14 +12,6 @@
   "pfactor": 0.5
 },{
   "id": 3,
-  "name": "warrior",
-  "pfactor": 0.6
-},{
-  "id": 4,
-  "name": "wizard",
-  "pfactor": 0.7
-},{
-  "id": 5,
   "name": "wolf",
   "pfactor": 0.4
 }]
