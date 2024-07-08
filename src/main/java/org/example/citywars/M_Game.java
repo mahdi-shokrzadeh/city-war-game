@@ -14,8 +14,6 @@ import java.util.Scanner;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import models.game.Round;
-
 import controllers.GameCharacterController;
 import controllers.UserCardsController;
 import controllers.game.GameController;
@@ -46,14 +44,14 @@ public class M_Game extends Menu {
 
         // Only Class Vars
         private int bet_amount;
-        private ArrayList<Round> rounds = new ArrayList<Round>();
+        private ArrayList<M_Round> rounds = new ArrayList<M_Round>();
         private User player_one;
         private User player_two;
 
         private ArrayList<Card> player_one_cards = new ArrayList<Card>();
         private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
-        private Round current_round;
+        private M_Round current_round;
         private ClanBattle battle;
         private Clan attackerClan;
         private Clan defenderClan;
@@ -62,8 +60,7 @@ public class M_Game extends Menu {
         ImageView timeLineWalker;
 
         public M_Game() {
-                super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
-                                "BG-Videos\\GameBGs\\bg3.png" });
+                super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png","BG-Videos\\GameBGs\\bg3.png" });
                 this.player_one = loggedInUser;
                 if (secondPersonNeeded) {
                         this.player_two = secondUser;
@@ -92,7 +89,7 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
+                rounds.add(new M_Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
@@ -131,7 +128,7 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
+                rounds.add(new M_Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
@@ -257,7 +254,7 @@ public class M_Game extends Menu {
                                         break;
 
                                 case "need_more_rounds":
-                                        this.rounds.add(new Round(this.player_one, this.player_two,
+                                        this.rounds.add(new M_Round(this.player_one, this.player_two,
                                                         this.player_one_cards, this.player_two_cards));
                                         this.current_round = this.rounds.get(this.rounds.size() - 1);
                                         break;
@@ -331,40 +328,43 @@ public class M_Game extends Menu {
         public void handleAddCardsToPlayers() {
                 if (this.mode.equals("AI")) {
                         AddCard.addCard(this.player_one_cards);
+                        AddCard.addCard(this.player_two_cards);
                 }
 
                 // from database
-                Response res_1 = UserCardsController.getUsersCards(this.player_one);
-                if (res_1.ok) {
-                        Object obj = res_1.body.get("cards");
-                        if (obj instanceof ArrayList<?>) {
-                                for (Object o : (ArrayList<?>) obj) {
-                                        if (o instanceof Card) {
-                                                this.player_one_cards.add((Card) o);
+                if (!this.mode.equals("AI")) {
+                        Response res_1 = UserCardsController.getUsersCards(this.player_one);
+                        if (res_1.ok) {
+                                Object obj = res_1.body.get("cards");
+                                if (obj instanceof ArrayList<?>) {
+                                        for (Object o : (ArrayList<?>) obj) {
+                                                if (o instanceof Card) {
+                                                        this.player_one_cards.add((Card) o);
+                                                }
                                         }
                                 }
-                        }
-                        Collections.shuffle(player_one_cards);
+                                Collections.shuffle(player_one_cards);
 
-                } else {
-                        System.out.println(res_1.exception.getMessage());
+                        } else {
+                                System.out.println(res_1.exception.getMessage());
+                        }
                 }
 
-                Response res_2 = UserCardsController.getUsersCards(this.player_two);
-                if (res_2.ok) {
-                        Object obj = res_2.body.get("cards");
-                        if (obj instanceof ArrayList<?>) {
-                                for (Object o : (ArrayList<?>) obj) {
-                                        if (o instanceof Card) {
-                                                this.player_two_cards.add((Card) o);
-                                        }
-                                }
-                        }
-                        Collections.shuffle(player_two_cards);
+                // Response res_2 = UserCardsController.getUsersCards(this.player_two);
+                // if (res_2.ok) {
+                //         Object obj = res_2.body.get("cards");
+                //         if (obj instanceof ArrayList<?>) {
+                //                 for (Object o : (ArrayList<?>) obj) {
+                //                         if (o instanceof Card) {
+                //                                 this.player_two_cards.add((Card) o);
+                //                         }
+                //                 }
+                //         }
+                //         Collections.shuffle(player_two_cards);
 
-                } else {
-                        System.out.println(res_2.message);
-                }
+                // } else {
+                //         System.out.println(res_2.message);
+                // }
 
         }
 
@@ -452,11 +452,11 @@ public class M_Game extends Menu {
                 this.bet_amount = bet_amount;
         }
 
-        public ArrayList<Round> getRounds() {
+        public ArrayList<M_Round> getRounds() {
                 return rounds;
         }
 
-        public void setRounds(ArrayList<Round> rounds) {
+        public void setRounds(ArrayList<M_Round> rounds) {
                 this.rounds = rounds;
         }
 
@@ -527,6 +527,9 @@ public class M_Game extends Menu {
                         ConsoleGame.printBetNotSet();
                         return false;
                 }
+
+                this.handleAddCardsToPlayers();
+                System.out.println("DONE!");
                 return true;
         }
 

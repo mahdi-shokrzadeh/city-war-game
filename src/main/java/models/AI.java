@@ -3,11 +3,12 @@ package models;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.example.citywars.M_Round;
+
 import com.almasb.fxgl.dev.Console;
 
 import models.card.Card;
 import models.game.Block;
-import models.game.Round;
 import models.game.SpellAffect;
 import views.console.game.ConsoleGame;
 
@@ -17,14 +18,14 @@ public class AI extends User {
     private boolean is_AI = true;
     private int ai_level;
     private Card chosenCard;
-    private Round round;
+    private M_Round round;
 
     public AI(int ai_level) {
         super("AI", "password", "AI", "email", "role", "recovery_pass_question", "recovery_pass_answer");
         this.ai_level = ai_level;
     }
 
-    public String chooseTheMove(Block[][] board, ArrayList<Card> AICards, Round round) {
+    public String chooseTheMove(Block[][] board, ArrayList<Card> AICards, M_Round round) {
         this.round = round;
         switch (ai_level) {
             case 1:

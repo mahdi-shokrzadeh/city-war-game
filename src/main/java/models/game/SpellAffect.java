@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.example.citywars.M_Round;
+
 import models.User;
 import models.card.Card;
 import models.card.Spell;
@@ -16,11 +18,11 @@ public class SpellAffect {
     private Card spell_card;
     private int turn_index;
     private User current_player;
-    private Round round;
+    private M_Round round;
     private ArrayList<Card> hand_cards;
 
     public SpellAffect(Card spell_card, int turn_index, int des_index,
-            Block[][] board, User current_player, Round round, ArrayList<Card> hand_cards) {
+            Block[][] board, User current_player, M_Round round, ArrayList<Card> hand_cards) {
         this.des_index = des_index;
         this.board = board;
         // this.spell_card = (Spell) spell_card;

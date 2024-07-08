@@ -1,4 +1,4 @@
-package models.game;
+package org.example.citywars;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,9 +6,11 @@ import java.util.Collections;
 import models.AI;
 import models.User;
 import models.card.Card;
+import models.game.Block;
+import models.game.Turn;
 import views.console.game.ConsoleGame;
 
-public class Round {
+public class M_Round extends Menu {
     private User player_one;
     private User player_two;
     private boolean game_is_finished = false;
@@ -21,11 +23,16 @@ public class Round {
 
     private Block[][] board = new Block[2][21];
 
-    public Round() {
+    public M_Round() {
     }
 
-    public Round(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards) {
+    public M_Round(User player_one, User player_two, ArrayList<Card> player_one_cards,
+            ArrayList<Card> player_two_cards) {
+
+        super("M_Round", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
+                "BG-Videos\\GameBGs\\bg3.png" });
         turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
+        
         this.current_turn = turns.get(0);
         this.player_one = player_one;
         this.player_two = player_two;
@@ -87,6 +94,18 @@ public class Round {
         }
 
         return "need_more_rounds";
+    }
+
+
+    public Menu myMethods() {
+        // String result = this.processRound();
+        // if (result.equals("game_is_finished")) {
+        //     return new M_GameOver(this.winner);
+        // se {
+        //     return new M_Round(this.player_one, this.player_two, this.player_one_cards, this.player_two_cards);
+        // 
+        // 
+        return new M_Game();
     }
 
     // getters and setters
