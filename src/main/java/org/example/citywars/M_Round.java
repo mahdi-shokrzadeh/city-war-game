@@ -39,9 +39,15 @@ public class M_Round extends Menu {
     @FXML
     private Pane rootElement;
 
+    private ImageView selectedCard = null;
+
+    private ImageView followMouseImage = new ImageView(
+            new Image(new File("src\\main\\resources\\GameElements\\f1.png").toURI().toString()));
+
     public M_Round() {
         super("M_Round", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
                 "BG-Videos\\GameBGs\\bg3.png" });
+        initializeFollowMouseImage();
     }
 
     public Menu myMethods() {
@@ -179,8 +185,24 @@ public class M_Round extends Menu {
 
     }
 
+    private void initializeFollowMouseImage() {
+        followMouseImage.setFitHeight(100);
+
+        followMouseImage.setFitWidth(50);
+
+        followMouseImage.setVisible(false);
+        rootElement.getChildren().add(followMouseImage);
+
+        rootElement.setOnMouseMoved(event -> {
+            if (selectedCard != null) {
+                followMouseImage.setLayoutX(event.getSceneX() - followMouseImage.getFitWidth() / 2);
+                followMouseImage.setLayoutY(event.getSceneY() - followMouseImage.getFitHeight() / 2);
+            }
+        });
+    }
+
     private void initialUserCards() {
-        // Example: Add images based on player's cards
+
         this.addImage(1, this.player_one.getIsBonusActive() ? 6 : 2);
         this.addImage(2, this.player_two.getIsBonusActive() ? 6 : 2);
     }
@@ -188,19 +210,15 @@ public class M_Round extends Menu {
     private void addImage(int user_index, int number_of_cards) {
         File file = new File("src\\main\\resources\\SampleCards\\1.png");
         Image image = new Image(file.toURI().toString());
-        // Image image = new Image("src/main/resources/SampleCards/1.png");
 
         for (int i = 0; i < number_of_cards; i++) {
             ImageView imageView = new ImageView(image);
-
-            // Set the ID for the ImageView
             imageView.setId("cardImage_" + user_index + "_" + i);
             imageView.setFitHeight(250);
             imageView.setFitWidth(200);
 
             if (user_index == 1) {
                 imageView.setX(300 + i * 300);
-
             } else {
                 imageView.setX(900 + i * 300);
             }
@@ -211,7 +229,50 @@ public class M_Round extends Menu {
                 imageView.setY(650);
             }
 
+            addCardEventHandlers(imageView);
             rootElement.getChildren().add(imageView);
+        }
+    }
+
+    private void addCardEventHandlers(ImageView imageView) {
+        imageView.setOnMouseClicked(event -> {
+            handleCardSelection(imageView);
+        });
+
+        imageView.setOnMouseEntered(event -> {
+            if (selectedCard != null) {
+                followMouseImage.setVisible(true);
+                rootElement.getChildren().add(followMouseImage);
+                rootElement.setOnMouseMoved(mouseEvent -> {
+                    followMouseImage.setLayoutX(mouseEvent.getSceneX() - followMouseImage.getFitWidth() / 2);
+                    followMouseImage.setLayoutY(mouseEvent.getSceneY() - followMouseImage.getFitHeight() / 2);
+                });
+            }
+        });
+
+        imageView.setOnMouseExited(event -> {
+            if (selectedCard != null) {
+                followMouseImage.setVisible(false);
+                rootElement.getChildren().remove(followMouseImage);
+                rootElement.setOnMouseMoved(null);
+            }
+        });
+    }
+
+    private void handleCardSelection(ImageView imageView) {
+        if (selectedCard == imageView) {
+
+            imageView.setStyle(null);
+            selectedCard = null;
+            followMouseImage.setVisible(false);
+        } else {
+
+            if (selectedCard != null) {
+                selectedCard.setStyle(null);
+            }
+            imageView.setStyle("-fx-effect: dropshadow(gaussian, green, 10, 0, 0, 0);");
+            selectedCard = imageView;
+            followMouseImage.setVisible(true);
         }
     }
 
