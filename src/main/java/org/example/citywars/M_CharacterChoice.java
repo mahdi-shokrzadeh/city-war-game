@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import models.GameCharacter;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,11 +55,14 @@ public class M_CharacterChoice extends Menu {
 
     @FXML
     protected void choiceCh1(MouseEvent event) throws IOException {
-        // ....
-        if (secondPersonNeeded)
+
+        if (secondPersonNeeded) {
+            secondUser.setGameCharacter(new GameCharacter("panda"));
             HelloApplication.menu = new M_Game();
-        else
+        } else {
+            loggedInUser.setGameCharacter(new GameCharacter("panda"));
             HelloApplication.menu = new M_GamePlayMenu();
+        }
         switchMenus(event);
     }
 
@@ -82,11 +86,13 @@ public class M_CharacterChoice extends Menu {
 
     @FXML
     protected void choiceCh2(MouseEvent event) throws IOException {
-        // ....
-        if (secondPersonNeeded)
+        if (secondPersonNeeded) {
+            secondUser.setGameCharacter(new GameCharacter("dragon"));
             HelloApplication.menu = new M_Game();
-        else
+        } else {
+            loggedInUser.setGameCharacter(new GameCharacter("dragon"));
             HelloApplication.menu = new M_GamePlayMenu();
+        }
         switchMenus(event);
     }
 
@@ -110,11 +116,14 @@ public class M_CharacterChoice extends Menu {
 
     @FXML
     protected void choiceCh3(MouseEvent event) throws IOException {
-        // ....
-        if (secondPersonNeeded)
+
+        if (secondPersonNeeded) {
+            secondUser.setGameCharacter(new GameCharacter("robot"));
             HelloApplication.menu = new M_Game();
-        else
+        } else {
+            loggedInUser.setGameCharacter(new GameCharacter("robot"));
             HelloApplication.menu = new M_GamePlayMenu();
+        }
         switchMenus(event);
     }
 
@@ -138,11 +147,14 @@ public class M_CharacterChoice extends Menu {
 
     @FXML
     protected void choiceCh4(MouseEvent event) throws IOException {
-        // ....
-        if (secondPersonNeeded)
+
+        if (secondPersonNeeded) {
+            secondUser.setGameCharacter(new GameCharacter("wolf"));
             HelloApplication.menu = new M_Game();
-        else
+        } else {
+            loggedInUser.setGameCharacter(new GameCharacter("wolf"));
             HelloApplication.menu = new M_GamePlayMenu();
+        }
         switchMenus(event);
     }
 

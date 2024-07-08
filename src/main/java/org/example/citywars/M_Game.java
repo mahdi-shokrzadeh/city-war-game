@@ -12,8 +12,15 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import controllers.GameCharacterController;
 import controllers.UserCardsController;
 import controllers.game.GameController;
@@ -60,7 +67,9 @@ public class M_Game extends Menu {
         ImageView timeLineWalker;
 
         public M_Game() {
-                super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png","BG-Videos\\GameBGs\\bg3.png" });
+                // super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png",
+                // "BG-Videos\\GameBGs\\bg2.png",
+                // "BG-Videos\\GameBGs\\bg3.png" });
                 this.player_one = loggedInUser;
                 if (secondPersonNeeded) {
                         this.player_two = secondUser;
@@ -77,6 +86,14 @@ public class M_Game extends Menu {
                         this.player_one = AI;
                 }
                 // System.out.println("HEY I'M HERE!");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
+
+                rounds.add(new M_Round(this.player_one, this.player_two, player_one_cards, player_two_cards));
+                this.current_round = rounds.get(0);
+                this.player_one_id = player_one.getID();
+                this.player_two_id = player_two.getID();
                 this.startGraphicGame();
         }
 
@@ -352,18 +369,18 @@ public class M_Game extends Menu {
 
                 // Response res_2 = UserCardsController.getUsersCards(this.player_two);
                 // if (res_2.ok) {
-                //         Object obj = res_2.body.get("cards");
-                //         if (obj instanceof ArrayList<?>) {
-                //                 for (Object o : (ArrayList<?>) obj) {
-                //                         if (o instanceof Card) {
-                //                                 this.player_two_cards.add((Card) o);
-                //                         }
-                //                 }
-                //         }
-                //         Collections.shuffle(player_two_cards);
+                // Object obj = res_2.body.get("cards");
+                // if (obj instanceof ArrayList<?>) {
+                // for (Object o : (ArrayList<?>) obj) {
+                // if (o instanceof Card) {
+                // this.player_two_cards.add((Card) o);
+                // }
+                // }
+                // }
+                // Collections.shuffle(player_two_cards);
 
                 // } else {
-                //         System.out.println(res_2.message);
+                // System.out.println(res_2.message);
                 // }
 
         }
@@ -529,8 +546,61 @@ public class M_Game extends Menu {
                 }
 
                 this.handleAddCardsToPlayers();
-                System.out.println("DONE!");
+                try {
+                        // this.current_round.processGraphicRound();
+                        HelloApplication.menu = new M_Round();
+                        // switchMenus(event);
+
+                } catch (Exception e) {
+                        System.out.println("Error in starting the game");
+                }
+
                 return true;
+        }
+
+        public void showRound(M_Game g) {
+                try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round" + ".fxml"));
+                        Scene scene = new Scene(loader.load());
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        M_Round controller = loader.getController();
+                        controller.setGame(g);
+                        stage.showAndWait();
+
+                        // Process the result from the round controller
+                        String result = controller.getResult();
+                        handleRoundResult(result);
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to start the game.");
+                }
+        }
+
+        private void handleRoundResult(String result) {
+                switch (result) {
+                        case "game_is_finished":
+                                showAlert("Game Over", "The game has finished.");
+                                findWinner();
+                                // handleRewards();
+                                break;
+
+                        case "need_more_rounds":
+                                // Start a new round
+                                Platform.runLater(() -> startGraphicGame());
+                                break;
+
+                        default:
+                                break;
+                }
+        }
+
+        private void showAlert(String title, String message) {
+                Alert alert = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
+                alert.setTitle(title);
+                alert.setHeaderText(null);
+                alert.showAndWait();
         }
 
 }
