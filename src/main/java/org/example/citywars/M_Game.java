@@ -90,7 +90,6 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                rounds.add(new M_Round(this.player_one, this.player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
@@ -106,7 +105,8 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                rounds.add(new M_Round(player_one, player_two, player_one_cards, player_two_cards));
+                // rounds.add(new M_Round(player_one, player_two, player_one_cards,
+                // player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
@@ -145,8 +145,9 @@ public class M_Game extends Menu {
                 LocalDateTime ldt = LocalDateTime.now();
                 this.created_at = ldt.format(formatter);
 
-                rounds.add(new M_Round(player_one, player_two, player_one_cards, player_two_cards));
-                this.current_round = rounds.get(0);
+                // rounds.add(new M_Round(player_one, player_two, player_one_cards,
+                // player_two_cards));
+                // this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
                 this.battle = battle;
@@ -264,20 +265,20 @@ public class M_Game extends Menu {
 
                 boolean con = true;
                 while (con) {
-                        String result = this.current_round.processRound();
-                        switch (result) {
-                                case "game_is_finished":
-                                        con = false;
-                                        break;
+                        // String result = this.current_round.processRound();
+                        // switch (result) {
+                        // case "game_is_finished":
+                        // con = false;
+                        // break;
 
-                                case "need_more_rounds":
-                                        this.rounds.add(new M_Round(this.player_one, this.player_two,
-                                                        this.player_one_cards, this.player_two_cards));
-                                        this.current_round = this.rounds.get(this.rounds.size() - 1);
-                                        break;
-                                default:
-                                        break;
-                        }
+                        // case "need_more_rounds":
+                        // // this.rounds.add(new M_Round(this.player_one, this.player_two,
+                        // // this.player_one_cards, this.player_two_cards));
+                        // this.current_round = this.rounds.get(this.rounds.size() - 1);
+                        // break;
+                        // default:
+                        // break;
+                        // }
                 }
                 ConsoleGame.printGameIsFinished();
                 this.findWinner();
@@ -546,15 +547,7 @@ public class M_Game extends Menu {
                 }
 
                 this.handleAddCardsToPlayers();
-                try {
-                        // this.current_round.processGraphicRound();
-                        HelloApplication.menu = new M_Round();
-                        // switchMenus(event);
-
-                } catch (Exception e) {
-                        System.out.println("Error in starting the game");
-                }
-
+                showRound(this);
                 return true;
         }
 
@@ -567,8 +560,10 @@ public class M_Game extends Menu {
                         M_Round controller = loader.getController();
                         controller.setGame(g);
                         stage.showAndWait();
+                        rounds.add(new M_Round());
 
                         // Process the result from the round controller
+                        System.out.println("HEY HERE!");
                         String result = controller.getResult();
                         handleRoundResult(result);
 
@@ -578,7 +573,7 @@ public class M_Game extends Menu {
                 }
         }
 
-        private void handleRoundResult(String result) {
+        public void handleRoundResult(String result) {
                 switch (result) {
                         case "game_is_finished":
                                 showAlert("Game Over", "The game has finished.");
@@ -596,11 +591,26 @@ public class M_Game extends Menu {
                 }
         }
 
-        private void showAlert(String title, String message) {
+        public void showAlert(String title, String message) {
                 Alert alert = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
                 alert.setTitle(title);
                 alert.setHeaderText(null);
                 alert.showAndWait();
         }
 
+        public User getPlayerOne() {
+                return player_one;
+        }
+
+        public User getPlayerTwo() {
+                return player_two;
+        }
+
+        public ArrayList<Card> getPlayerOneCards() {
+                return player_one_cards;
+        }
+
+        public ArrayList<Card> getPlayerTwoCards() {
+                return player_two_cards;
+        }
 }

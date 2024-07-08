@@ -16,11 +16,14 @@ public class M_Round extends Menu {
     private boolean game_is_finished = false;
     private String winner;
     private ArrayList<Turn> turns = new ArrayList<Turn>();
-    private Turn current_turn;
+    private int current_turn = 1;
     private int number_of_round_turns = 4;
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
     private M_Game game;
+    private boolean is_player_one_turn = true;
+    private int player_one_remaining_turns = number_of_round_turns / 2;
+    private int player_two_remaining_turns = number_of_round_turns / 2;
 
     private Block[][] board = new Block[2][21];
 
@@ -29,27 +32,50 @@ public class M_Round extends Menu {
                 "BG-Videos\\GameBGs\\bg3.png" });
     }
 
-    public M_Round(User player_one, User player_two, ArrayList<Card> player_one_cards,
-            ArrayList<Card> player_two_cards) {
-        turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
+    public Menu myMethods() {
+        return new M_Game();
+    }
 
-        this.current_turn = turns.get(0);
-        this.player_one = player_one;
-        this.player_two = player_two;
+    public void handleBotInitiation() {
+        // Boss cards
+        Card card_one = new Card("boss_one", 0, 21, "Regular", 20, 30, 0, 0, winner, null);
+        // Card card_two = new Card("two", 0, 10, "Regular", 20, 30, 0, 0, winner,
+        // null);
+        // Card card_three = new Card("three", 0, 7, "Regular", 20, 30, 0, 0, winner,
+        // null);
 
-        this.player_one_cards = player_one_cards;
-        this.player_two_cards = player_two_cards;
+        int total_damage = 0;
+        for (int i = 0; i <= 20; i++) {
+            int random = (int) (Math.random() * 10) + 20;
+            this.board[0][i].setBlockCard(card_one);
+            this.board[0][i].setBlockEmpty(false);
+            this.board[0][i].setCardHidden(true);
+            this.board[0][i].setBlockPower(random);
+            this.board[0][i].setBlockDamage(random);
+            total_damage += random;
+        }
+
+        this.player_one.setDamage(total_damage);
+    }
+
+    public boolean processGraphicRound() {
+
+        return false;
+    }
+
+    public void setGame(M_Game game) {
+        this.game = game;
+        this.player_one = game.getPlayerOne();
+        this.player_two = game.getPlayerTwo();
+        this.player_one_cards = game.getPlayerOneCards();
+        this.player_two_cards = game.getPlayerTwoCards();
         Collections.shuffle(player_one_cards);
         Collections.shuffle(player_two_cards);
-
-        // fill the board with block
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 21; j++) {
                 board[i][j] = new Block();
             }
         }
-
-        // Boss
         if ((this.player_one instanceof AI) && ((AI) this.player_one).getAiLevel() == 5) {
             this.changeBlocksForBoss();
             this.handleBotInitiation();
@@ -67,45 +93,6 @@ public class M_Round extends Menu {
             this.board[0][rand_1].setBlockUnavailable(true);
             this.board[1][rand_2].setBlockUnavailable(true);
         }
-
-    }
-
-    public String processRound() {
-
-        ConsoleGame.printRoundStart();
-        boolean con = true;
-        while (con) {
-            String result = current_turn.processTurn(board,
-                    this);
-            if (result.equals("turn_is_finished")) {
-                if (this.turns.size() < this.number_of_round_turns) {
-                    this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
-                    this.current_turn = turns.get(turns.size() - 1);
-                } else {
-                    // System.out.println("HERE!!");
-                    // timeLine();
-                    if (this.timeLine()) {
-                        return "game_is_finished";
-                    } else {
-                        con = false;
-                    }
-                }
-            }
-        }
-
-        return "need_more_rounds";
-    }
-
-    public Menu myMethods() {
-        // String result = this.processRound();
-        // if (result.equals("game_is_finished")) {
-        // return new M_GameOver(this.winner);
-        // se {
-        // return new M_Round(this.player_one, this.player_two, this.player_one_cards,
-        // this.player_two_cards);
-        //
-        //
-        return new M_Game();
     }
 
     // getters and setters
@@ -147,14 +134,6 @@ public class M_Round extends Menu {
 
     public void setTurns(ArrayList<Turn> turns) {
         this.turns = turns;
-    }
-
-    public Turn getCurrent_turn() {
-        return current_turn;
-    }
-
-    public void setCurrent_turn(Turn current_turn) {
-        this.current_turn = current_turn;
     }
 
     public Block[][] getBoard() {
@@ -252,44 +231,7 @@ public class M_Round extends Menu {
     }
 
     public void changeBlocksForBoss() {
-        // Only Boss!
-        // this.board[1][0].setBlockUnavailable(true);
-        // this.board[1][1].setBlockUnavailable(true);
-        // this.board[1][2].setBlockUnavailable(true);
-        // this.board[1][18].setBlockUnavailable(true);
-        // this.board[1][19].setBlockUnavailable(true);
-        // this.board[1][20].setBlockUnavailable(true);
-    }
 
-    public void handleBotInitiation() {
-        // Boss cards
-        Card card_one = new Card("boss_one", 0, 21, "Regular", 20, 30, 0, 0, winner, null);
-        // Card card_two = new Card("two", 0, 10, "Regular", 20, 30, 0, 0, winner,
-        // null);
-        // Card card_three = new Card("three", 0, 7, "Regular", 20, 30, 0, 0, winner,
-        // null);
-
-        int total_damage = 0;
-        for (int i = 0; i <= 20; i++) {
-            int random = (int) (Math.random() * 10) + 20;
-            this.board[0][i].setBlockCard(card_one);
-            this.board[0][i].setBlockEmpty(false);
-            this.board[0][i].setCardHidden(true);
-            this.board[0][i].setBlockPower(random);
-            this.board[0][i].setBlockDamage(random);
-            total_damage += random;
-        }
-
-        this.player_one.setDamage(total_damage);
-    }
-
-    public boolean processGraphicRound() {
-
-        return false;
-    }
-
-    public void setGame(M_Game game) {
-        this.game = game;
     }
 
     public M_Game getGame() {
