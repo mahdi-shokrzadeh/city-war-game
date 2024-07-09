@@ -173,4 +173,9 @@ public abstract class Menu implements Initializable {
         HelloApplication.menu = new M_Setting();
         switchMenus(event);
     }
+    @FXML
+    protected void GoToGameButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Game();
+        switchMenus(event);
+    }
 }
