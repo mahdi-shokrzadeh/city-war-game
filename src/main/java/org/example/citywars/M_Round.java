@@ -202,7 +202,7 @@ public class M_Round extends Menu {
                 System.out.println(res.message);
             }
 
-            imageView.setId("cardImage_" + user_index + "_" + i + "_" + c.getName() + "_" + c.getDuration());
+            imageView.setId("cardImage_" + user_index +"_" + c.getName() + "_" + c.getDuration());
 
             if (user_index == 0) {
                 imageView.setLayoutX(150 + i * (this.original_card_width + 5));
@@ -254,9 +254,12 @@ public class M_Round extends Menu {
                     // turn is over
                     if (this.is_player_one_turn) {
                         this.player_one_remaining_turns--;
+                        handleUpdatePlayerCards(player_one, player_one_cards, 0);
                     } else {
                         this.player_two_remaining_turns--;
+                        handleUpdatePlayerCards(player_two, player_two_cards, 1);
                     }
+
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.updateRemainingTurns();
 
@@ -335,8 +338,7 @@ public class M_Round extends Menu {
     public Card findCardFromId(String id) {
         String[] id_parts = id.split("_");
         int user_index = Integer.parseInt(id_parts[1]);
-        int card_index = Integer.parseInt(id_parts[2]);
-        String card_name = id_parts[3];
+        String card_name = id_parts[2];
 
         if (user_index == 0) {
             for (Card card : player_one_cards) {
@@ -682,11 +684,24 @@ public class M_Round extends Menu {
         rootElement.getChildren().add(damage_label);
     }
 
+    public void handleUpdatePlayerCards(User player, ArrayList<Card> cards, int user_index) {
+        // find and remove all player cards from page
+        for (Card c : cards) {
+            String id = "cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration();
+            TextFlow card = (TextFlow) rootElement.lookup("#" + id);
+            rootElement.getChildren().remove(card);
+        }
+
+        addImage(user_index, player.getIsBonusActive() ? 6 : 5);
+    }
+
     public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
         Block bl = this.board[turn_index][block_index];
         Label power_label = (Label) rootElement.lookup("#powerl_" + turn_index + "_" + block_index);
         Label damage_label = (Label) rootElement.lookup("#damagel_" + turn_index + "_" + block_index);
-        if (power_label == null && !bl.isBlockEmpty()) {
+        if (bl.isBlockEmpty())
+            return;
+        if (power_label == null) {
             // create
             power_label = new Label(String.valueOf(power));
             damage_label = new Label(String.valueOf(damage));
@@ -714,8 +729,8 @@ public class M_Round extends Menu {
         power_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 12);
         damage_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 55);
 
-        power_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
-        damage_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
+        power_label.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
+        damage_label.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
     }
 
     public void handleAffection(int des_index, int block_number, boolean x) throws Exception {
