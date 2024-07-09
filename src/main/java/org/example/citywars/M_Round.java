@@ -116,21 +116,8 @@ public class M_Round extends Menu {
             this.board[0][rand_1].setBlockUnavailable(true);
             this.board[1][rand_2].setBlockUnavailable(true);
             // handle graphic
-            ImageView im = new ImageView(
-                    new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-            im.setFitHeight(this.block_height);
-            im.setFitWidth(this.block_width);
-            im.setLayoutX(this.left_board_margin + (rand_1) * this.block_width);
-            im.setLayoutY(this.top_board_margin);
-            rootElement.getChildren().add(im);
-
-            ImageView im2 = new ImageView(
-                    new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-            im2.setFitHeight(this.block_height);
-            im2.setFitWidth(this.block_width);
-            im2.setLayoutX(this.left_board_margin + (rand_2) * this.block_width);
-            im2.setLayoutY(this.top_board_margin + this.block_height + 10);
-            rootElement.getChildren().add(im2);
+            handlePutSpider(0, rand_1);
+            handlePutSpider(1, rand_2);
         }
 
         // add user cards
@@ -145,8 +132,8 @@ public class M_Round extends Menu {
     }
 
     public void initializeFollowMouseImage() {
-        followMouseImage.setFitHeight(100);
-        followMouseImage.setFitWidth(50);
+        followMouseImage.setFitHeight(this.block_height);
+        followMouseImage.setFitWidth(this.block_width);
         followMouseImage.setVisible(false);
         rootElement.getChildren().add(followMouseImage);
 
@@ -191,8 +178,8 @@ public class M_Round extends Menu {
 
     private void initialUserCards() {
 
-        this.addImage(1, this.player_one.getIsBonusActive() ? 6 : 5);
-        this.addImage(2, this.player_two.getIsBonusActive() ? 6 : 5);
+        this.addImage(0, this.player_one.getIsBonusActive() ? 6 : 5);
+        this.addImage(1, this.player_two.getIsBonusActive() ? 6 : 5);
     }
 
     private void addImage(int user_index, int number_of_cards) {
@@ -201,7 +188,7 @@ public class M_Round extends Menu {
             Card c;
             TextFlow imageView = new TextFlow();
 
-            if (user_index == 1) {
+            if (user_index == 0) {
                 c = player_one_cards.get(i);
                 System.out.println(c.getName());
             } else {
@@ -214,9 +201,9 @@ public class M_Round extends Menu {
                 System.out.println(res.message);
             }
 
-            imageView.setId("cardImage_" + user_index + "_" + i);
+            imageView.setId("cardImage_" + user_index + "_" + i + "_" + c.getName() + "_" + c.getDuration());
 
-            if (user_index == 1) {
+            if (user_index == 0) {
                 imageView.setLayoutX(150 + i * (this.original_card_width + 5));
 
             } else {
@@ -227,8 +214,7 @@ public class M_Round extends Menu {
                 imageView.setLayoutY(373);
             } else {
                 imageView.setLayoutY(373 + this.original_card_heoght + 10);
-                if (user_index == 1) {
-
+                if (user_index == 0) {
                     imageView.setLayoutX(150 + (i - 3) * (this.original_card_width + 5));
                 } else {
                     imageView.setLayoutX(900 + (i - 3) * (this.original_card_width + 5));
@@ -257,22 +243,20 @@ public class M_Round extends Menu {
         });
 
         imageView.setOnMouseReleased(event -> {
-
             int x = (int) event.getSceneX();
             int y = (int) event.getSceneY();
 
             if (selectedCard == imageView) {
                 if (checkValidForBoard(x, y)) {
-                    // Remove the card if dropped on the board
                     rootElement.getChildren().remove(imageView);
                     followMouseImage.setVisible(false);
                 } else {
-                    // Reset visibility if not dropped on the board
                     imageView.setVisible(true);
                     followMouseImage.setVisible(false);
                 }
                 selectedCard.setStyle(null);
                 selectedCard = null;
+                selected_card = null;
             }
         });
     }
@@ -288,25 +272,17 @@ public class M_Round extends Menu {
         followMouseImage.setFitWidth(duration * this.block_width);
     }
 
-    public void handleCardSelection(@SuppressWarnings("exports") TextFlow imageView) {
+    public void handleCardSelection(TextFlow imageView) {
         if (selectedCard != null) {
             selectedCard.setStyle(null);
         }
         imageView.setStyle("-fx-effect: dropshadow(gaussian, green, 11, 0, 0, 0);");
         selectedCard = imageView;
-        // get the id of the selected card
-        String[] id_parts = imageView.getId().split("_");
-
-        // extarct the card index and user index
-        int card_index = id_parts[2].charAt(0) - '0';
-        int user_index = id_parts[1].charAt(0) - '0';
-
-        if (user_index == 1) {
-            selected_card = player_one_cards.get(card_index);
-        } else {
-            selected_card = player_two_cards.get(card_index);
-        }
-
+        String id = imageView.getId();
+        selected_card = this.findCardFromId(id);
+        System.out.println("name: " + selected_card.getName() + " power: " + selected_card.getPower() + " du :"
+                + selected_card.getDuration());
+        System.out.println(id);
         followMouseImage.setVisible(true);
     }
 
@@ -327,13 +303,49 @@ public class M_Round extends Menu {
         }
 
         int block_index = (int) ((x - 160) / 75);
-
+        String id = selectedCard.getId();
         if (is_player_one_turn) {
-            return handlePutCardInBoard(0, player_one_cards.get(0), block_index + 1);
+            return handlePutCardInBoard(0, this.selected_card, block_index + 1);
         } else {
-            return handlePutCardInBoard(1, player_two_cards.get(0), block_index + 1);
+            return handlePutCardInBoard(1, this.selected_card, block_index + 1);
         }
 
+    }
+
+    public Card findCardFromId(String id) {
+        String[] id_parts = id.split("_");
+        int user_index = Integer.parseInt(id_parts[1]);
+        int card_index = Integer.parseInt(id_parts[2]);
+        String card_name = id_parts[3];
+
+        if (user_index == 0) {
+            for (Card card : player_one_cards) {
+                if (card.getName().equals(card_name)) {
+                    return card;
+                }
+
+            }
+        } else {
+            for (Card card : player_two_cards) {
+                if (card.getName().equals(card_name)) {
+                    return card;
+                }
+            }
+        }
+        System.out.println("Card not found!!!!");
+        return null;
+    }
+
+    public void handlePutSpider(int user_index, int block_index) {
+
+        // handle graphic
+        ImageView im = new ImageView(
+                new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
+        im.setFitHeight(this.block_height);
+        im.setFitWidth(this.block_width);
+        im.setLayoutX(this.left_board_margin - 6 + (block_index) * (this.block_width));
+        im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
+        rootElement.getChildren().add(im);
     }
 
     public boolean timeLine() {
@@ -580,6 +592,19 @@ public class M_Round extends Menu {
             } else {
                 im.setLayoutY(this.top_board_margin + this.block_height + 10);
             }
+
+            // if all:
+            // for (int i = 0; i < card.getDuration(); i++) {
+            // Block bl = this.board[turn_number][starting_block_number + i];
+            // putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(),
+            // this.is_player_one_turn ? 0 : 1,
+            // starting_block_number + i);
+            // }
+
+            Block bl = this.board[turn_number][starting_block_number];
+            putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(), this.is_player_one_turn ? 0 : 1,
+                    starting_block_number);
+
             rootElement.getChildren().add(im);
 
         } else {
@@ -626,6 +651,22 @@ public class M_Round extends Menu {
             return false;
         }
         return true;
+    }
+
+    public void putInfInBlock(int power, int damage, int turn_index, int block_index) {
+        Label power_label = new Label(String.valueOf(power));
+        Label damage_label = new Label(String.valueOf(damage));
+
+        power_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
+        damage_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
+        power_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 12);
+        damage_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 55);
+
+        power_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
+        damage_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
+
+        rootElement.getChildren().add(power_label);
+        rootElement.getChildren().add(damage_label);
     }
 
     public void handleAffection(int des_index, int block_number) throws Exception {
