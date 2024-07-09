@@ -549,27 +549,23 @@ public class M_Game extends Menu {
                 }
 
                 this.handleAddCardsToPlayers();
-                showRound(this);
+                showRound();
                 return true;
         }
 
-        public void showRound(M_Game g) {
+        public void showRound() {
                 try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round.fxml"));
                         Parent root = loader.load();
                         Scene scene = new Scene(root);
-                        Stage currentStage = this.st;
-                        currentStage.setScene(scene);
+                        this.st.setScene(scene);
                         M_Round controller = loader.getController();
-                        controller.setGame(g);
-                        g.rounds.add(new M_Round());
-                        System.out.println("HEY ROUND IS OVER");
-                        String result = controller.getResult();
-                        handleRoundResult(result);
+                        controller.setGame(this);
+                        this.rounds.add(new M_Round());
+                        System.out.println("HEY ROUND IS OPENED!");
 
                 } catch (Exception e) {
                         e.printStackTrace();
-                        showAlert("Error", "Failed to start the game.");
                 }
         }
 

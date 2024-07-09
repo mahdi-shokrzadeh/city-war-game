@@ -42,6 +42,7 @@ public class M_Round extends Menu {
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
     private M_Game game;
+    private Timeline timeline;
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
     private boolean is_player_one_turn = true;
     private int player_one_remaining_turns = number_of_round_turns / 2;
@@ -277,6 +278,7 @@ public class M_Round extends Menu {
                                 System.out.println("Game is finished!");
                             } else {
                                 System.out.println("Game is not finished!");
+                                this.game.showRound();
                             }
                             System.out.println("Timeline animation completed!");
                         });
@@ -392,9 +394,9 @@ public class M_Round extends Menu {
     public void timeLine(Runnable onCompletion) {
         final int[] currentIndex = { 0 };
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             if (currentIndex[0] > 20) {
-                ((Timeline) event.getSource()).stop();
+                timeline.stop();
                 onCompletion.run();
                 return;
             }
@@ -435,7 +437,7 @@ public class M_Round extends Menu {
             updateTotalDameges();
 
             if (this.checkGameIsFinished()) {
-                ((Timeline) event.getSource()).stop();
+                timeline.stop();
                 this.game_is_finished = true;
                 onCompletion.run();
             }
