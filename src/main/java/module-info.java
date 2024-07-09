@@ -18,8 +18,8 @@ module org.example.citywars {
 
     opens org.example.citywars;
     opens models;
-    opens models.card to com.fasterxml.jackson.databind;
     opens models.game to com.fasterxml.jackson.databind;
+    opens models.card;
 
     exports org.example.citywars;
     exports models to com.fasterxml.jackson.databind;
