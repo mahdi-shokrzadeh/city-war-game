@@ -15,6 +15,8 @@ import java.util.Scanner;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -62,14 +64,14 @@ public class M_Game extends Menu {
         private ClanBattle battle;
         private Clan attackerClan;
         private Clan defenderClan;
+        private Stage st;
 
         @FXML
         ImageView timeLineWalker;
 
-        public M_Game() {
-                // super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png",
-                // "BG-Videos\\GameBGs\\bg2.png",
-                // "BG-Videos\\GameBGs\\bg3.png" });
+        public M_Game(@SuppressWarnings("exports") Stage st) {
+
+                this.st = st;
                 this.player_one = loggedInUser;
                 if (secondPersonNeeded) {
                         this.player_two = secondUser;
@@ -553,17 +555,15 @@ public class M_Game extends Menu {
 
         public void showRound(M_Game g) {
                 try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round" + ".fxml"));
-                        Scene scene = new Scene(loader.load());
-                        Stage st = new Stage();
-                        st.setScene(scene);
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round.fxml"));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        Stage currentStage = this.st;
+                        currentStage.setScene(scene);
                         M_Round controller = loader.getController();
                         controller.setGame(g);
-                        st.showAndWait();
-                        rounds.add(new M_Round());
-
-                        // Process the result from the round controller
-                        System.out.println("HEY HERE!");
+                        g.rounds.add(new M_Round());
+                        System.out.println("HEY ROUND IS OVER");
                         String result = controller.getResult();
                         handleRoundResult(result);
 

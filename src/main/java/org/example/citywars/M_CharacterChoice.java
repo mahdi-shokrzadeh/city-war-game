@@ -1,9 +1,11 @@
 package org.example.citywars;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import models.GameCharacter;
 import models.Response;
 
@@ -63,8 +65,10 @@ public class M_CharacterChoice extends Menu {
             secondUser.setGameCharacter(getCharacter("panda"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
-            else
-                HelloApplication.menu = new M_Game();
+            else {
+                // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+            }
         } else {
             loggedInUser.setGameCharacter(getCharacter("panda"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -96,8 +100,10 @@ public class M_CharacterChoice extends Menu {
             secondUser.setGameCharacter(getCharacter("dragon"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
-            else
-                HelloApplication.menu = new M_Game();
+            else {
+                // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+            }
         } else {
             loggedInUser.setGameCharacter(getCharacter("dragon"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -130,8 +136,10 @@ public class M_CharacterChoice extends Menu {
             secondUser.setGameCharacter(getCharacter("robot"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
-            else
-                HelloApplication.menu = new M_Game();
+            else {
+                // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+            }
         } else {
             loggedInUser.setGameCharacter(getCharacter("robot"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -164,8 +172,10 @@ public class M_CharacterChoice extends Menu {
             secondUser.setGameCharacter(getCharacter("wolf"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
-            else
-                HelloApplication.menu = new M_Game();
+            else {
+                // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+            }
         } else {
             loggedInUser.setGameCharacter(getCharacter("wolf"));
             HelloApplication.menu = new M_GamePlayMenu();

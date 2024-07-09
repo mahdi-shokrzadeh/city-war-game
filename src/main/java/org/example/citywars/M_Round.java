@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.AI;
 import models.Response;
@@ -70,7 +71,7 @@ public class M_Round extends Menu {
     }
 
     public Menu myMethods() {
-        return new M_Game();
+        return new M_Game(new Stage());
     }
 
     public void handleBotInitiation() {
@@ -381,9 +382,9 @@ public class M_Round extends Menu {
         // handle graphic
         ImageView im = new ImageView(
                 new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-        im.setFitHeight(this.block_height);
-        im.setFitWidth(this.block_width);
-        im.setLayoutX(this.left_board_margin - 6 + (block_index) * (this.block_width));
+        // im.setFitHeight(this.block_height);
+        // im.setFitWidth(this.block_width);
+        im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width));
         im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
         rootElement.getChildren().add(im);
     }
