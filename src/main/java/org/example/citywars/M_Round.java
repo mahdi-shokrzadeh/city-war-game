@@ -251,6 +251,15 @@ public class M_Round extends Menu {
                 if (checkValidForBoard(x, y)) {
                     rootElement.getChildren().remove(imageView);
                     followMouseImage.setVisible(false);
+                    // turn is over
+                    if (this.is_player_one_turn) {
+                        this.player_one_remaining_turns--;
+                    } else {
+                        this.player_two_remaining_turns--;
+                    }
+                    this.is_player_one_turn = !this.is_player_one_turn;
+                    this.updateRemainingTurns();
+
                 } else {
                     imageView.setVisible(true);
                     followMouseImage.setVisible(false);
@@ -277,9 +286,19 @@ public class M_Round extends Menu {
         if (selectedCard != null) {
             selectedCard.setStyle(null);
         }
+        String id = imageView.getId();
+        int user_index = Integer.parseInt(id.split("_")[1]);
+        if (this.is_player_one_turn) {
+            if (user_index == 1) {
+                return;
+            }
+        } else {
+            if (user_index == 0) {
+                return;
+            }
+        }
         imageView.setStyle("-fx-effect: dropshadow(gaussian, green, 11, 0, 0, 0);");
         selectedCard = imageView;
-        String id = imageView.getId();
         selected_card = this.findCardFromId(id);
         System.out.println("name: " + selected_card.getName() + " power: " + selected_card.getPower() + " du :"
                 + selected_card.getDuration());
@@ -572,16 +591,6 @@ public class M_Round extends Menu {
             }
         }
         if (cond) {
-            for (int i = 0; i < card.getDuration(); i++) {
-                this.board[turn_number][starting_block_number + i].setBlockCard(card);
-                this.board[turn_number][starting_block_number + i].setBlockEmpty(false);
-                try {
-                    handleAffection(turn_number, starting_block_number + i, i == 0 ? true : false);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-
             // create copy image of followMouseImage
             ImageView im = new ImageView(new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
                     .toURI().toString());
@@ -594,20 +603,16 @@ public class M_Round extends Menu {
                 im.setLayoutY(this.top_board_margin + this.block_height + 10);
             }
 
-            // if all:
-            for (int i = 0; i < card.getDuration(); i++) {
-                Block bl = this.board[turn_number][starting_block_number + i];
-                putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(),
-                        this.is_player_one_turn ? 0 : 1,
-                        starting_block_number + i);
-            }
-
-            // Block bl = this.board[turn_number][starting_block_number];
-            // putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(),
-            // this.is_player_one_turn ? 0 : 1,
-            // starting_block_number);
-
             rootElement.getChildren().add(im);
+            for (int i = 0; i < card.getDuration(); i++) {
+                this.board[turn_number][starting_block_number + i].setBlockCard(card);
+                this.board[turn_number][starting_block_number + i].setBlockEmpty(false);
+                try {
+                    handleAffection(turn_number, starting_block_number + i, i == 0 ? true : false);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
 
         } else {
             return false;
@@ -658,7 +663,8 @@ public class M_Round extends Menu {
     public void putInfInBlock(int power, int damage, int turn_index, int block_index) {
         Label power_label = new Label(String.valueOf(power));
         Label damage_label = new Label(String.valueOf(damage));
-
+        power_label.setId("powerl_" + turn_index + "_" + block_index);
+        damage_label.setId("damagel_" + turn_index + "_" + block_index);
         Block bl = this.board[turn_index][block_index];
         if (bl.isBlockDestroyed()) {
             power_label.setText("Des");
@@ -677,13 +683,30 @@ public class M_Round extends Menu {
     }
 
     public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
-        Label power_label = (Label) rootElement.lookup("#power_label_" + turn_index + "_" + block_index);
-        Label damage_label = (Label) rootElement.lookup("#damage_label_" + turn_index + "_" + block_index);
-
         Block bl = this.board[turn_index][block_index];
+        Label power_label = (Label) rootElement.lookup("#powerl_" + turn_index + "_" + block_index);
+        Label damage_label = (Label) rootElement.lookup("#damagel_" + turn_index + "_" + block_index);
+        if (power_label == null && !bl.isBlockEmpty()) {
+            // create
+            power_label = new Label(String.valueOf(power));
+            damage_label = new Label(String.valueOf(damage));
+
+            // set id
+            power_label.setId("powerl_" + turn_index + "_" + block_index);
+            damage_label.setId("damagel_" + turn_index + "_" + block_index);
+
+            rootElement.getChildren().add(power_label);
+            rootElement.getChildren().add(damage_label);
+        }
+
         if (bl.isBlockDestroyed()) {
             power_label.setText("Des");
             damage_label.setText(0 + "");
+        } else if (!bl.isBlockEmpty()) {
+            power_label.setText(String.valueOf(power));
+            damage_label.setText(String.valueOf(damage));
+        } else {
+
         }
 
         power_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
@@ -738,6 +761,8 @@ public class M_Round extends Menu {
         this.updateTotalDameges();
         // if (x) {
         updateInfInBlock(bl.getBlockPower(), bl.getBlockDamage(), des_index, block_number);
+        updateInfInBlock(opponent_block.getBlockPower(), opponent_block.getBlockDamage(), (des_index + 1) % 2,
+                block_number);
         // }
     }
 
