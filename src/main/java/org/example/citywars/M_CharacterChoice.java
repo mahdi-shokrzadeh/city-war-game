@@ -58,7 +58,10 @@ public class M_CharacterChoice extends Menu {
 
         if (secondPersonNeeded) {
             secondUser.setGameCharacter(new GameCharacter("panda"));
-            HelloApplication.menu = new M_Game();
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
         } else {
             loggedInUser.setGameCharacter(new GameCharacter("panda"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -88,7 +91,10 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh2(MouseEvent event) throws IOException {
         if (secondPersonNeeded) {
             secondUser.setGameCharacter(new GameCharacter("dragon"));
-            HelloApplication.menu = new M_Game();
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
         } else {
             loggedInUser.setGameCharacter(new GameCharacter("dragon"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -119,7 +125,10 @@ public class M_CharacterChoice extends Menu {
 
         if (secondPersonNeeded) {
             secondUser.setGameCharacter(new GameCharacter("robot"));
-            HelloApplication.menu = new M_Game();
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
         } else {
             loggedInUser.setGameCharacter(new GameCharacter("robot"));
             HelloApplication.menu = new M_GamePlayMenu();
@@ -150,7 +159,10 @@ public class M_CharacterChoice extends Menu {
 
         if (secondPersonNeeded) {
             secondUser.setGameCharacter(new GameCharacter("wolf"));
-            HelloApplication.menu = new M_Game();
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
         } else {
             loggedInUser.setGameCharacter(new GameCharacter("wolf"));
             HelloApplication.menu = new M_GamePlayMenu();
