@@ -3,8 +3,15 @@ package org.example.citywars;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.CountDownLatch;
 
 import controllers.CardController;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Duration;
 import models.AI;
 import models.Response;
 import models.User;
@@ -202,7 +210,7 @@ public class M_Round extends Menu {
                 System.out.println(res.message);
             }
 
-            imageView.setId("cardImage_" + user_index +"_" + c.getName() + "_" + c.getDuration());
+            imageView.setId("cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration());
 
             if (user_index == 0) {
                 imageView.setLayoutX(150 + i * (this.original_card_width + 5));
@@ -262,6 +270,16 @@ public class M_Round extends Menu {
 
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.updateRemainingTurns();
+                    if (player_one_remaining_turns == 0 && player_two_remaining_turns == 0) {
+                        timeLine(() -> {
+                            if (this.game_is_finished) {
+                                System.out.println("Game is finished!");
+                            } else {
+                                System.out.println("Game is not finished!");
+                            }
+                            System.out.println("Timeline animation completed!");
+                        });
+                    }
 
                 } else {
                     imageView.setVisible(true);
@@ -370,53 +388,66 @@ public class M_Round extends Menu {
         rootElement.getChildren().add(im);
     }
 
-    public boolean timeLine() {
-        // System.out.println("HEY here!");
-        for (int i = 0; i <= 20; i++) {
+    public void timeLine(Runnable onCompletion) {
+        final int[] currentIndex = { 0 };
 
-            Block player_one_block = this.board[0][i];
-            Block player_two_block = this.board[1][i];
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (currentIndex[0] > 20) {
+                ((Timeline) event.getSource()).stop();
+                onCompletion.run();
+                return;
+            }
+
+            Block player_one_block = this.board[0][currentIndex[0]];
+            Block player_two_block = this.board[1][currentIndex[0]];
+
+            ImageView im = new ImageView(
+                    new Image(new File("src\\main\\resources\\GameElements\\timelineWalker.png").toURI().toString()));
+
+            im.setFitHeight(2 * this.block_height + 10);
+            im.setFitWidth(this.block_width);
+            im.setLayoutX(left_board_margin + currentIndex[0] * block_width + 5);
+            im.setLayoutY(top_board_margin);
+
+            Platform.runLater(() -> rootElement.getChildren().add(im));
 
             if (player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
-
+                // Both blocks are empty
             } else if (player_one_block.isBlockEmpty() && !player_two_block.isBlockEmpty()) {
-                this.player_one
-                        .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
-                // reduce the damage of the player
+                this.player_one.setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
                 this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
             } else if (!player_one_block.isBlockEmpty() && player_two_block.isBlockEmpty()) {
-                this.player_two
-                        .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
-
-                // reduce the damage of the player
+                this.player_two.setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
                 this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
             } else {
                 if (player_one_block.getBlockPower() > player_two_block.getBlockPower()) {
-                    this.player_two
-                            .setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
-                    this.player_one
-                            .setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
-
+                    this.player_two.setHitPoints(this.player_two.getHitPoints() - player_one_block.getBlockDamage());
+                    this.player_one.setDamage(this.player_one.getDamage() - player_one_block.getBlockDamage());
                 } else if (player_one_block.getBlockPower() < player_two_block.getBlockPower()) {
-                    this.player_one
-                            .setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
-                    this.player_two
-                            .setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
+                    this.player_one.setHitPoints(this.player_one.getHitPoints() - player_two_block.getBlockDamage());
+                    this.player_two.setDamage(this.player_two.getDamage() - player_two_block.getBlockDamage());
                 }
-
             }
-            ConsoleGame.printBlockIndex(i + 1);
-            ConsoleGame.printBlocksStatus(player_one_block, player_two_block);
-            ConsoleGame.printDamageStatus(this.player_one, this.player_two);
-            ConsoleGame.printHPStatus(this.player_one, this.player_two);
+
+            updateHitPoints();
+            updateRemainingTurns();
+            updateTotalDameges();
 
             if (this.checkGameIsFinished()) {
-                return true;
+                ((Timeline) event.getSource()).stop();
+                this.game_is_finished = true;
+                onCompletion.run();
             }
 
-        }
+            currentIndex[0]++;
+            if (currentIndex[0] == 21) {
+                onCompletion.run();
+            }
+        }));
 
-        return false;
+        timeline.setCycleCount(21);
+        timeline.play();
+        System.out.println("Timeline started!");
     }
 
     public boolean checkGameIsFinished() {
