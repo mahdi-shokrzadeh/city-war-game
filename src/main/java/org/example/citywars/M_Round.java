@@ -112,6 +112,8 @@ public class M_Round extends Menu {
         putHitPoints();
         initializeFollowMouseImage();
         initializeMouseMoveListener();
+        initializeCharacterImages(player_one, 0);
+        initializeCharacterImages(player_two, 1);
     }
 
     public void initializeFollowMouseImage() {
@@ -432,6 +434,47 @@ public class M_Round extends Menu {
 
         label_1.setText(String.valueOf(this.player_one.getHitPoints()));
         label_2.setText(String.valueOf(this.player_two.getHitPoints()));
+    }
+
+    public void initializeCharacterImages(User user, int user_index) {
+        File[] imageFiles;
+        imageFiles = new File[4];
+        imageFiles[0] = new File("src/main/resources/Characters/Igoribuki.png");
+        imageFiles[1] = new File("src/main/resources/Characters/Master_Masher.png");
+        imageFiles[2] = new File("src/main/resources/Characters/Nahane.png");
+        imageFiles[3] = new File("src/main/resources/Characters/Sensei_Pandaken.png");
+        ImageView player_char_img;
+
+        switch (user.getGameCharacter().getID()) {
+            case 0:
+                player_char_img = new ImageView(new Image(imageFiles[0].toURI().toString()));
+                break;
+
+            case 1:
+                player_char_img = new ImageView(new Image(imageFiles[1].toURI().toString()));
+                break;
+
+            case 2:
+                player_char_img = new ImageView(new Image(imageFiles[2].toURI().toString()));
+                break;
+
+            default:
+                player_char_img = new ImageView(new Image(imageFiles[3].toURI().toString()));
+                break;
+        }
+        player_char_img.setFitHeight(430);
+        player_char_img.setFitWidth(430);
+
+        if (user_index == 0) {
+            player_char_img.setLayoutX(100);
+            player_char_img.setLayoutY(600);
+        } else {
+            player_char_img.setLayoutX(1500);
+            player_char_img.setLayoutY(600);
+        }
+
+        rootElement.getChildren().add(player_char_img);
+
     }
 
     public boolean handlePutCardInBoard(int turn_number, Card card, int starting_block_number) {
