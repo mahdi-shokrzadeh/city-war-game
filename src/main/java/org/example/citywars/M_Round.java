@@ -41,6 +41,8 @@ public class M_Round extends Menu {
     final int original_card_heoght = 280;
     final int block_width = 75;
     final int block_height = 100;
+    final int top_board_margin = 80;
+    final int left_board_margin = 160;
 
     private Block[][] board = new Block[2][21];
 
@@ -113,6 +115,20 @@ public class M_Round extends Menu {
 
             this.board[0][rand_1].setBlockUnavailable(true);
             this.board[1][rand_2].setBlockUnavailable(true);
+            // handle graphic
+            ImageView im = new ImageView(
+                    new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
+            im.setFitHeight(100);
+            im.setLayoutX(160 + (rand_1) * this.block_width);
+            im.setLayoutY(this.top_board_margin);
+            rootElement.getChildren().add(im);
+
+            ImageView im2 = new ImageView(
+                    new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
+            im2.setFitHeight(100);
+            im2.setLayoutX(160 + (rand_2) * this.block_width);
+            im2.setLayoutY(this.top_board_margin + this.block_height + 10);
+            rootElement.getChildren().add(im2);
         }
 
         // add user cards
@@ -297,11 +313,11 @@ public class M_Round extends Menu {
         int max_y;
 
         if (is_player_one_turn) {
-            min_y = 80;
-            max_y = 180;
+            min_y = this.top_board_margin;
+            max_y = this.top_board_margin + this.block_height;
         } else {
-            min_y = 190;
-            max_y = 290;
+            min_y = this.top_board_margin + this.block_height + 10;
+            max_y = this.top_board_margin + 2 * this.block_height + 10;
         }
 
         if (y < min_y || y > max_y) {
@@ -550,29 +566,22 @@ public class M_Round extends Menu {
                     System.out.println(e);
                 }
             }
-            // place f1 graphicaly in the borad
 
-            // create copy image of f1
-            ImageView im = new ImageView(
-                    new Image(new File("src\\main\\resources\\GameElements\\f1.png").toURI().toString()));
+            // create copy image of followMouseImage
+            ImageView im = new ImageView(followMouseImage.getImage());
             im.setFitHeight(100);
-            im.setFitWidth(50);
-            im.setLayoutX(160 + (starting_block_number) * 75);
+            im.setLayoutX(160 + (starting_block_number) * this.block_width);
             if (turn_number == 0) {
-                im.setLayoutY(80);
+                im.setLayoutY(this.top_board_margin);
             } else {
-                im.setLayoutY(190);
+                im.setLayoutY(this.top_board_margin + this.block_height + 10);
             }
-
             rootElement.getChildren().add(im);
 
         } else {
             return false;
         }
-        // ConsoleGame.printSuccessfulCardPlacement();
-        // Check for Bonous
-        // this.checkBonous();
-        // card.getCharacter().getPFactor()
+
         if (turn_number == 0) {
             if (Math.random() < card.getCharacter().getPFactor() && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
