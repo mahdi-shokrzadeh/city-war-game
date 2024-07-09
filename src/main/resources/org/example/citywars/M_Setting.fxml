@@ -30,28 +30,32 @@
      </rowConstraints>
       <children>
          <Slider fx:id="volume" majorTickUnit="10.0" minorTickCount="1" prefHeight="97.0" prefWidth="512.0" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-         <ToggleButton fx:id="toggle1" mnemonicParsing="false" onAction="#toggleButtons" prefHeight="87.0" prefWidth="694.0" selected="true" text="Dark Mode" GridPane.columnSpan="2" GridPane.rowIndex="2">
+         <ToggleButton fx:id="toggle1" mnemonicParsing="false" onAction="#toggleButtons" prefHeight="87.0" prefWidth="694.0"  text="Dark Mode" GridPane.columnSpan="2" GridPane.rowIndex="2" style="-fx-font-size: 30">
             <toggleGroup>
                <ToggleGroup fx:id="modes" />
             </toggleGroup>
          </ToggleButton>
-         <Label prefHeight="70.0" prefWidth="284.0" text="Volume :">
+         <Label textFill="WHITE" prefHeight="70.0" prefWidth="284.0" text="Volume :">
             <font>
                <Font size="30.0" />
             </font>
          </Label>
-         <Label prefHeight="65.0" prefWidth="241.0" text="Music :" GridPane.rowIndex="1">
+         <Label textFill="WHITE" prefHeight="65.0" prefWidth="241.0" text="Music :" GridPane.rowIndex="1">
             <font>
                <Font size="30.0" />
             </font>
          </Label>
-         <ChoiceBox fx:id="chooseMusic" prefHeight="71.0" prefWidth="557.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-         <Button onAction="#OkButton" mnemonicParsing="false" prefHeight="78.0" prefWidth="353.0" text="OK" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-         <Button onAction="#BackButton" mnemonicParsing="false" prefHeight="82.0" prefWidth="341.0" text="Back" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-         <ToggleButton fx:id="toggle2" mnemonicParsing="false" onAction="#toggleButtons" prefHeight="87.0" prefWidth="694.0" text="Light Mode" toggleGroup="$modes" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+         <ChoiceBox fx:id="chooseMusic" prefHeight="71.0" prefWidth="557.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" style="-fx-font-size: 30" />
+         <Button onAction="#OkButton" mnemonicParsing="false" prefHeight="78.0" prefWidth="353.0" text="Change Music" GridPane.columnIndex="3" GridPane.rowIndex="3" style="-fx-font-size: 30"/>
+         <Button onAction="#BackButton" mnemonicParsing="false" prefHeight="82.0" prefWidth="341.0" text="Back" GridPane.columnSpan="2" GridPane.rowIndex="3" style="-fx-font-size: 30"/>
+         <ToggleButton fx:id="toggle2" mnemonicParsing="false" onAction="#toggleButtons" prefHeight="87.0" prefWidth="694.0" text="Light Mode" toggleGroup="$modes" GridPane.columnIndex="3" GridPane.rowIndex="2" style="-fx-font-size: 30"/>
       </children>
    </GridPane>
-   <Label alignment="CENTER" layoutX="641.0" layoutY="226.0" prefHeight="130.0" prefWidth="653.0" text="Settings" />
+   <Label textFill="WHITE" alignment="CENTER" layoutX="641.0" layoutY="226.0" prefHeight="130.0" prefWidth="653.0" text="Settings" >
+       <font>
+           <Font size="50.0" />
+       </font>
+   </Label>
 
     
 </Pane>

@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -24,7 +26,8 @@ public class HelloApplication extends Application {
         loadFiles();
 
         menu = new M_Intro();
-        outPutMusic = BGMusics.get(0);
+        outPutMusic = new MediaPlayer(BGMusicMedias.get(0));
+        outPutMusic.setCycleCount(-1);
         outPutMusic.setVolume(0.5);
         outPutMusic.play();
 
@@ -59,12 +62,15 @@ public class HelloApplication extends Application {
         }
 
         BGMusicFiles = new ArrayList<>();
+        BGMusicFiles.add(new File("src/main/resources/Musics/01 - Main Title (The Godfather Waltz).mp3"));
         BGMusicFiles.add(new File("src/main/resources/Musics/01 - Prologue.mp3"));
         BGMusicFiles.add(new File("src/main/resources/Musics/London Music Works - Theme From Agatha Christies Poirot.mp3"));
+        BGMusicMedias=new ArrayList<>();
+//        BGMusics = new ArrayList<>();
+        for (int i = 0; i < BGMusicFiles.size(); i++) {
 
-        BGMusics = new ArrayList<>();
-        for (File bgMusicFile : BGMusicFiles) {
-            BGMusics.add(new AudioClip(bgMusicFile.toURI().toString()));
+            BGMusicMedias.add(new Media(BGMusicFiles.get(i).toURI().toString()));
+//            BGMusics.add(new MediaPlayer(BGMusicMedias.get(i)));
         }
     }
 

@@ -56,7 +56,7 @@ public class M_SignUpMenu extends Menu {
     AA_Captcha captchaCode;
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu", new String[]{"BG-Videos\\BG-signUp.png"});
+        super("M_SignUpMenu", new String[]{"BG-Videos\\BG-signUp.png","BG-Videos\\lightmode.png"});
         captchaCode=new AA_Captcha();
 
         captchaCountLeft = 3;

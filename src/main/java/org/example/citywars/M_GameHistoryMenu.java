@@ -20,7 +20,7 @@ public class M_GameHistoryMenu extends Menu {
     private Exception exception = null;
 
     public M_GameHistoryMenu() {
-        super("M_GameHistoryMenu", new String[]{"BG-Videos\\BG1.jpg"});
+        super("M_GameHistoryMenu", new String[]{"BG-Videos\\BG1.jpg","BG-Videos\\lightmode.png"});
         gamePerPage = 7;
     }
 

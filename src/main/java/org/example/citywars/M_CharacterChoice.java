@@ -21,7 +21,7 @@ public class M_CharacterChoice extends Menu {
     ImageView imv4;
 
     public M_CharacterChoice() {
-        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg"});
+        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg","BG-Videos\\lightmode.png"});
     }
 
     @Override

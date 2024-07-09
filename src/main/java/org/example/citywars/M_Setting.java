@@ -1,5 +1,6 @@
 package org.example.citywars;
 
+import com.almasb.fxgl.audio.AudioPlayer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,12 +40,19 @@ public class M_Setting extends Menu{
         if (event.getSource()==toggle2){
             themeIndex=1;
         }
+        System.out.println(themeIndex);
+        backGroundIm.setImage(BGims.get(themeIndex));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (themeIndex==0)
+           toggle1.setSelected(true);
+        else
+            toggle2.setSelected(true);
         backGroundIm.setImage(BGims.get(themeIndex));
 
-        chooseMusic.getItems().addAll(1, 2);
+        chooseMusic.getItems().addAll(1, 2,3);
+        chooseMusic.setValue(soundIndex);
 
         volume.setBlockIncrement(outPutMusic.getVolume());
 
@@ -57,20 +66,24 @@ public class M_Setting extends Menu{
     }
     @FXML
     protected void OkButton(ActionEvent event) throws IOException {
-        outPutMusic=BGMusics.get(chooseMusic.getValue()-1);
-        if ((int)volume.getValue()==0)
-            outPutMusic.stop();
-        else
-            outPutMusic.play();
+        outPutMusic.stop();
+        soundIndex=chooseMusic.getValue()-1;
+        outPutMusic=new MediaPlayer(BGMusicMedias.get(soundIndex));
+        outPutMusic.play();
+        outPutMusic.setCycleCount(-1);
 
     }
     @FXML
     protected void BackButton(ActionEvent event) throws IOException {
-
-
+        if (lastMenu==1) {
+            HelloApplication.menu = new M_GameMainMenu();
+        }
+        else if (lastMenu==2)
+            HelloApplication.menu=new M_PauseMenu();
+        switchMenus(event);
     }
     public M_Setting(){
-        super("M_Setting", new String[]{"BG-Videos\\shopMenu.png"});
+        super("M_Setting", new String[]{"BG-Videos\\shopMenu.png","BG-Videos\\lightmode.png"});
     }
 
     @Override
