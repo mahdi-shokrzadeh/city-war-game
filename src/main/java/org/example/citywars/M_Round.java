@@ -37,12 +37,18 @@ public class M_Round extends Menu {
     private int player_one_remaining_turns = number_of_round_turns / 2;
     private int player_two_remaining_turns = number_of_round_turns / 2;
 
+    final int original_card_width = 209;
+    final int original_card_heoght = 280;
+    final int block_width = 75;
+    final int block_height = 100;
+
     private Block[][] board = new Block[2][21];
 
     @FXML
     private Pane rootElement;
 
     private TextFlow selectedCard = null;
+    private Card selected_card = null;
 
     private ImageView followMouseImage = new ImageView(
             new Image(new File("src\\main\\resources\\GameElements\\f1.png").toURI().toString()));
@@ -193,20 +199,23 @@ public class M_Round extends Menu {
             imageView.setId("cardImage_" + user_index + "_" + i);
 
             if (user_index == 1) {
-                imageView.setLayoutX(300 + i * 290);
+                imageView.setLayoutX(150 + i * (this.original_card_width + 5));
 
             } else {
-                imageView.setLayoutX(900 + i * 290);
+                imageView.setLayoutX(900 + i * (this.original_card_width + 5));
             }
 
-            if (i <= 3) {
-                imageView.setLayoutY(350 + i * 100);
-
+            if (i < 3) {
+                imageView.setLayoutY(373);
             } else {
-                imageView.setLayoutY(650 + (i - 4) * 100);
+                imageView.setLayoutY(373 + this.original_card_heoght + 10);
+                if (user_index == 1) {
 
+                    imageView.setLayoutX(150 + (i - 3) * (this.original_card_width + 5));
+                } else {
+                    imageView.setLayoutX(900 + (i - 3) * (this.original_card_width + 5));
+                }
             }
-
             addCardEventHandlers(imageView);
             rootElement.getChildren().add(imageView);
         }
@@ -220,6 +229,8 @@ public class M_Round extends Menu {
 
         imageView.setOnMouseDragged(event -> {
             if (selectedCard == imageView) {
+                chooseFollowingImage();
+                handleMeasures(selected_card.getDuration());
                 followMouseImage.setVisible(true);
                 followMouseImage.setLayoutX(event.getSceneX() + 20);
                 followMouseImage.setLayoutY(event.getSceneY() + 20);
@@ -248,12 +259,36 @@ public class M_Round extends Menu {
         });
     }
 
-    public void handleCardSelection(TextFlow imageView) {
+    public void chooseFollowingImage() {
+        followMouseImage.setImage(
+                new Image(new File("src\\main\\resources\\GameElements\\f" + this.selected_card.getDuration() + ".png")
+                        .toURI().toString()));
+    }
+
+    public void handleMeasures(int duration) {
+        followMouseImage.setFitHeight(100);
+        followMouseImage.setFitWidth(duration * this.block_width);
+    }
+
+    public void handleCardSelection(@SuppressWarnings("exports") TextFlow imageView) {
         if (selectedCard != null) {
             selectedCard.setStyle(null);
         }
         imageView.setStyle("-fx-effect: dropshadow(gaussian, green, 11, 0, 0, 0);");
         selectedCard = imageView;
+        // get the id of the selected card
+        String[] id_parts = imageView.getId().split("_");
+
+        // extarct the card index and user index
+        int card_index = id_parts[2].charAt(0) - '0';
+        int user_index = id_parts[1].charAt(0) - '0';
+
+        if (user_index == 1) {
+            selected_card = player_one_cards.get(card_index);
+        } else {
+            selected_card = player_two_cards.get(card_index);
+        }
+
         followMouseImage.setVisible(true);
     }
 
@@ -485,10 +520,10 @@ public class M_Round extends Menu {
         player_char_img.setFitWidth(430);
 
         if (user_index == 0) {
-            player_char_img.setLayoutX(100);
+            player_char_img.setLayoutX(5);
             player_char_img.setLayoutY(600);
         } else {
-            player_char_img.setLayoutX(1500);
+            player_char_img.setLayoutX(1560);
             player_char_img.setLayoutY(600);
         }
 

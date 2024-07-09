@@ -5,11 +5,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import models.GameCharacter;
+import models.Response;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import controllers.GameCharacterController;
 
 public class M_CharacterChoice extends Menu {
     File[] imageFiles;
@@ -57,13 +60,13 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh1(MouseEvent event) throws IOException {
 
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(new GameCharacter("panda"));
+            secondUser.setGameCharacter(getCharacter("panda"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else
                 HelloApplication.menu = new M_Game();
         } else {
-            loggedInUser.setGameCharacter(new GameCharacter("panda"));
+            loggedInUser.setGameCharacter(getCharacter("panda"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -90,13 +93,13 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh2(MouseEvent event) throws IOException {
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(new GameCharacter("dragon"));
+            secondUser.setGameCharacter(getCharacter("dragon"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else
                 HelloApplication.menu = new M_Game();
         } else {
-            loggedInUser.setGameCharacter(new GameCharacter("dragon"));
+            loggedInUser.setGameCharacter(getCharacter("dragon"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -124,13 +127,13 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh3(MouseEvent event) throws IOException {
 
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(new GameCharacter("robot"));
+            secondUser.setGameCharacter(getCharacter("robot"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else
                 HelloApplication.menu = new M_Game();
         } else {
-            loggedInUser.setGameCharacter(new GameCharacter("robot"));
+            loggedInUser.setGameCharacter(getCharacter("robot"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -158,13 +161,13 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh4(MouseEvent event) throws IOException {
 
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(new GameCharacter("wolf"));
+            secondUser.setGameCharacter(getCharacter("wolf"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else
                 HelloApplication.menu = new M_Game();
         } else {
-            loggedInUser.setGameCharacter(new GameCharacter("wolf"));
+            loggedInUser.setGameCharacter(getCharacter("wolf"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -187,4 +190,14 @@ public class M_CharacterChoice extends Menu {
         imv3.setOpacity(1);
         imv1.setOpacity(1);
     }
+
+    private GameCharacter getCharacter(String name) {
+        Response res = GameCharacterController.getGameCharacter(name);
+        if (res.ok) {
+            return (GameCharacter) res.body.get("character");
+        }
+        return null;
+
+    }
+
 }
