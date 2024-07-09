@@ -9,6 +9,7 @@ public class Card extends CardStruct {
     private GameCharacter character;
     private int level;
     private SpellType spellType;
+    private String imageURL;
 
     public Card() {
     }
@@ -20,6 +21,16 @@ public class Card extends CardStruct {
         damage = _damage;
         character = _character;
         level = 1;
+    }
+
+    public Card(String _name, int _price, int _duration, String _type, int _power, int _damage, int _upgradeLevel,
+            int _upgradeCost, String _desc, GameCharacter _character, String img) {
+        super(_name, _price, _duration, _type, _upgradeLevel, _upgradeCost, _desc);
+        power = _power;
+        damage = _damage;
+        character = _character;
+        level = 1;
+        imageURL = img;
     }
 
     public int getPower() {
@@ -57,6 +68,14 @@ public class Card extends CardStruct {
 
     public SpellType getSpellType() {
         return spellType;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURl(String s) {
+        imageURL = s;
     }
 
 }
