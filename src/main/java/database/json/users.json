@@ -22,9 +22,9 @@
     "pfactor" : 0.9
   },
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 2,
   "username" : "Phil",
@@ -49,9 +49,9 @@
     "pfactor" : 0.5
   },
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 3,
   "username" : "Dwaine",
@@ -72,9 +72,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 4,
   "username" : "William",
@@ -95,9 +95,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 5,
   "username" : "George1",
@@ -118,9 +118,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 6,
   "username" : "George",
@@ -141,9 +141,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 7,
   "username" : "John",
@@ -164,9 +164,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 8,
   "username" : "Barack",
@@ -187,9 +187,9 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
 }, {
   "id" : 9,
   "username" : "mahdis",
@@ -210,7 +210,30 @@
   "damage" : 0,
   "gameCharacter" : null,
   "shouldCardsBeHidden" : false,
-  "isBonusActive" : false,
+  "botLevel" : 0,
   "cardsAreStolen" : false,
-  "botLevel" : 0
+  "isBonusActive" : false
+}, {
+  "id" : 10,
+  "username" : "userKhob",
+  "password" : "Wg@4FtsE@Psu",
+  "nickname" : "Khob",
+  "email" : "s@gmail.com",
+  "role" : "user",
+  "passRecoveryQuestion" : "What is your favourite color?",
+  "passRecoveryAnswer" : "blue",
+  "level" : 1,
+  "experience" : 0,
+  "hitPoints" : 100,
+  "coins" : 0,
+  "clanID" : null,
+  "firstLogin" : true,
+  "userCardIDS" : [ ],
+  "progress" : 1,
+  "damage" : 0,
+  "gameCharacter" : null,
+  "shouldCardsBeHidden" : false,
+  "botLevel" : 0,
+  "cardsAreStolen" : false,
+  "isBonusActive" : false
 } ]

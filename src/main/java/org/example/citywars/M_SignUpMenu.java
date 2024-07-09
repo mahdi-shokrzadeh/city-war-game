@@ -1,6 +1,7 @@
 package org.example.citywars;
 
 import controllers.UserController;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,9 +10,11 @@ import models.Response;
 import models.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +27,8 @@ public class M_SignUpMenu extends Menu {
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
+    String[] Questions = { "What is your father’s name?", "What is your favourite color?", "What was the name of your first pet?" };
+
     @FXML
     Label error;
     @FXML
@@ -44,9 +49,7 @@ public class M_SignUpMenu extends Menu {
     TextField emailField;
     @FXML
     TextField nicknameField;
-    @FXML
-    ProgressBar ErrorTimer;
-    int captchaCountLeft;
+    @FXML int captchaCountLeft;
     private String securityQuestion;
     private String securityQuestionAnswer;
     private String pass; // for command line
@@ -54,6 +57,8 @@ public class M_SignUpMenu extends Menu {
 
     public M_SignUpMenu() {
         super("M_SignUpMenu", new String[]{"BG-Videos\\BG-signUp.png"});
+        captchaCode=new AA_Captcha();
+
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
@@ -170,15 +175,14 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        }  else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
+        }  else if (getIndexFromUsername(username) != -1) {
                 System.out.println("Username already exists!");
-            } else if (passwordProblem(password.trim()) != null) {
-//            System.out.println("|" + password.trim() + "|");
+        } else if (passwordProblem(password.trim()) != null) {
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
             out = "Password confirmation doesn't match!";
         } else if (!email.trim().matches("^[a-zA-Z]+@[a-zA-Z]+.com$")) {
-            out = "Incorrect format for username!";
+            out = "Incorrect format for email!";
         } else {
             out = securityQuestions;
         }
@@ -292,6 +296,13 @@ public class M_SignUpMenu extends Menu {
         }else if (questionChoice.getSelectionModel().isEmpty()) {
             error.setText("Choose your question!");
             return;
+        }else if (captchaField.getText().matches("\\D")) {
+            error.setText("Captcha answer must be number!");
+            return;
+        }
+        else if (Integer.parseInt(captchaField.getText())!=(captchaCode.getAnswer())) {
+            error.setText("Wrong answer for captcha!");
+            return;
         }
 
         String s = checkAll(usernameField.getText(),
@@ -304,12 +315,11 @@ public class M_SignUpMenu extends Menu {
             error.setText(s);
             return;
         }
-
-        pass = matcher.group("password");
-
-        Menu menu =  securityQuestionAndCaptcha(matcher.group("username").trim());
-        if( menu != null ){
-            return menu;
+        Response res = UserController.createUser(usernameField.getText(),passwordField.getText(),nicknameField.getText(),emailField.getText(),"user",questionChoice.getValue(), questionAnswerField.getText());
+        error.setText(res.message);
+        if (res.ok){
+            HelloApplication.menu = new M_LoginMenu();
+            switchMenus(event);
         }
     }
 
@@ -330,5 +340,13 @@ public class M_SignUpMenu extends Menu {
     protected void captchaButton(ActionEvent event) throws IOException {
         captchaCode =new AA_Captcha();
         captcha.setText(captchaCode.showEquation());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        backGroundIm.setImage(BGims.get(themeIndex));
+        captcha.setText(captchaCode.showEquation());
+        questionChoice.getItems().addAll(Questions);
     }
 }
