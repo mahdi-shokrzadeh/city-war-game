@@ -12,10 +12,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 3,
   "name" : "SpearOfLight",
@@ -30,10 +31,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 4,
   "name" : "StaffOfWisdom",
@@ -48,10 +50,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 5,
   "name" : "FistOfJustice",
@@ -66,10 +69,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 6,
   "name" : "VortexOfPower",
@@ -84,10 +88,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 7,
   "name" : "SharpBite",
@@ -102,11 +107,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 8,
   "name" : "HowlToMoon",
@@ -121,12 +126,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
-  
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 9,
   "name" : "PawOfSpeed",
@@ -141,11 +145,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 10,
   "name" : "Flank",
@@ -160,11 +164,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 11,
   "name" : "BackToTheWall",
@@ -179,11 +183,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 12,
   "name" : "SwordOfHonor",
@@ -198,11 +202,11 @@
   "character" : {
     "id" : 5,
     "name" : "warrior",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 13,
   "name" : "Teleportation",
@@ -217,10 +221,11 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 14,
   "name" : "UndercoverDrone",
@@ -235,10 +240,11 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 15,
   "name" : "CavalrySupport",
@@ -253,10 +259,11 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 16,
   "name" : "AwesomePunch",
@@ -271,10 +278,11 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 17,
   "name" : "LazyAttack",
@@ -289,11 +297,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 18,
   "name" : "JumpScare",
@@ -308,10 +316,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 19,
   "name" : "FireBreath",
@@ -326,10 +335,11 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 20,
   "name" : "WingSlap",
@@ -344,10 +354,11 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 21,
   "name" : "TailSlam",
@@ -362,11 +373,11 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 22,
   "name" : "MagicSlash",
@@ -381,11 +392,11 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 23,
   "name" : "FireBall",
@@ -400,11 +411,11 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 24,
   "name" : "Shield",
@@ -419,10 +430,11 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : "Shield"
+  "spellType" : "Shield",
+  "imageURL" : null
 }, {
   "id" : 25,
   "name" : "Heal",
@@ -437,11 +449,11 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Heal"
+  "spellType" : "Heal",
+  "imageURL" : null
 }, {
   "id" : 26,
   "name" : "PowerBoost",
@@ -456,10 +468,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "PowerBoost"
+  "spellType" : "PowerBoost",
+  "imageURL" : null
 }, {
   "id" : 27,
   "name" : "SpaceShift",
@@ -474,11 +487,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "SpaceShift"
+  "spellType" : "SpaceShift",
+  "imageURL" : null
 }, {
   "id" : 28,
   "name" : "Repair",
@@ -493,10 +506,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Repair"
+  "spellType" : "Repair",
+  "imageURL" : null
 }, {
   "id" : 29,
   "name" : "RoundReduce",
@@ -511,11 +525,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "RoundReduce"
+  "spellType" : "RoundReduce",
+  "imageURL" : null
 }, {
   "id" : 30,
   "name" : "Steal",
@@ -530,11 +544,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Steal"
+  "spellType" : "Steal",
+  "imageURL" : null
 }, {
   "id" : 31,
   "name" : "Attenuate",
@@ -549,11 +563,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Attenuate"
+  "spellType" : "Attenuate",
+  "imageURL" : null
 }, {
   "id" : 32,
   "name" : "Copy",
@@ -568,11 +582,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Copy"
+  "spellType" : "Copy",
+  "imageURL" : null
 }, {
   "id" : 33,
   "name" : "Hide",
@@ -587,11 +601,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Hide"
+  "spellType" : "Hide",
+  "imageURL" : null
 }, {
   "id" : 23,
   "name" : "AddSpace",
@@ -606,11 +620,11 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "AddSpace"
+  "spellType" : "AddSpace",
+  "imageURL" : null
 }, {
   "id" : 23,
   "name" : "Mirror",
@@ -625,9 +639,9 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Mirror"
-}]
+  "spellType" : "Mirror",
+  "imageURL" : null
+} ]
