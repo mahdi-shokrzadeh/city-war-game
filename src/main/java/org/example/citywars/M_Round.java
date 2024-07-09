@@ -1,8 +1,11 @@
 package org.example.citywars;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 
 import controllers.CardController;
@@ -95,6 +98,14 @@ public class M_Round extends Menu {
         }
 
         this.player_one.setDamage(total_damage);
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Random random = new Random();
+        int i = random.nextInt(BGims.size());
+        backGroundIm.setImage(BGims.get(i));
     }
 
     public void setGame(M_Game game) {
@@ -276,6 +287,7 @@ public class M_Round extends Menu {
                         timeLine(() -> {
                             if (this.game_is_finished) {
                                 System.out.println("Game is finished!");
+                                this.game.handleGameOver();
                             } else {
                                 System.out.println("Game is not finished!");
                                 this.game.showRound();
@@ -457,10 +469,14 @@ public class M_Round extends Menu {
         if (this.player_one.getHitPoints() <= 0) {
             this.game_is_finished = true;
             this.winner = this.player_two.getUsername();
+            this.game.setWinner(winner);
+            this.game.setWinnerUser(this.player_two);
             return true;
         } else if (this.player_two.getHitPoints() <= 0) {
             this.game_is_finished = true;
             this.winner = this.player_one.getUsername();
+            this.game.setWinner(winner);
+            this.game.setWinnerUser(this.player_one);
             return true;
         }
         return false;
