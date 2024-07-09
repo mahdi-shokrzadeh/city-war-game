@@ -33,6 +33,7 @@ public class M_Round extends Menu {
     private ArrayList<Card> player_one_cards = new ArrayList<Card>();
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
     private M_Game game;
+    private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
     private boolean is_player_one_turn = true;
     private int player_one_remaining_turns = number_of_round_turns / 2;
     private int player_two_remaining_turns = number_of_round_turns / 2;
@@ -575,7 +576,7 @@ public class M_Round extends Menu {
                 this.board[turn_number][starting_block_number + i].setBlockCard(card);
                 this.board[turn_number][starting_block_number + i].setBlockEmpty(false);
                 try {
-                    handleAffection(turn_number, starting_block_number + i);
+                    handleAffection(turn_number, starting_block_number + i, i == 0 ? true : false);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -594,16 +595,17 @@ public class M_Round extends Menu {
             }
 
             // if all:
-            // for (int i = 0; i < card.getDuration(); i++) {
-            // Block bl = this.board[turn_number][starting_block_number + i];
+            for (int i = 0; i < card.getDuration(); i++) {
+                Block bl = this.board[turn_number][starting_block_number + i];
+                putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(),
+                        this.is_player_one_turn ? 0 : 1,
+                        starting_block_number + i);
+            }
+
+            // Block bl = this.board[turn_number][starting_block_number];
             // putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(),
             // this.is_player_one_turn ? 0 : 1,
-            // starting_block_number + i);
-            // }
-
-            Block bl = this.board[turn_number][starting_block_number];
-            putInfInBlock(bl.getBlockPower(), bl.getBlockDamage(), this.is_player_one_turn ? 0 : 1,
-                    starting_block_number);
+            // starting_block_number);
 
             rootElement.getChildren().add(im);
 
@@ -657,6 +659,12 @@ public class M_Round extends Menu {
         Label power_label = new Label(String.valueOf(power));
         Label damage_label = new Label(String.valueOf(damage));
 
+        Block bl = this.board[turn_index][block_index];
+        if (bl.isBlockDestroyed()) {
+            power_label.setText("Des");
+            damage_label.setText(0 + "");
+        }
+
         power_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
         damage_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
         power_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 12);
@@ -664,46 +672,72 @@ public class M_Round extends Menu {
 
         power_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
         damage_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
-
         rootElement.getChildren().add(power_label);
         rootElement.getChildren().add(damage_label);
     }
 
-    public void handleAffection(int des_index, int block_number) throws Exception {
-        // if (this.board[des_index][block_number].getBlockCard() == null) {
-        // // should return if the crad is spell and has no duration!
-        // return;
-        // }
-        // Block bl = this.board[des_index][block_number];
-        // Block opponent_block = this.board[(des_index + 1) % 2][block_number];
-        // if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
-        // this.current_player.setDamage(this.current_player.getDamage() +
-        // bl.getBlockDamage());
-        // }
-        // if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
-        // User op = getOpponent(this.current_player);
-        // if (bl.getBlockPower() > opponent_block.getBlockPower()) {
-        // opponent_block.setBlockDestroyed(true);
-        // opponent_destroyed_blocks.add(opponent_block);
-        // // reduce the damage
-        // op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
+    public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
+        Label power_label = (Label) rootElement.lookup("#power_label_" + turn_index + "_" + block_index);
+        Label damage_label = (Label) rootElement.lookup("#damage_label_" + turn_index + "_" + block_index);
 
-        // } else if (bl.getBlockPower() < opponent_block.getBlockPower()) {
-        // bl.setBlockDestroyed(true);
-        // // reduce the damage
-        // this.current_player.setDamage(this.current_player.getDamage()
-        // - bl.getBlockDamage());
-        // } else {
-        // // powers are equal
-        // bl.setBlockDestroyed(true);
-        // opponent_block.setBlockDestroyed(true);
-        // // reduce the damage
-        // this.current_player.setDamage(this.current_player.getDamage()
-        // - bl.getBlockDamage());
+        Block bl = this.board[turn_index][block_index];
+        if (bl.isBlockDestroyed()) {
+            power_label.setText("Des");
+            damage_label.setText(0 + "");
+        }
 
-        // op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
+        power_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
+        damage_label.setLayoutX(this.left_board_margin + (block_index) * (this.block_width) + 27);
+        power_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 12);
+        damage_label.setLayoutY(this.top_board_margin + turn_index * (this.block_height + 10) + 55);
 
-        // }
+        power_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
+        damage_label.setStyle("-fx-text-fill: white; -fx-font-size: 19px; -fx-font-weight: bold;");
+    }
+
+    public void handleAffection(int des_index, int block_number, boolean x) throws Exception {
+        User current_player = des_index == 0 ? this.player_one : this.player_two;
+        User op = des_index == 0 ? this.player_two : this.player_one;
+        if (this.board[des_index][block_number].getBlockCard() == null) {
+            return;
+        }
+        Block bl = this.board[des_index][block_number];
+        Block opponent_block = this.board[(des_index + 1) % 2][block_number];
+        if (bl.getBlockCard().getCardType().toString().equals("Regular")) {
+            current_player.setDamage(current_player.getDamage() +
+                    bl.getBlockDamage());
+        }
+        System.out.println("HEY RUN!");
+        if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
+            if (bl.getBlockPower() > opponent_block.getBlockPower()) {
+                opponent_block.setBlockDestroyed(true);
+                opponent_destroyed_blocks.add(opponent_block);
+                // reduce the damage
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
+
+            } else if (bl.getBlockPower() < opponent_block.getBlockPower()) {
+                bl.setBlockDestroyed(true);
+                // reduce the damage
+                current_player.setDamage(current_player.getDamage()
+                        - bl.getBlockDamage());
+            } else {
+                // powers are equal
+                bl.setBlockDestroyed(true);
+                opponent_block.setBlockDestroyed(true);
+                // reduce the damage
+                current_player.setDamage(current_player.getDamage()
+                        - bl.getBlockDamage());
+                op.setDamage(op.getDamage() - opponent_block.getBlockDamage());
+
+            }
+
+        }
+
+        // update graphically
+        this.updateHitPoints();
+        this.updateTotalDameges();
+        // if (x) {
+        updateInfInBlock(bl.getBlockPower(), bl.getBlockDamage(), des_index, block_number);
         // }
     }
 
