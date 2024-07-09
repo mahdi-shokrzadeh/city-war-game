@@ -4,13 +4,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import controllers.CardController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import models.AI;
+import models.Response;
 import models.User;
 import models.card.Card;
 import models.game.Block;
@@ -38,7 +42,7 @@ public class M_Round extends Menu {
     @FXML
     private Pane rootElement;
 
-    private ImageView selectedCard = null;
+    private TextFlow selectedCard = null;
 
     private ImageView followMouseImage = new ImageView(
             new Image(new File("src\\main\\resources\\GameElements\\f1.png").toURI().toString()));
@@ -162,30 +166,45 @@ public class M_Round extends Menu {
     }
 
     private void initialUserCards() {
-        this.addImage(1, this.player_one.getIsBonusActive() ? 6 : 2);
-        this.addImage(2, this.player_two.getIsBonusActive() ? 6 : 2);
+
+        this.addImage(1, this.player_one.getIsBonusActive() ? 6 : 5);
+        this.addImage(2, this.player_two.getIsBonusActive() ? 6 : 5);
     }
 
     private void addImage(int user_index, int number_of_cards) {
-        File file = new File("src\\main\\resources\\SampleCards\\1.png");
-        Image image = new Image(file.toURI().toString());
 
         for (int i = 0; i < number_of_cards; i++) {
-            ImageView imageView = new ImageView(image);
-            imageView.setId("cardImage_" + user_index + "_" + i);
-            imageView.setFitHeight(250);
-            imageView.setFitWidth(200);
+            Card c;
+            TextFlow imageView = new TextFlow();
 
             if (user_index == 1) {
-                imageView.setX(300 + i * 300);
+                c = player_one_cards.get(i);
+                System.out.println(c.getName());
             } else {
-                imageView.setX(900 + i * 300);
+                c = player_two_cards.get(i);
+            }
+            Response res = CardController.getCardImage(c, c.getLevel());
+            if (res.ok) {
+                imageView = (TextFlow) res.body.get("textFlow");
+            } else {
+                System.out.println(res.message);
+            }
+
+            imageView.setId("cardImage_" + user_index + "_" + i);
+
+            if (user_index == 1) {
+                imageView.setLayoutX(300 + i * 290);
+
+            } else {
+                imageView.setLayoutX(900 + i * 290);
             }
 
             if (i <= 3) {
-                imageView.setY(350);
+                imageView.setLayoutY(350 + i * 100);
+
             } else {
-                imageView.setY(650);
+                imageView.setLayoutY(650 + (i - 4) * 100);
+
             }
 
             addCardEventHandlers(imageView);
@@ -193,7 +212,7 @@ public class M_Round extends Menu {
         }
     }
 
-    private void addCardEventHandlers(ImageView imageView) {
+    private void addCardEventHandlers(TextFlow imageView) {
         imageView.setOnMousePressed(event -> {
             handleCardSelection(imageView);
             event.consume();
@@ -229,7 +248,7 @@ public class M_Round extends Menu {
         });
     }
 
-    public void handleCardSelection(ImageView imageView) {
+    public void handleCardSelection(TextFlow imageView) {
         if (selectedCard != null) {
             selectedCard.setStyle(null);
         }

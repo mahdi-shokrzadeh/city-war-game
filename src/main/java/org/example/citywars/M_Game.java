@@ -555,11 +555,11 @@ public class M_Game extends Menu {
                 try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round" + ".fxml"));
                         Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
+                        Stage st = new Stage();
+                        st.setScene(scene);
                         M_Round controller = loader.getController();
                         controller.setGame(g);
-                        stage.showAndWait();
+                        st.showAndWait();
                         rounds.add(new M_Round());
 
                         // Process the result from the round controller
