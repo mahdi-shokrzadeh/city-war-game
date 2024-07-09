@@ -395,15 +395,20 @@ public class CardController {
 
         Text power = new Text(String.valueOf(card.getPower()));
         Text damage = new Text(String.valueOf(card.getDamage()));
+        Text name = new Text(String.valueOf(card.getName()));
         power.setFill(Color.WHITE);
         power.setFont(Font.font(36));
         power.setTranslateX(-200);
         power.setTranslateY(-221);
         damage.setFill(Color.WHITE);
         damage.setFont(Font.font(22));
-        damage.setTranslateX(-119);
-        damage.setTranslateY(-35);
-        TextFlow textFlow = new TextFlow(imageView, damage, power);
+        damage.setTranslateX(-118);
+        damage.setTranslateY(-34.5);
+        name.setFill(Color.WHITE);
+        name.setFont(Font.font(18));
+        name.setTranslateX(-237);
+        name.setTranslateY(-90);
+        TextFlow textFlow = new TextFlow(imageView, damage, power, name);
         textFlow.setTranslateX(150);
 
         return new Response("card image generated successfully", 200, "textFlow", textFlow);
