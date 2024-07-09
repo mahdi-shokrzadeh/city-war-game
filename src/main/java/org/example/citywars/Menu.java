@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -29,6 +30,9 @@ import java.util.regex.Pattern;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
+    static AudioClip outPutMusic;
+    static ArrayList<File> BGMusicFiles;
+    static ArrayList<AudioClip> BGMusics;
     static File[] CharImageFiles;
     static Image[] charsImages;
     static int themeIndex=0;
@@ -118,7 +122,6 @@ public abstract class Menu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
             backGroundIm.setImage(BGims.get(themeIndex));
-
     }
 
     //Control Methods
