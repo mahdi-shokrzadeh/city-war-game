@@ -31,7 +31,9 @@ import java.util.Map;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
-    static int themeIndex = 0;
+    static File[] CharImageFiles;
+    static Image[] charsImages;
+    static int themeIndex=0;
     ArrayList<File> files;
     Media media;
     MediaPlayer mediaPlayer;
@@ -79,14 +81,28 @@ public abstract class Menu implements Initializable {
 
     void switchMenus(Event event) throws IOException {
         System.out.println(HelloApplication.menu.getName());////////////////
+//        stage.setFullScreen(true);
 
         root = FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName() + ".fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle(HelloApplication.menu.getName());
         stage.getIcons().add(icon);
+//        stage.setFullScreen(true);
         stage.setScene(scene);
-        // stage.setFullScreen(true);
+        stage.show();
+    }
+    void switchMenus() throws IOException {
+        System.out.println(HelloApplication.menu.getName());////////////////
+//        stage.setFullScreen(true);
+
+        root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
+//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle(HelloApplication.menu.getName());
+        stage.getIcons().add(icon);
+//        stage.setFullScreen(true);
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -172,6 +188,11 @@ public abstract class Menu implements Initializable {
     @FXML
     protected void GoToSettingButton(ActionEvent event) throws IOException {
         HelloApplication.menu = new M_Setting();
+        switchMenus(event);
+    }
+    @FXML
+    protected void GoToGameButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Game();
         switchMenus(event);
     }
 }

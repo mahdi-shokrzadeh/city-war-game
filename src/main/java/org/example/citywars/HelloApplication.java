@@ -6,8 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
+import static org.example.citywars.Menu.CharImageFiles;
+import static org.example.citywars.Menu.charsImages;
 
 public class HelloApplication extends Application {
     public static Menu menu;
@@ -15,6 +19,8 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        loadFiles();
 
         menu = new M_Intro();
 
@@ -26,6 +32,26 @@ public class HelloApplication extends Application {
         // stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void loadFiles() {
+        CharImageFiles = new File[12];
+        CharImageFiles[0]=  new File("src/main/resources/Characters/Igoribuki.png");
+        CharImageFiles[1]=  new File("src/main/resources/Characters/Master_Masher.png");
+        CharImageFiles[2]=  new File("src/main/resources/Characters/Nahane.png");
+        CharImageFiles[3]=  new File("src/main/resources/Characters/Sensei_Pandaken.png");
+        CharImageFiles[4]=  new File("src/main/resources/Characters/DmanNormal.gif");
+        CharImageFiles[5]=  new File("src/main/resources/Characters/wolfNormal.gif");
+        CharImageFiles[6]=  new File("src/main/resources/Characters/dragonNormal.gif");
+        CharImageFiles[7]=  new File("src/main/resources/Characters/pandaNormal.gif");
+        CharImageFiles[8]=  new File("src/main/resources/Characters/DmanAttack.gif");
+        CharImageFiles[9]=  new File("src/main/resources/Characters/wolfAttack.gif");
+        CharImageFiles[10]=  new File("src/main/resources/Characters/dragonAttack.gif");
+        CharImageFiles[11]=  new File("src/main/resources/Characters/pandaAttack.gif");
+        charsImages=new Image[CharImageFiles.length];
+        for (int i = 0; i < CharImageFiles.length; i++) {
+            charsImages[i] = new Image(CharImageFiles[i].toURI().toString());
+        }
     }
 
     public static void main(String[] args) {

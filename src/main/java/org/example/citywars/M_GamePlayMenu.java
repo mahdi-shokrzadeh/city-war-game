@@ -204,8 +204,8 @@ public class M_GamePlayMenu extends Menu {
         int ai_level = loggedInUser.getProgress();
         AI AI = new AI(ai_level);
         AI.setGameCharacter(new GameCharacter("BOT"));
-        HelloApplication.menu = new M_Game();
-        // HelloApplication.menu = new M_Round();
+        HelloApplication.menu = new M_LevelMap();
+
         switchMenus(event);
     }
     @FXML

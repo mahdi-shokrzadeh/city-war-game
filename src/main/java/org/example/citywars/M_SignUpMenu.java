@@ -1,6 +1,7 @@
 package org.example.citywars;
 
 import controllers.UserController;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,9 +10,11 @@ import models.Response;
 import models.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,23 +27,38 @@ public class M_SignUpMenu extends Menu {
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
+    String[] Questions = { "What is your father’s name?", "What is your favourite color?", "What was the name of your first pet?" };
+
+    @FXML
     Label error;
+    @FXML
+    Label captcha;
+    @FXML
     TextField usernameField;
+    @FXML
     PasswordField passwordField;
-    Label password;
+    @FXML
     PasswordField passwordConfirmationField;
+    @FXML
     ChoiceBox<String> questionChoice;
+    @FXML
     TextField questionAnswerField;
+    @FXML
     TextField captchaField;
+    @FXML
     TextField emailField;
+    @FXML
     TextField nicknameField;
-    int captchaCountLeft;
+    @FXML int captchaCountLeft;
     private String securityQuestion;
     private String securityQuestionAnswer;
     private String pass; // for command line
+    AA_Captcha captchaCode;
 
     public M_SignUpMenu() {
-        super("M_SignUpMenu", new String[] { "BG-Videos\\BG-signUp.png" });
+        super("M_SignUpMenu", new String[]{"BG-Videos\\BG-signUp.png"});
+        captchaCode=new AA_Captcha();
+
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
         patterns.add(Pattern.compile(
@@ -161,15 +179,14 @@ public class M_SignUpMenu extends Menu {
             out = "Blank Field!";
         else if (!username.trim().matches("[a-zA-Z]+")) {
             out = "Incorrect format for username!";
-        } else if (getIndexFromUsername(matcher.group("username").trim()) != -1) {
-            System.out.println("Username already exists!");
+        }  else if (getIndexFromUsername(username) != -1) {
+                System.out.println("Username already exists!");
         } else if (passwordProblem(password.trim()) != null) {
-            // System.out.println("|" + password.trim() + "|");
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
             out = "Password confirmation doesn't match!";
         } else if (!email.trim().matches("^[a-zA-Z]+@[a-zA-Z]+.com$")) {
-            out = "Incorrect format for username!";
+            out = "Incorrect format for email!";
         } else {
             out = securityQuestions;
         }
@@ -258,4 +275,85 @@ public class M_SignUpMenu extends Menu {
         return -1;
     }
 
+    @FXML
+    protected void signupButton(ActionEvent event) throws IOException {
+        if (usernameField.getText().isBlank()) {
+            error.setText("Username Field is blank!");
+            return;
+        }
+        else if (passwordField.getText().isBlank()) {
+            error.setText("Password Field is blank!");
+            return;
+        }
+        else if (passwordConfirmationField.getText().isBlank()) {
+            error.setText("Confirmation Field is blank!");
+            return;
+        }else if (emailField.getText().isBlank()) {
+            error.setText("Email Field is blank!");
+            return;
+        }else if (nicknameField.getText().isBlank()) {
+            error.setText("Nickname Field is blank!");
+            return;
+        }else if (questionAnswerField.getText().isBlank()) {
+            error.setText("Answer Field is blank!");
+            return;
+        }else if (captchaField.getText().isBlank()) {
+            error.setText("Enter captcha!");
+            return;
+        }else if (questionChoice.getSelectionModel().isEmpty()) {
+            error.setText("Choose your question!");
+            return;
+        }else if (captchaField.getText().matches("\\D")) {
+            error.setText("Captcha answer must be number!");
+            return;
+        }
+        else if (Integer.parseInt(captchaField.getText())!=(captchaCode.getAnswer())) {
+            error.setText("Wrong answer for captcha!");
+            return;
+        }
+
+        String s = checkAll(usernameField.getText(),
+                passwordField.getText(),
+                passwordConfirmationField.getText(),
+                emailField.getText(),
+                nicknameField.getText());
+
+        if (!s.equals(securityQuestions)) {
+            error.setText(s);
+            return;
+        }
+        Response res = UserController.createUser(usernameField.getText(),passwordField.getText(),nicknameField.getText(),emailField.getText(),"user",questionChoice.getValue(), questionAnswerField.getText());
+        error.setText(res.message);
+        if (res.ok){
+            HelloApplication.menu = new M_LoginMenu();
+            switchMenus(event);
+        }
+    }
+
+    @FXML
+    protected void randPassButton(ActionEvent event) throws IOException {
+        String randPass= randomPassword();
+        passwordField.setText(randPass);
+        error.setText("Random Password Created!");
+    }
+    @FXML
+    protected void showPassButton(ActionEvent event) throws IOException {
+        if (passwordField.getText().isBlank())
+            error.setText("Password Field is blank!");
+        else
+            error.setText("Your Password is "+passwordField.getText());
+    }
+    @FXML
+    protected void captchaButton(ActionEvent event) throws IOException {
+        captchaCode =new AA_Captcha();
+        captcha.setText(captchaCode.showEquation());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        backGroundIm.setImage(BGims.get(themeIndex));
+        captcha.setText(captchaCode.showEquation());
+        questionChoice.getItems().addAll(Questions);
+    }
 }
