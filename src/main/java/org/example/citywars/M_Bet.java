@@ -19,7 +19,7 @@ public class M_Bet extends Menu {
     Spinner<Integer> betAmount;
 
     public M_Bet() {
-        super("M_Bet", new String[] { "BG-Videos\\bit.png" });
+        super("M_Bet", new String[]{"BG-Videos\\bit.png","BG-Videos\\lightmode.png"});
     }
 
     @FXML

@@ -4,14 +4,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.example.citywars.Menu.CharImageFiles;
-import static org.example.citywars.Menu.charsImages;
+import static org.example.citywars.Menu.*;
 
 public class HelloApplication extends Application {
     public static Menu menu;
@@ -23,6 +26,11 @@ public class HelloApplication extends Application {
         loadFiles();
 
         menu = new M_Intro();
+        outPutMusic = new MediaPlayer(BGMusicMedias.get(0));
+        outPutMusic.setCycleCount(-1);
+        outPutMusic.setVolume(0.5);
+        outPutMusic.play();
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -51,6 +59,18 @@ public class HelloApplication extends Application {
         charsImages=new Image[CharImageFiles.length];
         for (int i = 0; i < CharImageFiles.length; i++) {
             charsImages[i] = new Image(CharImageFiles[i].toURI().toString());
+        }
+
+        BGMusicFiles = new ArrayList<>();
+        BGMusicFiles.add(new File("src/main/resources/Musics/01 - Main Title (The Godfather Waltz).mp3"));
+        BGMusicFiles.add(new File("src/main/resources/Musics/01 - Prologue.mp3"));
+        BGMusicFiles.add(new File("src/main/resources/Musics/London Music Works - Theme From Agatha Christies Poirot.mp3"));
+        BGMusicMedias=new ArrayList<>();
+//        BGMusics = new ArrayList<>();
+        for (int i = 0; i < BGMusicFiles.size(); i++) {
+
+            BGMusicMedias.add(new Media(BGMusicFiles.get(i).toURI().toString()));
+//            BGMusics.add(new MediaPlayer(BGMusicMedias.get(i)));
         }
     }
 

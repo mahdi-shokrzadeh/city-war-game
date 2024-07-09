@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
-        super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png"});
+        super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
     }
 
     private void printMenu() {
@@ -20,7 +20,13 @@ public class M_GameMainMenu extends Menu {
         System.out.println("    profile");
         System.out.println("    log out");
     }
-
+    @FXML
+    protected void GoToSettingButton(ActionEvent event) throws IOException {
+        HelloApplication.menu = new M_Setting();
+        lastMenu=1;
+        switchMenus(event);
+//        System.out.println(lastMenu);
+    }
     public Menu myMethods() {
         printMenu();
         do {

@@ -36,7 +36,7 @@ public class M_GamePlayMenu extends Menu {
     Label name;
 
     public M_GamePlayMenu() {
-        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png"});
+        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png","BG-Videos\\lightmode.png"});
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
 

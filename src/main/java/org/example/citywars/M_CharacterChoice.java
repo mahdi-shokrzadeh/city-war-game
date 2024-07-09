@@ -29,18 +29,7 @@ public class M_CharacterChoice extends Menu {
     ImageView imv4;
 
     public M_CharacterChoice() {
-        super("M_CharacterChoice", new String[] { "BG-Videos\\BG1.jpg" });
-
-        imageFiles = new File[4];
-        imageFiles[0] = new File("src/main/resources/Characters/Igoribuki.png");
-        imageFiles[1] = new File("src/main/resources/Characters/Master_Masher.png");
-        imageFiles[2] = new File("src/main/resources/Characters/Nahane.png");
-        imageFiles[3] = new File("src/main/resources/Characters/Sensei_Pandaken.png");
-        charsImages = new Image[imageFiles.length];
-        for (int i = 0; i < imageFiles.length; i++) {
-            charsImages[i] = new Image(imageFiles[i].toURI().toString());
-        }
-
+        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg","BG-Videos\\lightmode.png"});
     }
 
     @Override

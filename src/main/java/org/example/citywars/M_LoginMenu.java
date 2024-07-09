@@ -45,7 +45,7 @@ public class M_LoginMenu extends Menu {
     Label title;
 
     public M_LoginMenu() {
-        super("M_LoginMenu", new String[]{"BG-Videos\\BG-login.png"});
+        super("M_LoginMenu", new String[]{"BG-Videos\\BG-login.png","BG-Videos\\lightmode.png"});
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn = false;
