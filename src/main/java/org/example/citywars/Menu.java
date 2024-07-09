@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -29,6 +30,13 @@ import java.util.regex.Pattern;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
+    static int lastMenu;
+    int soundIndex=1;
+    static MediaPlayer outPutMusic;
+    static ArrayList<File> BGMusicFiles;
+    static ArrayList<Media> BGMusicMedias;
+
+//    static ArrayList<MediaPlayer> BGMusics;
     static File[] CharImageFiles;
     static Image[] charsImages;
     static int themeIndex=0;
@@ -118,7 +126,6 @@ public abstract class Menu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
             backGroundIm.setImage(BGims.get(themeIndex));
-
     }
 
     //Control Methods
@@ -168,11 +175,7 @@ public abstract class Menu implements Initializable {
         HelloApplication.menu = new M_GameMainMenu();
         switchMenus(event);
     }
-    @FXML
-    protected void GoToSettingButton(ActionEvent event) throws IOException {
-        HelloApplication.menu = new M_Setting();
-        switchMenus(event);
-    }
+
     @FXML
     protected void GoToGameButton(ActionEvent event) throws IOException {
         HelloApplication.menu = new M_Game();
