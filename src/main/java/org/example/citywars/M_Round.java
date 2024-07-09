@@ -118,15 +118,17 @@ public class M_Round extends Menu {
             // handle graphic
             ImageView im = new ImageView(
                     new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-            im.setFitHeight(100);
-            im.setLayoutX(160 + (rand_1) * this.block_width);
+            im.setFitHeight(this.block_height);
+            im.setFitWidth(this.block_width);
+            im.setLayoutX(this.left_board_margin + (rand_1) * this.block_width);
             im.setLayoutY(this.top_board_margin);
             rootElement.getChildren().add(im);
 
             ImageView im2 = new ImageView(
                     new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-            im2.setFitHeight(100);
-            im2.setLayoutX(160 + (rand_2) * this.block_width);
+            im2.setFitHeight(this.block_height);
+            im2.setFitWidth(this.block_width);
+            im2.setLayoutX(this.left_board_margin + (rand_2) * this.block_width);
             im2.setLayoutY(this.top_board_margin + this.block_height + 10);
             rootElement.getChildren().add(im2);
         }
@@ -568,9 +570,11 @@ public class M_Round extends Menu {
             }
 
             // create copy image of followMouseImage
-            ImageView im = new ImageView(followMouseImage.getImage());
-            im.setFitHeight(100);
-            im.setLayoutX(160 + (starting_block_number) * this.block_width);
+            ImageView im = new ImageView(new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
+                    .toURI().toString());
+            im.setFitWidth(card.getDuration() * this.block_width);
+            im.setFitHeight(this.block_height);
+            im.setLayoutX(160 + (starting_block_number) * (this.block_width - 1));
             if (turn_number == 0) {
                 im.setLayoutY(this.top_board_margin);
             } else {
