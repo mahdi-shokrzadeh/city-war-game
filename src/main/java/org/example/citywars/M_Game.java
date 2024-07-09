@@ -70,7 +70,8 @@ public class M_Game extends Menu {
     ImageView timeLineWalker;
 
     public M_Game(@SuppressWarnings("exports") Stage st) {
-
+        super("M_Round", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
+                "BG-Videos\\GameBGs\\bg3.png" });
         this.st = st;
         this.player_one = loggedInUser;
         if (secondPersonNeeded) {
@@ -139,7 +140,7 @@ public class M_Game extends Menu {
     }
 
     public M_Game(User player_one, User player_two, String mode, ClanBattle battle,
-                  Clan attackerClan, Clan defenderClan) {
+            Clan attackerClan, Clan defenderClan) {
         super("M_Game");
         this.player_one = player_one;
         this.player_two = player_two;
@@ -252,7 +253,7 @@ public class M_Game extends Menu {
     public boolean startGame() {
         if (((this.mode.equals("duel") || this.mode.equals("clan"))
                 && (this.player_one.getGameCharacter() == null ||
-                this.player_two.getGameCharacter() == null))
+                        this.player_two.getGameCharacter() == null))
                 || (this.player_two.getGameCharacter() == null)) {
             System.out.println("Please select character first!");
             return false;
@@ -268,7 +269,7 @@ public class M_Game extends Menu {
         System.out.println(this.player_two.getUsername());
         System.out.println(this.player_one.getUsername());
 
-        if (!this.mode.equals("AI")) {
+        if (this.mode.equals("AI")) {
             AddCard.addCard(this.player_one_cards);
             AddCard.addCard(this.player_two_cards);
         }
@@ -292,21 +293,21 @@ public class M_Game extends Menu {
             }
         }
 
-            Response res_2 = UserCardsController.getUsersCards(this.player_two);
-            if (res_2.ok) {
-                    Object obj = res_2.body.get("cards");
-                    if (obj instanceof ArrayList<?>) {
-                            for (Object o : (ArrayList<?>) obj) {
-                                    if (o instanceof Card) {
-                                            this.player_two_cards.add((Card) o);
-                                    }
-                            }
-                    }
-                    Collections.shuffle(player_two_cards);
+        // Response res_2 = UserCardsController.getUsersCards(this.player_two);
+        // if (res_2.ok) {
+        //     Object obj = res_2.body.get("cards");
+        //     if (obj instanceof ArrayList<?>) {
+        //         for (Object o : (ArrayList<?>) obj) {
+        //             if (o instanceof Card) {
+        //                 this.player_two_cards.add((Card) o);
+        //             }
+        //         }
+        //     }
+        //     Collections.shuffle(player_two_cards);
 
-            } else {
-                    System.out.println(res_2.message);
-            }
+        // } else {
+        //     System.out.println(res_2.message);
+        // }
 
     }
 
@@ -461,7 +462,7 @@ public class M_Game extends Menu {
     public boolean startGraphicGame() {
         if (((this.mode.equals("duel"))
                 && (this.player_one.getGameCharacter() == null ||
-                this.player_two.getGameCharacter() == null))
+                        this.player_two.getGameCharacter() == null))
                 || (this.player_two.getGameCharacter() == null)) {
             System.out.println("Please select character first!");
             return false;
@@ -472,7 +473,7 @@ public class M_Game extends Menu {
 
         System.out.println("User1:" + this.player_one.getUsername() + " User2:" + this.player_two.getUsername());
         this.handleAddCardsToPlayers();
-//        showRound();
+        showRound();
         return true;
     }
 
