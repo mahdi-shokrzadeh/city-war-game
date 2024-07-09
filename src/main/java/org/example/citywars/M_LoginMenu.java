@@ -178,6 +178,11 @@ public class M_LoginMenu extends Menu {
     @FXML
     protected void loginBack(ActionEvent event) throws IOException {
         if (secondPersonNeeded) {
+            if (is_bet){
+                HelloApplication.menu = new M_Bet();
+                switchMenus(event);
+                return;
+            }
             HelloApplication.menu = new M_GamePlayMenu();
             switchMenus(event);
         }

@@ -39,7 +39,7 @@ public class M_Game extends Menu {
         private String looser_reward;
 
         // Only Class Vars
-        private int bet_amount;
+        static int bet_amount;
         private ArrayList<Round> rounds = new ArrayList<Round>();
         private User player_one;
         private User player_two;

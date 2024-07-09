@@ -42,8 +42,12 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh1 (MouseEvent event) throws IOException {
         //....
-        if (secondPersonNeeded)
-            HelloApplication.menu = new M_Game();
+        if (secondPersonNeeded) {
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
+        }
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
@@ -70,8 +74,12 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh2 (MouseEvent event) throws IOException {
         //....
-        if (secondPersonNeeded)
-            HelloApplication.menu = new M_Game();
+        if (secondPersonNeeded){
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
+        }
         else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
@@ -98,9 +106,12 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh3 (MouseEvent event) throws IOException {
         //....
-        if (secondPersonNeeded)
-            HelloApplication.menu = new M_Game();
-        else
+        if (secondPersonNeeded){
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
+        }else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
@@ -126,9 +137,12 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh4 (MouseEvent event) throws IOException {
         //....
-        if (secondPersonNeeded)
-            HelloApplication.menu = new M_Game();
-        else
+        if (secondPersonNeeded){
+            if (is_bet)
+                HelloApplication.menu = new M_Bet();
+            else
+                HelloApplication.menu = new M_Game();
+        }else
             HelloApplication.menu = new M_GamePlayMenu();
         switchMenus(event);
     }
