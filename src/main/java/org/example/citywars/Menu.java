@@ -17,6 +17,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.P_PlayMode;
 import models.User;
+import models.card.Card;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public abstract class Menu implements Initializable {
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
     protected static Map<String, Image> images;
+    protected static Card editingCard = null;
 
     public abstract Menu myMethods();
 
