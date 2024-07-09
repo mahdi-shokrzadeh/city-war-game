@@ -84,6 +84,19 @@ public abstract class Menu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    void switchMenus() throws IOException {
+        System.out.println(HelloApplication.menu.getName());////////////////
+//        stage.setFullScreen(true);
+
+        root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
+//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle(HelloApplication.menu.getName());
+        stage.getIcons().add(icon);
+//        stage.setFullScreen(true);
+        stage.setScene(scene);
+        stage.show();
+    }
     public static String passwordProblem(String s){
         if (s.isBlank())
             return "Blank Field!";
