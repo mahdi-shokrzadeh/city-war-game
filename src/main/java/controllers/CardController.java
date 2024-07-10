@@ -284,6 +284,7 @@ public class CardController {
 
         Card card = new Card(name, price, duration, existingCard.getCardType().toString(), power, damage, upgradeLevel,
                 upgradeCost, desc, gameCharacter);
+        card.setID(cardID);
         try {
             cardDB.update(card, cardID);
         } catch (Exception e) {
@@ -347,8 +348,9 @@ public class CardController {
         }
 
         Card existingCard = cardDB.getOne(cardID);
+        System.out.println("this is id: " + cardID);
         if (existingCard == null) {
-            res = new Response("card with this does name not exist exists", -409);
+            res = new Response("card with this does name not exist", -409);
             return res;
         }
 
@@ -358,6 +360,7 @@ public class CardController {
 
         Card card = new Card(name, price, duration, existingCard.getCardType().toString(), power, damage, upgradeLevel,
                 upgradeCost, desc, gameCharacter, imageURL);
+        card.setID(cardID);
         try {
             cardDB.update(card, cardID);
         } catch (Exception e) {

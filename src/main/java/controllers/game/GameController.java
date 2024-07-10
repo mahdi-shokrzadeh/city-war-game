@@ -162,6 +162,7 @@ public class GameController {
             int loserCoins = 0;
             loserReward += "+" + loserScore + " experience ";
             loserUser.setExperience(loserUser.getExperience() + loserScore);
+            loserReward += "+" + (loserLevel - loserUser.getBotLevel()) + "level ";
             for (int i = 0; i < loserLevel - loserUser.getLevel(); i++) {
                 loserUser.setLevel(loserUser.getLevel() + 1);
                 loserCoins += loserUser.getLevel() * 15;

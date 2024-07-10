@@ -13,68 +13,94 @@ import java.util.List;
 public class UserCardDB {
     private final ObjectMapper mapper;
     private List<UserCard> data;
-    public UserCardDB(){
+
+    public UserCardDB() {
         mapper = new ObjectMapper();
-        try{
+        try {
             File file = new File("./src/main/java/database/json/userCards.json");
-            if(file.length() == 0){
+            if (file.length() == 0) {
                 data = new ArrayList<>();
-            }else{
-                data = mapper.readValue(file, new TypeReference<List<UserCard>>(){});
+            } else {
+                data = mapper.readValue(file, new TypeReference<List<UserCard>>() {
+                });
             }
-        }catch (Exception e){
-            System.out.println("Exception in UserCardDB: " +e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception in UserCardDB: " + e.getMessage());
         }
     }
-    private void save(){
+
+    private void save() {
         try {
             File file = new File("./src/main/java/database/json/userCards.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
         } catch (IOException e) {
-            System.out.println("Exception in UserCardDB: " +e.getMessage());
+            System.out.println("Exception in UserCardDB: " + e.getMessage());
         }
     }
-    public int create(UserCard userCard){
+
+    public int create(UserCard userCard) {
         int id = -1;
-            if( data.isEmpty() ){
-                id = 0;
-            }else {
-                id = data.getLast().getID() + 1;
-            }
-            userCard.setID(id);
-            data.add(userCard);
-            save();
+        if (data.isEmpty()) {
+            id = 0;
+        } else {
+            id = data.getLast().getID() + 1;
+        }
+        userCard.setID(id);
+        data.add(userCard);
+        save();
         return id;
     }
-    public UserCard getOne(int id){
+
+    public UserCard getOne(int id) {
         UserCard userCard = null;
         userCard = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return userCard;
     }
-    public UserCard firstWhereEquals(int id){
+
+    public UserCard firstWhereEquals(int id) {
         UserCard userCard = null;
         userCard = data.stream().filter(o -> o.getUserID() == id).findFirst().orElse(null);
         return userCard;
     }
-    public UserCard firstWhereEquals(int userID, int cardID){
+
+    public UserCard firstWhereEquals(int userID, int cardID) {
         UserCard userCard = null;
-        userCard = data.stream().filter(o -> o.getUserID() == userID && o.getCardID() == cardID).findFirst().orElse(null);
+        userCard = data.stream().filter(o -> o.getUserID() == userID && o.getCardID() == cardID).findFirst()
+                .orElse(null);
         return userCard;
     }
-    public List<UserCard> whereEquals(int id){
+
+    public List<UserCard> whereEquals(int id) {
         List<UserCard> cards = null;
         cards = data.stream().filter(o -> o.getUserID() == id).toList();
         return cards;
     }
-    public List<UserCard> getAll(){
+
+    public List<UserCard> getAll() {
         return data;
     }
+
     public void update(UserCard userCard, int id) {
-        data.replaceAll(o -> o.getID() == id ? userCard: o);
+        data.replaceAll(o -> o.getID() == id ? userCard : o);
         save();
     }
-    public void delete(int id){
+
+    public void delete(int id) {
         data.removeIf(o -> o.getID() == id);
         save();
+    }
+
+    public void revalidate() {
+        try {
+            File file = new File("./src/main/java/database/json/userCards.json");
+            if (file.length() == 0) {
+                data = new ArrayList<>();
+            } else {
+                data = mapper.readValue(file, new TypeReference<List<UserCard>>() {
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in UserCardDB: " + e.getMessage());
+        }
     }
 }

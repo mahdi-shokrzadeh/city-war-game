@@ -147,10 +147,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="25.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#Back" prefWidth="80.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#Back" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
       <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <font>
+            <Font size="24.0" />
+         </font>
       </Button>
    </children>
 </Pane>

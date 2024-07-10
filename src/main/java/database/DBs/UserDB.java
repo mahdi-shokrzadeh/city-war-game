@@ -10,24 +10,26 @@ import models.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class UserDB {
     private final ObjectMapper mapper;
     private List<User> data;
-    public UserDB(){
+
+    public UserDB() {
         mapper = new ObjectMapper();
-        try{
+        try {
             File file = new File("./src/main/java/database/json/users.json");
-            if(file.length() == 0){
+            if (file.length() == 0) {
                 data = new ArrayList<>();
-            }else{
-                data = mapper.readValue(file, new TypeReference<List<User>>(){});
+            } else {
+                data = mapper.readValue(file, new TypeReference<List<User>>() {
+                });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Exception in UserDB: " + e.getMessage());
         }
     }
-    private void save(){
+
+    private void save() {
         try {
             File file = new File("./src/main/java/database/json/users.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, data);
@@ -35,41 +37,62 @@ public class UserDB {
             System.out.println("Exception in UserDB: " + e.getMessage());
         }
     }
-    public int create(User user){
+
+    public int create(User user) {
         int id = -1;
-            if( data.isEmpty() ){
-                id = 0;
-            }else {
-                id = data.getLast().getID() + 1;
-            }
-            user.setID(id);
-            data.add(user);
-            save();
+        if (data.isEmpty()) {
+            id = 0;
+        } else {
+            id = data.getLast().getID() + 1;
+        }
+        user.setID(id);
+        data.add(user);
+        save();
         return id;
     }
-    public User getOne(int id){
+
+    public User getOne(int id) {
         User user = null;
         user = data.stream().filter(o -> o.getID() == id).findFirst().orElse(null);
         return user;
     }
-    public User getByUserName(String name){
+
+    public User getByUserName(String name) {
         User user = null;
-        user = data.stream().filter(o -> o.getUsername().equals(name) ).findFirst().orElse(null);
+        user = data.stream().filter(o -> o.getUsername().equals(name)).findFirst().orElse(null);
         return user;
     }
-    public List<User> getAll(){
+
+    public List<User> getAll() {
         return data;
     }
+
     public void update(User user, int id) {
-        data.replaceAll(o -> o.getID() == id ? user: o);
+        data.replaceAll(o -> o.getID() == id ? user : o);
         save();
     }
-    public void delete(int id){
+
+    public void delete(int id) {
         data.removeIf(o -> o.getID() == id);
         save();
     }
-    public void deleteByUserName(String name){
-        data.removeIf(o -> o.getUsername().equals(name) );
+
+    public void deleteByUserName(String name) {
+        data.removeIf(o -> o.getUsername().equals(name));
         save();
+    }
+
+    public void revalidate() {
+        try {
+            File file = new File("./src/main/java/database/json/users.json");
+            if (file.length() == 0) {
+                data = new ArrayList<>();
+            } else {
+                data = mapper.readValue(file, new TypeReference<List<User>>() {
+                });
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in UserDB: " + e.getMessage());
+        }
     }
 }
