@@ -46,9 +46,6 @@ public class M_MyClanMenu extends Menu {
             if (res.exception != null) {
                 System.out.println(res.exception.getMessage());
             }
-        }
-        if (myClan == null) {
-            System.out.println("you don't have a clan yet, join one first");
             return new M_ClanMainMenu();
         }
         res = ClanController.getBattles(myClan.getID());
@@ -59,6 +56,7 @@ public class M_MyClanMenu extends Menu {
             if (res.exception != null) {
                 System.out.println(res.exception.getMessage());
             }
+            return new M_ClanMainMenu();
         }
         boolean shouldPlay;
         res = ClanController.getShouldPlay(loggedInUser);
@@ -77,6 +75,7 @@ public class M_MyClanMenu extends Menu {
                 String key = matcher.group("key");
                 if (myClan.getLeaderID() != loggedInUser.getID()) {
                     System.out.println("only leader can start battle");
+                    continue;
                 }
                 try {
                     res = ClanController.startBattle(loggedInUser, myClan, key);

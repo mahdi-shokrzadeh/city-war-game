@@ -18,21 +18,12 @@ public class UserCardsController {
     private static final UserCardDB ucDB = new UserCardDB();
     private static final CardDB cardDB = new CardDB();
 
-    public static Response buyCard(int userID, Card card) {
-        User user;
-        try {
-            user = userDB.getOne(userID);
-        } catch (Exception e) {
-            return new Response("an exception occurred while fetching user", -500, e);
-        }
-        if (user == null) {
-            return new Response("could not find any user with this id", -400);
-        }
+    public static Response buyCard(User user, Card card) {
         if (user.getCoins() < card.getPrice()) {
             return new Response("user does not have enough coins to buy this card", -400);
         }
 
-        UserCard userCard = new UserCard(userID, card.getID());
+        UserCard userCard = new UserCard(user.getID(), card.getID());
         int id;
         try {
             id = ucDB.create(userCard);
@@ -57,7 +48,7 @@ public class UserCardsController {
             return new Response("an exception happened while fetching user card", -500, e);
         }
         if (userCard == null) {
-            return new Response("no user card was found", -400);
+            return new Response("no user card was found", -404);
         }
         return new Response("user card fetched successfully", 200, "userCard", userCard);
     }
@@ -169,8 +160,9 @@ public class UserCardsController {
             return new Response("the user does not own this card", -401);
         }
 
+        System.out.println(userCard.getID());
         if (user.getCoins() < userCard.getLevel() * card.getUpgradeCost()) {
-            return new Response("you does not have enough coins to upgrade this card", -400);
+            return new Response("you do not have enough coins to upgrade this card", -400);
         }
         if (user.getLevel() < card.getUpgradeLevel()) {
             return new Response("you haven't reached the required level to upgrade this card", -400);

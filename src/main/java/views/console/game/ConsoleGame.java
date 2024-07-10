@@ -38,7 +38,7 @@ public class ConsoleGame {
     public static void printGameResult(String result) {
         System.out.println("--------------------");
         System.out.println("Game result: \n" + result + "\n");
-        System.out.println("Use back to main menu command to go back");
+        System.out.println("Use `back to main menu` command to go back");
         System.out.println("--------------------");
     }
 
@@ -209,6 +209,14 @@ public class ConsoleGame {
 
     public static void printSuccessfulBetSet(int bet) {
         System.out.println("Bet amount was set to " + bet + "!");
+    }
+
+    public static void printSuccessfulMirror() {
+        System.out.println("Mirror card successfully placed!");
+    }
+
+    public static void printSuccessfulAddSpecialCard() {
+        System.out.println("Special card successfully added space to your opponent!");
     }
 
 }

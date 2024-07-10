@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleNameChange" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_EditCardMenu">
+   <children>
+      <GridPane fx:id="form" layoutX="100.0" layoutY="90.0" prefHeight="664.0" prefWidth="600.0" translateY="40.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " translateY="-200.0" wrappingWidth="150.0" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price: " translateY="-160.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Power:" translateY="-120.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:" translateY="-80.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Damage:" translateY="-40.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade level: " wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField id="name" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handleNameChange" prefWidth="450.0" translateY="-200.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField id="price" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handlePriceChange" prefWidth="450.0" translateY="-160.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField id="power" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handlePowerChange" prefWidth="450.0" translateY="-120.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField id="duration" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handleDurationChange" prefWidth="450.0" translateY="-80.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField id="damage" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handleDamageChange" prefWidth="450.0" translateY="-40.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <TextField id="upgradeLevel" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handleUpgradeLevelChange" prefWidth="450.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Background: " wrappingWidth="150.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Button mnemonicParsing="false" onMouseClicked="#handleChooseFileClick" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Choose file" textFill="WHITE" translateX="150.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <ImageView fx:id="preview" fitHeight="202.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateX="-40.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" onMouseClicked="#handleAddCardClick" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: green;" text="Save changes" textFill="WHITE" translateX="60.0" translateY="10.0" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrade cost: " translateY="40.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" translateY="80.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="upgradeCost" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#handleUpgradeCostChange" prefWidth="450.0" translateY="40.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Character:" translateY="140.0" wrappingWidth="150.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Button fx:id="pandaButton" mnemonicParsing="false" onMouseClicked="#selectPanda" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Panda" textFill="WHITE" translateX="150.0" translateY="140.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="wolfButton" mnemonicParsing="false" onMouseClicked="#selectWolf" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Wolf" textFill="WHITE" translateX="265.0" translateY="140.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="warriorButton" mnemonicParsing="false" onMouseClicked="#selectWarrior" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Warrior" textFill="WHITE" translateX="385.0" translateY="140.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="dragonButton" mnemonicParsing="false" onMouseClicked="#selectDragon" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Dragon" textFill="WHITE" translateX="500.0" translateY="140.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <TextArea fx:id="description" maxHeight="-Infinity" maxWidth="-Infinity" onKeyTyped="#handleDescriptionChange" prefHeight="40.0" prefWidth="450.0" translateY="90.0" GridPane.halignment="RIGHT">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextArea>
+         </children>
+      </GridPane>
+      <TextField fx:id="searchBar" layoutX="320.0" layoutY="90.0" prefWidth="480.0" promptText="Enter the name of the card you want to edit..." translateX="-220.0" translateY="-10.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Button layoutX="645.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#handleSearch" prefWidth="100.0" style="-fx-background-color: #8900AC;" text="Search" textFill="WHITE" translateX="-45.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="25.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#Back" prefWidth="80.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
+      <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

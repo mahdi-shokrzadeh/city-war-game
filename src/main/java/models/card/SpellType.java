@@ -10,7 +10,9 @@ public enum SpellType {
     Steal,
     Attenuate,
     Copy,
-    Hide;
+    Hide,
+    AddSpace,
+    Mirror;
 
     public static boolean includes(String type) {
         boolean result = false;

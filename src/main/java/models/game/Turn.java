@@ -24,6 +24,9 @@ public class Turn {
 
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
 
+    public Turn() {
+    }
+
     public Turn(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards,
             Block[][] board) {
         this.player_one = player_one;
@@ -65,19 +68,23 @@ public class Turn {
             if (((AI) current_player).getAiLevel() == 5) {
                 ((AI) current_player).handleBoss(board);
             } else {
-                String input = ((AI) current_player).chooseTheMove(board, player_one_cards);
+                String input = ((AI) current_player).chooseTheMove(board, player_one_cards, this.round);
                 if (input.equals("No valid card to place")) {
                     ConsoleGame.printNoValidCardToPlace();
                 } else {
                     ConsoleGame.printAIChoice(input);
-                    String[] parts = input.split(" ");
-                    int card_number = Integer.parseInt(parts[3]);
-                    int block_number = Integer.parseInt(parts[6]);
-                    Card selected_card = player_one_cards.get(card_number - 1);
-                    ConsoleCard.printCard(card_number, selected_card, "normal");
-                    if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
-                        // Turn is finished
-                        ConsoleGame.printTurnIsFinished(turn_index + 1);
+                    if (!input.startsWith("Spell")) {
+                        String[] parts = input.split(" ");
+                        int card_number = Integer.parseInt(parts[3]);
+                        int block_number = Integer.parseInt(parts[6]);
+                        Card selected_card = player_one_cards.get(card_number - 1);
+                        ConsoleCard.printCard(card_number, selected_card, "normal");
+                        if (handlePutCardInBoard((turn_index) % 2, selected_card, block_number)) {
+                            // Turn is finished
+                            ConsoleGame.printTurnIsFinished(turn_index + 1);
+                            cond = true;
+                        }
+                    } else {
                         cond = true;
                     }
                 }
@@ -125,6 +132,7 @@ public class Turn {
                 }
                 // regex for -Placing card number n in block i
                 else if (input.matches("^placing card number ([1-6]) in block ([1-9]|1[0-9]|2[0-1])$")) {
+                    // else if (input.matches("^put card ([1-6]) in ([1-9]|1[0-9]|2[0-1])$")) {
                     String[] parts = input.split(" ");
                     int card_number = Integer.parseInt(parts[3]);
                     int block_number = Integer.parseInt(parts[6]);
@@ -149,7 +157,7 @@ public class Turn {
                                 ConsoleGame.printTurnIsFinished(turn_index + 1);
                                 cond = true;
                             }
-                        } else {
+                        } else if (selected_card.getCardType().toString().equals("Spell")) {
                             // SPELL action
 
                             //
@@ -157,14 +165,17 @@ public class Turn {
                             SpellAffect s = new SpellAffect(selected_card, turn_index, block_number - 1, board,
                                     current_player, this.round,
                                     player_one == current_player ? player_one_cards : player_two_cards);
-
-                            if (s.spellHandler()) {
-                                try {
-                                    handleAffection(turn_index, block_number - 1);
-                                } catch (Exception e) {
-                                    System.out.println(e);
+                            try {
+                                if (s.spellHandler()) {
+                                    try {
+                                        handleAffection(turn_index, block_number - 1);
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+                                } else {
                                 }
-                            } else {
+                            } catch (Exception e) {
+                                System.out.println(e);
                             }
                             cond = true;
                         }
@@ -225,7 +236,7 @@ public class Turn {
         this.checkBonous();
         // card.getCharacter().getPFactor()
         if (des_index == 0) {
-            if (Math.random() < 1 && !this.player_one.getIsBonusActive()
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_one.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
 
                 if (card.getCardType().toString().equals(player_one_cards.get(2).getCardType().toString())) {
@@ -236,7 +247,7 @@ public class Turn {
 
             player_one_cards.remove(card);
         } else {
-            if (Math.random() < 1 && !this.player_two.getIsBonusActive()
+            if (Math.random() < card.getCharacter().getPFactor() && !this.player_two.getIsBonusActive()
                     && card.getCardType().toString().equals("Regular")) {
                 if (card.getCardType().toString().equals(player_two_cards.get(2).getCardType().toString())) {
                     player_two_cards.get(2).setPower(player_two_cards.get(2).getPower() + 2);

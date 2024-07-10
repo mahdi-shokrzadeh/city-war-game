@@ -7,20 +7,25 @@ import com.almasb.fxgl.dev.Console;
 
 import models.card.Card;
 import models.game.Block;
+import models.game.Round;
+import models.game.SpellAffect;
 import views.console.game.ConsoleGame;
 
 public class AI extends User {
+    // Bots spell cards: SpaceShift , Repair , RoundReduce
 
     private boolean is_AI = true;
     private int ai_level;
     private Card chosenCard;
+    private Round round;
 
     public AI(int ai_level) {
         super("AI", "password", "AI", "email", "role", "recovery_pass_question", "recovery_pass_answer");
         this.ai_level = ai_level;
     }
 
-    public String chooseTheMove(Block[][] board, ArrayList<Card> AICards) {
+    public String chooseTheMove(Block[][] board, ArrayList<Card> AICards, Round round) {
+        this.round = round;
         switch (ai_level) {
             case 1:
                 return chooseRandomMove(board, AICards);
@@ -43,6 +48,14 @@ public class AI extends User {
             int startBlock = random.nextInt(board[0].length - card.getDuration() + 1);
             if (isPlaceValid(board, card, startBlock) && card.getCardType().toString().equals("Regular")) {
                 return String.format("Placing card number %d in block %d", cardIndex + 1, startBlock + 1);
+            } else if (card.getCardType().toString().equals("Spell")) {
+                SpellAffect spe = new SpellAffect(card, 0, 5, board, this, round, AICards);
+                try {
+                    spe.spellHandler();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Spell card " + card.getName() + " has been used!";
             }
         }
     }
@@ -52,10 +65,21 @@ public class AI extends User {
         while (true) {
             int cardIndex = random.nextInt(this.getIsBonusActive() ? 6 : 5);
             Card card = AICards.get(cardIndex);
-            for (int i = 0; i <= board[0].length - card.getDuration(); i++) {
-                if (isPlaceValid(board, card, i) && card.getCardType().toString().equals("Regular")) {
-                    return String.format("Placing card number %d in block %d", cardIndex + 1, i + 1);
+            if (card.getCardType().toString().equals("Regular")) {
+
+                for (int i = 0; i <= board[0].length - card.getDuration(); i++) {
+                    if (isPlaceValid(board, card, i) && card.getCardType().toString().equals("Regular")) {
+                        return String.format("Placing card number %d in block %d", cardIndex + 1, i + 1);
+                    }
                 }
+            } else if (card.getCardType().toString().equals("Spell")) {
+                SpellAffect spe = new SpellAffect(card, 0, 5, board, this, round, AICards);
+                try {
+                    spe.spellHandler();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Spell card " + card.getName() + " has been used!";
             }
         }
     }
@@ -79,6 +103,20 @@ public class AI extends User {
         for (int i = 0; i <= board[0].length - bestCard.getDuration(); i++) {
             if (isPlaceValid(board, bestCard, i) && bestCard.getCardType().toString().equals("Regular")) {
                 return String.format("Placing card number %d in block %d", AICards.indexOf(bestCard) + 1, i + 1);
+            }
+        }
+
+        // find a spell card to use
+        for (int i = 0; i <= (this.getIsBonusActive() ? 5 : 4); i++) {
+            Card card = AICards.get(i);
+            if (card.getCardType().toString().equals("Spell")) {
+                SpellAffect spe = new SpellAffect(card, 0, 5, board, this, round, AICards);
+                try {
+                    spe.spellHandler();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Spell card " + card.getName() + " has been used!";
             }
         }
 
@@ -160,6 +198,20 @@ public class AI extends User {
             bestPower = -1;
         }
 
+        // find a spell card to use
+        for (int i = 0; i <= maxCardsToConsider; i++) {
+            Card card = AICards.get(i);
+            if (card.getCardType().toString().equals("Spell")) {
+                SpellAffect spe = new SpellAffect(card, 0, 5, board, this, round, AICards);
+                try {
+                    spe.spellHandler();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "Spell card " + card.getName() + " has been used!";
+            }
+        }
+
         return "No available block to place the card";
     }
 
@@ -187,7 +239,7 @@ public class AI extends User {
             Random random = new Random();
             int random1 = random.nextInt(21);
             if (!board[0][random1].isBlockDestroyed()) {
-                int random_power = random.nextInt(7) + 3;
+                int random_power = random.nextInt(2) + 3;
                 board[0][random1].setBlockPower(board[0][random1].getBlockPower() + random_power);
                 i++;
                 ConsoleGame.printBossDecision(random1 + 1, random_power);

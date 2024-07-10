@@ -1,42 +1,8 @@
 [ {
-  "id" : 0,
-  "name" : "revolve",
+  "id" : 2,
+  "name" : "Knife Slash",
   "price" : 60,
   "duration" : 1,
-  "cardType" : "Regular",
-  "upgradeLevel" : 2,
-  "upgradeCost" : 5,
-  "desc" : "this is also a dragon",
-  "power" : 29,
-  "damage" : 50,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
-  },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 1,
-  "name" : "strike",
-  "price" : 70,
-  "duration" : 2,
-  "cardType" : "Regular",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 5,
-  "desc" : "desc",
-  "power" : 30,
-  "damage" : 40,
-  "character" : {
-    "id" : 1,
-    "name" : "dragon"
-  },
-  "level" : 1,
-  "spellType" : null
-}, {
-  "id" : 2,
-  "name" : "KnifeSlash",
-  "price" : 60,
-  "duration" : 3,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
@@ -46,15 +12,16 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 3,
-  "name" : "SpearOfLight",
+  "name" : "Spear Of Light",
   "price" : 70,
-  "duration" : 1,
+  "duration" : 2,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
@@ -64,51 +31,54 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 4,
-  "name" : "StaffOfWisdom",
+  "name" : "Staff Of Wisdom",
   "price" : 65,
-  "duration" : 2,
+  "duration" : 3,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
   "desc" : "Each time this staff hits you in the head you become wiser",
   "power" : 30,
-  "damage" : 20,
+  "damage" : 21,
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 5,
-  "name" : "FistOfJustice",
+  "name" : "Fist Of Justice",
   "price" : 70,
-  "duration" : 3,
+  "duration" : 4,
   "cardType" : "Regular",
   "upgradeLevel" : 2,
   "upgradeCost" : 50,
   "desc" : "This fist came from justice league as a gift",
   "power" : 30,
-  "damage" : 33,
+  "damage" : 32,
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 6,
-  "name" : "VortexOfPower",
+  "name" : "Vortex Of Power",
   "price" : 80,
-  "duration" : 4,
+  "duration" : 5,
   "cardType" : "Regular",
   "upgradeLevel" : 3,
   "upgradeCost" : 50,
@@ -118,15 +88,16 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 7,
-  "name" : "SharpBite",
+  "name" : "Sharp Bite",
   "price" : 50,
-  "duration" : 3,
+  "duration" : 1,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
@@ -136,14 +107,14 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 8,
-  "name" : "HowlToMoon",
+  "name" : "Howl To Moon",
   "price" : 60,
   "duration" : 5,
   "cardType" : "Regular",
@@ -155,15 +126,14 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
-  
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 9,
-  "name" : "PawOfSpeed",
+  "name" : "Paw Of Speed",
   "price" : 60,
   "duration" : 2,
   "cardType" : "Regular",
@@ -175,11 +145,11 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 10,
   "name" : "Flank",
@@ -194,14 +164,14 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 11,
-  "name" : "BackToTheWall",
+  "name" : "Back To The Wall",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
@@ -213,14 +183,14 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
-
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 12,
-  "name" : "SwordOfHonor",
+  "name" : "Sword Of Honor",
   "price" : 75,
   "duration" : 3,
   "cardType" : "Regular",
@@ -231,12 +201,12 @@
   "damage" : 36,
   "character" : {
     "id" : 5,
-    "name" : "wolf",
-    "pfactor": 0.4
-
+    "name" : "warrior",
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 13,
   "name" : "Teleportation",
@@ -251,13 +221,14 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 14,
-  "name" : "Undere",
+  "name" : "Undercover Drone",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
@@ -269,15 +240,16 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 15,
-  "name" : "CavalrySupport",
+  "name" : "Cavalry Support",
   "price" : 70,
-  "duration" : 3,
+  "duration" : 5,
   "cardType" : "Regular",
   "upgradeLevel" : 2,
   "upgradeCost" : 50,
@@ -287,15 +259,16 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 16,
-  "name" : "AwesomePunch",
+  "name" : "Awesome Punch",
   "price" : 80,
-  "duration" : 5,
+  "duration" : 2,
   "cardType" : "Regular",
   "upgradeLevel" : 3,
   "upgradeCost" : 50,
@@ -305,13 +278,14 @@
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 17,
-  "name" : "LazyAttack",
+  "name" : "Lazy Attack",
   "price" : 80,
   "duration" : 5,
   "cardType" : "Regular",
@@ -323,14 +297,14 @@
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 18,
-  "name" : "JumpScare",
+  "name" : "Jump Scare",
   "price" : 70,
   "duration" : 1,
   "cardType" : "Regular",
@@ -342,15 +316,16 @@
   "character" : {
     "id" : 5,
     "name" : "wolf",
-    "pfactor": 0.4
+    "pfactor" : 0.4
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 19,
-  "name" : "FireBreath",
+  "name" : "Fire Breath",
   "price" : 60,
-  "duration" : 3,
+  "duration" : 1,
   "cardType" : "Regular",
   "upgradeLevel" : 1,
   "upgradeCost" : 50,
@@ -360,13 +335,14 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 20,
-  "name" : "WingSlap",
+  "name" : "Wing Slap",
   "price" : 50,
   "duration" : 2,
   "cardType" : "Regular",
@@ -378,13 +354,14 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 21,
-  "name" : "TailSlam",
+  "name" : "Tail Slam",
   "price" : 50,
   "duration" : 3,
   "cardType" : "Regular",
@@ -396,14 +373,14 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 22,
-  "name" : "MagicSlash",
+  "name" : "Magic Slash",
   "price" : 70,
   "duration" : 4,
   "cardType" : "Regular",
@@ -415,14 +392,14 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
   "id" : 23,
-  "name" : "FireBall",
+  "name" : "Fire Ball",
   "price" : 80,
   "duration" : 5,
   "cardType" : "Regular",
@@ -434,13 +411,13 @@
   "character" : {
     "id" : 1,
     "name" : "dragon",
-    "pfactor": 0.8
-
+    "pfactor" : 0.8
   },
   "level" : 1,
-  "spellType" : null
+  "spellType" : null,
+  "imageURL" : null
 }, {
-  "id" : 23,
+  "id" : 24,
   "name" : "Shield",
   "price" : 80,
   "duration" : 1,
@@ -448,17 +425,18 @@
   "upgradeLevel" : 1,
   "upgradeCost" : 1,
   "desc" : "A shield that defends against the enemy's attack preventing hp loss",
-  "power" : 0,
+  "power" : 999,
   "damage" : 0,
   "character" : {
     "id" : 3,
     "name" : "warrior",
-    "pfactor": 0.6
+    "pfactor" : 0.6
   },
   "level" : 1,
-  "spellType" : "Shield"
+  "spellType" : "Shield",
+  "imageURL" : "src/main/resources/Cards/Shield.png"
 }, {
-  "id" : 23,
+  "id" : 25,
   "name" : "Heal",
   "price" : 80,
   "duration" : 1,
@@ -466,19 +444,19 @@
   "upgradeLevel" : 1,
   "upgradeCost" : 1,
   "desc" : "Replanishes an amount of player's hp",
-  "power" : 0,
+  "power" : 999,
   "damage" : 0,
   "character" : {
     "id" : 0,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Heal"
+  "spellType" : "Heal",
+  "imageURL" : "src/main/resources/Cards/Heal.png"
 }, {
-  "id" : 23,
-  "name" : "PowerBoost",
+  "id" : 26,
+  "name" : "Power Boost",
   "price" : 80,
   "duration" : 1,
   "cardType" : "Spell",
@@ -490,12 +468,13 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "PowerBoost"
+  "spellType" : "PowerBoost",
+  "imageURL" : "src/main/resources/Cards/PowerBoost.png"
 }, {
-  "id" : 23,
+  "id" : 27,
   "name" : "SpaceShift",
   "price" : 80,
   "duration" : 1,
@@ -508,13 +487,13 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "SpaceShift"
+  "spellType" : "SpaceShift",
+  "imageURL" : "src/main/resources/Cards/SpaceShift.png"
 }, {
-  "id" : 23,
+  "id" : 28,
   "name" : "Repair",
   "price" : 80,
   "duration" : 1,
@@ -527,13 +506,14 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Repair"
+  "spellType" : "Repair",
+  "imageURL" : "src/main/resources/Cards/Repair.png"
 }, {
-  "id" : 23,
-  "name" : "RoundReduce",
+  "id" : 29,
+  "name" : "Round Reduce",
   "price" : 80,
   "duration" : 1,
   "cardType" : "Spell",
@@ -545,32 +525,13 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "RoundReduce"
+  "spellType" : "RoundReduce",
+  "imageURL" : "src/main/resources/Cards/RoundReduce.png"
 }, {
-  "id" : 23,
-  "name" : "Steal",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Steals a card from opponents hand",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda",
-    "pfactor": 0.9
-
-  },
-  "level" : 1,
-  "spellType" : "Steal"
-}, {
-  "id" : 23,
+  "id" : 31,
   "name" : "Attenuate",
   "price" : 80,
   "duration" : 1,
@@ -583,32 +544,13 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Attenuate"
+  "spellType" : "Attenuate",
+  "imageURL" : "src/main/resources/Cards/Attenuate.png"
 }, {
-  "id" : 23,
-  "name" : "Copy",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Copies",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda",
-    "pfactor": 0.9
-
-  },
-  "level" : 1,
-  "spellType" : "Copy"
-}, {
-  "id" : 23,
+  "id" : 33,
   "name" : "Hide",
   "price" : 80,
   "duration" : 1,
@@ -621,9 +563,85 @@
   "character" : {
     "id" : 1,
     "name" : "panda",
-    "pfactor": 0.9
-
+    "pfactor" : 0.9
   },
   "level" : 1,
-  "spellType" : "Hide"
+  "spellType" : "Hide",
+  "imageURL" : null
+}, {
+  "id" : 23,
+  "name" : "Add Space",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Adds Space",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "AddSpace",
+  "imageURL" : null
+}, {
+  "id" : 23,
+  "name" : "Mirror",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Mirrors damage",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "Mirror",
+  "imageURL" : null
+}, {
+  "id" : 32,
+  "name" : "Copy",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Copies",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "Copy",
+  "imageURL" : null
+}, {
+  "id" : 30,
+  "name" : "Steal",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Steals a card from opponents hand",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "Steal",
+  "imageURL" : null
 }]

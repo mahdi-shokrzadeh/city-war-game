@@ -14,11 +14,13 @@ module org.example.citywars {
     requires com.almasb.fxgl.all;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
+    requires javafx.base;
 
     opens org.example.citywars;
-    opens models to com.fasterxml.jackson.databind;
-    opens models.card to com.fasterxml.jackson.databind;
+    opens models;
     opens models.game to com.fasterxml.jackson.databind;
+    opens models.card;
+
     exports org.example.citywars;
     exports models to com.fasterxml.jackson.databind;
     exports models.card to com.fasterxml.jackson.databind;

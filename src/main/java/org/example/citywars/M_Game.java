@@ -1,7 +1,13 @@
 package org.example.citywars;
 
-import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Formatter;
+import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -20,10 +26,10 @@ import models.GameCharacter;
 import models.Response;
 import models.User;
 import models.card.Card;
+import models.game.AddCard;
 import views.console.game.ConsoleGame;
 
 public class M_Game extends Menu {
-
 
         private int id;
         private int player_one_id;
@@ -56,26 +62,28 @@ public class M_Game extends Menu {
         ImageView timeLineWalker;
 
         public M_Game() {
-                super("M_Game", new String[]{"BG-Videos\\GameBGs\\bg1.png","BG-Videos\\GameBGs\\bg2.png","BG-Videos\\GameBGs\\bg3.png"});
+                super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
+                                "BG-Videos\\GameBGs\\bg3.png" });
                 this.player_one = loggedInUser;
-                if (secondPersonNeeded){
+                if (secondPersonNeeded) {
                         this.player_two = secondUser;
-                        if (is_bet){
-                                mode="bet";
-                        }else {
-                                mode="duel";
+                        if (is_bet) {
+                                mode = "bet";
+                        } else {
+                                mode = "duel";
                         }
-                }else
-                        mode="AI";
+                } else
+                        mode = "AI";
         }
-
 
         public M_Game(User player_one, User player_two, String mode) {
                 super("M_Game");
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
@@ -107,20 +115,24 @@ public class M_Game extends Menu {
         }
 
         public M_Game(User player_one, User player_two, String mode, ClanBattle battle,
-                      Clan attackerClan, Clan defenderClan) {
+                        Clan attackerClan, Clan defenderClan) {
                 super("M_Game");
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
-
+                this.battle = battle;
+                this.defenderClan = defenderClan;
+                this.attackerClan = attackerClan;
                 ConsoleGame.printGreetings();
-                this.handleAddCardsToPlayers();
+                // this.handleAddCardsToPlayers();
         }
 
         // not related to me :)
@@ -128,7 +140,9 @@ public class M_Game extends Menu {
                 super("M_Game");
                 this.player_one = player_one;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 // rounds.add(new Round(player_one, player_two, player_one_cards,
                 // player_two_cards));
@@ -160,7 +174,7 @@ public class M_Game extends Menu {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-                Random random= new Random();
+                Random random = new Random();
                 int i = random.nextInt(BGims.size());
                 backGroundIm.setImage(BGims.get(i));
         }
@@ -247,8 +261,9 @@ public class M_Game extends Menu {
         }
 
         public boolean startGame() {
-                if ((this.mode.equals("duel") && (this.player_one.getGameCharacter() == null ||
-                                this.player_two.getGameCharacter() == null))
+                if (((this.mode.equals("duel") || this.mode.equals("clan"))
+                                && (this.player_one.getGameCharacter() == null ||
+                                                this.player_two.getGameCharacter() == null))
                                 || (this.player_two.getGameCharacter() == null)) {
                         System.out.println("Please select character first!");
                         return false;
@@ -339,79 +354,9 @@ public class M_Game extends Menu {
         }
 
         public void handleAddCardsToPlayers() {
-
-                player_one_cards.add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "desc1",
-                                new GameCharacter("c1")));
-
-                player_one_cards
-                                .add(new Card("Water", 0, 4, "Regular", 45, 35, 1, 0, "water description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Earth", 0, 3, "Regular", 30, 25, 1, 0, "earth description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Air", 0, 2, "Regular", 25, 20, 1, 0, "air description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Fire324", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(
-                                new Card("Waterdsff", 0, 3, "Regular", 55, 15, 1, 0, "water description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Dragon", 0, 5, "Regular", 70, 50, 1, 0, "dragon description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Wizard", 0, 4, "Regular", 45, 35, 1, 0, "wizard description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Knight", 0, 3, "Regular", 30, 25, 1, 0, "knight description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Archer", 0, 2, "Regular", 25, 20, 1, 0, "archer description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(new Card("Mega Knight", 0, 5, "Regular", 70, 50, 1, 0,
-                                "mega knight description",
-                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Sparky", 0, 6, "Regular", 100, 70, 1, 0, "sparky description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Giant", 0, 4, "Regular", 45, 35, 1, 0, "giant description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Goblin", 0, 3, "Regular", 30, 25, 1, 0, "goblin description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Minion", 0, 2, "Regular", 25, 20, 1, 0, "minion description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Pekka", 0, 5, "Regular", 70, 50, 1, 0, "pekka description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(
-                                new Card("Hog Rider", 0, 4, "Regular", 45, 35, 1, 0, "hog rider description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(
-                                new Card("Valkyrie", 0, 3, "Regular", 30, 25, 1, 0, "valkyrie description",
-                                                new GameCharacter("c1")));
-                player_one_cards
-                                .add(new Card("Witch", 0, 2, "Regular", 25, 20, 1, 0, "witch description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(new Card("Lava Hound", 0, 5, "Regular", 70, 50, 1, 0,
-                                "lava hound description",
-                                new GameCharacter("c1")));
-                player_one_cards.add(
-                                new Card("Balloon", 0, 4, "Regular", 45, 35, 1, 0, "balloon description",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(new Card("Baby Dragon", 0, 3, "Regular", 30, 25, 1, 0,
-                                "baby dragon description",
-                                new GameCharacter("c1")));
-                player_one_cards.add(
-                                new Card("Giant Skeleton", 0, 2, "Regular", 25, 20, 1, 0, "giantskeletondescription",
-                                                new GameCharacter("c1")));
-                player_one_cards.add(new Card("Barbarians", 0, 5, "Regular", 70, 50, 1, 0,
-                                "barbarians description",
-                                new GameCharacter("c1")));
+                if (this.mode.equals("AI")) {
+                        AddCard.addCard(this.player_one_cards);
+                }
 
                 // player_two_cards
                 // .add(new Card("Fire", 0, 1, "Regular", 20, 15, 1, 0, "fire description",
@@ -528,7 +473,6 @@ public class M_Game extends Menu {
                 // from database
                 Response res_1 = UserCardsController.getUsersCards(this.player_one);
                 if (res_1.ok) {
-                        // this.player_one_cards = (ArrayList<Card>) res_1.body.get("userCard");
                         Object obj = res_1.body.get("cards");
                         if (obj instanceof ArrayList<?>) {
                                 for (Object o : (ArrayList<?>) obj) {
@@ -537,13 +481,14 @@ public class M_Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_one_cards);
+
                 } else {
                         System.out.println(res_1.exception.getMessage());
                 }
 
                 Response res_2 = UserCardsController.getUsersCards(this.player_two);
                 if (res_2.ok) {
-                        // this.player_two_cards = (ArrayList<Card>) res_2.body.get("userCard");
                         Object obj = res_2.body.get("cards");
                         if (obj instanceof ArrayList<?>) {
                                 for (Object o : (ArrayList<?>) obj) {
@@ -552,6 +497,8 @@ public class M_Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_two_cards);
+
                 } else {
                         System.out.println(res_2.message);
                 }
