@@ -72,8 +72,10 @@ public class M_GameOverMenu extends Menu {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        String winnerRewardRaw = "Flank: +1 level / User: +135 experience +2 level +25 hitpoints +50 coins"; // game.getwinnerreward
-        String loserRewardRaw = "Flank: +1 level / User: +135 experience +2 level +25 hitpoints +50 coins"; // game.getloserreward
+        String winnerRewardRaw = game.getWinnerReward();// "Flank: +1 level / User: +135 experience +2 level +25
+                                                        // hitpoints +50 coins"; // game.getwinnerreward
+        String loserRewardRaw = game.getLoserReward();// "Flank: +1 level / User: +135 experience +2 level +25 hitpoints
+                                                      // +50 coins"; // game.getloserreward
         String winnerReward = "";
         String loserReward = "";
 
