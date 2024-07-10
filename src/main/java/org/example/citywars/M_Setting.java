@@ -54,7 +54,7 @@ public class M_Setting extends Menu{
         chooseMusic.getItems().addAll(1, 2,3);
         chooseMusic.setValue(soundIndex);
 
-        volume.setBlockIncrement(outPutMusic.getVolume());
+        volume.setValue(outPutMusic.getVolume()*100);
 
         volume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override

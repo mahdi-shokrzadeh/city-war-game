@@ -14,7 +14,7 @@ import org.example.citywars.M_LoginMenu;
 import org.example.citywars.Menu;
 
 public class UserController {
-    private static final UserDB userDB = new UserDB();
+    public static final UserDB userDB = new UserDB();
     private static final CardDB cardDB = new CardDB();
     private static final UserCardDB ucDB = new UserCardDB();
 
