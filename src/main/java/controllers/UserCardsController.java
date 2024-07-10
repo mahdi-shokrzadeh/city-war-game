@@ -24,6 +24,7 @@ public class UserCardsController {
         }
 
         UserCard userCard = new UserCard(user.getID(), card.getID());
+        ucDB.revalidate();
         int id;
         try {
             id = ucDB.create(userCard);
@@ -31,6 +32,7 @@ public class UserCardsController {
             return new Response("an exception happened while creating user card", -500, e);
         }
         user.addUserCardID(id);
+        user.setCoins(user.getCoins() - card.getPrice());
         try {
             userDB.update(user, user.getID());
         } catch (Exception e) {
@@ -41,6 +43,7 @@ public class UserCardsController {
     }
 
     public static Response getUserCard(int userID, int cardID) {
+        ucDB.revalidate();
         UserCard userCard = null;
         try {
             userCard = ucDB.firstWhereEquals(userID, cardID);
@@ -160,7 +163,6 @@ public class UserCardsController {
             return new Response("the user does not own this card", -401);
         }
 
-        System.out.println(userCard.getID());
         if (user.getCoins() < userCard.getLevel() * card.getUpgradeCost()) {
             return new Response("you do not have enough coins to upgrade this card", -400);
         }
@@ -172,6 +174,13 @@ public class UserCardsController {
         }
         if (userCard.getLevel() < 3) {
             userCard.setLevel(userCard.getLevel() + 1);
+        }
+
+        try {
+            user.setCoins(user.getCoins() - userCard.getLevel() * card.getUpgradeCost());
+            userDB.update(user, user.getID());
+        } catch (Exception e) {
+            return new Response("an exception happened while saving user", -500, e);
         }
 
         try {
