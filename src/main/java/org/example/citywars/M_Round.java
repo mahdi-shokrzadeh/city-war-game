@@ -666,38 +666,38 @@ public class M_Round extends Menu {
         imageFiles[5] = new File("src/main/resources/Characters/DmanAttack.gif");
 
         ImageView player_char_img;
-        if(user instanceof AI){
-            if(((AI)user).getAiLevel() == 5){
+        if (user instanceof AI) {
+            if (((AI) user).getAiLevel() == 5) {
                 player_char_img = new ImageView(new Image(imageFiles[5].toURI().toString()));
 
-            }else{
+            } else {
                 player_char_img = new ImageView(new Image(imageFiles[4].toURI().toString()));
             }
-        }else{
+        } else {
 
             switch (user.getGameCharacter().getID()) {
                 case 0:
                     player_char_img = new ImageView(new Image(imageFiles[0].toURI().toString()));
                     break;
-    
+
                 case 1:
                     player_char_img = new ImageView(new Image(imageFiles[1].toURI().toString()));
                     break;
-    
+
                 case 2:
                     player_char_img = new ImageView(new Image(imageFiles[2].toURI().toString()));
                     break;
-    
+
                 default:
                     player_char_img = new ImageView(new Image(imageFiles[3].toURI().toString()));
                     break;
             }
         }
-        player_char_img.setFitHeight(430);
-        player_char_img.setFitWidth(430);
+        player_char_img.setFitHeight(410);
+        player_char_img.setFitWidth(410);
 
         if (user_index == 0) {
-            player_char_img.setLayoutX(5);
+            player_char_img.setLayoutX(0);
             player_char_img.setLayoutY(600);
         } else {
             player_char_img.setLayoutX(1560);
