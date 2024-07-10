@@ -42,9 +42,10 @@ public class M_GameOverMenu extends Menu {
         super("M_GameOverMenu");
     }
 
-    public M_GameOverMenu(SimpleGame simpleGame) {
+    public M_GameOverMenu(String wr, String lr) {
         super("M_GameOverMenu");
-        game = simpleGame;
+        winner_reward = wr;
+        looser_reward = lr;
     }
 
     public M_GameOverMenu(User winner, String winner_reward, String looser_reward) {
@@ -72,10 +73,10 @@ public class M_GameOverMenu extends Menu {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        String winnerRewardRaw = game.getWinnerReward();// "Flank: +1 level / User: +135 experience +2 level +25
-                                                        // hitpoints +50 coins"; // game.getwinnerreward
-        String loserRewardRaw = game.getLoserReward();// "Flank: +1 level / User: +135 experience +2 level +25 hitpoints
-                                                      // +50 coins"; // game.getloserreward
+        String winnerRewardRaw = winner_reward;// "Flank: +1 level / User: +135 experience +2 level +25
+                                               // hitpoints +50 coins"; // game.getwinnerreward
+        String loserRewardRaw = looser_reward;// "Flank: +1 level / User: +135 experience +2 level +25 hitpoints
+                                              // +50 coins"; // game.getloserreward
         String winnerReward = "";
         String loserReward = "";
 
