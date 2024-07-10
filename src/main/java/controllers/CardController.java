@@ -3,6 +3,8 @@ package controllers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.almasb.fxgl.ui.Position;
@@ -379,9 +381,6 @@ public class CardController {
     }
 
     public static Response getCardImage(Card card, int level) {
-        if (card.getCardType().toString().equals("Spell")) {
-            return new Response("", 200);
-        }
         File file = null;
         if (card.getImageURL() == null) {
             file = new File("src/main/resources/Cards/" + card.getCharacter().getName() + "_d"
@@ -429,7 +428,13 @@ public class CardController {
         hBox.setMinHeight(30);
         hBox.setMaxHeight(30);
         hBox.setId("hBox");
-        TextFlow textFlow = new TextFlow(imageView, damage, power, hBox);
+        TextFlow textFlow = null;
+
+        if (card.getCardType().toString().equals("Regular")) {
+            textFlow = new TextFlow(imageView, damage, power, hBox);
+        } else if (card.getCardType().toString().equals("Spell")) {
+            textFlow = new TextFlow(imageView, hBox);
+        }
 
         return new Response("card image generated successfully", 200, "textFlow", textFlow);
     }
