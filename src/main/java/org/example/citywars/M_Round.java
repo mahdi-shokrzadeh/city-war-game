@@ -724,6 +724,7 @@ public class M_Round extends Menu {
         } else {
             player_char_img.setLayoutX(1560);
             player_char_img.setLayoutY(600);
+            player_char_img.setScaleX(-1);
         }
 
         rootElement.getChildren().add(player_char_img);

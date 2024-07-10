@@ -475,8 +475,8 @@ public class M_Game extends Menu {
             // game over menu
         } catch (Exception e) {
             try {
-                // HelloApplication.menu = new M_GameOverMenu(this,winner_reward, looser_reward);
-                // switchMenus();
+                HelloApplication.menu = new M_GameOverMenu(this.winner_reward, this.looser_reward);
+                switchMenus();
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
