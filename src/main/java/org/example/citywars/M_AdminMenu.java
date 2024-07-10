@@ -59,6 +59,13 @@ public class M_AdminMenu extends Menu {
         switchMenus(event);
     }
 
+    @FXML
+    public void logout(Event event) throws IOException {
+        loggedInUser = null;
+        HelloApplication.menu = new M_Intro();
+        switchMenus(event);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
