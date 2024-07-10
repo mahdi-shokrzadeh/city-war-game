@@ -198,9 +198,7 @@ public class M_AddCardMenu extends Menu {
             alert.show();
             return;
         }
-        User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com",
-                "admin", "recQuestion", "recAnswer");
-        Response res = CardController.createCard(_user, cardName,
+        Response res = CardController.createCard(loggedInUser, cardName,
                 Integer.parseInt(cardPrice),
                 Integer.parseInt(cardDuration), "Regular",
                 Integer.parseInt(cardPower), Integer.parseInt(cardDamage),

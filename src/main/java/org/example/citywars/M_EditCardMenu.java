@@ -202,9 +202,7 @@ public class M_EditCardMenu extends Menu {
             alert.show();
             return;
         }
-        User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion", "recAnswer");
-        System.out.println(card.getID());
-        Response res = CardController.editCard(_user, card.getID(), cardName,
+        Response res = CardController.editCard(loggedInUser, card.getID(), cardName,
                 Integer.parseInt(cardPrice),
                 Integer.parseInt(cardDuration),
                 Integer.parseInt(cardPower), Integer.parseInt(cardDamage),
