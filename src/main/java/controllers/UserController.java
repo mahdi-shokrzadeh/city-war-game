@@ -118,6 +118,88 @@ public class UserController {
 
         try {
             User user = new User(username, password, nickname, email, role, passRecoveryQuestion, passRecoveryAnswer);
+            user.setProfileID(0);
+            userDB.create(user);
+        } catch (Exception e) {
+            return new Response("an exception occurred while creating user", -500, e);
+        }
+        return new Response("user successfully created", 201);
+
+    }
+
+    public static Response createUser(String username, String password, String nickname, String email, String role,
+            String passRecoveryQuestion, String passRecoveryAnswer, int profileID) {
+        if (username.isBlank()) {
+            return new Response("username can not be blank", -422);
+        }
+        if (!Pattern.compile("^[a-zA-Z0-9_]+$").matcher(username).find()) {
+            return new Response(
+                    "username should only contain lower case letters, upper case letters, numbers and under score",
+                    -422);
+        }
+        Response res = sudoGetAllUsers();
+        List<User> allUsers = null;
+        if (res.ok) {
+            allUsers = (List<User>) res.body.get("allUsers");
+        }
+        boolean duplicateUserName = false;
+        if (allUsers != null) {
+            for (User u : allUsers) {
+                if (u.getUsername().equals(username)) {
+                    duplicateUserName = true;
+                    break;
+                }
+            }
+        }
+        if (duplicateUserName) {
+            return new Response("this username has already been taken", -422);
+        }
+
+        if (password.isBlank()) {
+            return new Response("password can not be blank", -422);
+        }
+        if (password.length() < 8) {
+            return new Response("password must be at least 8 characters long", -422);
+        }
+        if (!Pattern.compile("[a-z]+").matcher(password).find()) {
+            return new Response("password must have at least one lower case letter", -422);
+        }
+        if (!Pattern.compile("[A-Z]+").matcher(password).find()) {
+            return new Response("password must have at least one upper case letter", -422);
+        }
+        if (!Pattern.compile("[0-9]+").matcher(password).find()) {
+            return new Response("password must have at least one digit", -422);
+        }
+        if (!Pattern.compile("[!%@#$^*&\\-+=_/;'.,~]+").matcher(password).find()) {
+            return new Response("password must contain at least one special character", -422);
+        }
+
+        if (nickname.isBlank()) {
+            return new Response("nickname can not be blank", -422);
+        }
+
+        if (email.isBlank()) {
+            return new Response("email can not be blank", -422);
+        }
+        if (!Pattern.compile("^[a-zA-Z0-9._]+@[a-z]+\\.[a-z]+$").matcher(email).find()) {
+            return new Response("invalid email format", -422);
+        }
+
+        if (passRecoveryQuestion.isBlank()) {
+            return new Response("password recovery question can not be blank", -422);
+        }
+
+        if (passRecoveryAnswer.isBlank()) {
+            return new Response("password recovery answer can not be blank", -422);
+        }
+
+        if (profileID < 0 || profileID > 4) {
+            return new Response("invalid profile id", -422);
+        }
+
+        try {
+            User user = new User(username, password, nickname, email, role, passRecoveryQuestion, passRecoveryAnswer);
+            user.setProfileID(profileID);
             userDB.create(user);
         } catch (Exception e) {
             return new Response("an exception occurred while creating user", -500, e);
@@ -142,6 +224,7 @@ public class UserController {
     }
 
     public static Response getByID(int id) {
+        userDB.revalidate();
         User user = null;
         try {
             user = userDB.getOne(id);
@@ -453,6 +536,25 @@ public class UserController {
         }
 
         return new Response("email updated successfully", 200);
+    }
+
+    public static Response editProfileID(int userID, int profileID) {
+        User user = null;
+        try {
+            user = userDB.getOne(userID);
+        } catch (Exception e) {
+            return new Response("an exception happened while fetching user", -500, e);
+        }
+        if (user == null) {
+            return new Response("user not found", -400);
+        }
+        user.setProfileID(profileID);
+        try {
+            userDB.update(user, userID);
+        } catch (Exception e) {
+            return new Response("an exception happened while saving user", -500, e);
+        }
+        return new Response("proifle updated successfully", 200);
     }
 
 }

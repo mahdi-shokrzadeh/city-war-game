@@ -39,15 +39,17 @@ public class M_RemoveCardMenu extends Menu {
         Response res = CardController.getCardByName(input);
         if (res.ok) {
             User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion", "recAnswer");
-            CardController.removeCard(_user, ((Card) res.body.get("card")));
+            res = CardController.removeCard(_user, ((Card) res.body.get("card")));
+            alert.setAlertType(AlertType.INFORMATION);
         } else {
             alert.setAlertType(AlertType.ERROR);
-            alert.setContentText(res.message);
-            alert.show();
+
             if (res.exception != null) {
                 System.out.println(res.exception.getMessage());
             }
         }
+        alert.setContentText(res.message);
+        alert.show();
     }
 
     public void Back(Event event) throws IOException {

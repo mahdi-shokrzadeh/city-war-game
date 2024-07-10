@@ -67,8 +67,6 @@ public class M_EditCardMenu extends Menu {
     }
 
     public void handleNameChange(Event event) {
-        System.out.println("this is target: " + event.getTarget().getClass() + "/" + event.getEventType() + "/"
-                + event.getSource().toString());
         TextField target = (TextField) event.getTarget();
         cardName = target.getText();
     }
@@ -204,10 +202,14 @@ public class M_EditCardMenu extends Menu {
             return;
         }
         User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion", "recAnswer");
-        Response res = CardController.editCard(_user, card.getID(), cardName, Integer.parseInt(cardPrice),
+        System.out.println(card.getID());
+        Response res = CardController.editCard(_user, card.getID(), cardName,
+                Integer.parseInt(cardPrice),
                 Integer.parseInt(cardDuration),
-                Integer.parseInt(cardPower), Integer.parseInt(cardDamage), Integer.parseInt(cardUpgradeLevel),
-                Integer.parseInt(cardUpgradeCost), cardDescription, cardCharacter, uploadedFile.getName());
+                Integer.parseInt(cardPower), Integer.parseInt(cardDamage),
+                Integer.parseInt(cardUpgradeLevel),
+                Integer.parseInt(cardUpgradeCost), cardDescription, cardCharacter,
+                "src/main/resources/Cards/" + uploadedFile.getName());
         if (res.ok) {
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("card edited successfully");

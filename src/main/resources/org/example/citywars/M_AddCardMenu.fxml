@@ -135,6 +135,12 @@
                </cursor></Button>
          </children>
       </GridPane>
-      <Button layoutX="24.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#Back" prefWidth="80.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE" />
+      <Button layoutX="24.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#Back" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </Pane>

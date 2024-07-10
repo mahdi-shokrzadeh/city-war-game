@@ -28,6 +28,7 @@ public class User implements Comparable<User> {
     private int bot_level;
     private boolean should_cards_be_hidden = false;
     private boolean cards_are_stolen = false;
+    private int profileID;
 
     public User(String username, String password, String nickname, String email, String role,
             String recovery_pass_question, String recovery_pass_answer) {
@@ -46,6 +47,27 @@ public class User implements Comparable<User> {
         this.firstLogin = true;
         this.userCardIDS = new ArrayList<>();
         progress = 1;
+        this.profileID = 0;
+    }
+
+    public User(String username, String password, String nickname, String email, String role,
+            String recovery_pass_question, String recovery_pass_answer, int _porifleID) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.role = role;
+        this.passRecoveryQuestion = recovery_pass_question;
+        this.passRecoveryAnswer = recovery_pass_answer;
+        this.level = 1;
+        this.experience = 0;
+        this.hitPoints = 150;
+        this.coins = 0;
+        this.clanID = null;
+        this.firstLogin = true;
+        this.userCardIDS = new ArrayList<>();
+        progress = 1;
+        this.profileID = _porifleID;
     }
 
     // getter and setters
@@ -248,5 +270,13 @@ public class User implements Comparable<User> {
 
     public boolean getCardsAreStolen() {
         return cards_are_stolen;
+    }
+
+    public void setProfileID(int s) {
+        profileID = s;
+    }
+
+    public int getProfileID() {
+        return profileID;
     }
 }

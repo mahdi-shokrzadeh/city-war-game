@@ -569,7 +569,7 @@
   "spellType" : "Hide",
   "imageURL" : null
 }, {
-  "id" : 23,
+  "id" : 34,
   "name" : "Add Space",
   "price" : 80,
   "duration" : 1,
@@ -588,7 +588,7 @@
   "spellType" : "AddSpace",
   "imageURL" : null
 }, {
-  "id" : 23,
+  "id" : 35,
   "name" : "Mirror",
   "price" : 80,
   "duration" : 1,
@@ -607,7 +607,7 @@
   "spellType" : "Mirror",
   "imageURL" : null
 }, {
-  "id" : 32,
+  "id" : 36,
   "name" : "Copy",
   "price" : 80,
   "duration" : 1,
@@ -626,7 +626,7 @@
   "spellType" : "Copy",
   "imageURL" : null
 }, {
-  "id" : 30,
+  "id" : 37,
   "name" : "Steal",
   "price" : 80,
   "duration" : 1,
