@@ -16,7 +16,9 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -49,6 +51,7 @@ public class M_Round extends Menu {
     private Timeline timeline;
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
     private boolean is_player_one_turn = true;
+    private boolean progress_bar_has_run = false;
     private int player_one_remaining_turns = number_of_round_turns / 2;
     private int player_two_remaining_turns = number_of_round_turns / 2;
 
@@ -270,15 +273,39 @@ public class M_Round extends Menu {
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.updateRemainingTurns();
                     if (player_one_remaining_turns <= 0 && player_two_remaining_turns <= 0) {
+                        // delete user cards
+                        this.deleteUsersCards();
+
                         timeLine(() -> {
                             if (this.game_is_finished) {
                                 System.out.println("Game is finished!");
                                 this.game.handleGameOver();
                             } else {
                                 System.out.println("Game is not finished!");
-                                this.game.showRound();
+                                this.handleProgressBar(rootElement, player_one, player_two);
+
+                                new Thread(() -> {
+                                    while (!progress_bar_has_run) {
+                                        try {
+                                            Thread.sleep(5);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                    Platform.runLater(() -> {
+                                        if (checkGameIsFinished()) {
+                                            System.out.println("Game is finished!");
+                                            this.game.handleGameOver();
+                                        } else {
+                                            System.out.println("Game is not finished!");
+                                            this.game.showRound();
+                                        }
+                                        System.out.println("Timeline animation completed!");
+                                    });
+                                }).start();
+
+                                System.out.println("Timeline animation completed!");
                             }
-                            System.out.println("Timeline animation completed!");
                         });
                     }
 
@@ -835,6 +862,66 @@ public class M_Round extends Menu {
             }
         }
 
+    }
+
+    public void handleProgressBar(Pane rootElement, User playerOne, User playerTwo) {
+        double random = Math.random();
+        if (playerOne instanceof AI) {
+            random = 0.7;
+        }
+        User u = random > 0.5 ? playerTwo : playerOne;
+        User op = random > 0.5 ? playerOne : playerTwo;
+
+        ProgressBar progressBar = new ProgressBar(0);
+        progressBar.setPrefWidth(400);
+        progressBar.setLayoutX(760);
+        progressBar.setLayoutY(650);
+
+        Label label = new Label(u.getUsername() + " ! press the button!");
+        label.setLayoutX(770);
+        label.setLayoutY(600);
+        label.setStyle("-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;");
+
+        Button button = new Button("Hit");
+        button.setLayoutX(760);
+        button.setLayoutY(680);
+
+        button.setStyle(
+                "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;");
+        rootElement.getChildren().addAll(progressBar, label, button);
+
+        final double[] direction = { 1.0 };
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, e -> {
+                    double currentProgress = progressBar.getProgress();
+                    if (currentProgress >= 1.0) {
+                        direction[0] = -1.0;
+                    } else if (currentProgress <= 0.0) {
+                        direction[0] = 1.0;
+                    }
+                    progressBar.setProgress(currentProgress + direction[0] * 0.07);
+                }),
+                new KeyFrame(Duration.millis(50)));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        button.setOnAction(e -> {
+            double finalProgress = progressBar.getProgress();
+            int hpReduction = (int) (100 * finalProgress);
+            op.setHitPoints(op.getHitPoints() - hpReduction);
+            this.updateHitPoints();
+
+            label.setText(op.getUsername() + " loses " + hpReduction + " HP!");
+            timeline.stop();
+            rootElement.getChildren().removeAll(progressBar, label, button);
+            game_is_finished = checkGameIsFinished();
+            progress_bar_has_run = true;
+        });
+
+        timeline.play();
+    }
+
+    public void deleteUsersCards() {
+        rootElement.getChildren().removeIf(node -> node instanceof TextFlow);
     }
 
     public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
