@@ -178,10 +178,16 @@ public class M_LoginMenu extends Menu {
                         switchMenus(event);
                     }
                 } else {
-                    M_ProfileMenu.profileIndex = 0;/////////////////////
-                    loggedInUser = (User) s.body.get("user");
-                    HelloApplication.menu = new M_GameMainMenu();
-                    switchMenus(event);
+                    if (isAdmin.isSelected()){
+                        loggedInUser = (User) s.body.get("user");
+                        HelloApplication.menu = new M_AdminMenu();
+                        switchMenus(event);
+                    }else {
+                        M_ProfileMenu.profileIndex = 0;/////////////////////
+                        loggedInUser = (User) s.body.get("user");
+                        HelloApplication.menu = new M_GameMainMenu();
+                        switchMenus(event);
+                    }
                 }
             }
         } else {
@@ -221,10 +227,16 @@ public class M_LoginMenu extends Menu {
                             switchMenus(event);
                         }
                     } else {
+                        if (isAdmin.isSelected()){
+                            loggedInUser = temp;
+                            HelloApplication.menu = new M_AdminMenu();
+                            switchMenus(event);
+                        }else{
                         M_ProfileMenu.profileIndex = 0;/////////////////////
                         loggedInUser = temp;
                         HelloApplication.menu = new M_GameMainMenu();
                         switchMenus(event);
+                        }
                     }
                 }
                 else {
@@ -257,6 +269,7 @@ public class M_LoginMenu extends Menu {
             password.setText("Password :");
             password.setDisable(false);
             passwordField.setDisable(false);
+            usernameField.setDisable(false);
 
             forgotPass.setText("Forgot your password?");
 
@@ -274,10 +287,15 @@ public class M_LoginMenu extends Menu {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (secondPersonNeeded)
+        if (secondPersonNeeded) {
             title.setText("Second Person Login");
-        else
+            isAdmin.setDisable(true);
+        }
+        else{
             title.setText("Login");
+            isAdmin.setDisable(false);
+        }
+
 
         backGroundIm.setImage(BGims.get(themeIndex));
     }

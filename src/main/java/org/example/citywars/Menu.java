@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
+    protected static Card editingCard = null;
     static int lastMenu;
     int soundIndex=1;
     static MediaPlayer outPutMusic;
@@ -66,8 +67,6 @@ public abstract class Menu implements Initializable {
     static boolean is_bet=false;
     P_PlayMode playMode;
     protected final Scanner consoleScanner = new Scanner(System.in);
-    protected static Map<String, Image> images;
-    protected static Card editingCard = null;
 
     public abstract Menu myMethods();
     public Menu(){};

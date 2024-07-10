@@ -32,11 +32,30 @@ public class M_GameMainMenu extends Menu {
     public M_GameMainMenu() {
         super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        backGroundIm.setImage(BGims.get(themeIndex));
+        HP.setText("HP: "+Integer.toString(loggedInUser.getHitPoints()));
+        name.setText("Hello "+loggedInUser.getNickname()+" !");
+        coin.setText("Coin: "+Integer.toString(loggedInUser.getCoins()));
+        level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
+        XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
+
+        profileIm.setImage(charsImagesProfile[loggedInUser.getProfileID()]);
+    }
+    @FXML
+    protected void goToProfile (MouseEvent event) throws IOException {
+        System.out.println("nghfb");
+        HelloApplication.menu = new M_ProfileMenu();
+        switchMenus(event);
+    }
     private void printMenu(){
         System.out.println("Main menu");
         System.out.println("Options: ");
         System.out.println("    start game");
-        System.out.println("    clans");
+        System.out.println("    show cards");
         System.out.println("    game history");
         System.out.println("    shop");
         System.out.println("    profile");
@@ -55,7 +74,7 @@ public class M_GameMainMenu extends Menu {
             String input = consoleScanner.nextLine();
             if (input.toLowerCase().matches("^ *start +game *$"))
                 return new M_GamePlayMenu();
-            else if (input.toLowerCase().matches("^clans$"))
+            else if(input.toLowerCase().matches("^clans$"))
                 return new M_ClanMainMenu();
             else if (input.toLowerCase().matches("^ *game +history *$"))
                 return new M_GameHistoryMenu();
@@ -67,7 +86,7 @@ public class M_GameMainMenu extends Menu {
                 return new M_Intro();
             else
                 System.out.println("invalid command!");
-        } while (true);
+        }while (true);
     }
 
     @FXML

@@ -61,22 +61,18 @@ public class M_SignUpMenu extends Menu {
 
         captchaCountLeft = 3;
         patterns = new ArrayList<>();
-        patterns.add(Pattern.compile(
-                "^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
-        patterns.add(Pattern.compile(
-                "^*user +create +-u (?<username>[\\S ]+) -p +random *-email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
-        patterns.add(Pattern.compile(
-                "^*question +pick +-q *(?<qNumber>[1-3]) *-a (?<answer>[\\S ]+) -c (?<answerConf>[\\S ]+) *$"));
+        patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p (?<password>[\\S ]+) +(?<passwordConf>[\\S ]+) -email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
+        patterns.add(Pattern.compile("^*user +create +-u (?<username>[\\S ]+) -p +random *-email (?<email>[\\S ]+) -n (?<nickname>[\\S ]+)*$"));
+        patterns.add(Pattern.compile("^*question +pick +-q *(?<qNumber>[1-3]) *-a (?<answer>[\\S ]+) -c (?<answerConf>[\\S ]+) *$"));
     }
 
-    private void printMenu() {
+    private void printMenu(){
         System.out.println("SIGN UP MENU");
         System.out.println("Options: ");
         System.out.println("    Back");
         System.out.println("Information: ");
         System.out.println("    You can signup in this menu using the one of the two following formats: ");
-        System.out.println(
-                "        user create -u <username> -p <password> <password_confirmation> -email <email> -n <nickname>");
+        System.out.println("        user create -u <username> -p <password> <password_confirmation> -email <email> -n <nickname>");
         System.out.println("        user create -u <username> -p random -email <email> -n <nickname>");
     }
 
@@ -85,9 +81,9 @@ public class M_SignUpMenu extends Menu {
         String input;
         do {
             input = consoleScanner.nextLine().trim();
-            if (input.toLowerCase().matches("^back$")) {
+            if (input.toLowerCase().matches("^back$")){
                 return new M_Intro();
-            } else if (patterns.get(1).matcher(input).find()) {
+            }else if (patterns.get(1).matcher(input).find()) {
                 matcher = patterns.get(1).matcher(input);
                 matcher.find();
                 String randPass = randomPassword();
@@ -108,17 +104,17 @@ public class M_SignUpMenu extends Menu {
                     System.out.println("Wrong Answer; Sign Up again from beginning :( ");
                     continue;
                 }
-                pass = passConf;
+                pass =  passConf;
 
                 System.out.println(s);
 
                 Menu menu = securityQuestionAndCaptcha(matcher.group("username").trim());
-                if (menu == null) {
+                if( menu == null ){
                     printMenu();
-                } else {
+                }else{
                     return menu;
                 }
-            } else if (patterns.get(0).matcher(input).find()) {
+            }else if (patterns.get(0).matcher(input).find()) {
                 matcher = patterns.get(0).matcher(input);
                 matcher.find();
                 String s = checkAll(matcher.group("username"),
@@ -135,16 +131,16 @@ public class M_SignUpMenu extends Menu {
 
                 pass = matcher.group("password");
 
-                Menu menu = securityQuestionAndCaptcha(matcher.group("username").trim());
-                if (menu != null) {
+                Menu menu =  securityQuestionAndCaptcha(matcher.group("username").trim());
+                if( menu != null ){
                     return menu;
                 }
-            } else if (Pattern.compile("^show current menu$").matcher(input).find()) {
+            }else if(Pattern.compile("^show current menu$").matcher(input).find()){
                 System.out.println("you are currently in " + getName());
-            } else {
+            }else {
                 System.out.println("Invalid command!");
             }
-        } while (true);
+        }while (true);
     }
 
     public static String randomPassword() {
@@ -221,16 +217,14 @@ public class M_SignUpMenu extends Menu {
             sqAnswer = consoleScanner.nextLine().trim();
             Matcher _matcher = patterns.get(2).matcher(sqAnswer);
             if (_matcher.find()) {
-                switch (_matcher.group("qNumber")) {
-                    case "1": {
+               switch (_matcher.group("qNumber")){
+                    case "1":{
                         securityQuestion = "What is your father’s name ?";
                         break;
-                    }
-                    case "2": {
+                    } case "2":{
                         securityQuestion = "What is your favourite color ?";
                         break;
-                    }
-                    case "3": {
+                    } case "3":{
                         securityQuestion = "What was the name of your first pet?";
                         break;
                     }
@@ -244,7 +238,7 @@ public class M_SignUpMenu extends Menu {
         }
     }
 
-    private Menu securityQuestionAndCaptcha(String username) {
+    private Menu securityQuestionAndCaptcha(String username){
         setSecurityQuestion();
 
         while (captchaCountLeft > 0) {
@@ -262,12 +256,11 @@ public class M_SignUpMenu extends Menu {
             }
 
             if (ans == captcha.getAnswer()) {
-                Response res = UserController.createUser(matcher.group("username"), pass, matcher.group("nickname"),
-                        matcher.group("email"), "user", securityQuestion, securityQuestionAnswer);
-                if (res.ok) {
+                Response res = UserController.createUser(matcher.group("username"),pass,matcher.group("nickname"),matcher.group("email"),"admin",securityQuestion, securityQuestionAnswer);
+                if(res.ok) {
                     System.out.println("User " + username + " created successfully!");
                     return new M_LoginMenu();
-                } else {
+                }else {
                     System.out.println(res.message);
                     return null;
                 }
@@ -283,12 +276,12 @@ public class M_SignUpMenu extends Menu {
     public static int getIndexFromUsername(String username){
         Response res = sudoGetAllUsers();
         List<User> allUsers = null;
-        if (res.ok) {
+        if(res.ok) {
             allUsers = (List<User>) res.body.get("allUsers");
         }
         boolean duplicateUserName = false;
-        if (allUsers != null) {
-            for (int i = 0; i < allUsers.size(); i++) {
+        if( allUsers != null ) {
+            for (int i = 0; i < allUsers.size() ; i++) {
                 if (allUsers.get(i).getUsername().equals(username)) {
                     return i;
                 }

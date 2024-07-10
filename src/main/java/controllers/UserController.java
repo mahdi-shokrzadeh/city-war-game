@@ -14,7 +14,7 @@ import org.example.citywars.M_LoginMenu;
 import org.example.citywars.Menu;
 
 public class UserController {
-    private static final UserDB userDB = new UserDB();
+    public static final UserDB userDB = new UserDB();
     private static final CardDB cardDB = new CardDB();
     private static final UserCardDB ucDB = new UserCardDB();
 
@@ -307,6 +307,7 @@ public class UserController {
                 Card card = allCards.get(random.nextInt(allCards.size()));
                 boolean duplicateCard = false;
                 for (int ucID : user.getUserCardIDS()) {
+                    System.out.println(ucID);
                     UserCard uc = ucDB.getOne(ucID);
                     if (uc.getCardID() == card.getID()) {
                         duplicateCard = true;

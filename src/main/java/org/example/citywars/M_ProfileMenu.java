@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static controllers.UserController.sudoGetAllUsers;
+import static controllers.UserController.userDB;
 import static org.example.citywars.M_SignUpMenu.*;
 
 public class M_ProfileMenu extends Menu{
@@ -68,8 +69,7 @@ public class M_ProfileMenu extends Menu{
         super("M_ProfileMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
         captchaCode=new AA_Captcha();
     }
-
-    private void printMenu() {
+    private void printMenu(){
         System.out.println("PROFILE MENU");
         System.out.println("Options: ");
         System.out.println("    show my profile");
@@ -81,24 +81,11 @@ public class M_ProfileMenu extends Menu{
         System.out.println("    Profile change -n <nickname>");
         System.out.println("    Profile change -e <email>");
     }
-
-    private void revalidate() {
-        Response res = UserController.getByID(loggedInUser.getID());
-        if (res.ok) {
-            loggedInUser = (User) res.body.get("user");
-        } else {
-            System.out.println(res.message);
-            if (res.exception != null) {
-                System.out.println(res.exception.getMessage());
-            }
-        }
-    }
-
     public Menu myMethods() {
         printMenu();
         do {
             String input = consoleScanner.nextLine().trim();
-            if (input.matches("^show my profile$")) {
+            if( input.matches("^show my profile$")){
                 System.out.println("username: " + loggedInUser.getUsername());
                 System.out.println("nickname: " + loggedInUser.getNickname());
                 System.out.println("email: " + loggedInUser.getEmail());
@@ -109,88 +96,83 @@ public class M_ProfileMenu extends Menu{
                 System.out.println("coins: " + loggedInUser.getCoins());
                 System.out.println("hit points: " + loggedInUser.getHitPoints());
                 System.out.println("progress level: " + loggedInUser.getProgress());
-            } else if (input.matches("^Profile change password -o (?<oldPass>\\S+) -n (?<newPass>\\S+)$")) {
-                matcher = Pattern.compile("^Profile change password -o (?<oldPass>\\S+) -n (?<newPass>\\S+)$")
-                        .matcher(input);
+            } else if ( input.matches("^Profile change password -o (?<oldPass>\\S+) -n (?<newPass>\\S+)$")) {
+                matcher = Pattern.compile("^Profile change password -o (?<oldPass>\\S+) -n (?<newPass>\\S+)$").matcher(input);
                 matcher.find();
                 String newPass = matcher.group("newPass").trim();
                 String oldPass = matcher.group("oldPass").trim();
-                if (!oldPass.equals(loggedInUser.getPassword())) {
+                if( !oldPass.equals(loggedInUser.getPassword()) ){
                     System.out.println("the old password that you entered does not match your current pass word");
                     printMenu();
                     continue;
                 }
                 System.out.println("Please enter your new password again: ");
                 input = consoleScanner.nextLine().trim();
-                if (!input.equals(newPass)) {
+                if( !input.equals(newPass) ){
                     System.out.println("password confirmation failed");
                     printMenu();
                     continue;
                 }
-                if (!checkCaptcha()) {
+                if( !checkCaptcha() ){
                     printMenu();
                     continue;
                 }
-                // Response res = UserController.editPassword(loggedInUser.getID(), newPass);
-                // System.out.println(res.message);
-                // if( res.exception != null ){
-                // System.out.println(res.exception.getMessage());
-                // }
-                // if( res.ok ){
-                // loggedInUser.setPassword(newPass);
-                // }
-                // revalidate();
-            } else if (input.matches("^Profile change -u (?<username>\\S+)$")) {
+//                Response res = UserController.editPassword(loggedInUser.getID(), newPass);
+//                System.out.println(res.message);
+//                if( res.exception != null ){
+//                    System.out.println(res.exception.getMessage());
+//                }
+//                if( res.ok ){
+//                    loggedInUser.setPassword(newPass);
+//                }
+            } else if( input.matches("^Profile change -u (?<username>\\S+)$")){
                 matcher = Pattern.compile("^Profile change -u (?<username>\\S+)$").matcher(input);
                 matcher.find();
                 String newUsername = matcher.group("username").trim();
-                if (loggedInUser.getUsername().equals(newUsername)) {
+                if( loggedInUser.getUsername().equals(newUsername) ){
                     System.out.println("new username can not be the same as the last username");
                     continue;
                 }
-                // Response res = UserController.editUsername(loggedInUser.getID(),newUsername);
-                // System.out.println(res.message);
-                // if(res.exception != null){
-                // System.out.println(res.exception.getMessage());
-                // }
-                // if( res.ok ){
-                // loggedInUser.setUsername(newUsername);
-                // }
-            } else if (input.matches("^Profile change -n (?<nickname>\\S+)$")) {
+//                Response res = UserController.editUsername(loggedInUser.getID(),newUsername);
+//                System.out.println(res.message);
+//                if(res.exception != null){
+//                    System.out.println(res.exception.getMessage());
+//                }
+//                if( res.ok ){
+//                    loggedInUser.setUsername(newUsername);
+//                }
+            }else if( input.matches("^Profile change -n (?<nickname>\\S+)$")){
                 matcher = Pattern.compile("^Profile change -n (?<nickname>\\S+)$").matcher(input);
                 matcher.find();
-                // Response res = UserController.editNickname(loggedInUser.getID(),
-                // matcher.group("nickname").trim());
-                // System.out.println(res.message);
-                // if(res.exception != null){
-                // System.out.println(res.exception.getMessage());
-                // }
-                // if( res.ok ){
-                // loggedInUser.setNickname(matcher.group("nickname").trim());
-                // }
-            } else if (input.matches("^Profile change -e (?<email>\\S+)$")) {
+//                Response res = UserController.editNickname(loggedInUser.getID(), matcher.group("nickname").trim());
+//                System.out.println(res.message);
+//                if(res.exception != null){
+//                    System.out.println(res.exception.getMessage());
+//                }
+//                if( res.ok ){
+//                    loggedInUser.setNickname(matcher.group("nickname").trim());
+//                }
+            }else if( input.matches("^Profile change -e (?<email>\\S+)$")){
                 matcher = Pattern.compile("^Profile change -e (?<email>\\S+)$").matcher(input);
                 matcher.find();
-                // Response res = UserController.editEmail(loggedInUser.getID(),
-                // matcher.group("email").trim());
-                // System.out.println(res.message);
-                // if(res.exception != null){
-                // System.out.println(res.exception.getMessage());
-                // }
-                // if( res.ok ){
-                // loggedInUser.setEmail(matcher.group("email").trim());
-                // }
-            } else if (input.matches("^show current menu$")) {
+//                Response res = UserController.editEmail(loggedInUser.getID(), matcher.group("email").trim());
+//                System.out.println(res.message);
+//                if(res.exception != null){
+//                    System.out.println(res.exception.getMessage());
+//                }
+//                if( res.ok ){
+//                    loggedInUser.setEmail(matcher.group("email").trim());
+//                }
+            }else if( input.matches("^show current menu$") ){
                 System.out.println("You are currently in " + getName());
-            } else if (input.matches("^Back$")) {
+            }else if( input.matches("^Back$")){
                 return new M_GameMainMenu();
-            } else {
+            }else{
                 System.out.println("invalid command!");
             }
-        } while (true);
+        }while (true);
     }
-
-    private boolean checkCaptcha() {
+    private boolean checkCaptcha(){
 
         while (captchaCountLeft > 0) {
 
@@ -226,7 +208,7 @@ public class M_ProfileMenu extends Menu{
         coin.setText("Coin: "+Integer.toString(loggedInUser.getCoins()));
         level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
         XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
-        profileIm.setImage(charsImagesProfile[profileIndex]);
+        profileIm.setImage(charsImagesProfile[loggedInUser.getProfileID()]);
 
         usernameField.setText(loggedInUser.getUsername());
         nicknameField.setText(loggedInUser.getNickname());
@@ -235,6 +217,8 @@ public class M_ProfileMenu extends Menu{
         passwordConfirmationField.setText(loggedInUser.getPassword());
         questionChoice.setValue(loggedInUser.getPassRecoveryQuestion());
         questionAnswerField.setText(loggedInUser.getPassRecoveryAnswer());
+        questionAnswerField.setDisable(true);
+        questionChoice.setDisable(true);
 
 
     }
@@ -244,6 +228,8 @@ public class M_ProfileMenu extends Menu{
         if (profileIndex== CharImageFilesProfile.length)
             profileIndex=0;
         profileIm.setImage(charsImagesProfile[profileIndex]);
+        UserController.editProfileID(loggedInUser.getID(),profileIndex);
+
     }
     @FXML
     protected void randPassButton(ActionEvent event) throws IOException {
@@ -302,9 +288,24 @@ public class M_ProfileMenu extends Menu{
         loggedInUser.setEmail(emailField.getText());
         loggedInUser.setNickname(nicknameField.getText());
         loggedInUser.setPassword(passwordField.getText());
-        loggedInUser.setPassRecoveryQuestion(questionChoice.getValue());
-        loggedInUser.setPassRecoveryAnswer(questionAnswerField.getText());
         error.setText("Your profile edited successfully!");
+
+        User user=null;
+        try {
+            user = userDB.getOne(loggedInUser.getID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (user == null) {
+            System.out.println("null");
+        }
+
+        UserController.editEmail(loggedInUser.getID(),emailField.getText());
+        UserController.editNickname(loggedInUser.getID(),nicknameField.getText());
+        UserController.editPassword(loggedInUser.getID(),passwordField.getText());
+        UserController.editUsername(loggedInUser.getID(),usernameField.getText());
+        UserController.editProfileID(loggedInUser.getID(),profileIndex);
+
     }
     @FXML
     protected void showPassButton(ActionEvent event) throws IOException {

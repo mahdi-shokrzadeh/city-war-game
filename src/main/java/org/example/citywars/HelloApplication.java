@@ -20,6 +20,14 @@ public class HelloApplication extends Application {
     public static Menu menu;
     public static Image icon = new Image("logo.png");
     public static Stage primaryStage;
+
+    public static Image[][] pandaCards;
+    public static Image[][] wolfCards;
+    public static Image[][] warriorCards;
+    public static Image[][] dragonCards;
+    public static Image[][] botCards;
+
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -84,6 +92,54 @@ public class HelloApplication extends Application {
             BGMusicMedias.add(new Media(BGMusicFiles.get(i).toURI().toString()));
 //            BGMusics.add(new MediaPlayer(BGMusicMedias.get(i)));
         }
+
+        pandaCards=new Image[5][3];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                File temp=  new File("src/main/resources/Cards/panda_d"
+                        + (i+1) + "_l" + (j+1) + ".png");
+                pandaCards[i][j]=new Image(temp.toURI().toString());
+
+            }
+        }
+
+        warriorCards=new Image[5][3];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                File temp=  new File("src/main/resources/Cards/warrior_d"
+                        + (i+1) + "_l" + (j+1) + ".png");
+                warriorCards[i][j]=new Image(temp.toURI().toString());
+
+            }
+        }
+        botCards=new Image[5][3];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                File temp=  new File("src/main/resources/Cards/bot_d"
+                        + (i+1) + "_l" + (j+1) + ".png");
+                botCards[i][j]=new Image(temp.toURI().toString());
+
+            }
+        }
+        wolfCards=new Image[5][3];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                File temp=  new File("src/main/resources/Cards/wolf_d"
+                        + (i+1) + "_l" + (j+1) + ".png");
+                wolfCards[i][j]=new Image(temp.toURI().toString());
+
+            }
+        }
+        dragonCards=new Image[5][3];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                File temp=  new File("src/main/resources/Cards/dragon_d"
+                        + (i+1) + "_l" + (j+1) + ".png");
+                dragonCards[i][j]=new Image(temp.toURI().toString());
+
+            }
+        }
+
     }
 
     public static void main(String[] args) {
