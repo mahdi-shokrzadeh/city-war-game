@@ -317,6 +317,12 @@ public class M_Round extends Menu {
     public String BOTmove() {
         if (((AI) player_one).getAiLevel() == 5) {
             ((AI) player_one).handleBoss(board);
+            this.is_player_one_turn = !this.is_player_one_turn;
+            this.player_one_remaining_turns--;
+            // this.updateHitPoints();
+            this.updateRemainingTurns();
+            this.updateTotalDameges();
+            // this.updateSpider();
         } else {
             String input = ((AI) player_one).chooseTheMove(board, player_one_cards, this);
             if (input.equals("No valid card to place")) {
