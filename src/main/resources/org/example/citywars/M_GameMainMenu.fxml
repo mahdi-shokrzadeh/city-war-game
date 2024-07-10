@@ -102,7 +102,7 @@
                <Font size="28.0" />
             </font>
          </Label>
-         <!-- <ImageView fx:id="profileIm" fitHeight="232.0" fitWidth="226.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.rowIndex="1" /> -->
+         <ImageView fx:id="profileIm" fitHeight="232.0" fitWidth="226.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
          <Label fx:id="name" alignment="CENTER" prefHeight="88.0" prefWidth="226.0" text="Label" textFill="#fffcfe" GridPane.columnSpan="2">
             <font>
                <Font size="30.0" />

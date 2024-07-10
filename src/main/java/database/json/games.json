@@ -119,4 +119,15 @@
   "winnerReward" : "+10 coins ",
   "betAmount" : 10,
   "loserReward" : "-10 coins "
+}, {
+  "id" : 12,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "duel",
+  "createdAt" : "2024-07-11 02:32:12",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "Back To The Wall: +2 level Howl To Moon: +2 level / User: +356 experience +0 level +25 hit points +35 coins",
+  "betAmount" : 0,
+  "loserReward" : "/ User: +25 experience +4level +60 coins "
 } ]
