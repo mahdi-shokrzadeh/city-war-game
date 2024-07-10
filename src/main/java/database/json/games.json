@@ -31,4 +31,92 @@
   "winnerReward" : "strike: +1 level SwordOfHonor: +1 level / User: +75 experience +1 level +25 hit points +142 coins",
   "betAmount" : 0,
   "loserReward" : "/ User: +25 experience +30 coins "
+}, {
+  "id" : 4,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-10 17:11:20",
+  "winner" : "player_two",
+  "numberOfRounds" : 0,
+  "winnerReward" : "+10044 coins ",
+  "betAmount" : 10044,
+  "loserReward" : "-10044 coins "
+}, {
+  "id" : 5,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-11 01:42:43",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "+40 coins ",
+  "betAmount" : 40,
+  "loserReward" : "-40 coins "
+}, {
+  "id" : 6,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-11 01:47:30",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "+54 coins ",
+  "betAmount" : 54,
+  "loserReward" : "-54 coins "
+}, {
+  "id" : 7,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "duel",
+  "createdAt" : "2024-07-11 02:00:05",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "Wing Slap: +1 level / User: +75 experience +0 level +25 hit points +7 coins",
+  "betAmount" : 0,
+  "loserReward" : "/ User: +25 experience +3level +0 coins "
+}, {
+  "id" : 8,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "duel",
+  "createdAt" : "2024-07-11 02:05:03",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "Fire Ball: +2 level / User: +120 experience +0 level +25 hit points +12 coins",
+  "betAmount" : 0,
+  "loserReward" : "/ User: +25 experience +3level +0 coins "
+}, {
+  "id" : 9,
+  "playerOneID" : 2,
+  "playerTwoID" : 1,
+  "mode" : "duel",
+  "createdAt" : "2024-07-11 02:09:24",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "/ User: +406 experience +0 level +25 hit points +40 coins",
+  "betAmount" : 0,
+  "loserReward" : "/ User: +25 experience +4level +0 coins "
+}, {
+  "id" : 10,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-11 02:12:48",
+  "winner" : "player_two",
+  "numberOfRounds" : 1,
+  "winnerReward" : "+12 coins ",
+  "betAmount" : 12,
+  "loserReward" : "-12 coins "
+}, {
+  "id" : 11,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-11 02:14:50",
+  "winner" : "player_two",
+  "numberOfRounds" : 2,
+  "winnerReward" : "+10 coins ",
+  "betAmount" : 10,
+  "loserReward" : "-10 coins "
 } ]

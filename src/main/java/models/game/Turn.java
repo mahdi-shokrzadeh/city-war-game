@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.example.citywars.M_Round;
+
 import java.util.Map;
 
 import models.AI;
@@ -20,7 +22,7 @@ public class Turn {
     private ArrayList<Card> player_two_cards;
     private User current_player;
     private Block[][] board = new Block[2][21];
-    private Round round;
+    private M_Round round;
 
     private ArrayList<Block> opponent_destroyed_blocks = new ArrayList<Block>();
 
@@ -37,7 +39,7 @@ public class Turn {
     }
 
     public String processTurn(Block[][] board,
-            Round round) {
+            M_Round round) {
         this.round = round;
         int turn_index = round.getTurns().indexOf(this);
         if (turn_index % 2 == 0) {

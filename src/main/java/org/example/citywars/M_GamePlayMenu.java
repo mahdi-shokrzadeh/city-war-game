@@ -36,7 +36,7 @@ public class M_GamePlayMenu extends Menu {
     Label name;
 
     public M_GamePlayMenu() {
-        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png"});
+        super("M_GamePlayMenu", new String[]{"BG-Videos\\BG-signUp.png","BG-Videos\\lightmode.png"});
         gameOver = false;
         ConsoleGameMenu.printGameMenu();
 
@@ -204,7 +204,7 @@ public class M_GamePlayMenu extends Menu {
         int ai_level = loggedInUser.getProgress();
         AI AI = new AI(ai_level);
         AI.setGameCharacter(new GameCharacter("BOT"));
-        HelloApplication.menu = new M_Game();
+        HelloApplication.menu = new M_LevelMap();
 
         switchMenus(event);
     }

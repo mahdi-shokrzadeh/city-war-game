@@ -31,6 +31,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import static org.example.citywars.HelloApplication.*;
+
 public class CardController {
     private static final UserDB userDB = new UserDB();
     private static final GameCharacterDB gcDB = new GameCharacterDB();
@@ -384,21 +386,40 @@ public class CardController {
     }
 
     public static Response getCardImage(Card card, int level) {
-        File file = null;
-        if (card.getImageURL() == null) {
-            file = new File("src/main/resources/Cards/" + card.getCharacter().getName() + "_d"
-                    + String.valueOf(card.getDuration()) + "_l" + String.valueOf(level) + ".png");
-        } else {
-            file = new File(card.getImageURL());
-        }
-        if (!file.exists()) {
-            return new Response("image not found", -404);
-        }
-        Image image = null;
-        ImageView imageView = null;
+//        File file = null;
+//        if (card.getImageURL() == null) {
+//            file = new File("src/main/resources/Cards/" + card.getCharacter().getName() + "_d"
+//                    + String.valueOf(card.getDuration()) + "_l" + String.valueOf(level) + ".png");
+//        } else {
+//            file = new File(card.getImageURL());
+//        }
+//        if (!file.exists()) {
+//            return new Response("image not found", -404);
+//        }
+//        Image image = null;
+        ImageView imageView = new ImageView();
         try {
-            image = new Image(new FileInputStream(file));
-            imageView = new ImageView(image);
+//            image = new Image(new FileInputStream(file));
+            switch (card.getCharacter().getName()){
+                case "bot":
+                    imageView.setImage(botCards[card.getDuration()-1][level-1]);
+                    break;
+                case "panda":
+                    imageView.setImage(pandaCards[card.getDuration()-1][level-1]);
+                    break;
+                case "wolf":
+                    imageView.setImage(wolfCards[card.getDuration()-1][level-1]);
+                    break;
+                case "warrior":
+                    imageView.setImage(warriorCards[card.getDuration()-1][level-1]);
+                    break;
+                case "dragon":
+                    imageView.setImage(dragonCards[card.getDuration()-1][level-1]);
+                    break;
+                default:
+                    System.out.println("fsdfgrzffffffffffffffffffffffffff");
+
+            }
             imageView.setFitWidth(209);
             imageView.setFitHeight(278.7);
             imageView.setId("imageView");

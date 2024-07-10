@@ -35,24 +35,25 @@ public class M_GameOverMenu extends Menu {
     private SimpleGame game;
     private String reward;
     private User winner;
-    private String looser_reward;
-    private String winner_reward;
+
+    // private String looser_reward;
+    // private String winner_reward;
 
     public M_GameOverMenu() {
         super("M_GameOverMenu");
     }
 
-    public M_GameOverMenu(String wr, String lr) {
-        super("M_GameOverMenu");
-        winner_reward = wr;
-        looser_reward = lr;
-    }
+    // public M_GameOverMenu(String wr, String lr) {
+    // super("M_GameOverMenu");
+    // // winner_reward = wr;
+    // // looser_reward = lr;
+    // }
 
     public M_GameOverMenu(User winner, String winner_reward, String looser_reward) {
         super("M_GameOverMenu");
         this.winner = winner;
-        this.looser_reward = looser_reward;
-        this.winner_reward = winner_reward;
+        // this.looser_reward = looser_reward;
+        // this.winner_reward = winner_reward;
 
         String res = "Winner: " + winner.getNickname() + "\n" +
                 "Reward: " + winner_reward + "\n" +
@@ -74,12 +75,12 @@ public class M_GameOverMenu extends Menu {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         String winnerRewardRaw = winner_reward;// "Flank: +1 level / User: +135 experience +2 level +25
-                                               // hitpoints +50 coins"; // game.getwinnerreward
+        //                                        // hitpoints +50 coins"; // game.getwinnerreward
         String loserRewardRaw = looser_reward;// "Flank: +1 level / User: +135 experience +2 level +25 hitpoints
                                               // +50 coins"; // game.getloserreward
         String winnerReward = "";
         String loserReward = "";
-
+        
         Matcher _matcher = null;
 
         _matcher = Pattern.compile("\\+[0-9]+ experience").matcher(winnerRewardRaw);
@@ -147,5 +148,8 @@ public class M_GameOverMenu extends Menu {
         loserRewardText.setFill(Paint.valueOf("white"));
         loserPane.getChildren().add(loserRewardText);
 
+
+        System.out.println("w: " + winnerRewardRaw);
+        System.out.println("l: " + loserReward);
     }
 }

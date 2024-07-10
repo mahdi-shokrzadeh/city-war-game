@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,17 +34,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import com.almasb.fxgl.core.collection.Array;
-
 public class M_ShopMenu extends Menu {
 
     @FXML
     private Pane pane;
     @FXML
-    private Text coinsText;
-
+    TextFlow tf;
+@FXML
+Label coinsText;
     public M_ShopMenu() {
-        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" });
+        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" ,"BG-Videos\\lightmode.png"});
     }
 
     private List<Card> allCards = null;
@@ -387,10 +387,21 @@ public class M_ShopMenu extends Menu {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Response res = CardController.getCardByName("Awesome Punch");
+        // Card card = (Card) res.body.get("card");
+        // res = CardController.getCardImage(card, 3);
+        // TextFlow tf = (TextFlow) res.body.get("textFlow");
+        // tf.setTranslateX(200);
+        // tf.setTranslateY(300);
+        // tf.setTranslateZ(10);
+        // pane.getChildren().addAll(tf);
+        backGroundIm.setImage(BGims.get(themeIndex));
+
+        coinsText.setText("Coin Count :"+ loggedInUser.getCoins());
+
 
         List<Card> allCards = null;
         List<Card> userCards = null;
-        List<TextFlow> tfs = new ArrayList<>();
         Response res = CardController.getAllCards();
         Alert alert = new Alert(AlertType.NONE);
         if (res.ok) {
@@ -398,14 +409,12 @@ public class M_ShopMenu extends Menu {
         } else {
             System.out.println(res.message);
         }
-        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
-                "admin", "recQuestion", "recAnswer");
-        _user.setID(1);
-        _user.setCoins(10000);
-        _user.setGameCharacter(new GameCharacter("panda"));
-        _user.setLevel(3);
-        coinsText.setText("Coins: " + _user.getCoins());
-        res = UserCardsController.getUsersCards(_user);
+//        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
+//                "admin", "recQuestion", "recAnswer");
+//        _user.setID(1);
+//        _user.setCoins(10000);
+//        _user.setGameCharacter(new GameCharacter("panda"));
+        res = UserCardsController.getUsersCards(/*_user*/loggedInUser);
         if (res.ok) {
             userCards = (List<Card>) res.body.get("cards");
         } else {
@@ -414,31 +423,11 @@ public class M_ShopMenu extends Menu {
                 System.out.println(res.exception.getMessage());
             }
         }
-
-        allCards.removeIf(s -> {
-            if (s.getCardType().toString().equals("Spell")) {
-                if (s.getSpellType().toString().equals("Copy")) {
-                    return true;
-                } else if (s.getSpellType().toString().equals("Hide")) {
-                    return true;
-                } else if (s.getSpellType().toString().equals("AddSpace")) {
-                    return true;
-                } else if (s.getSpellType().toString().equals("Mirror")) {
-
-                    return true;
-                } else if (s.getSpellType().toString().equals("Steal")) {
-                    return true;
-
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        });
-
         for (int i = 0; i < allCards.size(); i++) {
             Card card = allCards.get(i);
+            if (card.getCardType().toString().equals("Spell")) {
+                continue;
+            }
 
             boolean hasCard = false;
             for (Card c : userCards) {
@@ -450,7 +439,7 @@ public class M_ShopMenu extends Menu {
             Integer level = null;
             UserCard uc = null;
             if (hasCard) {
-                res = UserCardsController.getUserCard(_user.getID(), card.getID());
+                res = UserCardsController.getUserCard(/*_user*/loggedInUser.getID(), card.getID());
                 if (res.ok) {
                     uc = ((UserCard) res.body.get("userCard"));
                     level = (int) uc.getLevel();
@@ -469,8 +458,8 @@ public class M_ShopMenu extends Menu {
             // tf.setBackground(Background.fill(Paint.valueOf("blue")));
             tf.setPrefWidth(180);
             tf.setPrefHeight(50);
-            tf.setTranslateX(400 + 230 * (i % 5));
-            tf.setTranslateY(100 + 350 * (i / 5));
+            tf.setTranslateX(  200 * (i % 5));
+            tf.setTranslateY( 350 * (i / 5));
             pane.getChildren().add(tf);
 
             for (Node node : tf.getChildren()) {
@@ -513,20 +502,18 @@ public class M_ShopMenu extends Menu {
                 if (uc.getLevel() >= 3) {
                     button = new Button("Max level");
                 } else {
-                    button = new Button("Upgrade (" + (uc.getLevel() + 1) * card.getUpgradeCost() + "$)");
+                    button = new Button("Upgrade (" + uc.getLevel() * card.getUpgradeCost() + "$)");
 
                 }
                 button.setTextFill(Paint.valueOf("white"));
-                if (uc.getLevel() < 3 && card.getCardType().toString().equals("Regular")) {
+                if (uc.getLevel() < 3) {
                     button.setCursor(Cursor.HAND);
                     button.setBackground(Background.fill(Paint.valueOf("#8900AC")));
                     button.setOnMouseClicked((event) -> {
-                        Response _res = UserCardsController.upgradeCard(_user, card);
+                        Response _res = UserCardsController.upgradeCard(loggedInUser, card);
                         alert.setContentText(_res.message);
                         alert.setAlertType(AlertType.INFORMATION);
                         alert.show();
-                        int coins = ((User) UserController.getByID(_user.getID()).body.get("user")).getCoins();
-                        coinsText.setText("Coins: " + coins);
                     });
                 } else {
                     button.setBackground(Background.fill(Paint.valueOf("#e8c400")));
@@ -553,22 +540,16 @@ public class M_ShopMenu extends Menu {
                 button.setTranslateX(tf.getTranslateX() + 25);
                 button.setTranslateY(tf.getTranslateY() + 285);
                 button.setOnMouseClicked((event) -> {
-                    Response _res = UserCardsController.buyCard(_user, card);
+                    Response _res = UserCardsController.buyCard(loggedInUser, card);
                     System.out.println(_res.message);
                     alert.setAlertType(AlertType.INFORMATION);
-                    alert.setContentText("card purchased successfully");
+                    alert.setContentText("card upgraded successfully");
                     alert.show();
-                    int coins = ((User) UserController.getByID(_user.getID()).body.get("user")).getCoins();
-                    coinsText.setText("Coins: " + coins);
                 });
                 pane.getChildren().addAll(button);
             }
 
         }
-
-        pane.setPrefHeight(allCards.size() * 400 + 250);
-        pane.setPrefWidth(1600);
-
     }
 
 }

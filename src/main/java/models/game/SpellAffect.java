@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.example.citywars.M_Round;
+
+import models.AI;
 import models.User;
 import models.card.Card;
 import models.card.Spell;
@@ -16,11 +19,11 @@ public class SpellAffect {
     private Card spell_card;
     private int turn_index;
     private User current_player;
-    private Round round;
+    private M_Round round;
     private ArrayList<Card> hand_cards;
 
     public SpellAffect(Card spell_card, int turn_index, int des_index,
-            Block[][] board, User current_player, Round round, ArrayList<Card> hand_cards) {
+            Block[][] board, User current_player, M_Round round, ArrayList<Card> hand_cards) {
         this.des_index = des_index;
         this.board = board;
         // this.spell_card = (Spell) spell_card;
@@ -69,7 +72,7 @@ public class SpellAffect {
                 return false;
 
             case "Attenuate":
-            
+
                 handleAttenuate();
                 return true;
 
@@ -219,7 +222,7 @@ public class SpellAffect {
     }
 
     public int findEmptyBlock(int turn_index) {
-
+        
         for (int i = 0; i <= 20; i++) {
             if (this.board[turn_index][i].isBlockEmpty() && !this.board[turn_index][i].isBlockUnavailable()) {
                 return i;
@@ -256,6 +259,11 @@ public class SpellAffect {
 
     public void handleRoundReduce() {
         this.round.setNumberOfRoundTurns(this.round.getNumberOfRoundTurns() - 1);
+        if (this.round.getPlayer_one() instanceof AI) {
+            this.round.setPlayerTwoRemainingTurns(this.round.getPlayerTwoRemainingTurns() - 1);
+        } else {
+
+        }
         ConsoleGame.printSuccessfulTurnReduce();
         this.removeCardFromHand(this.spell_card);
     }
@@ -264,7 +272,6 @@ public class SpellAffect {
         // randomly choose two reqular cards from opponent
         Card found_card_one = null;
         Card found_card_two = null;
-
 
         System.out.println("Attenuate");
 
@@ -377,7 +384,7 @@ public class SpellAffect {
             return;
         }
 
-        this.board[this.turn_index][block_number].setBlockUnavailable(true);
+        this.board[(this.turn_index + 1) % 2][block_number].setBlockUnavailable(true);
         ConsoleGame.printSuccessfulAddSpecialCard();
         this.removeCardFromHand(this.spell_card);
     }
