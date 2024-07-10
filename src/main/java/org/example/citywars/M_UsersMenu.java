@@ -52,9 +52,7 @@ public class M_UsersMenu extends Menu {
             public void run() {
                 backGroundIm.setImage(BGims.get(themeIndex));
 
-                User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion",
-                        "recAnswer");
-                Response res = UserController.getAllUsers(_user);
+                Response res = UserController.getAllUsers(loggedInUser);
                 Alert alert = new Alert(AlertType.NONE);
                 List<User> allUsers = null;
                 if (!res.ok) {

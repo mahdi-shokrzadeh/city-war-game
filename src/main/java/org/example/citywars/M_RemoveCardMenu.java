@@ -37,14 +37,20 @@ public class M_RemoveCardMenu extends Menu {
             alert.show();
             return;
         }
+        Card card = null;
         Response res = CardController.getCardByName(input);
         if (res.ok) {
-            User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion", "recAnswer");
-            res = CardController.removeCard(_user, ((Card) res.body.get("card")));
-            alert.setAlertType(AlertType.INFORMATION);
+            card = (Card) res.body.get("card");
         } else {
             alert.setAlertType(AlertType.ERROR);
+            if (res.exception != null) {
+                System.out.println(res.exception.getMessage());
+            }
+        }
 
+        res = CardController.removeCard(loggedInUser, card);
+        if (!res.ok) {
+            alert.setAlertType(AlertType.ERROR);
             if (res.exception != null) {
                 System.out.println(res.exception.getMessage());
             }
