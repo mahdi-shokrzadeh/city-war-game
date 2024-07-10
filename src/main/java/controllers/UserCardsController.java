@@ -160,8 +160,9 @@ public class UserCardsController {
             return new Response("the user does not own this card", -401);
         }
 
+        System.out.println(userCard.getID());
         if (user.getCoins() < userCard.getLevel() * card.getUpgradeCost()) {
-            return new Response("you does not have enough coins to upgrade this card", -400);
+            return new Response("you do not have enough coins to upgrade this card", -400);
         }
         if (user.getLevel() < card.getUpgradeLevel()) {
             return new Response("you haven't reached the required level to upgrade this card", -400);
