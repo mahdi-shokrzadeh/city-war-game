@@ -353,11 +353,11 @@ public class M_Round extends Menu {
                     }
                 } else {
                     this.updateHitPoints();
-                    this.updateRemainingTurns();
                     this.updateTotalDameges();
                     this.updateSpider();
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.player_one_remaining_turns--;
+                    this.updateRemainingTurns();
                 }
             }
         }
@@ -475,7 +475,7 @@ public class M_Round extends Menu {
         im.setFitHeight(this.block_height);
         im.setFitWidth(this.block_width);
         im.setId("spider_" + user_index + "_" + block_index);
-        im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width));
+        im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width - 1.9));
         im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
         rootElement.getChildren().add(im);
     }
@@ -637,7 +637,7 @@ public class M_Round extends Menu {
         Label label_1 = new Label(String.valueOf(this.player_one.getHitPoints()));
         Label label_2 = new Label(String.valueOf(this.player_two.getHitPoints()));
 
-        label_1.setLayoutX(1707);
+        label_1.setLayoutX(187);
         label_1.setLayoutY(390);
 
         label_1.setId("hp_label_1");
@@ -739,9 +739,10 @@ public class M_Round extends Menu {
                 break;
             }
         }
-        System.out.println("HERE!");
+        System.out.println(card.getCardType());
         if (cond) {
-            if (card.getCardType().toString().equals("Regualr")) {
+            if (card.getCardType().toString().equals("Regular")) {
+                System.out.println("REG");
                 // create copy image of followMouseImage
                 ImageView im = new ImageView(
                         new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")

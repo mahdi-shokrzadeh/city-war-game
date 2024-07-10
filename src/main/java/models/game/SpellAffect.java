@@ -222,7 +222,7 @@ public class SpellAffect {
     }
 
     public int findEmptyBlock(int turn_index) {
-
+        
         for (int i = 0; i <= 20; i++) {
             if (this.board[turn_index][i].isBlockEmpty() && !this.board[turn_index][i].isBlockUnavailable()) {
                 return i;
