@@ -87,6 +87,8 @@ public class M_Game extends Menu {
             Random random = new Random();
             int i = random.nextInt(BGims.size());
             backGroundIm.setImage(BGims.get(i));
+            System.out.println("User1 char: " + this.player_one.getGameCharacter().getName());
+            System.out.println("User2 char: " + this.player_two.getGameCharacter().getName());
             // this.startGraphicGame();
         });
         bt.setOnAction(event -> {

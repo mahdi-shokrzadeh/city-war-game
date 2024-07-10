@@ -657,29 +657,41 @@ public class M_Round extends Menu {
 
     public void initializeCharacterImages(User user, int user_index) {
         File[] imageFiles;
-        imageFiles = new File[4];
-        imageFiles[0] = new File("src/main/resources/Characters/Igoribuki.png");
-        imageFiles[1] = new File("src/main/resources/Characters/Master_Masher.png");
-        imageFiles[2] = new File("src/main/resources/Characters/Nahane.png");
-        imageFiles[3] = new File("src/main/resources/Characters/Sensei_Pandaken.png");
+        imageFiles = new File[6];
+        imageFiles[0] = new File("src/main/resources/Characters/wolfNormal.gif");
+        imageFiles[1] = new File("src/main/resources/Characters/pandaNormal.gif");
+        imageFiles[2] = new File("src/main/resources/Characters/DmanNormal.gif");
+        imageFiles[3] = new File("src/main/resources/Characters/dragonNormal.gif");
+        imageFiles[4] = new File("src/main/resources/Characters/robotNormal.gif");
+        imageFiles[5] = new File("src/main/resources/Characters/DmanAttack.gif");
+
         ImageView player_char_img;
+        if(user instanceof AI){
+            if(((AI)user).getAiLevel() == 5){
+                player_char_img = new ImageView(new Image(imageFiles[5].toURI().toString()));
 
-        switch (user.getGameCharacter().getID()) {
-            case 0:
-                player_char_img = new ImageView(new Image(imageFiles[0].toURI().toString()));
-                break;
+            }else{
+                player_char_img = new ImageView(new Image(imageFiles[4].toURI().toString()));
+            }
+        }else{
 
-            case 1:
-                player_char_img = new ImageView(new Image(imageFiles[1].toURI().toString()));
-                break;
-
-            case 2:
-                player_char_img = new ImageView(new Image(imageFiles[2].toURI().toString()));
-                break;
-
-            default:
-                player_char_img = new ImageView(new Image(imageFiles[3].toURI().toString()));
-                break;
+            switch (user.getGameCharacter().getID()) {
+                case 0:
+                    player_char_img = new ImageView(new Image(imageFiles[0].toURI().toString()));
+                    break;
+    
+                case 1:
+                    player_char_img = new ImageView(new Image(imageFiles[1].toURI().toString()));
+                    break;
+    
+                case 2:
+                    player_char_img = new ImageView(new Image(imageFiles[2].toURI().toString()));
+                    break;
+    
+                default:
+                    player_char_img = new ImageView(new Image(imageFiles[3].toURI().toString()));
+                    break;
+            }
         }
         player_char_img.setFitHeight(430);
         player_char_img.setFitWidth(430);

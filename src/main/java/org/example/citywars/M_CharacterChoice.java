@@ -49,7 +49,7 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh1(MouseEvent event) throws IOException {
 
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(getCharacter("panda"));
+            secondUser.setGameCharacter(getCharacter("wolf"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else {
@@ -59,7 +59,7 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Game();
             }
         } else {
-            loggedInUser.setGameCharacter(getCharacter("panda"));
+            loggedInUser.setGameCharacter(getCharacter("wolf"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -86,7 +86,7 @@ public class M_CharacterChoice extends Menu {
     @FXML
     protected void choiceCh2(MouseEvent event) throws IOException {
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(getCharacter("dragon"));
+            secondUser.setGameCharacter(getCharacter("panda"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else {
@@ -96,7 +96,7 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Game();
             }
         } else {
-            loggedInUser.setGameCharacter(getCharacter("dragon"));
+            loggedInUser.setGameCharacter(getCharacter("panda"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
@@ -162,7 +162,7 @@ public class M_CharacterChoice extends Menu {
     protected void choiceCh4(MouseEvent event) throws IOException {
 
         if (secondPersonNeeded) {
-            secondUser.setGameCharacter(getCharacter("wolf"));
+            secondUser.setGameCharacter(getCharacter("dragon"));
             if (is_bet)
                 HelloApplication.menu = new M_Bet();
             else {
@@ -172,7 +172,7 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Game();
             }
         } else {
-            loggedInUser.setGameCharacter(getCharacter("wolf"));
+            loggedInUser.setGameCharacter(getCharacter("dragon"));
             HelloApplication.menu = new M_GamePlayMenu();
         }
         switchMenus(event);
