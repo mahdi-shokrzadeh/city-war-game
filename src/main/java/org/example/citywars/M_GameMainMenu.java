@@ -43,7 +43,7 @@ public class M_GameMainMenu extends Menu {
         level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
         XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
 
-        profileIm.setImage(charsImagesProfile[profileIndex]);
+        profileIm.setImage(charsImagesProfile[loggedInUser.getProfileID()]);
     }
     @FXML
     protected void goToProfile (MouseEvent event) throws IOException {

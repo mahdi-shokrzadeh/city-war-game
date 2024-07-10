@@ -2,7 +2,7 @@
   "id" : 1,
   "username" : "Drew",
   "password" : "UserUser2@",
-  "nickname" : "admin",
+  "nickname" : "King",
   "email" : "admin@gmail.com",
   "role" : "admin",
   "passRecoveryQuestion" : "recQuestion",
@@ -22,8 +22,8 @@
     "name" : "panda",
     "pfactor" : 0.0
   },
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -50,8 +50,8 @@
     "name" : "robot",
     "pfactor" : 0.5
   },
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -74,8 +74,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -98,8 +98,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -122,8 +122,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -146,8 +146,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -170,8 +170,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -194,8 +194,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -218,8 +218,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -242,8 +242,8 @@
   "damage" : 0,
   "profileID" : 0,
   "gameCharacter" : null,
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -270,8 +270,8 @@
     "name" : "dragon",
     "pfactor" : 0.8
   },
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 }, {
@@ -298,8 +298,8 @@
     "name" : "panda",
     "pfactor" : 0.9
   },
-  "isBonusActive" : false,
   "botLevel" : 0,
+  "isBonusActive" : false,
   "cardsAreStolen" : false,
   "shouldCardsBeHidden" : false
 } ]

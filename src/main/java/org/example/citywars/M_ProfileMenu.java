@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static controllers.UserController.sudoGetAllUsers;
+import static controllers.UserController.userDB;
 import static org.example.citywars.M_SignUpMenu.*;
 
 public class M_ProfileMenu extends Menu{
@@ -207,7 +208,7 @@ public class M_ProfileMenu extends Menu{
         coin.setText("Coin: "+Integer.toString(loggedInUser.getCoins()));
         level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
         XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
-        profileIm.setImage(charsImagesProfile[profileIndex]);
+        profileIm.setImage(charsImagesProfile[loggedInUser.getProfileID()]);
 
         usernameField.setText(loggedInUser.getUsername());
         nicknameField.setText(loggedInUser.getNickname());
@@ -216,6 +217,8 @@ public class M_ProfileMenu extends Menu{
         passwordConfirmationField.setText(loggedInUser.getPassword());
         questionChoice.setValue(loggedInUser.getPassRecoveryQuestion());
         questionAnswerField.setText(loggedInUser.getPassRecoveryAnswer());
+        questionAnswerField.setDisable(true);
+        questionChoice.setDisable(true);
 
 
     }
@@ -225,6 +228,8 @@ public class M_ProfileMenu extends Menu{
         if (profileIndex== CharImageFilesProfile.length)
             profileIndex=0;
         profileIm.setImage(charsImagesProfile[profileIndex]);
+        UserController.editProfileID(loggedInUser.getID(),profileIndex);
+
     }
     @FXML
     protected void randPassButton(ActionEvent event) throws IOException {
@@ -283,9 +288,24 @@ public class M_ProfileMenu extends Menu{
         loggedInUser.setEmail(emailField.getText());
         loggedInUser.setNickname(nicknameField.getText());
         loggedInUser.setPassword(passwordField.getText());
-        loggedInUser.setPassRecoveryQuestion(questionChoice.getValue());
-        loggedInUser.setPassRecoveryAnswer(questionAnswerField.getText());
         error.setText("Your profile edited successfully!");
+
+        User user=null;
+        try {
+            user = userDB.getOne(loggedInUser.getID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (user == null) {
+            System.out.println("null");
+        }
+
+        UserController.editEmail(loggedInUser.getID(),emailField.getText());
+        UserController.editNickname(loggedInUser.getID(),nicknameField.getText());
+        UserController.editPassword(loggedInUser.getID(),passwordField.getText());
+        UserController.editUsername(loggedInUser.getID(),usernameField.getText());
+        UserController.editProfileID(loggedInUser.getID(),profileIndex);
+
     }
     @FXML
     protected void showPassButton(ActionEvent event) throws IOException {
