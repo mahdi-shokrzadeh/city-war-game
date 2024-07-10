@@ -53,8 +53,8 @@ public class M_Game extends Menu {
     private String winner_reward;
     private String looser_reward;
 
-    @FXML
-    Button bt;
+    // @FXML
+    // Button bt;
 
     // Only Class Vars
     static int bet_amount;
@@ -89,12 +89,12 @@ public class M_Game extends Menu {
             backGroundIm.setImage(BGims.get(i));
             System.out.println("User1 char: " + this.player_one.getGameCharacter().getName());
             System.out.println("User2 char: " + this.player_two.getGameCharacter().getName());
-            // this.startGraphicGame();
-        });
-        bt.setOnAction(event -> {
-            this.handleAddCardsToPlayers();
             this.startGraphicGame();
         });
+        // bt.setOnAction(event -> {
+        // this.handleAddCardsToPlayers();
+        // this.startGraphicGame();
+        // });
     }
 
     public M_Game() {

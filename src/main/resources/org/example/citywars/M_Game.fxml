@@ -38,6 +38,6 @@
             <Image url="@../../../GameElements/lifeSpan.png" />
         </image>
     </ImageView>
-   <Button fx:id="bt" layoutX="617.0" layoutY="634.0" mnemonicParsing="false" text="Button" />
+   <!-- <Button fx:id="bt" layoutX="617.0" layoutY="634.0" mnemonicParsing="false" text="Button" /> -->
 
 </Pane>
