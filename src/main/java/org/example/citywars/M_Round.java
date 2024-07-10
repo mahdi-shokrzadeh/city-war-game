@@ -59,7 +59,6 @@ public class M_Round extends Menu {
     final int top_board_margin = 80;
     final int left_board_margin = 160;
 
-
     private ImageView boss_gif;
 
     private Block[][] board = new Block[2][21];
@@ -92,14 +91,15 @@ public class M_Round extends Menu {
 
         int total_damage = 0;
         for (int i = 0; i <= 20; i++) {
-            int random = (int) (Math.random() * 10) + 20;
+            int random = (int) (Math.random() * 10) + 15;
+            int random_2 = (int) (Math.random() * 10) + 10;
             this.board[0][i].setBlockCard(card_one);
             this.board[0][i].setBlockEmpty(false);
             this.board[0][i].setCardHidden(true);
             this.board[0][i].setBlockPower(random);
-            this.board[0][i].setBlockDamage(random);
+            this.board[0][i].setBlockDamage(random_2);
             total_damage += random;
-            updateInfInBlock(random, random, 0, i);
+            updateInfInBlock(random, random_2, 0, i);
         }
 
         this.player_one.setDamage(total_damage);
@@ -307,7 +307,6 @@ public class M_Round extends Menu {
                 updateInfInBlock(board[0][i].getBlockPower(), board[0][i].getBlockDamage(), 0, i);
             }
             // run the boss gif again
-            
 
         } else {
             String input = ((AI) player_one).chooseTheMove(board, player_one_cards, this);
