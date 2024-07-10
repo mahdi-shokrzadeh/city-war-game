@@ -42,7 +42,7 @@ public class M_GameHistoryMenu extends Menu {
             List<M_Game> temp = (List<M_Game>) res.body.get("games");
             games = new ArrayList<>();
             for (int i = 0; i < temp.size(); i++) {
-                games.add(temp.get(i));
+                // games.add(temp.get(i));
             }
         } else {
             System.out.println(res.message);
@@ -69,7 +69,7 @@ public class M_GameHistoryMenu extends Menu {
         temp.getColumns().addAll(id);
 
         temp.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        temp.getItems().addAll(games);
+        // temp.getItems().addAll(games);
         return temp;
 
     }
