@@ -32,6 +32,7 @@ import models.Response;
 import models.User;
 import models.card.Card;
 import models.game.Block;
+import models.game.SpellAffect;
 import models.game.Turn;
 import views.console.game.ConsoleCard;
 import views.console.game.ConsoleGame;
@@ -287,7 +288,7 @@ public class M_Round extends Menu {
                                 new Thread(() -> {
                                     while (!progress_bar_has_run) {
                                         try {
-                                            Thread.sleep(5);
+                                            Thread.sleep(3);
                                         } catch (InterruptedException ex) {
                                             ex.printStackTrace();
                                         }
@@ -411,9 +412,10 @@ public class M_Round extends Menu {
         imageView.setStyle("-fx-effect: dropshadow(gaussian, green, 11, 0, 0, 0);");
         selectedCard = imageView;
         selected_card = this.findCardFromId(id);
-        System.out.println("name: " + selected_card.getName() + " power: " + selected_card.getPower() + " du :"
-                + selected_card.getDuration());
-        System.out.println(id);
+        // System.out.println("name: " + selected_card.getName() + " power: " +
+        // selected_card.getPower() + " du :"
+        // + selected_card.getDuration());
+        // System.out.println(id);
         followMouseImage.setVisible(true);
     }
 
@@ -433,14 +435,13 @@ public class M_Round extends Menu {
             return false;
         }
 
-        int block_index = (int) ((x - 160) / 75);
+        int block_index = (int) ((x - 160) / this.block_width);
         String id = selectedCard.getId();
         if (is_player_one_turn) {
             return handlePutCardInBoard(0, this.selected_card, block_index + 1);
         } else {
             return handlePutCardInBoard(1, this.selected_card, block_index + 1);
         }
-
     }
 
     public Card findCardFromId(String id) {
@@ -636,14 +637,14 @@ public class M_Round extends Menu {
         Label label_1 = new Label(String.valueOf(this.player_one.getHitPoints()));
         Label label_2 = new Label(String.valueOf(this.player_two.getHitPoints()));
 
-        label_1.setLayoutX(170);
-        label_1.setLayoutY(410);
+        label_1.setLayoutX(1707);
+        label_1.setLayoutY(390);
 
         label_1.setId("hp_label_1");
         label_2.setId("hp_label_2");
 
-        label_2.setLayoutX(1730);
-        label_2.setLayoutY(410);
+        label_2.setLayoutX(1707);
+        label_2.setLayoutY(390);
 
         label_1.setStyle("-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;");
         label_2.setStyle("-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;");
@@ -738,30 +739,84 @@ public class M_Round extends Menu {
                 break;
             }
         }
+        System.out.println("HERE!");
         if (cond) {
-            // create copy image of followMouseImage
-            ImageView im = new ImageView(new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
-                    .toURI().toString());
-            im.setFitWidth(card.getDuration() * this.block_width);
-            im.setFitHeight(this.block_height);
-            im.setLayoutX(160 + (starting_block_number) * (this.block_width - 1));
-            if (turn_number == 0) {
-                im.setLayoutY(this.top_board_margin);
-            } else {
-                im.setLayoutY(this.top_board_margin + this.block_height + 10);
-            }
+            if (card.getCardType().toString().equals("Regualr")) {
+                // create copy image of followMouseImage
+                ImageView im = new ImageView(
+                        new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
+                                .toURI().toString());
+                im.setFitWidth(card.getDuration() * this.block_width);
+                im.setFitHeight(this.block_height);
+                im.setLayoutX(160 + (starting_block_number) * (this.block_width - 1));
+                if (turn_number == 0) {
+                    im.setLayoutY(this.top_board_margin);
+                } else {
+                    im.setLayoutY(this.top_board_margin + this.block_height + 10);
+                }
 
-            rootElement.getChildren().add(im);
-            for (int i = 0; i < card.getDuration(); i++) {
-                this.board[turn_number][starting_block_number + i].setBlockCard(card);
-                this.board[turn_number][starting_block_number + i].setBlockEmpty(false);
+                rootElement.getChildren().add(im);
+                for (int i = 0; i < card.getDuration(); i++) {
+                    this.board[turn_number][starting_block_number + i].setBlockCard(card);
+                    this.board[turn_number][starting_block_number + i].setBlockEmpty(false);
+                    try {
+                        handleAffection(turn_number, starting_block_number + i, i == 0 ? true : false);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+
+            } else {
+                SpellAffect s = new SpellAffect(selected_card, is_player_one_turn ? 0 : 1, starting_block_number, board,
+                        is_player_one_turn ? player_one : player_two, this,
+                        is_player_one_turn ? player_one_cards : player_two_cards);
                 try {
-                    handleAffection(turn_number, starting_block_number + i, i == 0 ? true : false);
+                    if (s.spellHandler()) {
+                        System.out.println("SPELL TEST");
+                        ImageView im = new ImageView(
+                                new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
+                                        .toURI().toString());
+                        im.setFitWidth(card.getDuration() * this.block_width);
+                        im.setFitHeight(this.block_height);
+                        im.setLayoutX(160 + (starting_block_number) * (this.block_width - 1));
+                        if (turn_number == 0) {
+                            im.setLayoutY(this.top_board_margin);
+                        } else {
+                            im.setLayoutY(this.top_board_margin + this.block_height + 10);
+                        }
+
+                        rootElement.getChildren().add(im);
+                        try {
+                            handleAffection(turn_number, starting_block_number, true);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    } else {
+                    }
+
+                    updateHitPoints();
+                    updateHitPoints();
+                    updateRemainingTurns();
+                    updateTotalDameges();
+                    updateSpider();
+
+                    // is_player_one_turn = !is_player_one_turn;
+                    // if (is_player_one_turn) {
+                    // player_one_remaining_turns--;
+                    // } else {
+                    // player_two_remaining_turns--;
+                    // }
+
+                    for (int i = 0; i <= 1; i++) {
+                        for (int j = 0; j < 21; j++) {
+                            updateInfInBlock(board[i][j].getBlockPower(), board[i][j].getBlockDamage(), i, j);
+                        }
+                    }
+
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
-
         } else {
             return false;
         }
@@ -775,7 +830,6 @@ public class M_Round extends Menu {
                     ConsoleGame.printBuffCard(3, 2);
                 }
             }
-
             player_one_cards.remove(card);
         } else {
             if (Math.random() < card.getCharacter().getPFactor() && !this.player_two.getIsBonusActive()
@@ -787,7 +841,6 @@ public class M_Round extends Menu {
             }
             player_two_cards.remove(card);
         }
-
         return true;
     }
 
@@ -974,7 +1027,7 @@ public class M_Round extends Menu {
             current_player.setDamage(current_player.getDamage() +
                     bl.getBlockDamage());
         }
-        System.out.println("HEY RUN!");
+        // System.out.println("HEY RUN!");
         if (!opponent_block.isBlockEmpty() && !opponent_block.isBlockUnavailable()) {
             if (bl.getBlockPower() > opponent_block.getBlockPower()) {
                 opponent_block.setBlockDestroyed(true);
