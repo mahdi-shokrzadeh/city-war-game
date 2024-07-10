@@ -195,7 +195,7 @@ public class M_Game extends Menu {
 
         if (this.mode.equals("AI")) {
             AddCard.addCard(this.player_one_cards);
-            AddCard.addCard(this.player_two_cards);
+            // AddCard.addCard(this.player_two_cards);
         }
 
         // from database
@@ -217,21 +217,21 @@ public class M_Game extends Menu {
             }
         }
 
-        // Response res_2 = UserCardsController.getUsersCards(this.player_two);
-        // if (res_2.ok) {
-        // Object obj = res_2.body.get("cards");
-        // if (obj instanceof ArrayList<?>) {
-        // for (Object o : (ArrayList<?>) obj) {
-        // if (o instanceof Card) {
-        // this.player_two_cards.add((Card) o);
-        // }
-        // }
-        // }
-        // Collections.shuffle(player_two_cards);
-        // System.out.println("DOM!");
-        // } else {
-        // System.out.println(res_2.message);
-        // }
+        Response res_2 = UserCardsController.getUsersCards(this.player_two);
+        if (res_2.ok) {
+            Object obj = res_2.body.get("cards");
+            if (obj instanceof ArrayList<?>) {
+                for (Object o : (ArrayList<?>) obj) {
+                    if (o instanceof Card) {
+                        this.player_two_cards.add((Card) o);
+                    }
+                }
+            }
+            Collections.shuffle(player_two_cards);
+            System.out.println("DOM!");
+        } else {
+            System.out.println(res_2.message);
+        }
 
     }
 
@@ -459,7 +459,7 @@ public class M_Game extends Menu {
                     res = GameController.createGambleGame(this, player_one, player_two,
                             this.rounds.size(),
                             w,
-                            this.bet_amount);
+                            bet_amount);
                     if (res.ok) {
                         this.winner_reward = (String) res.body.get("winner");
                         this.looser_reward = (String) res.body.get("loser");

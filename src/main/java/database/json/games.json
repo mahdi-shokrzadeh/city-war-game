@@ -31,4 +31,15 @@
   "winnerReward" : "strike: +1 level SwordOfHonor: +1 level / User: +75 experience +1 level +25 hit points +142 coins",
   "betAmount" : 0,
   "loserReward" : "/ User: +25 experience +30 coins "
+}, {
+  "id" : 4,
+  "playerOneID" : 1,
+  "playerTwoID" : 2,
+  "mode" : "bet",
+  "createdAt" : "2024-07-10 17:11:20",
+  "winner" : "player_two",
+  "numberOfRounds" : 0,
+  "winnerReward" : "+10044 coins ",
+  "betAmount" : 10044,
+  "loserReward" : "-10044 coins "
 } ]

@@ -193,10 +193,10 @@ public class M_Round extends Menu {
         for (int i = 0; i < number_of_cards; i++) {
             Card c;
             TextFlow imageView = new TextFlow();
-
+            System.out.println("User index: " + user_index + " Card number: " + i);
             if (user_index == 0) {
                 c = player_one_cards.get(i);
-                System.out.println(c.getName());
+                // System.out.println(c.getName());
             } else {
                 c = player_two_cards.get(i);
             }
@@ -210,10 +210,9 @@ public class M_Round extends Menu {
             imageView.setId("cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration());
 
             if (user_index == 0) {
-                imageView.setLayoutX(150 + i * (this.original_card_width + 5));
-
+                imageView.setLayoutX(200 + i * (this.original_card_width + 2));
             } else {
-                imageView.setLayoutX(900 + i * (this.original_card_width + 5));
+                imageView.setLayoutX(980 + i * (this.original_card_width + 2));
             }
 
             if (i < 3) {
@@ -221,9 +220,9 @@ public class M_Round extends Menu {
             } else {
                 imageView.setLayoutY(373 + this.original_card_heoght + 10);
                 if (user_index == 0) {
-                    imageView.setLayoutX(150 + (i - 3) * (this.original_card_width + 5));
+                    imageView.setLayoutX(200 + (i - 3) * (this.original_card_width + 2));
                 } else {
-                    imageView.setLayoutX(900 + (i - 3) * (this.original_card_width + 5));
+                    imageView.setLayoutX(980 + (i - 3) * (this.original_card_width + 2));
                 }
             }
             addCardEventHandlers(imageView);
@@ -806,10 +805,14 @@ public class M_Round extends Menu {
 
     public void handleUpdatePlayerCards(User player, ArrayList<Card> cards, int user_index) {
         // find and remove all player cards from page
+        int co = 0;
         for (Card c : cards) {
+            if (co > 7)
+                break;
             String id = "cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration();
             TextFlow card = (TextFlow) rootElement.lookup("#" + id);
             rootElement.getChildren().remove(card);
+            co++;
         }
         if (!(player instanceof AI) || (player instanceof AI && ((AI) player).getAiLevel() != 5)) {
             addImage(user_index, player.getIsBonusActive() ? 6 : 5);
