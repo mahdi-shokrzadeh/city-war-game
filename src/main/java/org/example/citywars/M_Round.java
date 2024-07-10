@@ -357,8 +357,8 @@ public class M_Round extends Menu {
                     this.updateSpider();
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.player_one_remaining_turns--;
-                    this.updateRemainingTurns();
                 }
+                this.updateRemainingTurns();
             }
         }
         return "";

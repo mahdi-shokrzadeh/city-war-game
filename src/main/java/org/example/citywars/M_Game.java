@@ -50,8 +50,8 @@ public class M_Game extends Menu {
     private User winner_user;
     private String reward;
     private int number_of_rounds;
-    private String winner_reward;
-    private String looser_reward;
+    // private String winner_reward;
+    // private String looser_reward;
 
     // @FXML
     // Button bt;
@@ -384,7 +384,6 @@ public class M_Game extends Menu {
             // M_Round x = new M_Round();
             // HelloApplication.menu = x;
             // switchMenus();
-            // this.rounds.add(x);
             // System.out.println("HEY ROUND IS OPENED!");
             // x.setGame(this);
 
@@ -394,6 +393,7 @@ public class M_Game extends Menu {
             stage.setScene(scene);
             M_Round controller = loader.getController();
             controller.setGame(this);
+            this.rounds.add(new M_Round());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -437,8 +437,8 @@ public class M_Game extends Menu {
                             this.rounds.size(),
                             w, this.player_one_cards, this.player_two_cards);
                     if (res.ok) {
-                        this.winner_reward = (String) res.body.get("winner");
-                        this.looser_reward = (String) res.body.get("loser");
+                        winner_reward = (String) res.body.get("winner");
+                        looser_reward = (String) res.body.get("loser");
                     } else {
                         System.out.println(res.message);
                     }
@@ -448,8 +448,8 @@ public class M_Game extends Menu {
                     res = GameController.createBotGame(this, player_two, this.rounds.size(), w,
                             player_two_cards);
                     if (res.ok) {
-                        this.winner_reward = (String) res.body.get("winner");
-                        this.looser_reward = (String) res.body.get("loser");
+                        winner_reward = (String) res.body.get("winner");
+                        looser_reward = (String) res.body.get("loser");
                     } else {
                         System.out.println(res.message);
                     }
@@ -461,8 +461,8 @@ public class M_Game extends Menu {
                             w,
                             bet_amount);
                     if (res.ok) {
-                        this.winner_reward = (String) res.body.get("winner");
-                        this.looser_reward = (String) res.body.get("loser");
+                        winner_reward = (String) res.body.get("winner");
+                        looser_reward = (String) res.body.get("loser");
                     } else {
                         System.out.println(res.message);
                     }
@@ -473,14 +473,23 @@ public class M_Game extends Menu {
 
             }
             // game over menu
+
         } catch (Exception e) {
-            try {
-                HelloApplication.menu = new M_GameOverMenu(this.winner_reward, this.looser_reward);
-                switchMenus();
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
             System.out.println(e.getMessage());
+        }
+        try {
+            // HelloApplication.menu = new M_GameOverMenu();
+            // switchMenus();
+
+            // System.out.println("win: " + winner_reward);
+            // System.out.println("los: " + looser_reward);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("M_GameOverMenu.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = HelloApplication.primaryStage;
+            stage.setScene(scene);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

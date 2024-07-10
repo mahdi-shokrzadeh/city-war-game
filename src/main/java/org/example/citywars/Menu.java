@@ -43,6 +43,8 @@ public abstract class Menu implements Initializable {
     static Image[] charsImages;
     static File[] CharImageFilesProfile;
     static Image[] charsImagesProfile;
+    static String looser_reward="";
+    static String winner_reward="";
     static int themeIndex=0;
     ArrayList<File> files;
      Media media;
