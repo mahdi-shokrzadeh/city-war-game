@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,9 +38,12 @@ public class M_ShopMenu extends Menu {
 
     @FXML
     private Pane pane;
-
+    @FXML
+    TextFlow tf;
+@FXML
+Label coinsText;
     public M_ShopMenu() {
-        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" });
+        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" ,"BG-Videos\\lightmode.png"});
     }
 
     private List<Card> allCards = null;
@@ -391,6 +395,9 @@ public class M_ShopMenu extends Menu {
         // tf.setTranslateY(300);
         // tf.setTranslateZ(10);
         // pane.getChildren().addAll(tf);
+        backGroundIm.setImage(BGims.get(themeIndex));
+        coinsText.setText("Coin Count :"+ loggedInUser.getCoins());
+
 
         List<Card> allCards = null;
         List<Card> userCards = null;
@@ -401,12 +408,12 @@ public class M_ShopMenu extends Menu {
         } else {
             System.out.println(res.message);
         }
-        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
-                "admin", "recQuestion", "recAnswer");
-        _user.setID(1);
-        _user.setCoins(10000);
-        _user.setGameCharacter(new GameCharacter("panda"));
-        res = UserCardsController.getUsersCards(_user);
+//        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
+//                "admin", "recQuestion", "recAnswer");
+//        _user.setID(1);
+//        _user.setCoins(10000);
+//        _user.setGameCharacter(new GameCharacter("panda"));
+        res = UserCardsController.getUsersCards(/*_user*/loggedInUser);
         if (res.ok) {
             userCards = (List<Card>) res.body.get("cards");
         } else {
@@ -431,7 +438,7 @@ public class M_ShopMenu extends Menu {
             Integer level = null;
             UserCard uc = null;
             if (hasCard) {
-                res = UserCardsController.getUserCard(_user.getID(), card.getID());
+                res = UserCardsController.getUserCard(/*_user*/loggedInUser.getID(), card.getID());
                 if (res.ok) {
                     uc = ((UserCard) res.body.get("userCard"));
                     level = (int) uc.getLevel();
@@ -502,7 +509,7 @@ public class M_ShopMenu extends Menu {
                     button.setCursor(Cursor.HAND);
                     button.setBackground(Background.fill(Paint.valueOf("#8900AC")));
                     button.setOnMouseClicked((event) -> {
-                        Response _res = UserCardsController.upgradeCard(_user, card);
+                        Response _res = UserCardsController.upgradeCard(loggedInUser, card);
                         alert.setContentText(_res.message);
                         alert.setAlertType(AlertType.INFORMATION);
                         alert.show();
@@ -532,7 +539,7 @@ public class M_ShopMenu extends Menu {
                 button.setTranslateX(tf.getTranslateX() + 25);
                 button.setTranslateY(tf.getTranslateY() + 285);
                 button.setOnMouseClicked((event) -> {
-                    Response _res = UserCardsController.buyCard(_user, card);
+                    Response _res = UserCardsController.buyCard(loggedInUser, card);
                     System.out.println(_res.message);
                     alert.setAlertType(AlertType.INFORMATION);
                     alert.setContentText("card upgraded successfully");

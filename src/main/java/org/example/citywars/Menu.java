@@ -17,6 +17,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.P_PlayMode;
 import models.User;
+import models.card.Card;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 import static org.example.citywars.HelloApplication.icon;
 
 public abstract class Menu implements Initializable {
+    protected static Card editingCard = null;
     static int lastMenu;
     int soundIndex=1;
     static MediaPlayer outPutMusic;
