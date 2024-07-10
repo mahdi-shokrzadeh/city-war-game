@@ -31,6 +31,7 @@ import models.User;
 import models.card.Card;
 import models.game.Block;
 import models.game.Turn;
+import views.console.game.ConsoleCard;
 import views.console.game.ConsoleGame;
 
 public class M_Round extends Menu {
@@ -75,7 +76,7 @@ public class M_Round extends Menu {
     }
 
     public Menu myMethods() {
-        return new M_Game(new Stage());
+        return new M_Game();
     }
 
     public void handleBotInitiation() {
@@ -99,7 +100,6 @@ public class M_Round extends Menu {
 
         this.player_one.setDamage(total_damage);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -151,6 +151,10 @@ public class M_Round extends Menu {
         initializeMouseMoveListener();
         initializeCharacterImages(player_one, 0);
         initializeCharacterImages(player_two, 1);
+        if (this.player_one instanceof AI) {
+            this.BOTmove();
+        }
+
     }
 
     public void initializeFollowMouseImage() {
@@ -279,11 +283,14 @@ public class M_Round extends Menu {
                     } else {
                         this.player_two_remaining_turns--;
                         handleUpdatePlayerCards(player_two, player_two_cards, 1);
+                        if (player_one instanceof AI && this.player_one_remaining_turns > 0) {
+                            this.BOTmove();
+                        }
                     }
 
                     this.is_player_one_turn = !this.is_player_one_turn;
                     this.updateRemainingTurns();
-                    if (player_one_remaining_turns == 0 && player_two_remaining_turns == 0) {
+                    if (player_one_remaining_turns <= 0 && player_two_remaining_turns <= 0) {
                         timeLine(() -> {
                             if (this.game_is_finished) {
                                 System.out.println("Game is finished!");
@@ -307,6 +314,38 @@ public class M_Round extends Menu {
         });
     }
 
+    public String BOTmove() {
+        if (((AI) player_one).getAiLevel() == 5) {
+            ((AI) player_one).handleBoss(board);
+        } else {
+            String input = ((AI) player_one).chooseTheMove(board, player_one_cards, this);
+            if (input.equals("No valid card to place")) {
+                ConsoleGame.printNoValidCardToPlace();
+            } else {
+                ConsoleGame.printAIChoice(input);
+                if (!input.startsWith("Spell")) {
+                    String[] parts = input.split(" ");
+                    int card_number = Integer.parseInt(parts[3]);
+                    int block_number = Integer.parseInt(parts[6]);
+                    Card selected_card = player_one_cards.get(card_number - 1);
+                    ConsoleCard.printCard(card_number, selected_card, "normal");
+                    if (handlePutCardInBoard(0, selected_card, block_number)) {
+                        this.is_player_one_turn = !this.is_player_one_turn;
+                        this.player_one_remaining_turns--;
+                    }
+                } else {
+                    this.updateHitPoints();
+                    this.updateRemainingTurns();
+                    this.updateTotalDameges();
+                    this.updateSpider();
+                    this.is_player_one_turn = !this.is_player_one_turn;
+                    this.player_one_remaining_turns--;
+                }
+            }
+        }
+        return "";
+    }
+
     public void chooseFollowingImage() {
         followMouseImage.setImage(
                 new Image(new File("src\\main\\resources\\GameElements\\f" + this.selected_card.getDuration() + ".png")
@@ -316,6 +355,25 @@ public class M_Round extends Menu {
     public void handleMeasures(int duration) {
         followMouseImage.setFitHeight(100);
         followMouseImage.setFitWidth(duration * this.block_width);
+    }
+
+    public void updateSpider() {
+        // delete all spiders from board
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 21; j++) {
+                ImageView spider = (ImageView) rootElement.lookup("#spider_" + i + "_" + j);
+                rootElement.getChildren().remove(spider);
+            }
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 21; j++) {
+                Block bl = this.board[i][j];
+                if (bl.isBlockUnavailable()) {
+                    handlePutSpider(i, j);
+                }
+            }
+        }
     }
 
     public void handleCardSelection(TextFlow imageView) {
@@ -396,8 +454,7 @@ public class M_Round extends Menu {
         // handle graphic
         ImageView im = new ImageView(
                 new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
-        // im.setFitHeight(this.block_height);
-        // im.setFitWidth(this.block_width);
+        im.setId("spider_" + user_index + "_" + block_index);
         im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width));
         im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
         rootElement.getChildren().add(im);
@@ -911,4 +968,13 @@ public class M_Round extends Menu {
     public String getResult() {
         return this.winner;
     }
+
+    public void setPlayerTwoRemainingTurns(int i) {
+        this.player_two_remaining_turns = i > 0 ? i : 0;
+    }
+
+    public int getPlayerTwoRemainingTurns() {
+        return this.player_two_remaining_turns;
+    }
+
 }

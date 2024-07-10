@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import org.example.citywars.M_Round;
 
+import models.AI;
 import models.User;
 import models.card.Card;
 import models.card.Spell;
@@ -71,7 +72,7 @@ public class SpellAffect {
                 return false;
 
             case "Attenuate":
-            
+
                 handleAttenuate();
                 return true;
 
@@ -258,6 +259,11 @@ public class SpellAffect {
 
     public void handleRoundReduce() {
         this.round.setNumberOfRoundTurns(this.round.getNumberOfRoundTurns() - 1);
+        if (this.round.getPlayer_one() instanceof AI) {
+            this.round.setPlayerTwoRemainingTurns(this.round.getPlayerTwoRemainingTurns() - 1);
+        } else {
+
+        }
         ConsoleGame.printSuccessfulTurnReduce();
         this.removeCardFromHand(this.spell_card);
     }
@@ -266,7 +272,6 @@ public class SpellAffect {
         // randomly choose two reqular cards from opponent
         Card found_card_one = null;
         Card found_card_two = null;
-
 
         System.out.println("Attenuate");
 
@@ -379,7 +384,7 @@ public class SpellAffect {
             return;
         }
 
-        this.board[this.turn_index][block_number].setBlockUnavailable(true);
+        this.board[(this.turn_index + 1) % 2][block_number].setBlockUnavailable(true);
         ConsoleGame.printSuccessfulAddSpecialCard();
         this.removeCardFromHand(this.spell_card);
     }

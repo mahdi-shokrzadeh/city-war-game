@@ -19,12 +19,12 @@ import static org.example.citywars.Menu.*;
 public class HelloApplication extends Application {
     public static Menu menu;
     public static Image icon = new Image("logo.png");
-
+    public static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
 
         loadFiles();
-
+        this.primaryStage = stage;
         menu = new M_Intro();
         outPutMusic = new MediaPlayer(BGMusicMedias.get(0));
         outPutMusic.setCycleCount(-1);

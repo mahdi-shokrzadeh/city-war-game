@@ -19,8 +19,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import controllers.GameCharacterController;
@@ -51,6 +53,9 @@ public class M_Game extends Menu {
     private String winner_reward;
     private String looser_reward;
 
+    @FXML
+    Button bt;
+
     // Only Class Vars
     static int bet_amount;
     private ArrayList<M_Round> rounds = new ArrayList<M_Round>();
@@ -69,10 +74,30 @@ public class M_Game extends Menu {
     @FXML
     ImageView timeLineWalker;
 
-    public M_Game(@SuppressWarnings("exports") Stage st) {
-        super("M_Round", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime ldt = LocalDateTime.now();
+            this.created_at = ldt.format(formatter);
+            this.player_one_id = player_one.getID();
+            this.player_two_id = player_two.getID();
+            this.handleAddCardsToPlayers();
+            Random random = new Random();
+            int i = random.nextInt(BGims.size());
+            backGroundIm.setImage(BGims.get(i));
+            // this.startGraphicGame();
+        });
+        bt.setOnAction(event -> {
+            this.handleAddCardsToPlayers();
+            this.startGraphicGame();
+        });
+    }
+
+    public M_Game() {
+        super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
                 "BG-Videos\\GameBGs\\bg3.png" });
-        this.st = st;
         this.player_one = loggedInUser;
         if (secondPersonNeeded) {
             System.out.print("Please enter the second player's username: ");
@@ -89,15 +114,6 @@ public class M_Game extends Menu {
             AI.setGameCharacter(new GameCharacter("BOT"));
             this.player_one = AI;
         }
-        // System.out.println("HEY I'M HERE!");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime ldt = LocalDateTime.now();
-        this.created_at = ldt.format(formatter);
-
-        // this.current_round = rounds.get(0);
-        this.player_one_id = player_one.getID();
-        this.player_two_id = player_two.getID();
-        this.startGraphicGame();
     }
 
     public M_Game(User player_one, User player_two, String mode) {
@@ -120,17 +136,14 @@ public class M_Game extends Menu {
         switch (mode) {
 
             case "duel":
-                // this.handleAddCardsToPlayers();
+
                 break;
 
             case "AI":
-
-                // this.handleAddCardsToPlayers();
                 break;
 
             case "bet":
-                // this.handleAddCardsToPlayers();
-                this.handleGetBetAmount();
+
                 break;
 
             default:
@@ -157,7 +170,6 @@ public class M_Game extends Menu {
         this.battle = battle;
         this.defenderClan = defenderClan;
         this.attackerClan = attackerClan;
-        ConsoleGame.printGreetings();
         // this.handleAddCardsToPlayers();
     }
 
@@ -172,102 +184,12 @@ public class M_Game extends Menu {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Random random = new Random();
-        int i = random.nextInt(BGims.size());
-        backGroundIm.setImage(BGims.get(i));
-    }
-
-    @Override
     public Menu myMethods() {
-        String input = consoleScanner.nextLine();
-        if (input.equals("select character")) {
-            if (!(player_one instanceof AI)) {
-                this.handleChooseCharacter(this.player_one);
-            }
-
-            this.handleChooseCharacter(this.player_two);
-
-        } else if (input.equals("set bet amount")) {
-            if (this.mode.equals("bet")) {
-                this.handleGetBetAmount();
-            } else {
-                System.out.println("This mode does not require a bet amount");
-            }
-        } else if (input.equals("start game")) {
-            if (this.startGame()) {
-                // handle game over
-                Menu menu = new M_GameOverMenu(this.winner_user, this.winner_reward,
-                        this.looser_reward);
-                return menu;
-            } else {
-
-                return this;
-            }
-        } else {
-            ConsoleGame.printInvaidInput();
-        }
 
         return this;
     }
 
-    public void handleChooseCharacter(User player) {
-
-        ArrayList<GameCharacter> characters = new ArrayList<GameCharacter>();
-        Response res = GameCharacterController.getAll();
-        if (res.ok) {
-            Object obj = res.body.get("gameCharacters");
-            if (obj instanceof ArrayList<?>) {
-                for (Object o : (ArrayList<?>) obj) {
-                    if (o instanceof GameCharacter) {
-                        characters.add((GameCharacter) o);
-                    }
-                }
-            }
-        } else {
-            System.out.println(res.message);
-        }
-
-        ConsoleGame.printCharacterMenu(player.getNickname(), characters);
-        boolean cond = false;
-        Scanner sc = new Scanner(System.in);
-        String in = "";
-        while (!cond) {
-            in = sc.nextLine();
-            if (in.matches("[1-6]")) {
-                cond = true;
-                try {
-                    player.setGameCharacter(characters.get(Integer.parseInt(in) - 1));
-                } catch (Exception e) {
-                    System.out.println("Please enter a valid number between 1 to "
-                            + characters.size());
-                }
-            } else {
-                System.out.println("Please enter a valid number between 1 to " + characters.size());
-            }
-        }
-        ConsoleGame.printSuccessfulcharacterChoice(characters.get(Integer.parseInt(in) - 1).getName());
-
-    }
-
-    public boolean startGame() {
-        if (((this.mode.equals("duel") || this.mode.equals("clan"))
-                && (this.player_one.getGameCharacter() == null ||
-                        this.player_two.getGameCharacter() == null))
-                || (this.player_two.getGameCharacter() == null)) {
-            System.out.println("Please select character first!");
-            return false;
-        } else if (this.mode.equals("bet") && this.bet_amount == 0) {
-            ConsoleGame.printBetNotSet();
-            return false;
-        }
-        this.handleAddCardsToPlayers();
-        return true;
-    }
-
     public void handleAddCardsToPlayers() {
-        System.out.println(this.player_two.getUsername());
-        System.out.println(this.player_one.getUsername());
 
         if (this.mode.equals("AI")) {
             AddCard.addCard(this.player_one_cards);
@@ -295,18 +217,18 @@ public class M_Game extends Menu {
 
         // Response res_2 = UserCardsController.getUsersCards(this.player_two);
         // if (res_2.ok) {
-        //     Object obj = res_2.body.get("cards");
-        //     if (obj instanceof ArrayList<?>) {
-        //         for (Object o : (ArrayList<?>) obj) {
-        //             if (o instanceof Card) {
-        //                 this.player_two_cards.add((Card) o);
-        //             }
-        //         }
-        //     }
-        //     Collections.shuffle(player_two_cards);
-
+        // Object obj = res_2.body.get("cards");
+        // if (obj instanceof ArrayList<?>) {
+        // for (Object o : (ArrayList<?>) obj) {
+        // if (o instanceof Card) {
+        // this.player_two_cards.add((Card) o);
+        // }
+        // }
+        // }
+        // Collections.shuffle(player_two_cards);
+        // System.out.println("DOM!");
         // } else {
-        //     System.out.println(res_2.message);
+        // System.out.println(res_2.message);
         // }
 
     }
@@ -431,33 +353,6 @@ public class M_Game extends Menu {
         }
     }
 
-    public void handleGetBetAmount() {
-        Scanner scanner = new Scanner(System.in);
-        boolean cond = false;
-        System.out.println("Please enter the bet amount:");
-        while (!cond) {
-            String inputt = scanner.nextLine();
-            if (inputt.matches("[0-9]+")) {
-                int b = Integer.parseInt(inputt);
-                this.bet_amount = b;
-                if (this.player_one.getCoins() < b
-                        || this.player_two.getCoins() < b) {
-                    System.out.println(
-                            "One of the players does not have enough coins to bet this amount"
-                                    + "\n" +
-                                    "Please enter a valid amount");
-
-                } else {
-                    cond = true;
-                    this.bet_amount = Integer.parseInt(inputt);
-                    ConsoleGame.printSuccessfulBetSet(b);
-                }
-            } else {
-                System.out.println("Please enter a valid number");
-            }
-        }
-    }
-
     // graphic related!
     public boolean startGraphicGame() {
         if (((this.mode.equals("duel"))
@@ -472,21 +367,31 @@ public class M_Game extends Menu {
         }
 
         System.out.println("User1:" + this.player_one.getUsername() + " User2:" + this.player_two.getUsername());
-        this.handleAddCardsToPlayers();
+        // Platform.runLater(() -> this.handleAddCardsToPlayers());
         showRound();
         return true;
     }
 
     public void showRound() {
         try {
+            // FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round.fxml"));
+            // Parent root = loader.load();
+            // Scene scene = new Scene(root);
+            // this.st.setScene(scene);
+            // M_Round controller = loader.getController();
+            // M_Round x = new M_Round();
+            // HelloApplication.menu = x;
+            // switchMenus();
+            // this.rounds.add(x);
+            // System.out.println("HEY ROUND IS OPENED!");
+            // x.setGame(this);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Round.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            this.st.setScene(scene);
+            Scene scene = new Scene(loader.load());
+            Stage stage = HelloApplication.primaryStage;
+            stage.setScene(scene);
             M_Round controller = loader.getController();
             controller.setGame(this);
-            this.rounds.add(new M_Round());
-            System.out.println("HEY ROUND IS OPENED!");
 
         } catch (Exception e) {
             e.printStackTrace();

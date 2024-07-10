@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 import controllers.GameCharacterController;
 
 public class M_CharacterChoice extends Menu {
-    File[] imageFiles;
-    Image[] charsImages;
     @FXML
     ImageView imv1;
     @FXML
@@ -29,7 +27,7 @@ public class M_CharacterChoice extends Menu {
     ImageView imv4;
 
     public M_CharacterChoice() {
-        super("M_CharacterChoice", new String[]{"BG-Videos\\BG1.jpg","BG-Videos\\lightmode.png"});
+        super("M_CharacterChoice", new String[] { "BG-Videos\\BG1.jpg", "BG-Videos\\lightmode.png" });
     }
 
     @Override
@@ -41,10 +39,10 @@ public class M_CharacterChoice extends Menu {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         backGroundIm.setImage(BGims.get(themeIndex));
 
-        imv1.setImage(charsImages[1]);
-        imv2.setImage(charsImages[2]);
-        imv3.setImage(charsImages[0]);
-        imv4.setImage(charsImages[3]);
+        imv1.setImage(charsImages[5]);
+        imv2.setImage(charsImages[7]);
+        imv3.setImage(charsImages[4]);
+        imv4.setImage(charsImages[6]);
     }
 
     @FXML
@@ -56,7 +54,9 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Bet();
             else {
                 // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+                // HelloApplication.menu = new M_Game((Stage) ((Node)
+                // event.getSource()).getScene().getWindow());
+                HelloApplication.menu = new M_Game();
             }
         } else {
             loggedInUser.setGameCharacter(getCharacter("panda"));
@@ -91,7 +91,9 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Bet();
             else {
                 // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+                // HelloApplication.menu = new M_Game((Stage) ((Node)
+                // event.getSource()).getScene().getWindow());
+                HelloApplication.menu = new M_Game();
             }
         } else {
             loggedInUser.setGameCharacter(getCharacter("dragon"));
@@ -127,7 +129,9 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Bet();
             else {
                 // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+                // HelloApplication.menu = new M_Game((Stage) ((Node)
+                // event.getSource()).getScene().getWindow());
+                HelloApplication.menu = new M_Game();
             }
         } else {
             loggedInUser.setGameCharacter(getCharacter("robot"));
@@ -163,7 +167,9 @@ public class M_CharacterChoice extends Menu {
                 HelloApplication.menu = new M_Bet();
             else {
                 // stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+                // HelloApplication.menu = new M_Game((Stage) ((Node)
+                // event.getSource()).getScene().getWindow());
+                HelloApplication.menu = new M_Game();
             }
         } else {
             loggedInUser.setGameCharacter(getCharacter("wolf"));

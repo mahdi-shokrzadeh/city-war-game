@@ -97,11 +97,11 @@ public abstract class Menu implements Initializable {
 //        stage.setFullScreen(true);
 
         root =  FXMLLoader.load(getClass().getResource(HelloApplication.menu.getName()+".fxml"));
-//        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        // stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        stage.setTitle(HelloApplication.menu.getName());
-        stage.getIcons().add(icon);
-//        stage.setFullScreen(true);
+        // stage.setTitle(HelloApplication.menu.getName());
+        // stage.getIcons().add(icon);
+        //  stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
     }

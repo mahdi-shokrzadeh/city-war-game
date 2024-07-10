@@ -26,7 +26,8 @@ public class M_Bet extends Menu {
     protected void betOkButton(ActionEvent event) throws IOException {
         bet_amount = betAmount.getValue();
         System.out.println(bet_amount);////////////////////////
-        HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+        // HelloApplication.menu = new M_Game((Stage) ((Node) event.getSource()).getScene().getWindow());
+        HelloApplication.menu = new M_Game();
         switchMenus(event);
     }
 
