@@ -3,18 +3,43 @@ package org.example.citywars;
 import controllers.CardController;
 import controllers.UserCardsController;
 import controllers.UserController;
+import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import models.GameCharacter;
 import models.Response;
 import models.User;
 import models.UserCard;
 import models.card.Card;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class M_ShopMenu extends Menu {
+
+    @FXML
+    private Pane pane;
+
     public M_ShopMenu() {
-        super("M_ShopMenu", new String[]{"BG-Videos\\shopMenu.png","BG-Videos\\lightmode.png"});
+        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" });
     }
 
     private List<Card> allCards = null;
@@ -350,4 +375,173 @@ public class M_ShopMenu extends Menu {
             }
         } while (true);
     }
+
+    public void Back(Event event) throws IOException {
+        HelloApplication.menu = new M_GameMainMenu();
+        switchMenus(event);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Response res = CardController.getCardByName("Awesome Punch");
+        // Card card = (Card) res.body.get("card");
+        // res = CardController.getCardImage(card, 3);
+        // TextFlow tf = (TextFlow) res.body.get("textFlow");
+        // tf.setTranslateX(200);
+        // tf.setTranslateY(300);
+        // tf.setTranslateZ(10);
+        // pane.getChildren().addAll(tf);
+
+        List<Card> allCards = null;
+        List<Card> userCards = null;
+        Response res = CardController.getAllCards();
+        Alert alert = new Alert(AlertType.NONE);
+        if (res.ok) {
+            allCards = (List<Card>) res.body.get("allCards");
+        } else {
+            System.out.println(res.message);
+        }
+        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
+                "admin", "recQuestion", "recAnswer");
+        _user.setID(1);
+        _user.setCoins(10000);
+        _user.setGameCharacter(new GameCharacter("panda"));
+        res = UserCardsController.getUsersCards(_user);
+        if (res.ok) {
+            userCards = (List<Card>) res.body.get("cards");
+        } else {
+            System.out.println(res.message);
+            if (res.exception != null) {
+                System.out.println(res.exception.getMessage());
+            }
+        }
+        for (int i = 0; i < allCards.size(); i++) {
+            Card card = allCards.get(i);
+            if (card.getCardType().toString().equals("Spell")) {
+                continue;
+            }
+
+            boolean hasCard = false;
+            for (Card c : userCards) {
+                if (c.getName().equals(card.getName())) {
+                    hasCard = true;
+                }
+            }
+
+            Integer level = null;
+            UserCard uc = null;
+            if (hasCard) {
+                res = UserCardsController.getUserCard(_user.getID(), card.getID());
+                if (res.ok) {
+                    uc = ((UserCard) res.body.get("userCard"));
+                    level = (int) uc.getLevel();
+                }
+            } else {
+                level = 1;
+            }
+
+            res = CardController.getCardImage(card, level);
+            TextFlow tf = null;
+            if (res.ok) {
+                tf = (TextFlow) res.body.get("textFlow");
+            } else {
+                System.out.println(res.message);
+            }
+            // tf.setBackground(Background.fill(Paint.valueOf("blue")));
+            tf.setPrefWidth(180);
+            tf.setPrefHeight(50);
+            tf.setTranslateX(400 + 200 * (i % 5));
+            tf.setTranslateY(100 + 350 * (i / 5));
+            pane.getChildren().add(tf);
+
+            for (Node node : tf.getChildren()) {
+                if (node.getId() != null) {
+                    if (node.getId() == "hBox") {
+                        node.setTranslateX(19);
+                        node.setTranslateY(-145);
+                    } else if (node.getId() == "power") {
+                        if (hasCard && uc.getLevel() < 3) {
+                            ((Text) node).setText(((char) '\u2191')
+                                    + String.valueOf(Integer.parseInt(((Text) node).getText()) + card.getDuration()));
+                            ((Text) node).setFont(Font.font(25));
+                            ((Text) node).setFill(Paint.valueOf("#07d104"));
+                            node.setTranslateX(5);
+                            node.setTranslateY(-248);
+                        } else {
+                            ((Text) node).setFont(Font.font(25));
+                            node.setTranslateX(27.5);
+                            node.setTranslateY(-248);
+                        }
+                    } else if (node.getId() == "damage") {
+                        if (hasCard && uc.getLevel() < 3) {
+                            ((Text) node).setText(
+                                    ((char) '\u2191') + String.valueOf(Integer.parseInt(((Text) node).getText()) + 3));
+                            ((Text) node).setFont(Font.font(14));
+                            ((Text) node).setFill(Paint.valueOf("#07d104"));
+                            node.setTranslateX(87);
+                            node.setTranslateY(-65);
+                        } else {
+                            ((Text) node).setFont(Font.font(14));
+                            node.setTranslateX(97);
+                            node.setTranslateY(-65);
+                        }
+                    }
+                }
+            }
+
+            if (hasCard) {
+                Button button = null;
+                if (uc.getLevel() >= 3) {
+                    button = new Button("Max level");
+                } else {
+                    button = new Button("Upgrade (" + uc.getLevel() * card.getUpgradeCost() + "$)");
+
+                }
+                button.setTextFill(Paint.valueOf("white"));
+                if (uc.getLevel() < 3) {
+                    button.setCursor(Cursor.HAND);
+                    button.setBackground(Background.fill(Paint.valueOf("#8900AC")));
+                    button.setOnMouseClicked((event) -> {
+                        Response _res = UserCardsController.upgradeCard(_user, card);
+                        alert.setContentText(_res.message);
+                        alert.setAlertType(AlertType.INFORMATION);
+                        alert.show();
+                    });
+                } else {
+                    button.setBackground(Background.fill(Paint.valueOf("#e8c400")));
+                }
+                button.setPrefWidth(160);
+                button.setMaxHeight(30);
+                button.setTranslateX(tf.getTranslateX() + 25);
+                button.setTranslateY(tf.getTranslateY() + 285);
+                pane.getChildren().add(button);
+            } else {
+                for (Node node : tf.getChildren()) {
+                    if (node.getId() != null && node.getId().equals("imageView")) {
+                        ColorAdjust colorAdjust = new ColorAdjust();
+                        colorAdjust.setSaturation(-0.95);
+                        node.setEffect(colorAdjust);
+                    }
+                }
+                Button button = new Button("Purchase (" + card.getPrice() + "$)");
+                button.setCursor(Cursor.HAND);
+                button.setBackground(Background.fill(Paint.valueOf("green")));
+                button.setTextFill(Paint.valueOf("white"));
+                button.setPrefWidth(160);
+                button.setMaxHeight(30);
+                button.setTranslateX(tf.getTranslateX() + 25);
+                button.setTranslateY(tf.getTranslateY() + 285);
+                button.setOnMouseClicked((event) -> {
+                    Response _res = UserCardsController.buyCard(_user, card);
+                    System.out.println(_res.message);
+                    alert.setAlertType(AlertType.INFORMATION);
+                    alert.setContentText("card upgraded successfully");
+                    alert.show();
+                });
+                pane.getChildren().addAll(button);
+            }
+
+        }
+    }
+
 }

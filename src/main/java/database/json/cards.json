@@ -1,6 +1,6 @@
 [ {
   "id" : 2,
-  "name" : "KnifeSlash",
+  "name" : "Knife Slash",
   "price" : 60,
   "duration" : 1,
   "cardType" : "Regular",
@@ -19,7 +19,7 @@
   "imageURL" : null
 }, {
   "id" : 3,
-  "name" : "SpearOfLight",
+  "name" : "Spear Of Light",
   "price" : 70,
   "duration" : 2,
   "cardType" : "Regular",
@@ -38,7 +38,7 @@
   "imageURL" : null
 }, {
   "id" : 4,
-  "name" : "StaffOfWisdom",
+  "name" : "Staff Of Wisdom",
   "price" : 65,
   "duration" : 3,
   "cardType" : "Regular",
@@ -57,7 +57,7 @@
   "imageURL" : null
 }, {
   "id" : 5,
-  "name" : "FistOfJustice",
+  "name" : "Fist Of Justice",
   "price" : 70,
   "duration" : 4,
   "cardType" : "Regular",
@@ -76,7 +76,7 @@
   "imageURL" : null
 }, {
   "id" : 6,
-  "name" : "VortexOfPower",
+  "name" : "Vortex Of Power",
   "price" : 80,
   "duration" : 5,
   "cardType" : "Regular",
@@ -95,7 +95,7 @@
   "imageURL" : null
 }, {
   "id" : 7,
-  "name" : "SharpBite",
+  "name" : "Sharp Bite",
   "price" : 50,
   "duration" : 1,
   "cardType" : "Regular",
@@ -114,7 +114,7 @@
   "imageURL" : null
 }, {
   "id" : 8,
-  "name" : "HowlToMoon",
+  "name" : "Howl To Moon",
   "price" : 60,
   "duration" : 5,
   "cardType" : "Regular",
@@ -133,7 +133,7 @@
   "imageURL" : null
 }, {
   "id" : 9,
-  "name" : "PawOfSpeed",
+  "name" : "Paw Of Speed",
   "price" : 60,
   "duration" : 2,
   "cardType" : "Regular",
@@ -171,7 +171,7 @@
   "imageURL" : null
 }, {
   "id" : 11,
-  "name" : "BackToTheWall",
+  "name" : "Back To The Wall",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
@@ -190,7 +190,7 @@
   "imageURL" : null
 }, {
   "id" : 12,
-  "name" : "SwordOfHonor",
+  "name" : "Sword Of Honor",
   "price" : 75,
   "duration" : 3,
   "cardType" : "Regular",
@@ -228,7 +228,7 @@
   "imageURL" : null
 }, {
   "id" : 14,
-  "name" : "UndercoverDrone",
+  "name" : "Undercover Drone",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
@@ -247,7 +247,7 @@
   "imageURL" : null
 }, {
   "id" : 15,
-  "name" : "CavalrySupport",
+  "name" : "Cavalry Support",
   "price" : 70,
   "duration" : 5,
   "cardType" : "Regular",
@@ -266,7 +266,7 @@
   "imageURL" : null
 }, {
   "id" : 16,
-  "name" : "AwesomePunch",
+  "name" : "Awesome Punch",
   "price" : 80,
   "duration" : 2,
   "cardType" : "Regular",
@@ -285,7 +285,7 @@
   "imageURL" : null
 }, {
   "id" : 17,
-  "name" : "LazyAttack",
+  "name" : "Lazy Attack",
   "price" : 80,
   "duration" : 5,
   "cardType" : "Regular",
@@ -304,7 +304,7 @@
   "imageURL" : null
 }, {
   "id" : 18,
-  "name" : "JumpScare",
+  "name" : "Jump Scare",
   "price" : 70,
   "duration" : 1,
   "cardType" : "Regular",
@@ -323,7 +323,7 @@
   "imageURL" : null
 }, {
   "id" : 19,
-  "name" : "FireBreath",
+  "name" : "Fire Breath",
   "price" : 60,
   "duration" : 1,
   "cardType" : "Regular",
@@ -342,7 +342,7 @@
   "imageURL" : null
 }, {
   "id" : 20,
-  "name" : "WingSlap",
+  "name" : "Wing Slap",
   "price" : 50,
   "duration" : 2,
   "cardType" : "Regular",
@@ -361,7 +361,7 @@
   "imageURL" : null
 }, {
   "id" : 21,
-  "name" : "TailSlam",
+  "name" : "Tail Slam",
   "price" : 50,
   "duration" : 3,
   "cardType" : "Regular",
@@ -380,7 +380,7 @@
   "imageURL" : null
 }, {
   "id" : 22,
-  "name" : "MagicSlash",
+  "name" : "Magic Slash",
   "price" : 70,
   "duration" : 4,
   "cardType" : "Regular",
@@ -399,7 +399,7 @@
   "imageURL" : null
 }, {
   "id" : 23,
-  "name" : "FireBall",
+  "name" : "Fire Ball",
   "price" : 80,
   "duration" : 5,
   "cardType" : "Regular",
@@ -434,7 +434,7 @@
   },
   "level" : 1,
   "spellType" : "Shield",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/Shield.png"
 }, {
   "id" : 25,
   "name" : "Heal",
@@ -453,10 +453,10 @@
   },
   "level" : 1,
   "spellType" : "Heal",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/Heal.png"
 }, {
   "id" : 26,
-  "name" : "PowerBoost",
+  "name" : "Power Boost",
   "price" : 80,
   "duration" : 1,
   "cardType" : "Spell",
@@ -472,7 +472,7 @@
   },
   "level" : 1,
   "spellType" : "PowerBoost",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/PowerBoost.png"
 }, {
   "id" : 27,
   "name" : "SpaceShift",
@@ -491,7 +491,7 @@
   },
   "level" : 1,
   "spellType" : "SpaceShift",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/SpaceShift.png"
 }, {
   "id" : 28,
   "name" : "Repair",
@@ -510,10 +510,10 @@
   },
   "level" : 1,
   "spellType" : "Repair",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/Repair.png"
 }, {
   "id" : 29,
-  "name" : "RoundReduce",
+  "name" : "Round Reduce",
   "price" : 80,
   "duration" : 1,
   "cardType" : "Spell",
@@ -529,26 +529,7 @@
   },
   "level" : 1,
   "spellType" : "RoundReduce",
-  "imageURL" : null
-}, {
-  "id" : 30,
-  "name" : "Steal",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Steals a card from opponents hand",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda",
-    "pfactor" : 0.9
-  },
-  "level" : 1,
-  "spellType" : "Steal",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/RoundReduce.png"
 }, {
   "id" : 31,
   "name" : "Attenuate",
@@ -567,26 +548,7 @@
   },
   "level" : 1,
   "spellType" : "Attenuate",
-  "imageURL" : null
-}, {
-  "id" : 32,
-  "name" : "Copy",
-  "price" : 80,
-  "duration" : 1,
-  "cardType" : "Spell",
-  "upgradeLevel" : 1,
-  "upgradeCost" : 1,
-  "desc" : "Copies",
-  "power" : 0,
-  "damage" : 0,
-  "character" : {
-    "id" : 1,
-    "name" : "panda",
-    "pfactor" : 0.9
-  },
-  "level" : 1,
-  "spellType" : "Copy",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/Attenuate.png"
 }, {
   "id" : 33,
   "name" : "Hide",
@@ -608,7 +570,7 @@
   "imageURL" : null
 }, {
   "id" : 23,
-  "name" : "AddSpace",
+  "name" : "Add Space",
   "price" : 80,
   "duration" : 1,
   "cardType" : "Spell",
@@ -644,4 +606,42 @@
   "level" : 1,
   "spellType" : "Mirror",
   "imageURL" : null
-} ]
+}, {
+  "id" : 32,
+  "name" : "Copy",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Copies",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "Copy",
+  "imageURL" : null
+}, {
+  "id" : 30,
+  "name" : "Steal",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Steals a card from opponents hand",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor" : 0.9
+  },
+  "level" : 1,
+  "spellType" : "Steal",
+  "imageURL" : null
+}]

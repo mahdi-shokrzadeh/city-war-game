@@ -2,7 +2,12 @@ package controllers;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.almasb.fxgl.ui.Position;
 
 import database.DBs.CardDB;
 import database.DBs.GameCharacterDB;
@@ -11,9 +16,16 @@ import models.card.*;
 import models.User;
 import models.Response;
 import database.DBs.UserDB;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -369,9 +381,6 @@ public class CardController {
     }
 
     public static Response getCardImage(Card card, int level) {
-        if (card.getCardType().equals("Spell")) {
-            return new Response("", 200);
-        }
         File file = null;
         if (card.getImageURL() == null) {
             file = new File("src/main/resources/Cards/" + card.getCharacter().getName() + "_d"
@@ -389,27 +398,43 @@ public class CardController {
             imageView = new ImageView(image);
             imageView.setFitWidth(209);
             imageView.setFitHeight(278.7);
+            imageView.setId("imageView");
         } catch (Exception e) {
             return new Response("an exception happened while loading image", -500, e);
         }
-
         Text power = new Text(String.valueOf(card.getPower()));
         Text damage = new Text(String.valueOf(card.getDamage()));
+        HBox hBox = new HBox();
         Text name = new Text(String.valueOf(card.getName()));
         power.setFill(Color.WHITE);
         power.setFont(Font.font(36));
         power.setTranslateX(-200);
         power.setTranslateY(-221);
+        power.setId("power");
         damage.setFill(Color.WHITE);
         damage.setFont(Font.font(22));
         damage.setTranslateX(-118);
         damage.setTranslateY(-34.5);
-        name.setFill(Color.WHITE);
+        damage.setId("damage");
+        name.setFill(Color.valueOf("white"));
         name.setFont(Font.font(18));
-        name.setTranslateX(-237);
-        name.setTranslateY(-90);
-        TextFlow textFlow = new TextFlow(imageView, damage, power, name);
-        textFlow.setTranslateX(150);
+        name.setStyle("-fx-font-weight: bold");
+        hBox.setTranslateX(-257);
+        hBox.setTranslateY(-83);
+        hBox.getChildren().add(name);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setPrefWidth(170);
+        hBox.setPrefHeight(30);
+        hBox.setMinHeight(30);
+        hBox.setMaxHeight(30);
+        hBox.setId("hBox");
+        TextFlow textFlow = null;
+
+        if (card.getCardType().toString().equals("Regular")) {
+            textFlow = new TextFlow(imageView, damage, power, hBox);
+        } else if (card.getCardType().toString().equals("Spell")) {
+            textFlow = new TextFlow(imageView, hBox);
+        }
 
         return new Response("card image generated successfully", 200, "textFlow", textFlow);
     }
