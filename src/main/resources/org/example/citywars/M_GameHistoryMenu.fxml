@@ -19,8 +19,8 @@
             <Cursor fx:constant="HAND" />
         </cursor>
     </Button>
-   <Pagination layoutX="176.0" layoutY="252.0" prefHeight="728.0" prefWidth="1502.0" />
-   <TableView layoutX="354.0" layoutY="186.0" prefHeight="512.0" prefWidth="1116.0">
+   <Pagination fx:id="pages" layoutX="176.0" layoutY="252.0" prefHeight="728.0" prefWidth="1502.0" />
+   <TableView fx:id="table" layoutX="354.0" layoutY="186.0" prefHeight="512.0" prefWidth="1116.0">
      <columns>
        <TableColumn prefWidth="75.0" text="C1" />
        <TableColumn prefWidth="75.0" text="C2" />
