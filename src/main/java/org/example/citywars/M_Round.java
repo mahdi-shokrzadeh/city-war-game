@@ -79,7 +79,7 @@ public class M_Round extends Menu {
         return new M_Game();
     }
 
-    public void handleBotInitiation() {
+    public void handleBossBotInitiation() {
         // Boss cards
         Card card_one = new Card("boss_one", 0, 21, "Regular", 20, 30, 0, 0, winner, null);
         // Card card_two = new Card("two", 0, 10, "Regular", 20, 30, 0, 0, winner,
@@ -96,9 +96,12 @@ public class M_Round extends Menu {
             this.board[0][i].setBlockPower(random);
             this.board[0][i].setBlockDamage(random);
             total_damage += random;
+            updateInfInBlock(random, random, 0, i);
         }
 
         this.player_one.setDamage(total_damage);
+        updateHitPoints();
+        updateTotalDameges();
     }
 
     @Override
@@ -123,7 +126,7 @@ public class M_Round extends Menu {
         }
         if ((this.player_one instanceof AI) && ((AI) this.player_one).getAiLevel() == 5) {
             this.changeBlocksForBoss();
-            this.handleBotInitiation();
+            this.handleBossBotInitiation();
         }
 
         // reseting the stolen cards
@@ -546,6 +549,14 @@ public class M_Round extends Menu {
     }
 
     public void changeBlocksForBoss() {
+        // graphically load card
+        ImageView boss_card_image = new ImageView(
+                new Image(new File("src\\main\\resources\\GameElements\\boss.png").toURI().toString()));
+        boss_card_image.setFitHeight(this.block_height);
+        boss_card_image.setFitWidth(21 * this.block_width);
+        boss_card_image.setLayoutX(this.left_board_margin);
+        boss_card_image.setLayoutY(this.top_board_margin);
+        rootElement.getChildren().add(boss_card_image);
 
     }
 
