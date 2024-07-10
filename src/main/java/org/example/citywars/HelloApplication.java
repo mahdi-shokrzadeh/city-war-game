@@ -61,6 +61,18 @@ public class HelloApplication extends Application {
             charsImages[i] = new Image(CharImageFiles[i].toURI().toString());
         }
 
+        CharImageFilesProfile = new File[5];
+        CharImageFilesProfile[0]=  new File("src/main/resources/Profile/Chi_Ao_Loong.png");
+        CharImageFilesProfile[1]=  new File("src/main/resources/Profile/Igoribuki_1.png");
+        CharImageFilesProfile[2]=  new File("src/main/resources/Profile/Master_Masher_1.png");
+        CharImageFilesProfile[3]=  new File("src/main/resources/Profile/Nahane_1.png");
+        CharImageFilesProfile[4]=  new File("src/main/resources/Profile/Sensei_Pandaken_1.png");
+
+        charsImagesProfile=new Image[CharImageFilesProfile.length];
+        for (int i = 0; i < CharImageFilesProfile.length; i++) {
+            charsImagesProfile[i] = new Image(CharImageFilesProfile[i].toURI().toString());
+        }
+
         BGMusicFiles = new ArrayList<>();
         BGMusicFiles.add(new File("src/main/resources/Musics/01 - Main Title (The Godfather Waltz).mp3"));
         BGMusicFiles.add(new File("src/main/resources/Musics/01 - Prologue.mp3"));

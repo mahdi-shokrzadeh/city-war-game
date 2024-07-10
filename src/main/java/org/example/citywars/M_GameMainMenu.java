@@ -2,12 +2,54 @@ package org.example.citywars;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static org.example.citywars.M_ProfileMenu.profileIndex;
 
 public class M_GameMainMenu extends Menu {
+    @FXML
+    private Label HP;
+
+    @FXML
+    private Label XP;
+    @FXML
+    private Label coin;
+
+    @FXML
+    private Label level;
+
+    @FXML
+    private Label name;
+
+    @FXML
+    private ImageView profileIm;
     public M_GameMainMenu() {
         super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        backGroundIm.setImage(BGims.get(themeIndex));
+        HP.setText("HP: "+Integer.toString(loggedInUser.getHitPoints()));
+        name.setText("Hello "+loggedInUser.getNickname()+" !");
+        coin.setText("Coin: "+Integer.toString(loggedInUser.getCoins()));
+        level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
+        XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
+
+        profileIm.setImage(charsImagesProfile[profileIndex]);
+    }
+    @FXML
+    protected void goToProfile (MouseEvent event) throws IOException {
+        System.out.println("nghfb");
+        HelloApplication.menu = new M_ProfileMenu();
+        switchMenus(event);
     }
     private void printMenu(){
         System.out.println("Main menu");

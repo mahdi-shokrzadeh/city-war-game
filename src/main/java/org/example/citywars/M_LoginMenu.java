@@ -169,6 +169,7 @@ public class M_LoginMenu extends Menu {
                     switchMenus(event);
                 }
             } else {
+                M_ProfileMenu.profileIndex=0;/////////////////////
                 loggedInUser = (User) s.body.get("user");
                 HelloApplication.menu = new M_GameMainMenu();
                 switchMenus(event);

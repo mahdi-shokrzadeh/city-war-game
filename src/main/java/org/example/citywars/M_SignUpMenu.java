@@ -22,12 +22,12 @@ import static controllers.UserController.sudoGetAllUsers;
 
 public class M_SignUpMenu extends Menu {
 
-    final String securityQuestions = "Please choose a security question using the following format :\n" +
+    public final static String securityQuestions = "Please choose a security question using the following format :\n" +
             "question pick -q question_number -a answer -c answer_confirmation\n"+
             "• 1-What is your father’s name ?\n" +
             "• 2-What is your favourite color ?\n" +
             "• 3-What was the name of your first pet?";
-    String[] Questions = { "What is your father’s name?", "What is your favourite color?", "What was the name of your first pet?" };
+    static String[] Questions = { "What is your father’s name?", "What is your favourite color?", "What was the name of your first pet?" };
 
     @FXML
     Label error;
@@ -143,7 +143,7 @@ public class M_SignUpMenu extends Menu {
         }while (true);
     }
 
-    private String randomPassword() {
+    public static String randomPassword() {
         Random random = new Random();
         int length = random.nextInt(10) + 8;
         String s1 = "0123456789";
@@ -164,7 +164,7 @@ public class M_SignUpMenu extends Menu {
         return output.toString();
     }
 
-    private String checkAll(String username, String password, String passwordConf, String email, String nickname) {
+    public static String checkAll(String username, String password, String passwordConf, String email, String nickname) {
         String out = "";
 
         if (username.isBlank() ||
@@ -178,6 +178,28 @@ public class M_SignUpMenu extends Menu {
         }  else if (getIndexFromUsername(username) != -1) {
                 System.out.println("Username already exists!");
         } else if (passwordProblem(password.trim()) != null) {
+            out = passwordProblem(password.trim());
+        } else if (!passwordConf.trim().equals(password.trim())) {
+            out = "Password confirmation doesn't match!";
+        } else if (!email.trim().matches("^[a-zA-Z]+@[a-zA-Z]+.com$")) {
+            out = "Incorrect format for email!";
+        } else {
+            out = securityQuestions;
+        }
+        return out;
+    }
+    public static String checkAll2(String username, String password, String passwordConf, String email, String nickname) {
+        String out = "";
+
+        if (username.isBlank() ||
+                password.isBlank() ||
+                passwordConf.isBlank() ||
+                email.isBlank() ||
+                nickname.isBlank())
+            out = "Blank Field!";
+        else if (!username.trim().matches("[a-zA-Z]+")) {
+            out = "Incorrect format for username!";
+        }else if (passwordProblem(password.trim()) != null) {
             out = passwordProblem(password.trim());
         } else if (!passwordConf.trim().equals(password.trim())) {
             out = "Password confirmation doesn't match!";
@@ -251,7 +273,7 @@ public class M_SignUpMenu extends Menu {
         return null;
     }
 
-    private int getIndexFromUsername(String username){
+    public static int getIndexFromUsername(String username){
         Response res = sudoGetAllUsers();
         List<User> allUsers = null;
         if(res.ok) {

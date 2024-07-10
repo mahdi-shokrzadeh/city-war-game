@@ -39,6 +39,8 @@ public abstract class Menu implements Initializable {
 //    static ArrayList<MediaPlayer> BGMusics;
     static File[] CharImageFiles;
     static Image[] charsImages;
+    static File[] CharImageFilesProfile;
+    static Image[] charsImagesProfile;
     static int themeIndex=0;
     ArrayList<File> files;
      Media media;
