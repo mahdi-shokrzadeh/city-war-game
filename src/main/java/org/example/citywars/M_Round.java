@@ -100,8 +100,7 @@ public class M_Round extends Menu {
         }
 
         this.player_one.setDamage(total_damage);
-        updateHitPoints();
-        updateTotalDameges();
+        // putTotalDameges();
     }
 
     @Override
@@ -133,16 +132,15 @@ public class M_Round extends Menu {
         this.player_one.setCardsAreStolen(false);
         this.player_two.setCardsAreStolen(false);
 
+        int rand_2 = (int) (Math.random() * 21);
+        this.board[1][rand_2].setBlockUnavailable(true);
+        handlePutSpider(1, rand_2);
         // put 1 destroyed block in board
-        if (!(player_one instanceof AI) || (player_one instanceof AI && player_one.getProgress() != 5)) {
+        if (!(player_one instanceof AI) || (player_one instanceof AI && (((AI) player_one).getAiLevel()) != 5)) {
             int rand_1 = (int) (Math.random() * 21);
-            int rand_2 = (int) (Math.random() * 21);
-
             this.board[0][rand_1].setBlockUnavailable(true);
-            this.board[1][rand_2].setBlockUnavailable(true);
             // handle graphic
             handlePutSpider(0, rand_1);
-            handlePutSpider(1, rand_2);
         }
 
         // add user cards
@@ -151,7 +149,6 @@ public class M_Round extends Menu {
         putTotalDameges();
         putHitPoints();
         initializeFollowMouseImage();
-        initializeMouseMoveListener();
         initializeCharacterImages(player_one, 0);
         initializeCharacterImages(player_two, 1);
         if (this.player_one instanceof AI) {
@@ -180,34 +177,11 @@ public class M_Round extends Menu {
         });
     }
 
-    public void initializeMouseMoveListener() {
-        // rootElement.setOnMouseReleased(event -> {
-        // if (selectedCard != null) {
-        // int x = (int) event.getSceneX();
-        // int y = (int) event.getSceneY();
-
-        // int block_index = (x - 300) / 100;
-        // int user_index = selectedCard.getId().charAt(9) - '0';
-        // int card_index = selectedCard.getId().charAt(11) - '0';
-
-        // if (user_index == 1) {
-        // if (player_one_remaining_turns == 0) {
-        // return;
-        // }
-        // player_one_remaining_turns--;
-        // } else {
-        // if (player_two_remaining_turns == 0) {
-        // return;
-        // }
-        // player_two_remaining_turns--;
-        // }
-        // }
-        // });
-    }
-
     private void initialUserCards() {
 
-        this.addImage(0, this.player_one.getIsBonusActive() ? 6 : 5);
+        if (!(this.player_one instanceof AI) || ((AI) this.player_one).getAiLevel() != 5) {
+            this.addImage(0, this.player_one.getIsBonusActive() ? 6 : 5);
+        }
         this.addImage(1, this.player_two.getIsBonusActive() ? 6 : 5);
     }
 
@@ -322,7 +296,7 @@ public class M_Round extends Menu {
             ((AI) player_one).handleBoss(board);
             this.is_player_one_turn = !this.is_player_one_turn;
             this.player_one_remaining_turns--;
-            // this.updateHitPoints();
+            this.updateHitPoints();
             this.updateRemainingTurns();
             this.updateTotalDameges();
             // this.updateSpider();
@@ -463,6 +437,8 @@ public class M_Round extends Menu {
         // handle graphic
         ImageView im = new ImageView(
                 new Image(new File("src\\main\\resources\\GameElements\\spider.png").toURI().toString()));
+        im.setFitHeight(this.block_height);
+        im.setFitWidth(this.block_width);
         im.setId("spider_" + user_index + "_" + block_index);
         im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width));
         im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
@@ -827,8 +803,9 @@ public class M_Round extends Menu {
             TextFlow card = (TextFlow) rootElement.lookup("#" + id);
             rootElement.getChildren().remove(card);
         }
-
-        addImage(user_index, player.getIsBonusActive() ? 6 : 5);
+        if (!(player instanceof AI) || (player instanceof AI && ((AI) player).getAiLevel() != 5)) {
+            addImage(user_index, player.getIsBonusActive() ? 6 : 5);
+        }
     }
 
     public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
