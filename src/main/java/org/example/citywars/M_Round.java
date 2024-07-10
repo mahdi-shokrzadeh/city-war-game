@@ -210,7 +210,7 @@ public class M_Round extends Menu {
             imageView.setId("cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration());
 
             if (user_index == 0) {
-                imageView.setLayoutX(200 + i * (this.original_card_width + 2));
+                imageView.setLayoutX(290 + i * (this.original_card_width + 2));
             } else {
                 imageView.setLayoutX(980 + i * (this.original_card_width + 2));
             }
@@ -220,7 +220,7 @@ public class M_Round extends Menu {
             } else {
                 imageView.setLayoutY(373 + this.original_card_heoght + 10);
                 if (user_index == 0) {
-                    imageView.setLayoutX(200 + (i - 3) * (this.original_card_width + 2));
+                    imageView.setLayoutX(290 + (i - 3) * (this.original_card_width + 2));
                 } else {
                     imageView.setLayoutX(980 + (i - 3) * (this.original_card_width + 2));
                 }
@@ -804,19 +804,37 @@ public class M_Round extends Menu {
     }
 
     public void handleUpdatePlayerCards(User player, ArrayList<Card> cards, int user_index) {
-        // find and remove all player cards from page
-        int co = 0;
-        for (Card c : cards) {
-            if (co > 7)
-                break;
-            String id = "cardImage_" + user_index + "_" + c.getName() + "_" + c.getDuration();
-            TextFlow card = (TextFlow) rootElement.lookup("#" + id);
-            rootElement.getChildren().remove(card);
-            co++;
-        }
+        // Find and remove all player cards from the page
+        // int co = 0;
+        // for (Card c : cards) {
+        // if (co > 7)
+        // break;
+        // String id = "cardImage_" + user_index + "_" + c.getName() + "_" +
+        // c.getDuration();
+        // TextFlow card = (TextFlow) rootElement.lookup("#" + id);
+        // if (card != null) {
+        // rootElement.getChildren().remove(card);
+        // System.out.println("Removed card with ID: " + id);
+        // } else {
+        // System.out.println("Card with ID: " + id + " not found");
+        // }
+        // co++;
+        // }
+        rootElement.getChildren().removeIf(node -> node instanceof TextFlow);
+
         if (!(player instanceof AI) || (player instanceof AI && ((AI) player).getAiLevel() != 5)) {
             addImage(user_index, player.getIsBonusActive() ? 6 : 5);
         }
+
+        // do it for its opponent
+        if (this.player_one == player) {
+            addImage(1, this.player_two.getIsBonusActive() ? 6 : 5);
+        } else {
+            if (!(player_one instanceof AI) || (player_one instanceof AI && ((AI) player_one).getAiLevel() != 5)) {
+                addImage(0, this.player_one.getIsBonusActive() ? 6 : 5);
+            }
+        }
+
     }
 
     public void updateInfInBlock(int power, int damage, int turn_index, int block_index) {
