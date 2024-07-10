@@ -63,7 +63,7 @@ public class M_Game extends Menu {
 
         public M_Game() {
                 super("M_Game", new String[] { "BG-Videos\\GameBGs\\bg1.png", "BG-Videos\\GameBGs\\bg2.png",
-                                "BG-Videos\\GameBGs\\bg3.png" });
+                                "BG-Videos\\GameBGs\\bg3.png" , "BG-Videos\\GameBGs\\bg4.png"});
                 this.player_one = loggedInUser;
                 if (secondPersonNeeded) {
                         this.player_two = secondUser;

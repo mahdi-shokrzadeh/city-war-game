@@ -16,11 +16,10 @@
 
     <BorderPane layoutX="558.0" layoutY="58.0" prefHeight="946.0" prefWidth="1180.0">
       <center>
-      
-            <ScrollPane prefHeight="1000.0" prefWidth="1400.0" BorderPane.alignment="CENTER">
+          <ScrollPane prefHeight="1000.0" prefWidth="1400.0" BorderPane.alignment="CENTER" >
       
                 <content>
-            <Pane fx:id="pane" prefHeight="2300" prefWidth="1400" />
+                    <Pane fx:id="pane" prefHeight="2300" prefWidth="1400" />
          </content>
       </ScrollPane>
       </center>

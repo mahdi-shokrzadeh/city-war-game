@@ -307,6 +307,7 @@ public class UserController {
                 Card card = allCards.get(random.nextInt(allCards.size()));
                 boolean duplicateCard = false;
                 for (int ucID : user.getUserCardIDS()) {
+                    System.out.println(ucID);
                     UserCard uc = ucDB.getOne(ucID);
                     if (uc.getCardID() == card.getID()) {
                         duplicateCard = true;

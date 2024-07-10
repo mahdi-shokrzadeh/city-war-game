@@ -396,6 +396,7 @@ Label coinsText;
         // tf.setTranslateZ(10);
         // pane.getChildren().addAll(tf);
         backGroundIm.setImage(BGims.get(themeIndex));
+
         coinsText.setText("Coin Count :"+ loggedInUser.getCoins());
 
 
@@ -457,8 +458,8 @@ Label coinsText;
             // tf.setBackground(Background.fill(Paint.valueOf("blue")));
             tf.setPrefWidth(180);
             tf.setPrefHeight(50);
-            tf.setTranslateX(400 + 200 * (i % 5));
-            tf.setTranslateY(100 + 350 * (i / 5));
+            tf.setTranslateX(  200 * (i % 5));
+            tf.setTranslateY( 350 * (i / 5));
             pane.getChildren().add(tf);
 
             for (Node node : tf.getChildren()) {
