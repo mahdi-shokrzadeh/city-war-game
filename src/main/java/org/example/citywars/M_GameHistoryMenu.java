@@ -3,14 +3,21 @@ package org.example.citywars;
 import controllers.UserController;
 import controllers.game.GameController;
 import kotlin.contracts.SimpleEffect;
+import javafx.fxml.FXML;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import models.Response;
 import models.User;
 //import models.game.Game;
 import models.game.SimpleGame;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class M_GameHistoryMenu extends Menu {
     public ArrayList<SimpleGame> games;
@@ -19,12 +26,52 @@ public class M_GameHistoryMenu extends Menu {
     int allPagesCount;
     SortKind sortKind;
     boolean nextOrPre;
+    @FXML
+    TableView<M_Game> table = createTable();
+    @FXML
+    Pagination pages;
 
     private Exception exception = null;
 
     public M_GameHistoryMenu() {
         super("M_GameHistoryMenu", new String[]{"BG-Videos\\BG1.jpg","BG-Videos\\lightmode.png"});
         gamePerPage = 7;
+
+        Response res = GameController.getAllUserGames(loggedInUser.getID());
+        if (res.ok) {
+            List<M_Game> temp = (List<M_Game>) res.body.get("games");
+            games = new ArrayList<>();
+            for (int i = 0; i < temp.size(); i++) {
+                games.add(temp.get(i));
+            }
+        } else {
+            System.out.println(res.message);
+            if (res.exception != null) {
+                System.out.println(res.exception.getMessage());
+            }
+        }
+
+        allPagesCount = games.size() % gamePerPage == 0 ? games.size() / gamePerPage
+                : (games.size() / gamePerPage) + 1;
+    }
+
+    private TableView<M_Game> createTable(){
+        TableView<M_Game> temp = new TableView<>();
+
+        TableColumn<M_Game,Integer> id = new TableColumn<>("ID");
+        id.setCellValueFactory(new PropertyValueFactory<M_Game,Integer>("id"));
+
+//        TableColumn<M_Game,String> opponentName = new TableColumn<>("Opponent Name");
+//        id.setCellValueFactory(new PropertyValueFactory<M_Game,String>("player_two."));
+        TableColumn<M_Game,String> createdAt = new TableColumn<>("Created at");
+//        id.setCellValueFactory(new PropertyValueFactory<M_Game,String>("created_at"));
+
+        temp.getColumns().addAll(id);
+
+        temp.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        temp.getItems().addAll(games);
+        return temp;
+
     }
 
     private void printMenu() {
@@ -274,5 +321,12 @@ public class M_GameHistoryMenu extends Menu {
                 System.out.println("invalid command!");
             }
         } while (true);
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        backGroundIm.setImage(BGims.get(themeIndex));
+        pages.setPageCount(allPagesCount);
+        pages.setCurrentPageIndex(currentPage);
+
     }
 }

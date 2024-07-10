@@ -2,18 +2,71 @@ package org.example.citywars;
 
 import controllers.UserController;
 import database.DBs.UserDB;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.AA_Captcha;
 import models.Response;
 import models.User;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class M_ProfileMenu extends Menu {
-    private int captchaCountLeft = 3;
+import static controllers.UserController.sudoGetAllUsers;
+import static org.example.citywars.M_SignUpMenu.*;
 
-    public M_ProfileMenu() {
-        super("M_ProfileMenu");
+public class M_ProfileMenu extends Menu{
+    AA_Captcha captchaCode;
+    static int profileIndex;
+    @FXML
+    private Label HP;
+
+    @FXML
+    private Label XP;
+    @FXML
+    private Label coin;
+
+    @FXML
+    private Label level;
+
+    @FXML
+    private Label name;
+
+    @FXML
+    private ImageView profileIm;
+    @FXML
+    Label error;
+    @FXML
+    Label captcha;
+    @FXML
+    TextField usernameField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    PasswordField passwordConfirmationField;
+    @FXML
+    ChoiceBox<String> questionChoice;
+    @FXML
+    TextField questionAnswerField;
+    @FXML
+    TextField captchaField;
+    @FXML
+    TextField emailField;
+    @FXML
+    TextField nicknameField;
+    private int captchaCountLeft = 3;
+    public M_ProfileMenu(){
+        super("M_ProfileMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
+        captchaCode=new AA_Captcha();
     }
 
     private void printMenu() {
@@ -161,5 +214,108 @@ public class M_ProfileMenu extends Menu {
         System.out.println("You Are Robot!!!");
         captchaCountLeft = 3;
         return false;
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        captcha.setText(captchaCode.showEquation());
+        questionChoice.getItems().addAll(Questions);
+
+        backGroundIm.setImage(BGims.get(themeIndex));
+        HP.setText("HP: "+Integer.toString(loggedInUser.getHitPoints()));
+        name.setText("Hello "+loggedInUser.getNickname()+" !");
+        coin.setText("Coin: "+Integer.toString(loggedInUser.getCoins()));
+        level.setText("Level: "+Integer.toString(loggedInUser.getLevel()));
+        XP.setText("XP: "+Integer.toString(loggedInUser.getExperience()));
+        profileIm.setImage(charsImagesProfile[profileIndex]);
+
+        usernameField.setText(loggedInUser.getUsername());
+        nicknameField.setText(loggedInUser.getNickname());
+        emailField.setText(loggedInUser.getEmail());
+        passwordField.setText(loggedInUser.getPassword());
+        passwordConfirmationField.setText(loggedInUser.getPassword());
+        questionChoice.setValue(loggedInUser.getPassRecoveryQuestion());
+        questionAnswerField.setText(loggedInUser.getPassRecoveryAnswer());
+
+
+    }
+    @FXML
+    protected void changeProfile (MouseEvent event) throws IOException {
+        profileIndex++;
+        if (profileIndex== CharImageFilesProfile.length)
+            profileIndex=0;
+        profileIm.setImage(charsImagesProfile[profileIndex]);
+    }
+    @FXML
+    protected void randPassButton(ActionEvent event) throws IOException {
+        String randPass= randomPassword();
+        passwordField.setText(randPass);
+        error.setText("Random Password Created!");
+    }
+    @FXML
+    protected void okButton(ActionEvent event) throws IOException {
+        if (usernameField.getText().isBlank()) {
+            error.setText("Username Field is blank!");
+            return;
+        }
+        else if (passwordField.getText().isBlank()) {
+            error.setText("Password Field is blank!");
+            return;
+        }
+        else if (passwordConfirmationField.getText().isBlank()) {
+            error.setText("Confirmation Field is blank!");
+            return;
+        }else if (emailField.getText().isBlank()) {
+            error.setText("Email Field is blank!");
+            return;
+        }else if (nicknameField.getText().isBlank()) {
+            error.setText("Nickname Field is blank!");
+            return;
+        }else if (questionAnswerField.getText().isBlank()) {
+            error.setText("Answer Field is blank!");
+            return;
+        }else if (captchaField.getText().isBlank()) {
+            error.setText("Enter captcha!");
+            return;
+        }else if (questionChoice.getValue()==null) {
+            error.setText("Choose your question!");
+            return;
+        }else if (captchaField.getText().matches("\\D")) {
+            error.setText("Captcha answer must be number!");
+            return;
+        }
+        else if (Integer.parseInt(captchaField.getText())!=(captchaCode.getAnswer())) {
+            error.setText("Wrong answer for captcha!");
+            return;
+        }
+
+        String s = checkAll2(usernameField.getText(),
+                passwordField.getText(),
+                passwordConfirmationField.getText(),
+                emailField.getText(),
+                nicknameField.getText());
+
+        if (!s.equals(securityQuestions) ) {
+            error.setText(s);
+            return;
+        }
+        loggedInUser.setUsername(usernameField.getText());
+        loggedInUser.setEmail(emailField.getText());
+        loggedInUser.setNickname(nicknameField.getText());
+        loggedInUser.setPassword(passwordField.getText());
+        loggedInUser.setPassRecoveryQuestion(questionChoice.getValue());
+        loggedInUser.setPassRecoveryAnswer(questionAnswerField.getText());
+        error.setText("Your profile edited successfully!");
+    }
+    @FXML
+    protected void showPassButton(ActionEvent event) throws IOException {
+        if (passwordField.getText().isBlank())
+            error.setText("Password Field is blank!");
+        else
+            error.setText("Your Password is "+passwordField.getText());
+    }
+    @FXML
+    protected void captchaButton(ActionEvent event) throws IOException {
+        captchaCode =new AA_Captcha();
+        captcha.setText(captchaCode.showEquation());
     }
 }

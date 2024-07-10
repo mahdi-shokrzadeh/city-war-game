@@ -15,11 +15,15 @@ import models.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
+import static controllers.UserController.sudoGetAllUsers;
+
 public class M_LoginMenu extends Menu {
+    boolean forgotPassBool;
     public static Timer timer;
     public static boolean timerIsOn;
     public static int lockTime;
@@ -43,9 +47,12 @@ public class M_LoginMenu extends Menu {
     ProgressBar ErrorTimer;
     @FXML
     Label title;
+    @FXML
+    Label password;
 
     public M_LoginMenu() {
         super("M_LoginMenu", new String[]{"BG-Videos\\BG-login.png","BG-Videos\\lightmode.png"});
+        forgotPassBool=false;
         lockTime = 0;
         failureCount = 0;
         M_LoginMenu.timerIsOn = false;
@@ -141,37 +148,88 @@ public class M_LoginMenu extends Menu {
             error.setText("Username Field is blank!");
             return;
         }
-        if (passwordField.getText().isBlank()) {
+        if (passwordField.getText().isBlank() && !passwordField.isDisable()) {
             error.setText("Password Field is blank!");
             return;
         }
-        Response s = UserController.login(usernameField.getText(), passwordField.getText());
-        error.setText(s.message);
 
-        if (timerIsOn && s.message.contains("Wrong Password")) {
-            ErrorTimer.progressProperty().setValue(1);
+        if (!forgotPassBool) {
+            Response s = UserController.login(usernameField.getText(), passwordField.getText());
+            error.setText(s.message);
 
-            Timeline timeline = new Timeline();
-            KeyValue key = new KeyValue(ErrorTimer.progressProperty(), 0);
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(5 * failureCount), key);
-            timeline.getKeyFrames().add(keyFrame);
-            timeline.play();
+            if (timerIsOn && s.message.contains("Wrong Password")) {
+                ErrorTimer.progressProperty().setValue(1);
 
-        }
-        if (s.ok) {
-            if (secondPersonNeeded) {
-                if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
-                    error.setText("\n!!! Same user, login again !!!\n");
-                    return;
+                Timeline timeline = new Timeline();
+                KeyValue key = new KeyValue(ErrorTimer.progressProperty(), 0);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(5 * failureCount), key);
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.play();
+
+            }
+            if (s.ok) {
+                if (secondPersonNeeded) {
+                    if (((User) s.body.get("user")).getID() == loggedInUser.getID()) {
+                        error.setText("\n!!! Same user, login again !!!\n");
+                        return;
+                    } else {
+                        secondUser = (User) s.body.get("user");
+                        HelloApplication.menu = new M_CharacterChoice();
+                        switchMenus(event);
+                    }
                 } else {
-                    secondUser =(User) s.body.get("user");
-                    HelloApplication.menu = new M_CharacterChoice();
+                    M_ProfileMenu.profileIndex = 0;/////////////////////
+                    loggedInUser = (User) s.body.get("user");
+                    HelloApplication.menu = new M_GameMainMenu();
                     switchMenus(event);
                 }
-            } else {
-                loggedInUser = (User) s.body.get("user");
-                HelloApplication.menu = new M_GameMainMenu();
-                switchMenus(event);
+            }
+        } else {
+            User temp;
+            if (passwordField.isDisable()){
+                int index = M_SignUpMenu.getIndexFromUsername(usernameField.getText());
+                if (index==-1){
+                    error.setText("Username doesn't exist!");
+                    return;
+                }
+
+                List<User> allUsers = (List<User>) sudoGetAllUsers().body.get("allUsers");
+                temp=allUsers.get(index);
+                error.setText(temp.getPassRecoveryQuestion());
+                usernameField.setDisable(true);
+                passwordField.setDisable(false);
+                password.setDisable(false);
+                password.setText("Answer :");
+
+            }else {
+                int index = M_SignUpMenu.getIndexFromUsername(usernameField.getText());
+                if (index==-1){
+                    error.setText("Username doesn't exist!");
+                    return;
+                }
+
+                List<User> allUsers = (List<User>) sudoGetAllUsers().body.get("allUsers");
+                temp=allUsers.get(index);
+                if (passwordField.getText().equals(temp.getPassRecoveryAnswer())){
+                    if (secondPersonNeeded) {
+                        if (temp.getID() == loggedInUser.getID()) {
+                            error.setText("\n!!! Same user, login again !!!\n");
+                            return;
+                        } else {
+                            secondUser = temp;
+                            HelloApplication.menu = new M_CharacterChoice();
+                            switchMenus(event);
+                        }
+                    } else {
+                        M_ProfileMenu.profileIndex = 0;/////////////////////
+                        loggedInUser = temp;
+                        HelloApplication.menu = new M_GameMainMenu();
+                        switchMenus(event);
+                    }
+                }
+                else {
+                    error.setText("Wrong Answer!");
+                }
             }
         }
     }
@@ -190,6 +248,28 @@ public class M_LoginMenu extends Menu {
             HelloApplication.menu = new M_Intro();
             switchMenus(event);
         }
+    }
+    @FXML
+    protected void forgotPassButton(ActionEvent event) throws IOException {
+        if (forgotPassBool){
+            error.setText("");
+            forgotPassBool=false;
+            password.setText("Password :");
+            password.setDisable(false);
+            passwordField.setDisable(false);
+
+            forgotPass.setText("Forgot your password?");
+
+        }else {
+            forgotPassBool=true;
+            error.setText("At first inter your username and hit ok");
+            password.setDisable(true);
+            passwordField.setDisable(true);
+
+            forgotPass.setText("I remember my password!");
+        }
+
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

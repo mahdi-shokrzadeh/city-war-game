@@ -2,16 +2,38 @@ package org.example.citywars;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static org.example.citywars.M_ProfileMenu.profileIndex;
 
 public class M_GameMainMenu extends Menu {
+    @FXML
+    private Label HP;
+
+    @FXML
+    private Label XP;
+    @FXML
+    private Label coin;
+
+    @FXML
+    private Label level;
+
+    @FXML
+    private Label name;
+
+    @FXML
+    private ImageView profileIm;
     public M_GameMainMenu() {
         super("M_GameMainMenu", new String[]{"BG-Videos\\BG_GameMain.png","BG-Videos\\lightmode.png"});
     }
-
-    private void printMenu() {
-        System.out.println("MAIN MENU");
+    private void printMenu(){
+        System.out.println("Main menu");
         System.out.println("Options: ");
         System.out.println("    start game");
         System.out.println("    clans");
