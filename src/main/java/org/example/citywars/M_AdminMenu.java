@@ -22,7 +22,8 @@ public class M_AdminMenu extends Menu {
     private Pane pane;
 
     public M_AdminMenu() {
-        super("M_AdminMenu");
+        super("M_AdminMenu",
+                new String[] { "BG-Videos/GameBGs/bg1.png", "BG-Videos/GameBGs/bg2.png", "BG-Videos/GameBGs/bg3.png" });
     }
 
     public Menu myMethods() {
@@ -68,7 +69,7 @@ public class M_AdminMenu extends Menu {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        backGroundIm.setImage(BGims.get(themeIndex));
     }
 
 }

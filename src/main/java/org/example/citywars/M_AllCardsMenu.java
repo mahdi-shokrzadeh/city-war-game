@@ -37,7 +37,8 @@ public class M_AllCardsMenu extends Menu {
     private TableView<Card> tableView;
 
     public M_AllCardsMenu() {
-        super("M_AllCardsMenu");
+        super("M_AllCardsMenu",
+                new String[] { "BG-Videos/GameBGs/bg1.png", "BG-Videos/GameBGs/bg2.png", "BG-Videos/GameBGs/bg3.png" });
     }
 
     public Menu myMethods() {
@@ -109,7 +110,6 @@ public class M_AllCardsMenu extends Menu {
                         btn.setBackground(Background.fill(Paint.valueOf("red")));
                         btn.setTextFill(Paint.valueOf("white"));
                         btn.setOnAction((ActionEvent event) -> {
-                            Card _card = getTableView().getItems().get(getIndex());
                             Alert alert = new Alert(AlertType.CONFIRMATION);
                             alert.setContentText("are you sure you want to delete this card?");
                             alert.showAndWait().ifPresent(res -> {
@@ -142,6 +142,8 @@ public class M_AllCardsMenu extends Menu {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        backGroundIm.setImage(BGims.get(themeIndex));
 
         tableView = new TableView<>();
         Response res = CardController.getAllCards();

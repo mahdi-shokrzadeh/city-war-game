@@ -135,7 +135,7 @@ public class M_GameOverMenu extends Menu {
         winnerRewardText.setTranslateY(150);
         winnerRewardText.setFill(Paint.valueOf("white"));
         winnerPane.getChildren().add(winnerRewardText);
-        Text loserRewardTitle = new Text("Winner reward: ");
+        Text loserRewardTitle = new Text("Loser reward: ");
         loserRewardTitle.setFont(Font.font(40));
         loserRewardTitle.setFill(Paint.valueOf("white"));
         loserRewardTitle.setTranslateX(13);
