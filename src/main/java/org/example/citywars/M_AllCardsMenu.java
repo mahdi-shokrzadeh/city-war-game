@@ -158,14 +158,12 @@ public class M_AllCardsMenu extends Menu {
         TableColumn<Card, String> nameCol = new TableColumn<>("Name");
         TableColumn<Card, Integer> durationCol = new TableColumn<>("Duration");
         TableColumn<Card, String> cardTypeCol = new TableColumn<>("Card Type");
-        TableColumn<Card, String> characterCol = new TableColumn<>("Character");
         TableColumn<Card, Integer> powerColumn = new TableColumn<>("Power");
         TableColumn<Card, Integer> damageCol = new TableColumn<>("Damage");
 
         tableView.getColumns().add(nameCol);
         tableView.getColumns().add(durationCol);
         tableView.getColumns().add(cardTypeCol);
-        tableView.getColumns().add(characterCol);
         tableView.getColumns().add(powerColumn);
         tableView.getColumns().add(damageCol);
         addEditButton();
@@ -174,7 +172,6 @@ public class M_AllCardsMenu extends Menu {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         cardTypeCol.setCellValueFactory(new PropertyValueFactory<>("cardType"));
-        characterCol.setCellValueFactory(new PropertyValueFactory<>("character"));
         powerColumn.setCellValueFactory(new PropertyValueFactory<>("power"));
         damageCol.setCellValueFactory(new PropertyValueFactory<>("damage"));
 
