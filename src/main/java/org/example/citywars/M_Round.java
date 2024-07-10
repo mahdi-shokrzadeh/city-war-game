@@ -59,6 +59,9 @@ public class M_Round extends Menu {
     final int top_board_margin = 80;
     final int left_board_margin = 160;
 
+
+    private ImageView boss_gif;
+
     private Block[][] board = new Block[2][21];
 
     @FXML
@@ -300,6 +303,12 @@ public class M_Round extends Menu {
             this.updateRemainingTurns();
             this.updateTotalDameges();
             // this.updateSpider();
+            for (int i = 0; i < 21; i++) {
+                updateInfInBlock(board[0][i].getBlockPower(), board[0][i].getBlockDamage(), 0, i);
+            }
+            // run the boss gif again
+            
+
         } else {
             String input = ((AI) player_one).chooseTheMove(board, player_one_cards, this);
             if (input.equals("No valid card to place")) {
@@ -656,7 +665,7 @@ public class M_Round extends Menu {
         if (user instanceof AI) {
             if (((AI) user).getAiLevel() == 5) {
                 player_char_img = new ImageView(new Image(imageFiles[5].toURI().toString()));
-
+                this.boss_gif = player_char_img;
             } else {
                 player_char_img = new ImageView(new Image(imageFiles[4].toURI().toString()));
             }
