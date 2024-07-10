@@ -279,7 +279,6 @@ public class M_ProfileMenu extends Menu{
             error.setText(s);
             return;
         }
-        System.out.println("sacdfnjshzbjhfxbjkvbxkjcxkh");
         loggedInUser.setUsername(usernameField.getText());
         loggedInUser.setEmail(emailField.getText());
         loggedInUser.setNickname(nicknameField.getText());

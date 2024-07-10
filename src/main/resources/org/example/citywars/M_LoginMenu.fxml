@@ -55,7 +55,7 @@
                <Font size="32.0" />
             </font>
          </Label>
-         <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="200.0" text="Password :" textFill="#fff9fd" GridPane.rowIndex="3">
+         <Label fx:id="password" contentDisplay="CENTER" prefHeight="47.0" prefWidth="200.0" text="Password :" textFill="#fff9fd" GridPane.rowIndex="3">
             <font>
                <Font size="32.0" />
             </font>
@@ -65,7 +65,7 @@
                <Font size="30.0" />
             </font>
          </Button>
-         <Button fx:id="forgotPass" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="69.0" prefWidth="616.0" text="Forgot your password?" textFill="#650349" GridPane.columnIndex="2" GridPane.rowIndex="5">
+         <Button onAction="#forgotPassButton" fx:id="forgotPass" alignment="CENTER" blendMode="SCREEN" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="69.0" prefWidth="616.0" text="Forgot your password?" textFill="#650349" GridPane.columnIndex="2" GridPane.rowIndex="5">
             <font>
                <Font size="30.0" />
             </font>
