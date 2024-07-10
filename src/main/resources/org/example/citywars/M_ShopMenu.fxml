@@ -9,7 +9,7 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_ShopMenu">
    <content>
-      <Pane fx:id="pane" prefHeight="2300" prefWidth="1400">
+      <Pane fx:id="pane" prefHeight="3000" prefWidth="1400">
           <Button contentDisplay="CENTER" layoutX="48.0" layoutY="27.0" mnemonicParsing="false" onAction="#GoToGameMainMenuButton" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
               <cursor>
                   <Cursor fx:constant="HAND" />

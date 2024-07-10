@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.citywars.M_UsersMenu">
    <children>
@@ -20,6 +22,12 @@
             <TableColumn prefWidth="120.0" text="Clan ID" />
         </columns>
       </TableView>
-      <Button layoutX="17.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#Back" prefWidth="80.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE" />
+      <Button layoutX="17.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#Back" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: #8900AC;" text="Back" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </Pane>
