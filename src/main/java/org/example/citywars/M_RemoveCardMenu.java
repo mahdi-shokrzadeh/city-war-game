@@ -20,7 +20,8 @@ public class M_RemoveCardMenu extends Menu {
     private TextField searchBar;
 
     public M_RemoveCardMenu() {
-        super("M_RemoveCardMenu");
+        super("M_RemoveCardMenu",
+                new String[] { "BG-Videos/GameBGs/bg1.png", "BG-Videos/GameBGs/bg2.png", "BG-Videos/GameBGs/bg3.png" });
     }
 
     public Menu myMethods() {
@@ -59,6 +60,7 @@ public class M_RemoveCardMenu extends Menu {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        backGroundIm.setImage(BGims.get(themeIndex));
 
     }
 

@@ -31,7 +31,8 @@ public class M_UsersMenu extends Menu {
     private Pane pane;
 
     public M_UsersMenu() {
-        super("M_UsersMenu");
+        super("M_UsersMenu",
+                new String[] { "BG-Videos/GameBGs/bg1.png", "BG-Videos/GameBGs/bg2.png", "BG-Videos/GameBGs/bg3.png" });
     }
 
     public Menu myMethods() {
@@ -49,6 +50,8 @@ public class M_UsersMenu extends Menu {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                backGroundIm.setImage(BGims.get(themeIndex));
+
                 User _user = new User("admin", "Admin1!", "admin", "admin@gmail.com", "admin", "recQuestion",
                         "recAnswer");
                 Response res = UserController.getAllUsers(_user);
