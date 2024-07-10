@@ -474,12 +474,9 @@ public class M_Game extends Menu {
             }
             // game over menu
         } catch (Exception e) {
-            // HelloApplication.menu = new M_Intro();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("M_Intro.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = HelloApplication.primaryStage;
-                stage.setScene(scene);
+                HelloApplication.menu = new M_GameOverMenu(this,winner_reward, looser_reward);
+                switchMenus();
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
