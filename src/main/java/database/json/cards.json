@@ -586,7 +586,7 @@
   },
   "level" : 1,
   "spellType" : "AddSpace",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/AddSpace.png"
 }, {
   "id" : 35,
   "name" : "Mirror",
@@ -605,7 +605,7 @@
   },
   "level" : 1,
   "spellType" : "Mirror",
-  "imageURL" : null
+  "imageURL" : "src/main/resources/Cards/Mirror.png"
 }, {
   "id" : 36,
   "name" : "Copy",

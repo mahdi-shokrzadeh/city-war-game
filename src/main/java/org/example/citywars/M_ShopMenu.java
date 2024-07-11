@@ -40,10 +40,11 @@ public class M_ShopMenu extends Menu {
     private Pane pane;
     @FXML
     TextFlow tf;
-@FXML
-Label coinsText;
+    @FXML
+    Label coinsText;
+
     public M_ShopMenu() {
-        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png" ,"BG-Videos\\lightmode.png"});
+        super("M_ShopMenu", new String[] { "BG-Videos\\shopMenu.png", "BG-Videos\\lightmode.png" });
     }
 
     private List<Card> allCards = null;
@@ -397,8 +398,7 @@ Label coinsText;
         // pane.getChildren().addAll(tf);
         backGroundIm.setImage(BGims.get(themeIndex));
 
-        coinsText.setText("Coin Count :"+ loggedInUser.getCoins());
-
+        coinsText.setText("Coin Count :" + loggedInUser.getCoins());
 
         List<Card> allCards = null;
         List<Card> userCards = null;
@@ -409,12 +409,12 @@ Label coinsText;
         } else {
             System.out.println(res.message);
         }
-//        User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
-//                "admin", "recQuestion", "recAnswer");
-//        _user.setID(1);
-//        _user.setCoins(10000);
-//        _user.setGameCharacter(new GameCharacter("panda"));
-        res = UserCardsController.getUsersCards(/*_user*/loggedInUser);
+        // User _user = new User("Drew", "UserUser2@", "admin", "admin@gmail.com",
+        // "admin", "recQuestion", "recAnswer");
+        // _user.setID(1);
+        // _user.setCoins(10000);
+        // _user.setGameCharacter(new GameCharacter("panda"));
+        res = UserCardsController.getUsersCards(/* _user */loggedInUser);
         if (res.ok) {
             userCards = (List<Card>) res.body.get("cards");
         } else {
@@ -423,6 +423,23 @@ Label coinsText;
                 System.out.println(res.exception.getMessage());
             }
         }
+
+        allCards.removeIf(o -> {
+            if (o.getCardType().toString().equals("Spell")) {
+                if (o.getSpellType().toString().equals("Hide")) {
+                    return true;
+                } else if (o.getSpellType().toString().equals("Copy")) {
+                    return true;
+                } else if (o.getSpellType().toString().equals("Steal")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        });
+
         for (int i = 0; i < allCards.size(); i++) {
             Card card = allCards.get(i);
             if (card.getCardType().toString().equals("Spell")) {
@@ -439,7 +456,7 @@ Label coinsText;
             Integer level = null;
             UserCard uc = null;
             if (hasCard) {
-                res = UserCardsController.getUserCard(/*_user*/loggedInUser.getID(), card.getID());
+                res = UserCardsController.getUserCard(/* _user */loggedInUser.getID(), card.getID());
                 if (res.ok) {
                     uc = ((UserCard) res.body.get("userCard"));
                     level = (int) uc.getLevel();
@@ -458,8 +475,8 @@ Label coinsText;
             // tf.setBackground(Background.fill(Paint.valueOf("blue")));
             tf.setPrefWidth(180);
             tf.setPrefHeight(50);
-            tf.setTranslateX(  200 * (i % 5));
-            tf.setTranslateY( 350 * (i / 5));
+            tf.setTranslateX(200 * (i % 5));
+            tf.setTranslateY(350 * (i / 5));
             pane.getChildren().add(tf);
 
             for (Node node : tf.getChildren()) {

@@ -1,6 +1,9 @@
 package org.example.citywars;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -8,9 +11,11 @@ import java.util.regex.Pattern;
 
 import controllers.CardController;
 import controllers.UserController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -71,10 +76,13 @@ public class M_GameOverMenu extends Menu {
         return this;
     }
 
+    public void Back(Event event) throws IOException {
+        HelloApplication.menu = new M_GameMainMenu();
+        switchMenus(event);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        backGroundIm.setImage(BGims.get(themeIndex));
 
         String winnerRewardRaw = winner_reward;// "Flank: +1 level / User: +135 experience +2 level +25
         // // hitpoints +50 coins"; // game.getwinnerreward
@@ -102,9 +110,9 @@ public class M_GameOverMenu extends Menu {
             winnerReward += _matcher.group() + "\n";
         }
         winnerReward += "\n";
-        _matcher = Pattern.compile("[a-zA-Z]+: \\+[0-9]+ level ").matcher(winnerRewardRaw);
+        _matcher = Pattern.compile("[a-zA-Z\s]+: \\+[0-9]+ level ").matcher(winnerRewardRaw);
         while (_matcher.find()) {
-            winnerReward += _matcher.group() + "\n";
+            winnerReward += _matcher.group().trim() + "\n";
         }
 
         _matcher = Pattern.compile("\\+[0-9]+ experience").matcher(loserRewardRaw);
@@ -120,12 +128,12 @@ public class M_GameOverMenu extends Menu {
             loserReward += _matcher.group() + "\n";
         }
         loserReward += "\n";
-        _matcher = Pattern.compile("[a-zA-Z]+: \\+[0-9]+ level ").matcher(loserRewardRaw);
+        _matcher = Pattern.compile("[a-zA-Z\s]+: \\+[0-9]+ level ").matcher(loserRewardRaw);
         while (_matcher.find()) {
-            loserReward += _matcher.group() + "\n";
+            loserReward += _matcher.group().trim() + "\n";
         }
 
-        Text winnerRewardTitle = new Text("Winner reward: ");
+        Text winnerRewardTitle = new Text("Winner : " + "winner.getUsername()");
         winnerRewardTitle.setFont(Font.font(40));
         winnerRewardTitle.setFill(Paint.valueOf("white"));
         winnerRewardTitle.setTranslateX(13);
@@ -137,7 +145,7 @@ public class M_GameOverMenu extends Menu {
         winnerRewardText.setTranslateY(150);
         winnerRewardText.setFill(Paint.valueOf("white"));
         winnerPane.getChildren().add(winnerRewardText);
-        Text loserRewardTitle = new Text("Loser reward: ");
+        Text loserRewardTitle = new Text("Loser : " + "loser.getUsername()");
         loserRewardTitle.setFont(Font.font(40));
         loserRewardTitle.setFill(Paint.valueOf("white"));
         loserRewardTitle.setTranslateX(13);
