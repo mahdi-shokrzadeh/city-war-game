@@ -259,11 +259,11 @@ public class SpellAffect {
 
     public void handleRoundReduce() {
         this.round.setNumberOfRoundTurns(this.round.getNumberOfRoundTurns() - 1);
-        if (this.round.getPlayer_one() instanceof AI) {
+        // if (this.round.getPlayer_one() instanceof AI) {
             this.round.setPlayerTwoRemainingTurns(this.round.getPlayerTwoRemainingTurns() - 1);
-        } else {
+        // } else {
 
-        }
+        // }
         ConsoleGame.printSuccessfulTurnReduce();
         this.removeCardFromHand(this.spell_card);
     }
