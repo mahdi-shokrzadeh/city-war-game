@@ -133,7 +133,7 @@ public class M_GameOverMenu extends Menu {
             loserReward += _matcher.group().trim() + "\n";
         }
 
-        Text winnerRewardTitle = new Text("Winner : " + "winner.getUsername()");
+        Text winnerRewardTitle = new Text("Winner : " + winnerUser.getUsername());
         winnerRewardTitle.setFont(Font.font(40));
         winnerRewardTitle.setFill(Paint.valueOf("white"));
         winnerRewardTitle.setTranslateX(13);
@@ -145,7 +145,7 @@ public class M_GameOverMenu extends Menu {
         winnerRewardText.setTranslateY(150);
         winnerRewardText.setFill(Paint.valueOf("white"));
         winnerPane.getChildren().add(winnerRewardText);
-        Text loserRewardTitle = new Text("Loser : " + "loser.getUsername()");
+        Text loserRewardTitle = new Text("Loser : " + loserUser.getUsername());
         loserRewardTitle.setFont(Font.font(40));
         loserRewardTitle.setFill(Paint.valueOf("white"));
         loserRewardTitle.setTranslateX(13);
