@@ -781,7 +781,8 @@ public class M_Round extends Menu {
 
                     }
 
-                    if (card.getDuration() > 0) {
+                    if ((card.getSpellType().toString().equals("Shield")
+                            || card.getSpellType().toString().equals("Heal")) && card.getDuration() > 0) {
                         ImageView im = new ImageView(
                                 new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
                                         .toURI().toString());
