@@ -446,7 +446,7 @@ public class M_Game extends Menu {
 
                 case "AI":
                     res = GameController.createBotGame(this, player_two, this.rounds.size(),
-                            this.winner.equals(this.player_one.getNickname()) ? "bot" : "player_two",player_two_cards);
+                            this.winner.equals(this.player_one.getNickname()) ? "bot" : "player_two", player_two_cards);
                     if (res.ok) {
                         winner_reward = (String) res.body.get("winner");
                         looser_reward = (String) res.body.get("loser");
@@ -473,6 +473,8 @@ public class M_Game extends Menu {
 
             }
             // game over menu
+            winnerUser = this.winner_user;
+            loserUser = this.winner_user == this.player_one ? this.player_two : this.player_one;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
