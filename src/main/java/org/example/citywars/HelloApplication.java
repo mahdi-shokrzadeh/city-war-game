@@ -18,21 +18,22 @@ import static org.example.citywars.Menu.*;
 
 public class HelloApplication extends Application {
     public static Menu menu;
-    public static Image icon = new Image("logo.png");
-    public static Stage primaryStage;
+    public static Image icon= new Image("logo.png");
 
     public static Image[][] pandaCards;
     public static Image[][] wolfCards;
     public static Image[][] warriorCards;
     public static Image[][] dragonCards;
     public static Image[][] botCards;
+    public static Stage primaryStage;
 
-
+    
     @Override
     public void start(Stage stage) throws IOException {
-
+        
         loadFiles();
         this.primaryStage = stage;
+
         menu = new M_Intro();
         outPutMusic = new MediaPlayer(BGMusicMedias.get(0));
         outPutMusic.setCycleCount(-1);
@@ -40,12 +41,12 @@ public class HelloApplication extends Application {
         outPutMusic.play();
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName() + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(menu.getName()+".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(menu.getName());
         stage.getIcons().add(icon);
-        // stage.setMaximized(true);
-        // stage.setFullScreen(true);
+        stage.setMaximized(true);
+//        stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
     }
@@ -145,19 +146,19 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
 
-        // // menu = new M_SignUpMenu();
-        // menu = new M_GamePlayMenu();
-        //
-        // Scanner sc = new Scanner(System.in);//for console version
-        // String input;//for console version
-        //
-        // boolean isEnd = false;
-        // while (!isEnd) {
-        // menu = menu.myMethods();
-        // if (menu == null) {
-        // System.out.println("the End!");
-        // isEnd = true;
-        // }
-        // }
+//        // menu = new M_SignUpMenu();
+//        menu = new M_GamePlayMenu();
+//
+//        Scanner sc = new Scanner(System.in);//for console version
+//        String input;//for console version
+//
+//        boolean isEnd = false;
+//        while (!isEnd) {
+//            menu = menu.myMethods();
+//            if (menu == null) {
+//                System.out.println("the End!");
+//                isEnd = true;
+//            }
+//        }
     }
 }

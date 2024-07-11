@@ -458,8 +458,8 @@
   "id" : 117,
   "userID" : 2,
   "cardID" : 11,
-  "experience" : 0,
-  "level" : 1
+  "experience" : 6,
+  "level" : 3
 }, {
   "id" : 118,
   "userID" : 2,
@@ -476,8 +476,8 @@
   "id" : 120,
   "userID" : 2,
   "cardID" : 8,
-  "experience" : 25,
-  "level" : 1
+  "experience" : 31,
+  "level" : 3
 }, {
   "id" : 121,
   "userID" : 12,

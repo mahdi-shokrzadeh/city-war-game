@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
 
 import controllers.CardController;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,11 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.AI;
 import models.Response;
@@ -339,6 +332,8 @@ public class M_Round extends Menu {
             String input = ((AI) player_one).chooseTheMove(board, player_one_cards, this);
             if (input.equals("No valid card to place")) {
                 ConsoleGame.printNoValidCardToPlace();
+                this.is_player_one_turn = !this.is_player_one_turn;
+                this.player_one_remaining_turns--;
             } else {
                 ConsoleGame.printAIChoice(input);
                 if (!input.startsWith("Spell")) {
@@ -775,6 +770,19 @@ public class M_Round extends Menu {
                 try {
                     if (s.spellHandler()) {
                         System.out.println("SPELL TEST");
+
+                        try {
+                            handleAffection(turn_number, starting_block_number, true);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+
+                    } else {
+
+                    }
+
+                    if ((card.getSpellType().toString().equals("Shield")
+                            || card.getSpellType().toString().equals("Heal")) && card.getDuration() > 0) {
                         ImageView im = new ImageView(
                                 new File("src\\main\\resources\\GameElements\\f" + card.getDuration() + ".png")
                                         .toURI().toString());
@@ -788,12 +796,6 @@ public class M_Round extends Menu {
                         }
 
                         rootElement.getChildren().add(im);
-                        try {
-                            handleAffection(turn_number, starting_block_number, true);
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                    } else {
                     }
 
                     updateHitPoints();
@@ -801,13 +803,6 @@ public class M_Round extends Menu {
                     updateRemainingTurns();
                     updateTotalDameges();
                     updateSpider();
-
-                    // is_player_one_turn = !is_player_one_turn;
-                    // if (is_player_one_turn) {
-                    // player_one_remaining_turns--;
-                    // } else {
-                    // player_two_remaining_turns--;
-                    // }
 
                     for (int i = 0; i <= 1; i++) {
                         for (int j = 0; j < 21; j++) {

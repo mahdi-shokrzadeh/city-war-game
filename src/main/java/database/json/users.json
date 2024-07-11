@@ -7,25 +7,25 @@
   "role" : "admin",
   "passRecoveryQuestion" : "recQuestion",
   "passRecoveryAnswer" : "recAnswer",
-  "level" : 3,
-  "experience" : 456,
+  "level" : 4,
+  "experience" : 181,
   "hitPoints" : 175,
-  "coins" : 174,
+  "coins" : 234,
   "clanID" : 0,
   "firstLogin" : false,
   "userCardIDS" : [ 144, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183 ],
   "progress" : 5,
   "damage" : 0,
-  "profileID" : 0,
-  "shouldCardsBeHidden" : false,
+  "profileID" : 4,
   "gameCharacter" : {
     "id" : 1,
     "name" : "panda",
     "pfactor" : 0.9
   },
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 2,
   "username" : "Phil",
@@ -36,24 +36,24 @@
   "passRecoveryQuestion" : "What is your favourite color ?",
   "passRecoveryAnswer" : "brown",
   "level" : 4,
-  "experience" : 220,
-  "hitPoints" : 175,
-  "coins" : 20223,
+  "experience" : 576,
+  "hitPoints" : 200,
+  "coins" : 20258,
   "clanID" : 2,
   "firstLogin" : false,
   "userCardIDS" : [ 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120 ],
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : {
     "id" : 3,
     "name" : "dragon",
     "pfactor" : 0.8
   },
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 3,
   "username" : "Dwaine",
@@ -73,11 +73,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 4,
   "username" : "William",
@@ -97,11 +97,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 5,
   "username" : "George1",
@@ -121,11 +121,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 6,
   "username" : "George",
@@ -145,11 +145,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 7,
   "username" : "John",
@@ -169,11 +169,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 8,
   "username" : "Barack",
@@ -193,11 +193,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 9,
   "username" : "mahdi_sh",
@@ -217,11 +217,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 10,
   "username" : "Peter",
@@ -241,11 +241,11 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : null,
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 11,
   "username" : "Andrew",
@@ -265,15 +265,15 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : {
     "id" : 1,
     "name" : "dragon",
     "pfactor" : 0.8
   },
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 }, {
   "id" : 12,
   "username" : "user",
@@ -293,13 +293,13 @@
   "progress" : 1,
   "damage" : 0,
   "profileID" : 0,
-  "shouldCardsBeHidden" : false,
   "gameCharacter" : {
     "id" : 0,
     "name" : "panda",
     "pfactor" : 0.9
   },
-  "cardsAreStolen" : false,
+  "botLevel" : 0,
   "isBonusActive" : false,
-  "botLevel" : 0
+  "cardsAreStolen" : false,
+  "shouldCardsBeHidden" : false
 } ]
