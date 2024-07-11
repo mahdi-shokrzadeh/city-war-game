@@ -386,38 +386,49 @@ public class CardController {
     }
 
     public static Response getCardImage(Card card, int level) {
-//        File file = null;
-//        if (card.getImageURL() == null) {
-//            file = new File("src/main/resources/Cards/" + card.getCharacter().getName() + "_d"
-//                    + String.valueOf(card.getDuration()) + "_l" + String.valueOf(level) + ".png");
-//        } else {
-//            file = new File(card.getImageURL());
-//        }
-//        if (!file.exists()) {
-//            return new Response("image not found", -404);
-//        }
-//        Image image = null;
+        // File file = null;
+        // if (card.getImageURL() == null) {
+        // file = new File("src/main/resources/Cards/" + card.getCharacter().getName() +
+        // "_d"
+        // + String.valueOf(card.getDuration()) + "_l" + String.valueOf(level) +
+        // ".png");
+        // } else {
+        // file = new File(card.getImageURL());
+        // }
+        // if (!file.exists()) {
+        // return new Response("image not found", -404);
+        // }
+        // Image image = null;
         ImageView imageView = new ImageView();
         try {
-//            image = new Image(new FileInputStream(file));
-            switch (card.getCharacter().getName()){
-                case "bot":
-                    imageView.setImage(botCards[card.getDuration()-1][level-1]);
-                    break;
-                case "panda":
-                    imageView.setImage(pandaCards[card.getDuration()-1][level-1]);
-                    break;
-                case "wolf":
-                    imageView.setImage(wolfCards[card.getDuration()-1][level-1]);
-                    break;
-                case "warrior":
-                    imageView.setImage(warriorCards[card.getDuration()-1][level-1]);
-                    break;
-                case "dragon":
-                    imageView.setImage(dragonCards[card.getDuration()-1][level-1]);
-                    break;
-                default:
-                    System.out.println("fsdfgrzffffffffffffffffffffffffff");
+            if (card.getImageURL() == null) {
+                // image = new Image(new FileInputStream(file));
+                switch (card.getCharacter().getName()) {
+                    case "bot":
+                        imageView.setImage(botCards[card.getDuration() - 1][level - 1]);
+                        break;
+                    case "panda":
+                        imageView.setImage(pandaCards[card.getDuration() - 1][level - 1]);
+                        break;
+                    case "wolf":
+                        imageView.setImage(wolfCards[card.getDuration() - 1][level - 1]);
+                        break;
+                    case "warrior":
+                        imageView.setImage(warriorCards[card.getDuration() - 1][level - 1]);
+                        break;
+                    case "dragon":
+                        imageView.setImage(dragonCards[card.getDuration() - 1][level - 1]);
+                        break;
+                    default:
+                        System.out.println("fsdfgrzffffffffffffffffffffffffff");
+
+                }
+            } else {
+                File file = null;
+                Image image = null;
+                file = new File(card.getImageURL());
+                image = new Image(new FileInputStream(file));
+                imageView.setImage(image);
 
             }
             imageView.setFitWidth(209);
