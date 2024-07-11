@@ -470,7 +470,7 @@ public class M_Round extends Menu {
         im.setFitHeight(this.block_height);
         im.setFitWidth(this.block_width);
         im.setId("spider_" + user_index + "_" + block_index);
-        im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width - 1.9));
+        im.setLayoutX(this.left_board_margin + (block_index) * (this.block_width - 0.9));
         im.setLayoutY(this.top_board_margin + user_index * (this.block_height + 10));
         rootElement.getChildren().add(im);
     }
