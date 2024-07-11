@@ -74,13 +74,15 @@ public class M_GameOverMenu extends Menu {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        backGroundIm.setImage(BGims.get(themeIndex));
+
         String winnerRewardRaw = winner_reward;// "Flank: +1 level / User: +135 experience +2 level +25
-        //                                        // hitpoints +50 coins"; // game.getwinnerreward
+        // // hitpoints +50 coins"; // game.getwinnerreward
         String loserRewardRaw = looser_reward;// "Flank: +1 level / User: +135 experience +2 level +25 hitpoints
                                               // +50 coins"; // game.getloserreward
         String winnerReward = "";
         String loserReward = "";
-        
+
         Matcher _matcher = null;
 
         _matcher = Pattern.compile("\\+[0-9]+ experience").matcher(winnerRewardRaw);
@@ -147,7 +149,6 @@ public class M_GameOverMenu extends Menu {
         loserRewardText.setTranslateY(150);
         loserRewardText.setFill(Paint.valueOf("white"));
         loserPane.getChildren().add(loserRewardText);
-
 
         System.out.println("w: " + winnerRewardRaw);
         System.out.println("l: " + loserReward);
