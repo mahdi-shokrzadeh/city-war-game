@@ -142,8 +142,8 @@ public class ConsoleGame {
         System.out.println("\nAI says: " + in + "\n");
     }
 
-    public static void printBossDecision(int index, int power) {
-        System.out.println("\nBoss bot increased the power of the card number " + index + " by " + power + "!!\n");
+    public String printBossDecision(int index, int power) {
+        return ("Boss bot increased the power of the card number " + index + " by " + power + "!!");
     }
 
     public static void printBuffCard(int index, int power) {

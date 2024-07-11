@@ -7,6 +7,8 @@ import org.example.citywars.M_Round;
 
 import com.almasb.fxgl.dev.Console;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import models.card.Card;
 import models.game.Block;
 import models.game.SpellAffect;
@@ -234,8 +236,26 @@ public class AI extends User {
         return true;
     }
 
-    public void handleBoss(Block[][] board) {
+    public void handleBoss(Block[][] board, @SuppressWarnings("exports") Pane rootElement) {
         int i = 0;
+
+        // seacrch for label with id boss_label
+        Label boss_label = (Label) rootElement.lookup("#boss_label");
+        if (boss_label != null) {
+            boss_label.setText("Boss bot is playing!!");
+        } else {
+            boss_label = new Label("Boss bot is playing!!");
+            boss_label.setId("boss_label");
+            boss_label.setLayoutX(120);
+            boss_label.setLayoutY(540);
+            // boss_label.setStyle("-fx-font-size: 29px; -fx-font-weight: bold;
+            // -fx-text-fill: red;");
+            // boss_label.setStyle(
+            //         "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: gray;");
+            rootElement.getChildren().add(boss_label);
+
+        }
+        String s = "";
         while (i < 2) {
             Random random = new Random();
             int random1 = random.nextInt(21);
@@ -243,9 +263,45 @@ public class AI extends User {
                 int random_power = random.nextInt(2) + 3;
                 board[0][random1].setBlockPower(board[0][random1].getBlockPower() + random_power);
                 i++;
-                ConsoleGame.printBossDecision(random1 + 1, random_power);
+                s = s + "\nBoss bot increased the power of the card number " + random1 + " by " + random_power + "!!";
+                // wait for 1.5 seconds
             }
         }
+
+        // choose random color for the label
+        Random random = new Random();
+        int random_color = random.nextInt(6);
+        switch (random_color) {
+            case 0:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: red;");
+                break;
+            case 1:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: blue;");
+                break;
+            case 2:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: green;");
+                break;
+            case 3:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: yellow;");
+                break;
+            case 4:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: orange;");
+                break;
+            case 5:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: purple;");
+                break;
+            default:
+                boss_label.setStyle(
+                        "-fx-effect: dropshadow(three-pass-box, blue, 10, 0, 0, 0); -fx-font-size: 29px; -fx-font-weight: bold; -fx-text-fill: gray;");
+                break;
+        }
+        boss_label.setText(s);
 
     }
 

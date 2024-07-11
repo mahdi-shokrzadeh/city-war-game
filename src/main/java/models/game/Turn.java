@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import org.example.citywars.M_Round;
 
+import javafx.scene.layout.Pane;
+
 import java.util.Map;
 
 import models.AI;
@@ -68,7 +70,7 @@ public class Turn {
         // AI or no?
         if (this.current_player instanceof AI) {
             if (((AI) current_player).getAiLevel() == 5) {
-                ((AI) current_player).handleBoss(board);
+                ((AI) current_player).handleBoss(board, new Pane());
             } else {
                 String input = ((AI) current_player).chooseTheMove(board, player_one_cards, this.round);
                 if (input.equals("No valid card to place")) {

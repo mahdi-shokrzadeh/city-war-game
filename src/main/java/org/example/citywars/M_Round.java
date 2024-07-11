@@ -316,7 +316,7 @@ public class M_Round extends Menu {
 
     public String BOTmove() {
         if (((AI) player_one).getAiLevel() == 5) {
-            ((AI) player_one).handleBoss(board);
+            ((AI) player_one).handleBoss(board , rootElement);
             this.is_player_one_turn = !this.is_player_one_turn;
             this.player_one_remaining_turns--;
             this.updateHitPoints();
