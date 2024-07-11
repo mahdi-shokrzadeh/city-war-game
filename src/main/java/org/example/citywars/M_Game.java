@@ -445,8 +445,8 @@ public class M_Game extends Menu {
                     break;
 
                 case "AI":
-                    res = GameController.createBotGame(this, player_two, this.rounds.size(), w,
-                            player_two_cards);
+                    res = GameController.createBotGame(this, player_two, this.rounds.size(),
+                            this.winner.equals(this.player_one.getNickname()) ? "bot" : "player_two",player_two_cards);
                     if (res.ok) {
                         winner_reward = (String) res.body.get("winner");
                         looser_reward = (String) res.body.get("loser");
