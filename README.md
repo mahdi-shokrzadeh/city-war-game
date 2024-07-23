@@ -14,6 +14,27 @@ This project is a part of our Object-Oriented Programming (OOP) course.
 
 City War is a strategic card game where two players compete against each other. 
 
+
+### Game Demo
+<div style="display: flex; flex-wrap: wrap;"> 
+  <img src="https://raw.githubusercontent.com/mahdi-shokrzadeh/city-war-game/main-graphic/gameplay/1.jpg" alt="Gameplay Image 5" style="width: 98%; margin-bottom: 10px;"> 
+</div>
+<div style="display: flex; flex-wrap: wrap;"> 
+  <img src="https://raw.githubusercontent.com/mahdi-shokrzadeh/city-war-game/main-graphic/gameplay/2.jpg" alt="Gameplay Image 1" style="width: 48%; margin-right: 2%;"> 
+  <img src="https://raw.githubusercontent.com/mahdi-shokrzadeh/city-war-game/main-graphic/gameplay/3.jpg" alt="Gameplay Image 2" style="width: 48%;"> 
+</div> 
+<div style="display: flex; flex-wrap: wrap;"> 
+  <img src="https://raw.githubusercontent.com/mahdi-shokrzadeh/city-war-game/main-graphic/gameplay/4.jpg" alt="Gameplay Image 3" style="width: 48%; margin-right: 2%;"> 
+  <img src="https://raw.githubusercontent.com/mahdi-shokrzadeh/city-war-game/main-graphic/gameplay/5.jpg" alt="Gameplay Image 4" style="width: 48%;"> 
+</div>
+
+
+### Watch the Gameplay Video
+
+
+[Gameplay Video](https://github.com/mahdi-shokrzadeh/city-war-game/raw/main-graphic/gameplay/Finalgameplay-1.m4v)
+
+
 ### Gameplay
 
 At the start of the game, each player selects 20 cards from the card bank to form their deck. The cards in the game are of two types: healing/damage and spell. Each card has three attributes: 
@@ -32,3 +53,36 @@ Each round will have 4 hands, and in each hand, players must fill their ground o
 
 If during the move, a player's HP is depleted due to the incoming damages, the game ends, and the winner is determined. Otherwise, the game ground is cleared, and the hands are changed. Some of the winner's cards are upgraded after the win.
 
+
+### Used Technologies
+
+City War is developed using the following technologies:
+
+- **Java**: Core programming language for the game logic.
+- **JavaFX**: Used for building the graphical user interface.
+- **Maven**: Dependency management and build automation tool.
+- **Jackson**: Library for database handling and JSON processing.
+
+### How to Use
+
+To get started with City War, follow these steps:
+
+1. **Clone the Project**:
+   ```bash
+   git clone https://github.com/mahdi-shokrzadeh/city-war-game.git
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   mvn install
+   ```
+
+3. **Build the Project**:
+   ```bash
+   mvn clean install
+   ```
+   
+4. **Run the Application**:
+   ```bash
+   mvn exec:java -Dexec.mainClass="com.city-war-game.HelloApplication"
+   ```
