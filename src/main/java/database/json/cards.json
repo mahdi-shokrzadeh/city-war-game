@@ -11,7 +11,8 @@
   "damage" : 50,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
@@ -28,7 +29,8 @@
   "damage" : 40,
   "character" : {
     "id" : 1,
-    "name" : "dragon"
+    "name" : "dragon",
+    "pfactor": 0.8
   },
   "level" : 1,
   "spellType" : null
@@ -231,7 +233,7 @@
   "damage" : 36,
   "character" : {
     "id" : 5,
-    "name" : "wolf",
+    "name" : "warrior",
     "pfactor": 0.4
 
   },
@@ -257,7 +259,7 @@
   "spellType" : null
 }, {
   "id" : 14,
-  "name" : "Undere",
+  "name" : "UndercoverDrone",
   "price" : 80,
   "duration" : 4,
   "cardType" : "Regular",
@@ -440,7 +442,7 @@
   "level" : 1,
   "spellType" : null
 }, {
-  "id" : 23,
+  "id" : 24,
   "name" : "Shield",
   "price" : 80,
   "duration" : 1,
@@ -448,7 +450,7 @@
   "upgradeLevel" : 1,
   "upgradeCost" : 1,
   "desc" : "A shield that defends against the enemy's attack preventing hp loss",
-  "power" : 0,
+  "power" : 999,
   "damage" : 0,
   "character" : {
     "id" : 3,
@@ -458,7 +460,7 @@
   "level" : 1,
   "spellType" : "Shield"
 }, {
-  "id" : 23,
+  "id" : 25,
   "name" : "Heal",
   "price" : 80,
   "duration" : 1,
@@ -466,7 +468,7 @@
   "upgradeLevel" : 1,
   "upgradeCost" : 1,
   "desc" : "Replanishes an amount of player's hp",
-  "power" : 0,
+  "power" : 999,
   "damage" : 0,
   "character" : {
     "id" : 0,
@@ -477,7 +479,7 @@
   "level" : 1,
   "spellType" : "Heal"
 }, {
-  "id" : 23,
+  "id" : 26,
   "name" : "PowerBoost",
   "price" : 80,
   "duration" : 1,
@@ -495,7 +497,7 @@
   "level" : 1,
   "spellType" : "PowerBoost"
 }, {
-  "id" : 23,
+  "id" : 27,
   "name" : "SpaceShift",
   "price" : 80,
   "duration" : 1,
@@ -514,7 +516,7 @@
   "level" : 1,
   "spellType" : "SpaceShift"
 }, {
-  "id" : 23,
+  "id" : 28,
   "name" : "Repair",
   "price" : 80,
   "duration" : 1,
@@ -532,7 +534,7 @@
   "level" : 1,
   "spellType" : "Repair"
 }, {
-  "id" : 23,
+  "id" : 29,
   "name" : "RoundReduce",
   "price" : 80,
   "duration" : 1,
@@ -551,7 +553,7 @@
   "level" : 1,
   "spellType" : "RoundReduce"
 }, {
-  "id" : 23,
+  "id" : 30,
   "name" : "Steal",
   "price" : 80,
   "duration" : 1,
@@ -570,7 +572,7 @@
   "level" : 1,
   "spellType" : "Steal"
 }, {
-  "id" : 23,
+  "id" : 31,
   "name" : "Attenuate",
   "price" : 80,
   "duration" : 1,
@@ -589,7 +591,7 @@
   "level" : 1,
   "spellType" : "Attenuate"
 }, {
-  "id" : 23,
+  "id" : 32,
   "name" : "Copy",
   "price" : 80,
   "duration" : 1,
@@ -608,7 +610,7 @@
   "level" : 1,
   "spellType" : "Copy"
 }, {
-  "id" : 23,
+  "id" : 33,
   "name" : "Hide",
   "price" : 80,
   "duration" : 1,
@@ -626,4 +628,42 @@
   },
   "level" : 1,
   "spellType" : "Hide"
+}, {
+  "id" : 23,
+  "name" : "AddSpace",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Adds Space",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor": 0.9
+
+  },
+  "level" : 1,
+  "spellType" : "AddSpace"
+}, {
+  "id" : 23,
+  "name" : "Mirror",
+  "price" : 80,
+  "duration" : 1,
+  "cardType" : "Spell",
+  "upgradeLevel" : 1,
+  "upgradeCost" : 1,
+  "desc" : "Mirrors damage",
+  "power" : 0,
+  "damage" : 0,
+  "character" : {
+    "id" : 1,
+    "name" : "panda",
+    "pfactor": 0.9
+
+  },
+  "level" : 1,
+  "spellType" : "Mirror"
 }]

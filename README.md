@@ -6,8 +6,8 @@ This project is a part of our Object-Oriented Programming (OOP) course.
 
 ## Team Information
 
-- Team Members: Mahdi Ghalami - MohammadMahdi Shokrzadeh - Parsa Joinedi
-- Student Numbers: 402102284 - 402101985 - 402101509
+- Team Members: MohammadMahdi Shokrzadeh - Mahdi Ghalami - Parsa Joinedi
+
 - Project Start Date: Sunday, April 21 ,2024
 
 ## About the Game

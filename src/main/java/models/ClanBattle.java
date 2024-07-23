@@ -1,9 +1,9 @@
 package models;
 
-import models.game.Game;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import models.game.SimpleGame;
 
 public class ClanBattle {
     private int id;
@@ -124,9 +124,9 @@ public class ClanBattle {
         playedDefendersIDS = list;
     }
 
-    public void playAGame(Game game) {
-        playedAttackersIDS.add(game.getPlayer_one_id());
-        playedDefendersIDS.add(game.getPlayer_two_id());
+    public void playAGame(SimpleGame game) {
+        playedAttackersIDS.add(game.getPlayerOneID());
+        playedDefendersIDS.add(game.getPlayerTwoID());
         gameIDS.add(game.getID());
         numberOfRemainingGames--;
         if (game.getWinner().equals("p1"))

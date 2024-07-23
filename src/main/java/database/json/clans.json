@@ -4,7 +4,7 @@
   "joiningKey" : "alpine/1",
   "battleKey" : "alpine",
   "leaderID" : 1,
-  "membersIDS" : [ 1 ],
+  "membersIDS" : [ 1, 10, 12 ],
   "battleID" : 0
 }, {
   "id" : 2,
@@ -12,6 +12,6 @@
   "joiningKey" : "ferrari/2",
   "battleKey" : "ferrari",
   "leaderID" : 2,
-  "membersIDS" : [ 2 ],
+  "membersIDS" : [ 2, 11, 13 ],
   "battleID" : 0
 } ]

@@ -13,7 +13,7 @@ public class SpellAffect {
 
     private int des_index;
     private Block[][] board;
-    private Spell spell_card;
+    private Card spell_card;
     private int turn_index;
     private User current_player;
     private Round round;
@@ -23,7 +23,8 @@ public class SpellAffect {
             Block[][] board, User current_player, Round round, ArrayList<Card> hand_cards) {
         this.des_index = des_index;
         this.board = board;
-        this.spell_card = (Spell) spell_card;
+        // this.spell_card = (Spell) spell_card;
+        this.spell_card = spell_card;
         this.turn_index = turn_index % 2;
         this.current_player = current_player;
         this.round = round;
@@ -39,15 +40,14 @@ public class SpellAffect {
                     return false;
                 }
                 handleShield();
-
-                break;
+                return true;
 
             case "Heal":
                 if (!handlePutSpell()) {
                     return false;
                 }
                 handleHeal();
-                break;
+                return false;
 
             case "PowerBoost":
                 if (!handlePowerBoost()) {
@@ -69,8 +69,9 @@ public class SpellAffect {
                 return false;
 
             case "Attenuate":
+            
                 handleAttenuate();
-                break;
+                return true;
 
             case "Copy":
                 handleCopy();
@@ -264,9 +265,13 @@ public class SpellAffect {
         Card found_card_one = null;
         Card found_card_two = null;
 
+
+        System.out.println("Attenuate");
+
         boolean found = false;
         for (int i = 0; i <= 20; i++) {
-            if (!this.board[(this.turn_index + 1) % 2][i].isBlockEmpty()) {
+            if (!this.board[(this.turn_index + 1) % 2][i].isBlockEmpty()
+                    && this.board[(this.turn_index + 1) % 2][i].getBlockCard() != null) {
                 if (this.board[(this.turn_index + 1) % 2][i].getBlockCard().getCardType().toString()
                         .equals("Regular")) {
                     if (!found) {
@@ -292,10 +297,10 @@ public class SpellAffect {
             } else if (op_block.getBlockCard().equals(found_card_two)) {
                 op_block.setBlockDamage(op_block.getBlockDamage() - 10);
             }
-            if (this.turn_index == 0) {
-                round.getPlayer_two().setDamage(round.getPlayer_two().getDamage() - 10 * found_card_two.getDuration());
+            if (this.turn_index % 2 == 0) {
+                round.getPlayer_two().setDamage(round.getPlayer_two().getDamage() - 3);
             } else {
-                round.getPlayer_one().setDamage(round.getPlayer_one().getDamage() - 10 * found_card_two.getDuration());
+                round.getPlayer_one().setDamage(round.getPlayer_one().getDamage() - 3);
             }
         }
         ConsoleGame.printAttenuateSuccess(found_card_one, found_card_two);
@@ -315,7 +320,7 @@ public class SpellAffect {
     }
 
     public void handleHide() {
-        if (this.turn_index == 0) {
+        if (this.turn_index % 2 == 0) {
             this.round.getPlayer_two().setShouldCardsBeHidden(true);
             Collections.shuffle(this.round.getPlayer_two_cards().subList(0, 5));
 

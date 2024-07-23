@@ -3,7 +3,6 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 import models.AI;
 import models.User;
 import models.card.Card;
@@ -21,6 +20,9 @@ public class Round {
     private ArrayList<Card> player_two_cards = new ArrayList<Card>();
 
     private Block[][] board = new Block[2][21];
+
+    public Round() {
+    }
 
     public Round(User player_one, User player_two, ArrayList<Card> player_one_cards, ArrayList<Card> player_two_cards) {
         turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
@@ -73,7 +75,7 @@ public class Round {
                     this.turns.add(new Turn(player_one, player_two, player_one_cards, player_two_cards, board));
                     this.current_turn = turns.get(turns.size() - 1);
                 } else {
-                    System.out.println("HERE!!");
+                    // System.out.println("HERE!!");
                     // timeLine();
                     if (this.timeLine()) {
                         return "game_is_finished";
@@ -169,7 +171,7 @@ public class Round {
     }
 
     public boolean timeLine() {
-        System.out.println("HEY here!");
+        // System.out.println("HEY here!");
         for (int i = 0; i <= 20; i++) {
 
             Block player_one_block = this.board[0][i];

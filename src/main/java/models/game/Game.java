@@ -1,6 +1,12 @@
 package models.game;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.Scanner;
 
 import org.example.citywars.M_GameOverMenu;
@@ -59,7 +65,9 @@ public class Game extends Menu {
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
@@ -96,13 +104,17 @@ public class Game extends Menu {
                 this.player_one = player_one;
                 this.player_two = player_two;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 rounds.add(new Round(player_one, player_two, player_one_cards, player_two_cards));
                 this.current_round = rounds.get(0);
                 this.player_one_id = player_one.getID();
                 this.player_two_id = player_two.getID();
-
+                this.battle = battle;
+                this.defenderClan = defenderClan;
+                this.attackerClan = attackerClan;
                 ConsoleGame.printGreetings();
                 // this.handleAddCardsToPlayers();
         }
@@ -112,7 +124,9 @@ public class Game extends Menu {
                 super("GameProcess");
                 this.player_one = player_one;
                 this.mode = mode;
-                this.created_at = new java.util.Date().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.now();
+                this.created_at = ldt.format(formatter);
 
                 // rounds.add(new Round(player_one, player_two, player_one_cards,
                 // player_two_cards));
@@ -444,6 +458,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_one_cards);
+
                 } else {
                         System.out.println(res_1.exception.getMessage());
                 }
@@ -458,6 +474,8 @@ public class Game extends Menu {
                                         }
                                 }
                         }
+                        Collections.shuffle(player_two_cards);
+
                 } else {
                         System.out.println(res_2.message);
                 }
